@@ -1,4 +1,13 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
 <script>
+    if (!sessionStorage.getItem('loggedInUser')) {
+        window.location.href = 'index.html';
+    }
+</script>
+<meta charset="UTF-8">
+... (devam eden kod)<script>
     if (!sessionStorage.getItem('loggedInUser')) {
         window.location.href = 'index.html';
     }
