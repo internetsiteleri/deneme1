@@ -3,234 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Türkçe Test Merkezi</title>
+    <title>Giriş - Hamza Hoca</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: #F5C842;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .header p {
-            color: rgba(255,255,255,0.8);
-            font-size: 1.1rem;
-        }
-
-        .card {
+        .login-container {
             background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid;
-            display: inline-block;
-        }
-
-        .okuma h2 {
-            color: #2c7da0;
-            border-bottom-color: #2c7da0;
-        }
-
-        .dinleme h2 {
-            color: #2a9d8f;
-            border-bottom-color: #2a9d8f;
-        }
-
-        .kartlar h2 {
-            color: #F5C842;
-            border-bottom-color: #F5C842;
-        }
-
-        .test-listesi {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .test-listesi li {
-            margin-bottom: 12px;
-        }
-
-        .test-listesi a {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #f8f9fa;
-            padding: 15px 20px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: 1px solid #e9ecef;
-        }
-
-        .test-listesi a:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
-        }
-
-        .test-adi {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .test-adi .icon {
-            font-size: 1.4rem;
-        }
-
-        .test-badge {
-            background: #6c757d;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .ekle-notu {
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            padding: 40px 32px;
+            max-width: 450px;
+            width: 100%;
             text-align: center;
-            margin-top: 30px;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
         }
-
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.8rem; }
-            .card h2 { font-size: 1.4rem; }
-            .test-listesi a { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .icon { font-size: 64px; margin-bottom: 20px; }
+        h1 { font-size: 28px; color: #333; margin-bottom: 12px; }
+        p { color: #666; margin-bottom: 28px; }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
+        input:focus {
+            outline: none;
+            border-color: #F5C842;
+            box-shadow: 0 0 0 3px rgba(245,200,66,0.2);
+        }
+        button {
+            background: linear-gradient(135deg, #F5C842, #C9960A);
+            color: #0D1B2A;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245,200,66,0.4);
+        }
+        .error {
+            color: #e74c3c;
+            margin-top: 16px;
+            font-size: 14px;
+            display: none;
+            background: #fee;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .loading { display: none; margin-top: 16px; color: #F5C842; }
+        .expiry-info { font-size: 12px; color: #888; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 TÜRKÇE TEST MERKEZİ</h1>
-            <p>HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM</p>
-        </div>
 
-        <!-- ÖĞRENME KARTLARI (YENİ) -->
-        <div class="card kartlar">
-            <h2>📇 ÖĞRENME KARTLARI</h2>
-            <ul class="test-listesi">
-                <li>
-                    <a href="kartlar.html">
-                        <span class="test-adi">
-                            <span class="icon">🃟</span>
-                            Selamlaşma Kartları
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- OKUMA TESTLERİ -->
-        <div class="card okuma">
-            <h2>📖 OKUMA TESTLERİ</h2>
-            <ul class="test-listesi">
-                <li>
-                    <a href="okuma1.html">
-                        <span class="test-adi">
-                            <span class="icon">📄</span>
-                            Okuma Testi 1
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="okuma2.html">
-                        <span class="test-adi">
-                            <span class="icon">📄</span>
-                            Okuma Testi 2
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="okuma3.html">
-                        <span class="test-adi">
-                            <span class="icon">📄</span>
-                            Okuma Testi 3
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- DİNLEME TESTLERİ -->
-        <div class="card dinleme">
-            <h2>🎧 DİNLEME TESTLERİ</h2>
-            <ul class="test-listesi">
-                <li>
-                    <a href="dinleme1.html">
-                        <span class="test-adi">
-                            <span class="icon">🎵</span>
-                            Dinleme Testi 1
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="dinleme2.html">
-                        <span class="test-adi">
-                            <span class="icon">🎵</span>
-                            Dinleme Testi 2
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="dinleme3.html">
-                        <span class="test-adi">
-                            <span class="icon">🎵</span>
-                            Dinleme Testi 3
-                        </span>
-                        <span class="test-badge">🔒 Şifreli</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="ekle-notu">
-            💡 Yeni test eklemek için: <strong>index.html</strong> dosyasını düzenleyip listeye yeni satır ekleyin.<br>
-            📧 Sorularınız için: Telegram kanalımıza katılın
-        </div>
+<div class="login-container" id="loginContainer">
+    <div class="icon">🔐</div>
+    <h1>Test Merkezi Girişi</h1>
+    <p>Lütfen size verilen kullanıcı adı ve şifre ile giriş yapın.</p>
+    <div class="input-group">
+        <label>👤 Kullanıcı Adı</label>
+        <input type="text" id="username" placeholder="Kullanıcı adınız" autocomplete="off">
     </div>
+    <div class="input-group">
+        <label>🔒 Şifre</label>
+        <input type="password" id="password" placeholder="Şifreniz">
+    </div>
+    <button onclick="checkLogin()">Giriş Yap</button>
+    <div class="error" id="errorMsg"></div>
+    <div class="loading" id="loadingMsg">🔍 Kontrol ediliyor...</div>
+    <div class="expiry-info">💡 Şifrelerin geçerlilik süresi vardır. Süresi dolan şifrelerle giriş yapılamaz.</div>
+</div>
+
+<script>
+const SHEET_ID = "11adJGi08o_bXfyzWuZoFVMiFOpS7c_LuM3ypeSkxHcU";
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
+
+let userList = [];
+
+async function fetchUserList() {
+    try {
+        const response = await fetch(SHEET_URL);
+        const text = await response.text();
+        const jsonText = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
+        const data = JSON.parse(jsonText);
+        const rows = data.table.rows;
+        userList = [];
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (row.c && row.c[0] && row.c[1]) {
+                userList.push({
+                    username: row.c[0].v?.toString().toLowerCase().trim(),
+                    password: row.c[1].v?.toString().trim(),
+                    expiryDate: row.c[2]?.v?.toString().trim() || ""
+                });
+            }
+        }
+    } catch (error) {
+        console.error("Google Sheets yüklenirken hata:", error);
+    }
+}
+
+function isExpired(expiryDateStr) {
+    if (!expiryDateStr || expiryDateStr === "") return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const expiryDate = new Date(expiryDateStr);
+    expiryDate.setHours(0, 0, 0, 0);
+    return today > expiryDate;
+}
+
+async function checkLogin() {
+    const username = document.getElementById('username').value.trim().toLowerCase();
+    const password = document.getElementById('password').value.trim();
+    const errorDiv = document.getElementById('errorMsg');
+    const loadingDiv = document.getElementById('loadingMsg');
+    
+    if (!username || !password) {
+        errorDiv.textContent = 'Lütfen kullanıcı adı ve şifre girin!';
+        errorDiv.style.display = 'block';
+        return;
+    }
+    
+    errorDiv.style.display = 'none';
+    loadingDiv.style.display = 'block';
+    
+    if (userList.length === 0) {
+        await fetchUserList();
+    }
+    
+    const user = userList.find(u => u.username === username && u.password === password);
+    
+    loadingDiv.style.display = 'none';
+    
+    if (!user) {
+        errorDiv.textContent = 'Kullanıcı adı veya şifre hatalı!';
+        errorDiv.style.display = 'block';
+        document.getElementById('password').value = '';
+        return;
+    }
+    
+    if (user.expiryDate && isExpired(user.expiryDate)) {
+        errorDiv.textContent = `⏰ Şifrenizin geçerlilik süresi dolmuştur! (Bitiş: ${user.expiryDate})`;
+        errorDiv.style.display = 'block';
+        document.getElementById('password').value = '';
+        return;
+    }
+    
+    // Giriş başarılı: kullanıcı adını sessionStorage'a kaydet ve menüye yönlendir
+    sessionStorage.setItem('loggedInUser', username);
+    window.location.href = 'menu.html';
+}
+
+window.onload = function() {
+    fetchUserList();
+    // Eğer zaten giriş yapılmışsa direkt menüye yönlendir
+    if (sessionStorage.getItem('loggedInUser')) {
+        window.location.href = 'menu.html';
+    }
+};
+</script>
 </body>
 </html>
