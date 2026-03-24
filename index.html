@@ -181,3 +181,9 @@ window.onload = function() {
 </script>
 </body>
 </html>
+window.onload = function() {
+    fetchUserList();
+    if (sessionStorage.getItem('loggedInUser')) {
+        window.location.href = 'menu.html';
+    }
+};
