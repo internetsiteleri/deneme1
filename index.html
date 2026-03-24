@@ -3,167 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamza Hoca - Türkçe Öğreniyorum</title>
+    <title>Türkçe Test Merkezi - Hamza Hoca</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
+
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
         }
+
         .header {
             text-align: center;
             margin-bottom: 40px;
         }
+
         .header h1 {
             font-size: 2.5rem;
             color: #F5C842;
             margin-bottom: 10px;
         }
+
         .header p {
             color: rgba(255,255,255,0.8);
             font-size: 1.1rem;
         }
-        .stars {
-            color: #F5C842;
-            font-size: 1.2rem;
-            letter-spacing: 4px;
-            margin: 10px 0;
-        }
-        .two-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-        @media (max-width: 700px) {
-            .two-columns {
-                grid-template-columns: 1fr;
-            }
-        }
+
         .card {
             background: white;
             border-radius: 20px;
             padding: 25px;
+            margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
+
         .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: #0D1B2A;
-            border-left: 4px solid #F5C842;
-            padding-left: 15px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            display: inline-block;
         }
-        .free-content {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 15px;
+
+        .kartlar h2 {
+            color: #F5C842;
+            border-bottom-color: #F5C842;
         }
-        .free-content h3 {
+
+        .okuma h2 {
             color: #2c7da0;
-            margin-bottom: 10px;
+            border-bottom-color: #2c7da0;
         }
-        .free-content p {
+
+        .dinleme h2 {
+            color: #2a9d8f;
+            border-bottom-color: #2a9d8f;
+        }
+
+        .test-listesi {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .test-listesi li {
+            margin-bottom: 12px;
+        }
+
+        .test-listesi a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
             color: #333;
-            line-height: 1.6;
-            margin-bottom: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            cursor: pointer;
         }
-        .free-content ul {
-            margin-left: 20px;
-            color: #555;
+
+        .test-listesi a:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
         }
-        .free-content li {
-            margin: 8px 0;
+
+        .test-adi {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .login-box {
-            background: #f0f0f0;
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
+
+        .test-adi .icon {
+            font-size: 1.4rem;
         }
-        .login-box h3 {
-            color: #0D1B2A;
-            margin-bottom: 15px;
+
+        .test-badge {
+            background: #6c757d;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
+
+        .free-badge {
+            background: #2a9d8f;
         }
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: #333;
-        }
-        input {
+
+        /* GİRİŞ MODALI */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 12px 15px;
-            font-size: 16px;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        .modal-content h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
             border: 2px solid #ddd;
             border-radius: 10px;
-            transition: all 0.3s ease;
+            font-size: 16px;
         }
-        input:focus {
-            outline: none;
-            border-color: #F5C842;
-        }
-        button {
+        .modal-content button {
             background: linear-gradient(135deg, #F5C842, #C9960A);
             color: #0D1B2A;
             border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            font-weight: 700;
+            padding: 12px;
+            font-weight: bold;
             border-radius: 40px;
             cursor: pointer;
-            transition: all 0.2s;
             width: 100%;
         }
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(245,200,66,0.4);
-        }
-        .error {
+        .modal-error {
             color: #e74c3c;
-            margin-top: 12px;
             font-size: 14px;
+            margin-top: 10px;
             display: none;
         }
-        .loading {
-            display: none;
-            margin-top: 12px;
-            color: #F5C842;
-        }
-        .divider {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #F5C842, transparent);
-            margin: 20px auto;
-        }
-        .tg-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #229ED9;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 40px;
-            margin-top: 15px;
-            font-weight: 600;
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
         }
         .footer {
             text-align: center;
-            margin-top: 40px;
+            margin-top: 30px;
             color: rgba(255,255,255,0.5);
             font-size: 0.8rem;
         }
@@ -175,65 +197,120 @@
         <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
         <div class="stars">★ ★ ★ ★ ★</div>
         <div class="divider"></div>
-        <p>Herkes İçin Açık İçerikler • Testler İçin Giriş Yapın</p>
+        <p>Tüm içerikler görünür. Testlere girmek için giriş yapın.</p>
     </div>
 
-    <div class="two-columns">
-        <!-- SOL TARAF: HERKESE AÇIK İÇERİKLER -->
-        <div class="card">
-            <h2>📖 Herkes İçin Açık</h2>
-            <div class="free-content">
-                <h3>📚 Günlük Okuma Parçası</h3>
-                <p><strong>Türkçe'nin Güzellikleri</strong><br>
-                Türkçe, köklü geçmişi ve zengin sözcük dağarcığıyla dünyanın en etkileyici dillerinden biridir. Her gün yeni bir kelime öğrenmek, dil becerilerinizi geliştirmenin en keyifli yoludur.</p>
-                
-                <h3>💡 Bugünün Kelimesi: "MERAK"</h3>
-                <p>Merak, öğrenmenin anahtarıdır. Yeni şeyler keşfetmek insanı hayata bağlar. Siz de merak edin, sorun, öğrenin!</p>
-                
-                <h3>📌 Serbest Alıştırma</h3>
-                <ul>
-                    <li>📝 Aşağıdaki kelimelerle bir cümle kurun: <strong>güzel, kitap, okumak</strong></li>
-                    <li>🎤 "Hayalinizdeki tatil" konusunda 3-5 cümle yazın</li>
-                </ul>
-                <p style="font-size:0.85rem; color:#888; margin-top:15px;">✅ Bu alıştırmalar herkese açıktır. Testlere girmek için sağ taraftan giriş yapın.</p>
-            </div>
-        </div>
+    <!-- ÖĞRENME KARTLARI (ÜCRETSİZ) -->
+    <div class="card kartlar">
+        <h2>📇 ÖĞRENME KARTLARI</h2>
+        <ul class="test-listesi">
+            <li>
+                <a href="kartlar.html" target="_blank">
+                    <span class="test-adi">
+                        <span class="icon">🃟</span>
+                        Selamlaşma Kartları
+                    </span>
+                    <span class="test-badge free-badge">✅ Ücretsiz</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 
-        <!-- SAĞ TARAF: GİRİŞ FORMU -->
-        <div class="card">
-            <h2>🔐 Testlere Giriş</h2>
-            <div class="login-box">
-                <h3>Okuma ve Dinleme Testleri</h3>
-                <p style="margin-bottom: 15px; color:#666;">Öğrenci kaydınız varsa giriş yapın.</p>
-                <div class="input-group">
-                    <label>👤 Kullanıcı Adı</label>
-                    <input type="text" id="username" placeholder="Kullanıcı adınız">
-                </div>
-                <div class="input-group">
-                    <label>🔒 Şifre</label>
-                    <input type="password" id="password" placeholder="Şifreniz">
-                </div>
-                <button onclick="checkLogin()">Testlere Giriş Yap</button>
-                <div class="error" id="errorMsg"></div>
-                <div class="loading" id="loadingMsg">🔍 Kontrol ediliyor...</div>
-                <div class="divider"></div>
-                <p style="font-size:0.8rem; color:#888;">Öğrenci kaydınız yoksa <a href="#" style="color:#F5C842;">iletişime geçin</a></p>
-                <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">📱 Telegram Kanalımız</a>
-            </div>
-        </div>
+    <!-- OKUMA TESTLERİ (GİRİŞ GEREKLİ) -->
+    <div class="card okuma">
+        <h2>📖 OKUMA TESTLERİ</h2>
+        <ul class="test-listesi">
+            <li>
+                <a onclick="requireLogin('okuma1.html')">
+                    <span class="test-adi">
+                        <span class="icon">📄</span>
+                        Okuma Testi 1
+                    </span>
+                    <span class="test-badge">🔒 Giriş Gerekli</span>
+                </a>
+            </li>
+            <li>
+                <a onclick="requireLogin('okuma2.html')">
+                    <span class="test-adi">
+                        <span class="icon">📄</span>
+                        Okuma Testi 2
+                    </span>
+                    <span class="test-badge">🔒 Giriş Gerekli</span>
+                </a>
+            </li>
+            <li>
+                <a onclick="requireLogin('okuma3.html')">
+                    <span class="test-adi">
+                        <span class="icon">📄</span>
+                        Okuma Testi 3
+                    </span>
+                    <span class="test-badge">🔒 Giriş Gerekli</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- DİNLEME TESTLERİ (GİRİŞ GEREKLİ) -->
+    <div class="card dinleme">
+        <h2>🎧 DİNLEME TESTLERİ</h2>
+        <ul class="test-listesi">
+            <li>
+                <a onclick="requireLogin('dinleme1.html')">
+                    <span class="test-adi">
+                        <span class="icon">🎵</span>
+                        Dinleme Testi 1
+                    </span>
+                    <span class="test-badge">🔒 Giriş Gerekli</span>
+                </a>
+            </li>
+            <li>
+                <a onclick="requireLogin('dinleme2.html')">
+                    <span class="test-adi">
+                        <span class="icon">🎵</span>
+                        Dinleme Testi 2
+                    </span>
+                    <span class="test-badge">🔒 Giriş Gerekli</span>
+                </a>
+            </li>
+            <li>
+                <a onclick="requireLogin('dinleme3.html')">
+                    <span class="test-adi">
+                        <span class="icon">🎵</span>
+                        Dinleme Testi 3
+                    </span>
+                    <span class="test-badge">🔒 Giriş Gerekli</span>
+                </a>
+            </li>
+        </ul>
     </div>
 
     <div class="footer">
-        HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM • Tüm içerikler ücretsizdir. Testler kayıtlı öğrenciler içindir.
+        💡 Selamlaşma kartları herkese açıktır. Okuma ve dinleme testleri için giriş yapmanız gereklidir.
+    </div>
+</div>
+
+<!-- GİRİŞ MODALI -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h3>🔐 Giriş Yapın</h3>
+        <p>Bu teste erişmek için lütfen giriş yapın.</p>
+        <input type="text" id="modalUsername" placeholder="Kullanıcı Adı">
+        <input type="password" id="modalPassword" placeholder="Şifre">
+        <button onclick="modalLogin()">Giriş Yap</button>
+        <div class="modal-error" id="modalError">Kullanıcı adı veya şifre hatalı!</div>
     </div>
 </div>
 
 <script>
+// Google Sheets bağlantısı
 const SHEET_ID = "11adJGi08o_bXfyzWuZoFVMiFOpS7c_LuM3ypeSkxHcU";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
 
 let userList = [];
+let pendingUrl = null;
 
+// Kullanıcı listesini çek
 async function fetchUserList() {
     try {
         const response = await fetch(SHEET_URL);
@@ -257,6 +334,7 @@ async function fetchUserList() {
     }
 }
 
+// Süre kontrolü
 function isExpired(expiryDateStr) {
     if (!expiryDateStr || expiryDateStr === "") return false;
     const today = new Date();
@@ -266,11 +344,25 @@ function isExpired(expiryDateStr) {
     return today > expiryDate;
 }
 
-async function checkLogin() {
-    const username = document.getElementById('username').value.trim().toLowerCase();
-    const password = document.getElementById('password').value.trim();
-    const errorDiv = document.getElementById('errorMsg');
-    const loadingDiv = document.getElementById('loadingMsg');
+// Giriş gerektiren teste tıklandığında
+function requireLogin(url) {
+    // Önce oturum var mı kontrol et
+    if (sessionStorage.getItem('loggedInUser')) {
+        window.location.href = url;
+    } else {
+        pendingUrl = url;
+        document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('modalUsername').value = '';
+        document.getElementById('modalPassword').value = '';
+        document.getElementById('modalError').style.display = 'none';
+    }
+}
+
+// Modal üzerinden giriş
+async function modalLogin() {
+    const username = document.getElementById('modalUsername').value.trim().toLowerCase();
+    const password = document.getElementById('modalPassword').value.trim();
+    const errorDiv = document.getElementById('modalError');
     
     if (!username || !password) {
         errorDiv.textContent = 'Lütfen kullanıcı adı ve şifre girin!';
@@ -278,41 +370,40 @@ async function checkLogin() {
         return;
     }
     
-    errorDiv.style.display = 'none';
-    loadingDiv.style.display = 'block';
-    
     if (userList.length === 0) {
         await fetchUserList();
     }
     
     const user = userList.find(u => u.username === username && u.password === password);
     
-    loadingDiv.style.display = 'none';
-    
     if (!user) {
         errorDiv.textContent = 'Kullanıcı adı veya şifre hatalı!';
         errorDiv.style.display = 'block';
-        document.getElementById('password').value = '';
         return;
     }
     
     if (user.expiryDate && isExpired(user.expiryDate)) {
-        errorDiv.textContent = `⏰ Şifrenizin geçerlilik süresi dolmuştur! (Bitiş: ${user.expiryDate})`;
+        errorDiv.textContent = `⏰ Şifrenizin süresi dolmuştur! (Bitiş: ${user.expiryDate})`;
         errorDiv.style.display = 'block';
-        document.getElementById('password').value = '';
         return;
     }
     
     // Giriş başarılı
     sessionStorage.setItem('loggedInUser', username);
-    window.location.href = 'menu.html';
+    closeModal();
+    if (pendingUrl) {
+        window.location.href = pendingUrl;
+    }
 }
 
+function closeModal() {
+    document.getElementById('loginModal').style.display = 'none';
+    pendingUrl = null;
+}
+
+// Sayfa yüklendiğinde kullanıcı listesini çek
 window.onload = function() {
     fetchUserList();
-    if (sessionStorage.getItem('loggedInUser')) {
-        window.location.href = 'menu.html';
-    }
 };
 </script>
 </body>
