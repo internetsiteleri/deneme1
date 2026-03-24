@@ -3,50 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş - Hamza Hoca</title>
+    <title>Hamza Hoca - Türkçe Öğreniyorum</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
-        .login-container {
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            color: #F5C842;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: rgba(255,255,255,0.8);
+            font-size: 1.1rem;
+        }
+        .stars {
+            color: #F5C842;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            margin: 10px 0;
+        }
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 700px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        .card {
             background: white;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            padding: 40px 32px;
-            max-width: 450px;
-            width: 100%;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #0D1B2A;
+            border-left: 4px solid #F5C842;
+            padding-left: 15px;
+        }
+        .free-content {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .free-content h3 {
+            color: #2c7da0;
+            margin-bottom: 10px;
+        }
+        .free-content p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .free-content ul {
+            margin-left: 20px;
+            color: #555;
+        }
+        .free-content li {
+            margin: 8px 0;
+        }
+        .login-box {
+            background: #f0f0f0;
+            border-radius: 16px;
+            padding: 20px;
             text-align: center;
         }
-        .icon { font-size: 64px; margin-bottom: 20px; }
-        h1 { font-size: 28px; color: #333; margin-bottom: 12px; }
-        p { color: #666; margin-bottom: 28px; }
-        .input-group { margin-bottom: 20px; text-align: left; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        .login-box h3 {
+            color: #0D1B2A;
+            margin-bottom: 15px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
         input {
             width: 100%;
-            padding: 14px 18px;
+            padding: 12px 15px;
             font-size: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
             transition: all 0.3s ease;
         }
         input:focus {
             outline: none;
             border-color: #F5C842;
-            box-shadow: 0 0 0 3px rgba(245,200,66,0.2);
         }
         button {
             background: linear-gradient(135deg, #F5C842, #C9960A);
             color: #0D1B2A;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 24px;
             font-size: 16px;
             font-weight: 700;
             border-radius: 40px;
@@ -56,39 +130,102 @@
         }
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245,200,66,0.4);
+            box-shadow: 0 5px 15px rgba(245,200,66,0.4);
         }
         .error {
             color: #e74c3c;
-            margin-top: 16px;
+            margin-top: 12px;
             font-size: 14px;
             display: none;
-            background: #fee;
-            padding: 10px;
-            border-radius: 8px;
         }
-        .loading { display: none; margin-top: 16px; color: #F5C842; }
-        .expiry-info { font-size: 12px; color: #888; margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; }
+        .loading {
+            display: none;
+            margin-top: 12px;
+            color: #F5C842;
+        }
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #F5C842, transparent);
+            margin: 20px auto;
+        }
+        .tg-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #229ED9;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+        <div class="stars">★ ★ ★ ★ ★</div>
+        <div class="divider"></div>
+        <p>Herkes İçin Açık İçerikler • Testler İçin Giriş Yapın</p>
+    </div>
 
-<div class="login-container" id="loginContainer">
-    <div class="icon">🔐</div>
-    <h1>Test Merkezi Girişi</h1>
-    <p>Lütfen size verilen kullanıcı adı ve şifre ile giriş yapın.</p>
-    <div class="input-group">
-        <label>👤 Kullanıcı Adı</label>
-        <input type="text" id="username" placeholder="Kullanıcı adınız" autocomplete="off">
+    <div class="two-columns">
+        <!-- SOL TARAF: HERKESE AÇIK İÇERİKLER -->
+        <div class="card">
+            <h2>📖 Herkes İçin Açık</h2>
+            <div class="free-content">
+                <h3>📚 Günlük Okuma Parçası</h3>
+                <p><strong>Türkçe'nin Güzellikleri</strong><br>
+                Türkçe, köklü geçmişi ve zengin sözcük dağarcığıyla dünyanın en etkileyici dillerinden biridir. Her gün yeni bir kelime öğrenmek, dil becerilerinizi geliştirmenin en keyifli yoludur.</p>
+                
+                <h3>💡 Bugünün Kelimesi: "MERAK"</h3>
+                <p>Merak, öğrenmenin anahtarıdır. Yeni şeyler keşfetmek insanı hayata bağlar. Siz de merak edin, sorun, öğrenin!</p>
+                
+                <h3>📌 Serbest Alıştırma</h3>
+                <ul>
+                    <li>📝 Aşağıdaki kelimelerle bir cümle kurun: <strong>güzel, kitap, okumak</strong></li>
+                    <li>🎤 "Hayalinizdeki tatil" konusunda 3-5 cümle yazın</li>
+                </ul>
+                <p style="font-size:0.85rem; color:#888; margin-top:15px;">✅ Bu alıştırmalar herkese açıktır. Testlere girmek için sağ taraftan giriş yapın.</p>
+            </div>
+        </div>
+
+        <!-- SAĞ TARAF: GİRİŞ FORMU -->
+        <div class="card">
+            <h2>🔐 Testlere Giriş</h2>
+            <div class="login-box">
+                <h3>Okuma ve Dinleme Testleri</h3>
+                <p style="margin-bottom: 15px; color:#666;">Öğrenci kaydınız varsa giriş yapın.</p>
+                <div class="input-group">
+                    <label>👤 Kullanıcı Adı</label>
+                    <input type="text" id="username" placeholder="Kullanıcı adınız">
+                </div>
+                <div class="input-group">
+                    <label>🔒 Şifre</label>
+                    <input type="password" id="password" placeholder="Şifreniz">
+                </div>
+                <button onclick="checkLogin()">Testlere Giriş Yap</button>
+                <div class="error" id="errorMsg"></div>
+                <div class="loading" id="loadingMsg">🔍 Kontrol ediliyor...</div>
+                <div class="divider"></div>
+                <p style="font-size:0.8rem; color:#888;">Öğrenci kaydınız yoksa <a href="#" style="color:#F5C842;">iletişime geçin</a></p>
+                <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">📱 Telegram Kanalımız</a>
+            </div>
+        </div>
     </div>
-    <div class="input-group">
-        <label>🔒 Şifre</label>
-        <input type="password" id="password" placeholder="Şifreniz">
+
+    <div class="footer">
+        HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM • Tüm içerikler ücretsizdir. Testler kayıtlı öğrenciler içindir.
     </div>
-    <button onclick="checkLogin()">Giriş Yap</button>
-    <div class="error" id="errorMsg"></div>
-    <div class="loading" id="loadingMsg">🔍 Kontrol ediliyor...</div>
-    <div class="expiry-info">💡 Şifrelerin geçerlilik süresi vardır. Süresi dolan şifrelerle giriş yapılamaz.</div>
 </div>
 
 <script>
@@ -166,14 +303,13 @@ async function checkLogin() {
         return;
     }
     
-    // Giriş başarılı: kullanıcı adını sessionStorage'a kaydet ve menüye yönlendir
+    // Giriş başarılı
     sessionStorage.setItem('loggedInUser', username);
     window.location.href = 'menu.html';
 }
 
 window.onload = function() {
     fetchUserList();
-    // Eğer zaten giriş yapılmışsa direkt menüye yönlendir
     if (sessionStorage.getItem('loggedInUser')) {
         window.location.href = 'menu.html';
     }
@@ -181,9 +317,3 @@ window.onload = function() {
 </script>
 </body>
 </html>
-window.onload = function() {
-    fetchUserList();
-    if (sessionStorage.getItem('loggedInUser')) {
-        window.location.href = 'menu.html';
-    }
-};
