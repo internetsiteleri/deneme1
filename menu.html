@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Merkezi - Hamza Hoca</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 2.5rem; color: #F5C842; margin-bottom: 10px; }
+        .header p { color: rgba(255,255,255,0.8); font-size: 1.1rem; }
+        .user-info {
+            text-align: right;
+            color: #F5C842;
+            margin-bottom: 20px;
+        }
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #F5C842;
+            color: #F5C842;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            display: inline-block;
+        }
+        .okuma h2 { color: #2c7da0; border-bottom-color: #2c7da0; }
+        .dinleme h2 { color: #2a9d8f; border-bottom-color: #2a9d8f; }
+        .kartlar h2 { color: #F5C842; border-bottom-color: #F5C842; }
+        .test-listesi { list-style: none; margin-top: 20px; }
+        .test-listesi li { margin-bottom: 12px; }
+        .test-listesi a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        .test-listesi a:hover { background: #e9ecef; transform: translateX(5px); }
+        .test-adi { display: flex; align-items: center; gap: 12px; }
+        .test-badge { background: #6c757d; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-info">
+            👤 <span id="usernameDisplay"></span>
+            <button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+        </div>
+        <div class="header">
+            <h1>📚 TÜRKÇE TEST MERKEZİ</h1>
+            <p>HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM</p>
+        </div>
+
+        <div class="card kartlar">
+            <h2>📇 ÖĞRENME KARTLARI</h2>
+            <ul class="test-listesi">
+                <li><a href="kartlar.html"><span class="test-adi"><span class="icon">🃟</span> Selamlaşma Kartları</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+            </ul>
+        </div>
+
+        <div class="card okuma">
+            <h2>📖 OKUMA TESTLERİ</h2>
+            <ul class="test-listesi">
+                <li><a href="okuma1.html"><span class="test-adi"><span class="icon">📄</span> Okuma Testi 1</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+                <li><a href="okuma2.html"><span class="test-adi"><span class="icon">📄</span> Okuma Testi 2</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+                <li><a href="okuma3.html"><span class="test-adi"><span class="icon">📄</span> Okuma Testi 3</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+            </ul>
+        </div>
+
+        <div class="card dinleme">
+            <h2>🎧 DİNLEME TESTLERİ</h2>
+            <ul class="test-listesi">
+                <li><a href="dinleme1.html"><span class="test-adi"><span class="icon">🎵</span> Dinleme Testi 1</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+                <li><a href="dinleme2.html"><span class="test-adi"><span class="icon">🎵</span> Dinleme Testi 2</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+                <li><a href="dinleme3.html"><span class="test-adi"><span class="icon">🎵</span> Dinleme Testi 3</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const loggedInUser = sessionStorage.getItem('loggedInUser');
+        if (!loggedInUser) {
+            window.location.href = 'index.html';
+        }
+        document.getElementById('usernameDisplay').textContent = loggedInUser;
+
+        function logout() {
+            sessionStorage.removeItem('loggedInUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
