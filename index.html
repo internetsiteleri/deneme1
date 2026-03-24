@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
@@ -30,13 +30,13 @@
 
         .header h1 {
             font-size: 2.5rem;
-            color: white;
+            color: #F5C842;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
 
         .header p {
-            color: rgba(255,255,255,0.9);
+            color: rgba(255,255,255,0.8);
             font-size: 1.1rem;
         }
 
@@ -69,6 +69,11 @@
         .dinleme h2 {
             color: #2a9d8f;
             border-bottom-color: #2a9d8f;
+        }
+
+        .kartlar h2 {
+            color: #F5C842;
+            border-bottom-color: #F5C842;
         }
 
         .test-listesi {
@@ -120,13 +125,8 @@
         .ekle-notu {
             text-align: center;
             margin-top: 30px;
-            color: rgba(255,255,255,0.7);
+            color: rgba(255,255,255,0.6);
             font-size: 0.9rem;
-        }
-
-        .ekle-notu a {
-            color: white;
-            text-decoration: underline;
         }
 
         @media (max-width: 600px) {
@@ -141,6 +141,22 @@
         <div class="header">
             <h1>📚 TÜRKÇE TEST MERKEZİ</h1>
             <p>HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM</p>
+        </div>
+
+        <!-- ÖĞRENME KARTLARI (YENİ) -->
+        <div class="card kartlar">
+            <h2>📇 ÖĞRENME KARTLARI</h2>
+            <ul class="test-listesi">
+                <li>
+                    <a href="kartlar.html">
+                        <span class="test-adi">
+                            <span class="icon">🃟</span>
+                            Selamlaşma Kartları
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+            </ul>
         </div>
 
         <!-- OKUMA TESTLERİ -->
