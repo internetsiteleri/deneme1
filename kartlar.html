@@ -7,323 +7,200 @@
     }
 </script>
 <meta charset="UTF-8">
-... (devam eden kod)<script>
-    if (!sessionStorage.getItem('loggedInUser')) {
-        window.location.href = 'index.html';
-    }
-</script><!DOCTYPE html>
-<html lang="tr">
-<head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giriş - Hamza Hoca</title>
+<title>Öğrenme Kartları - Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-    .login-container, .test-container {
-        background: white;
-        border-radius: 24px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        padding: 40px 32px;
-        max-width: 450px;
-        width: 100%;
-        text-align: center;
-    }
-    .test-container {
-        max-width: 1200px;
-        display: none;
-        padding: 20px;
-        background: transparent;
-        box-shadow: none;
-    }
-    .icon {
-        font-size: 64px;
-        margin-bottom: 20px;
-    }
-    h1 {
-        font-size: 28px;
-        color: #333;
-        margin-bottom: 12px;
-    }
-    .login-container p {
-        color: #666;
-        margin-bottom: 28px;
-    }
-    .input-group {
-        margin-bottom: 20px;
-        text-align: left;
-    }
-    .input-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 600;
-        color: #333;
-    }
-    input {
-        width: 100%;
-        padding: 14px 18px;
-        font-size: 16px;
-        border: 2px solid #e0e0e0;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-    }
-    input:focus {
-        outline: none;
-        border-color: #F5C842;
-        box-shadow: 0 0 0 3px rgba(245,200,66,0.2);
-    }
-    button {
-        background: linear-gradient(135deg, #F5C842, #C9960A);
-        color: #0D1B2A;
-        border: none;
-        padding: 14px 28px;
-        font-size: 16px;
-        font-weight: 700;
-        border-radius: 40px;
-        cursor: pointer;
-        transition: all 0.2s;
-        width: 100%;
-    }
-    button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(245,200,66,0.4);
-    }
-    .error {
-        color: #e74c3c;
-        margin-top: 16px;
-        font-size: 14px;
-        display: none;
-        background: #fee;
-        padding: 10px;
-        border-radius: 8px;
-    }
-    .loading {
-        display: none;
-        margin-top: 16px;
-        color: #F5C842;
-    }
-    .back-btn {
-        background: transparent;
-        border: 2px solid #F5C842;
-        color: #F5C842;
-        margin-top: 20px;
-        width: auto;
-        padding: 10px 24px;
-    }
-    .back-btn:hover {
-        background: #F5C842;
-        color: #0D1B2A;
-    }
-    .test-header {
-        margin-bottom: 20px;
-    }
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9960A;
+    --bg: #0D1B2A;
+    --text: #F0EAD6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header { text-align: center; padding: 2.5rem 1rem 1.2rem; }
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 0.9rem;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #F5C842 0%, #FFF3A3 50%, #C9960A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .stars { text-align:center; font-size:1rem; opacity:.35; margin:.5rem 0; }
+  .divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0.8rem auto;
+  }
+  header p { color: rgba(240,234,214,0.42); font-size:.82rem; }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 1.1rem;
+    padding: 0 1.5rem 3.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .card-wrap {
+    height: 130px;
+    cursor: pointer;
+    perspective: 1000px;
+  }
+  .card-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  .card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute;
+    top:0; left:0; width:100%; height:100%;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    padding: 1rem;
+    border: 1.5px solid rgba(245,200,66,0.15);
+    box-shadow: 0 6px 24px rgba(0,0,0,.4);
+    backface-visibility: hidden;
+  }
+  .card-front { background: linear-gradient(145deg, #1E3552, #122133); }
+  .card-back {
+    background: linear-gradient(145deg, #103828, #071E12);
+    transform: rotateY(180deg);
+  }
+  .card-word { font-size: 1rem; font-weight: 800; text-align: center; }
+  .card-front .card-word { color: #FFF3A3; }
+  .card-back .card-word { color: #7EFFF5; }
+  .flip-hint {
+    position: absolute; bottom: 8px;
+    font-size: .55rem; opacity: .2;
+  }
+  .counter {
+    position: absolute;
+    top: 9px; left: 12px;
+    font-size: .58rem; font-weight: 800;
+    opacity: .3;
+  }
+  .telegram-section { text-align: center; padding: 0.5rem 1rem 2rem; }
+  .tg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    padding: 0.65rem 1.5rem;
+    border-radius: 50px;
+  }
+  .logout-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #F5C842;
+    color: #F5C842;
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 100;
+  }
+  .logout-btn:hover { background: #F5C842; color: #0D1B2A; }
 </style>
 </head>
 <body>
 
-<!-- GİRİŞ EKRANI -->
-<div class="login-container" id="loginContainer">
-    <div class="icon">🔐</div>
-    <h1>Teste Giriş</h1>
-    <p>Lütfen size verilen kullanıcı adı ve şifre ile giriş yapın.</p>
-    <div class="input-group">
-        <label>👤 Kullanıcı Adı</label>
-        <input type="text" id="username" placeholder="Kullanıcı adınız" autocomplete="off">
-    </div>
-    <div class="input-group">
-        <label>🔒 Şifre</label>
-        <input type="password" id="password" placeholder="Şifreniz">
-    </div>
-    <button onclick="checkLogin()">Giriş Yap</button>
-    <div class="error" id="errorMsg">Kullanıcı adı veya şifre hatalı!</div>
-    <div class="loading" id="loadingMsg">🔍 Kontrol ediliyor...</div>
+<button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+
+<header>
+  <div class="header-badge">✦ Öğrenme Kartları ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Karta tıklayın → Çeviri görün &nbsp;|&nbsp; Kartga bosing → Tarjimani ko'ring</p>
+</header>
+
+<div class="telegram-section">
+  <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">📱 Kanala Katıl</a>
 </div>
 
-<!-- TEST İÇERİĞİ (KARTLAR) -->
-<div class="test-container" id="testContainer">
-    <div class="test-header">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
-            <div>
-                <div style="background: linear-gradient(135deg, #F5C842, #C9960A); display: inline-block; padding: 4px 16px; border-radius: 30px; font-size: 12px; font-weight: bold; color: #0D1B2A;">✦ Öğrenme Kartları ✦</div>
-                <h1 style="color: #F5C842; font-size: 24px; margin-top: 10px;">HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
-            </div>
-            <button class="back-btn" onclick="logout()" style="margin-top: 0;">Çıkış Yap</button>
-        </div>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div style="color: #F5C842; font-size: 20px;">★ ★ ★ ★ ★</div>
-            <div style="width: 80px; height: 2px; background: linear-gradient(90deg, transparent, #F5C842, transparent); margin: 10px auto;"></div>
-            <p style="color: rgba(240,234,214,0.6);">Karta tıklayın → Çeviri görün &nbsp;|&nbsp; Kartga bosing → Tarjimani ko'ring</p>
-        </div>
-    </div>
-
-    <!-- TELEGRAM -->
-    <div style="text-align: center; margin-bottom: 30px;">
-        <div style="display: inline-flex; align-items: center; gap: 1rem; background: rgba(22,32,50,0.85); border: 1.5px solid rgba(34,158,217,0.3); border-radius: 60px; padding: 0.75rem 1.5rem; flex-wrap: wrap; justify-content: center;">
-            <svg viewBox="0 0 48 48" width="44" height="44">
-                <circle cx="24" cy="24" r="24" fill="#229ED9"/>
-                <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
-            </svg>
-            <a href="https://t.me/TurkcheOzbekche" target="_blank" style="display: inline-flex; align-items: center; gap: 0.45rem; background: linear-gradient(135deg, #229ED9, #1A7FB0); color: #fff; text-decoration: none; font-weight: 800; font-size: 0.92rem; padding: 0.65rem 1.5rem; border-radius: 50px;">Kanala Katıl</a>
-        </div>
-    </div>
-
-    <div style="text-align: center; margin: 20px 0 10px;">
-        <div style="font-family: 'Playfair Display', serif; font-size: 1rem; color: #F5C842; letter-spacing: 2px;">Salomlashish iboralari • Selamlaşma Cümleleri</div>
-    </div>
-
-    <div id="cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.1rem; padding: 0 0 3.5rem; max-width: 1100px; margin: 0 auto;"></div>
-</div>
+<div class="cards-grid" id="cards-grid"></div>
 
 <script>
-// Google Sheets ID'niz
-const SHEET_ID = "11adJGi08o_bXfyzWuZoFVMiFOpS7c_LuM3ypeSkxHcU";
-const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&tq=select%20*&gid=0`;
-
-let userList = [];
-let cardsLoaded = false;
-
-// Kartlar için kelime listesi
 const phrases = [
-    { uz: "Salom", tr: "Merhaba" },
-    { uz: "Mening ismim…", tr: "Benim adım…" },
-    { uz: "Mamnun bo'ldim", tr: "Memnun oldum" },
-    { uz: "Men ham mamnun bo'ldim", tr: "Ben de memnun oldum" },
-    { uz: "Xayrli tong", tr: "Günaydın" },
-    { uz: "Xayrli kun", tr: "İyi günler" },
-    { uz: "Xayrli oqshom", tr: "İyi akşamlar" },
-    { uz: "Xayrli tun", tr: "İyi geceler" },
-    { uz: "Sizning ismingiz nima?", tr: "Sizin adınız ne?" },
-    { uz: "Qandaysiz?", tr: "Nasılsınız?" },
-    { uz: "Raxmat, yaxshiman", tr: "Teşekkür ederim, iyiyim" },
-    { uz: "Men ham yaxshiman", tr: "Ben de iyiyim" },
-    { uz: "Ismingiz nima?", tr: "Adınız ne?" },
-    { uz: "Tanishtiray…", tr: "Tanıştırayım…" },
-    { uz: "Tanishganimizdan mamnun bo'ldim", tr: "Tanıştığımıza memnun oldum" },
-    { uz: "Ko'rishguncha", tr: "Görüşmek üzere" },
-    { uz: "Xayr", tr: "Güle güle" },
-    { uz: "Yaxshi qoling", tr: "Hoşça kal" },
-    { uz: "Xush kelibsiz", tr: "Hoş geldiniz" },
-    { uz: "Xush ko'rdik", tr: "Hoş bulduk" },
-    { uz: "Alvido!", tr: "Elveda!" }
+  { uz: "Salom", tr: "Merhaba" },
+  { uz: "Mening ismim…", tr: "Benim adım…" },
+  { uz: "Mamnun bo'ldim", tr: "Memnun oldum" },
+  { uz: "Men ham mamnun bo'ldim", tr: "Ben de memnun oldum" },
+  { uz: "Xayrli tong", tr: "Günaydın" },
+  { uz: "Xayrli kun", tr: "İyi günler" },
+  { uz: "Xayrli oqshom", tr: "İyi akşamlar" },
+  { uz: "Xayrli tun", tr: "İyi geceler" },
+  { uz: "Sizning ismingiz nima?", tr: "Sizin adınız ne?" },
+  { uz: "Qandaysiz?", tr: "Nasılsınız?" },
+  { uz: "Raxmat, yaxshiman", tr: "Teşekkür ederim, iyiyim" },
+  { uz: "Men ham yaxshiman", tr: "Ben de iyiyim" },
+  { uz: "Ismingiz nima?", tr: "Adınız ne?" },
+  { uz: "Tanishtiray…", tr: "Tanıştırayım…" },
+  { uz: "Tanishganimizdan mamnun bo'ldim", tr: "Tanıştığımıza memnun oldum" },
+  { uz: "Ko'rishguncha", tr: "Görüşmek üzere" },
+  { uz: "Xayr", tr: "Güle güle" },
+  { uz: "Yaxshi qoling", tr: "Hoşça kal" },
+  { uz: "Xush kelibsiz", tr: "Hoş geldiniz" },
+  { uz: "Xush ko'rdik", tr: "Hoş bulduk" },
+  { uz: "Alvido!", tr: "Elveda!" },
 ];
 
-// Kartları oluştur
-function loadCards() {
-    if (cardsLoaded) return;
-    const grid = document.getElementById('cards-grid');
-    grid.innerHTML = '';
-    
-    phrases.forEach((item, i) => {
-        const wrap = document.createElement('div');
-        wrap.className = 'card-wrap';
-        wrap.style.cssText = 'height: 130px; cursor: pointer; perspective: 1000px;';
-        wrap.innerHTML = `
-            <div style="position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d;" class="card-inner">
-                <div style="position: absolute; top:0; left:0; width:100%; height:100%; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; padding: 1rem; border: 1.5px solid rgba(245,200,66,0.15); box-shadow: 0 6px 24px rgba(0,0,0,.4); background: linear-gradient(145deg, #1E3552, #122133); backface-visibility: hidden;" class="card-face card-front">
-                    <span style="position: absolute; top: 9px; left: 12px; font-size: .58rem; font-weight: 800; opacity: .3;">${String(i+1).padStart(2,'0')}</span>
-                    <div style="font-size: 1rem; font-weight: 800; text-align: center; color: #FFF3A3;">${item.uz}</div>
-                    <span style="position: absolute; bottom: 8px; font-size: .55rem; opacity: .2;">bosing / tıklayın</span>
-                </div>
-                <div style="position: absolute; top:0; left:0; width:100%; height:100%; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .3rem; padding: 1rem; border: 1.5px solid rgba(58,175,169,.25); box-shadow: 0 6px 24px rgba(0,0,0,.4); background: linear-gradient(145deg, #103828, #071E12); transform: rotateY(180deg); backface-visibility: hidden;" class="card-face card-back">
-                    <span style="position: absolute; top: 9px; left: 12px; font-size: .58rem; font-weight: 800; opacity: .3;">${String(i+1).padStart(2,'0')}</span>
-                    <div style="font-size: .58rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; opacity: .35;">Türkçe</div>
-                    <div style="font-size: 1rem; font-weight: 800; text-align: center; color: #7EFFF5;">${item.tr}</div>
-                    <span style="position: absolute; bottom: 8px; font-size: .55rem; opacity: .2;">bosing / tıklayın</span>
-                </div>
-            </div>
-        `;
-        const inner = wrap.querySelector('.card-inner');
-        wrap.addEventListener('click', () => {
-            inner.style.transform = inner.style.transform === 'rotateY(180deg)' ? 'rotateY(0deg)' : 'rotateY(180deg)';
-        });
-        grid.appendChild(wrap);
-    });
-    cardsLoaded = true;
-}
+const grid = document.getElementById('cards-grid');
 
-// Google Sheets'ten kullanıcı listesini çek
-async function fetchUserList() {
-    try {
-        const response = await fetch(SHEET_URL);
-        const text = await response.text();
-        const jsonText = text.substring(text.indexOf('(') + 1, text.lastIndexOf(')'));
-        const data = JSON.parse(jsonText);
-        const rows = data.table.rows;
-        userList = [];
-        for (let i = 1; i < rows.length; i++) {
-            const row = rows[i];
-            if (row.c && row.c[0] && row.c[1]) {
-                userList.push({
-                    username: row.c[0].v?.toString().toLowerCase().trim(),
-                    password: row.c[1].v?.toString().trim()
-                });
-            }
-        }
-        console.log("Kullanıcı listesi yüklendi:", userList.length + " kayıt");
-    } catch (error) {
-        console.error("Google Sheets yüklenirken hata:", error);
-    }
-}
-
-// Giriş kontrolü
-async function checkLogin() {
-    const username = document.getElementById('username').value.trim().toLowerCase();
-    const password = document.getElementById('password').value.trim();
-    const errorDiv = document.getElementById('errorMsg');
-    const loadingDiv = document.getElementById('loadingMsg');
-    
-    if (!username || !password) {
-        errorDiv.style.display = 'block';
-        errorDiv.textContent = 'Lütfen kullanıcı adı ve şifre girin!';
-        return;
-    }
-    
-    errorDiv.style.display = 'none';
-    loadingDiv.style.display = 'block';
-    
-    if (userList.length === 0) {
-        await fetchUserList();
-    }
-    
-    const user = userList.find(u => u.username === username && u.password === password);
-    
-    loadingDiv.style.display = 'none';
-    
-    if (user) {
-        document.getElementById('loginContainer').style.display = 'none';
-        document.getElementById('testContainer').style.display = 'block';
-        loadCards();
-    } else {
-        errorDiv.style.display = 'block';
-        errorDiv.textContent = 'Kullanıcı adı veya şifre hatalı!';
-        document.getElementById('password').value = '';
-    }
-}
+phrases.forEach((item, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'card-wrap';
+  wrap.innerHTML = `
+    <div class="card-inner">
+      <div class="card-face card-front">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+        <div class="card-word">${item.uz}</div>
+        <span class="flip-hint">bosing / tıklayın</span>
+      </div>
+      <div class="card-face card-back">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+        <div class="card-word">${item.tr}</div>
+        <span class="flip-hint">bosing / tıklayın</span>
+      </div>
+    </div>`;
+  wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+  grid.appendChild(wrap);
+});
 
 function logout() {
-    document.getElementById('loginContainer').style.display = 'flex';
-    document.getElementById('testContainer').style.display = 'none';
-    document.getElementById('username').value = '';
-    document.getElementById('password').value = '';
-    document.getElementById('errorMsg').style.display = 'none';
+    sessionStorage.removeItem('loggedInUser');
+    window.location.href = 'index.html';
 }
-
-// Sayfa yüklendiğinde kullanıcı listesini çek
-window.onload = function() {
-    fetchUserList();
-};
 </script>
 </body>
 </html>
