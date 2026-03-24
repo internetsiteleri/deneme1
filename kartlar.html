@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<script>
-    if (!sessionStorage.getItem('loggedInUser')) {
-        window.location.href = 'index.html';
-    }
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Öğrenme Kartları - Hamza Hoca</title>
@@ -116,7 +111,7 @@
     padding: 0.65rem 1.5rem;
     border-radius: 50px;
   }
-  .logout-btn {
+  .home-btn {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -127,14 +122,15 @@
     border-radius: 30px;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
     z-index: 100;
   }
-  .logout-btn:hover { background: #F5C842; color: #0D1B2A; }
+  .home-btn:hover { background: #F5C842; color: #0D1B2A; }
 </style>
 </head>
 <body>
 
-<button class="logout-btn" onclick="logout()">Çıkış Yap</button>
+<a href="index.html" class="home-btn">🏠 Ana Sayfa</a>
 
 <header>
   <div class="header-badge">✦ Öğrenme Kartları ✦</div>
@@ -196,11 +192,6 @@ phrases.forEach((item, i) => {
   wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
   grid.appendChild(wrap);
 });
-
-function logout() {
-    sessionStorage.removeItem('loggedInUser');
-    window.location.href = 'index.html';
-}
 </script>
 </body>
 </html>
