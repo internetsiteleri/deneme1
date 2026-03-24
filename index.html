@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkçe Test Merkezi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            display: inline-block;
+        }
+
+        .okuma h2 {
+            color: #2c7da0;
+            border-bottom-color: #2c7da0;
+        }
+
+        .dinleme h2 {
+            color: #2a9d8f;
+            border-bottom-color: #2a9d8f;
+        }
+
+        .test-listesi {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .test-listesi li {
+            margin-bottom: 12px;
+        }
+
+        .test-listesi a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+
+        .test-listesi a:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .test-adi {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .test-adi .icon {
+            font-size: 1.4rem;
+        }
+
+        .test-badge {
+            background: #6c757d;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .ekle-notu {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        .ekle-notu a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 1.8rem; }
+            .card h2 { font-size: 1.4rem; }
+            .test-listesi a { flex-direction: column; align-items: flex-start; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 TÜRKÇE TEST MERKEZİ</h1>
+            <p>HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM</p>
+        </div>
+
+        <!-- OKUMA TESTLERİ -->
+        <div class="card okuma">
+            <h2>📖 OKUMA TESTLERİ</h2>
+            <ul class="test-listesi">
+                <li>
+                    <a href="okuma1.html">
+                        <span class="test-adi">
+                            <span class="icon">📄</span>
+                            Okuma Testi 1
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="okuma2.html">
+                        <span class="test-adi">
+                            <span class="icon">📄</span>
+                            Okuma Testi 2
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="okuma3.html">
+                        <span class="test-adi">
+                            <span class="icon">📄</span>
+                            Okuma Testi 3
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- DİNLEME TESTLERİ -->
+        <div class="card dinleme">
+            <h2>🎧 DİNLEME TESTLERİ</h2>
+            <ul class="test-listesi">
+                <li>
+                    <a href="dinleme1.html">
+                        <span class="test-adi">
+                            <span class="icon">🎵</span>
+                            Dinleme Testi 1
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="dinleme2.html">
+                        <span class="test-adi">
+                            <span class="icon">🎵</span>
+                            Dinleme Testi 2
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="dinleme3.html">
+                        <span class="test-adi">
+                            <span class="icon">🎵</span>
+                            Dinleme Testi 3
+                        </span>
+                        <span class="test-badge">🔒 Şifreli</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="ekle-notu">
+            💡 Yeni test eklemek için: <strong>index.html</strong> dosyasını düzenleyip listeye yeni satır ekleyin.<br>
+            📧 Sorularınız için: Telegram kanalımıza katılın
+        </div>
+    </div>
+</body>
+</html>
