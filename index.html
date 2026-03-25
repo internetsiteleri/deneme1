@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -54,67 +54,76 @@
             margin: 20px auto;
         }
 
-        /* TABLO STİLİ */
-        .menu-table {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 900px) {
-            .menu-table {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 500px) {
-            .menu-table {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .menu-card {
+        /* MENÜ BUTONLARI */
+        .menu-btn {
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
+            margin-bottom: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .menu-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-header {
+        .menu-btn-header {
             background: #1a2332;
             color: #F5C842;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.2rem;
+            padding: 18px 24px;
+            font-size: 1.3rem;
             font-weight: bold;
-            border-bottom: 3px solid #F5C842;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
         }
 
-        .card-content {
-            padding: 15px;
+        .menu-btn-header:hover {
+            background: #2a3a4a;
         }
 
-        .card-content ul {
+        .menu-btn-header .icon {
+            font-size: 1.5rem;
+        }
+
+        .menu-btn-header .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .menu-btn-header.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .menu-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+        }
+
+        .menu-content.show {
+            max-height: 500px;
+        }
+
+        .menu-items {
+            padding: 16px 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .menu-items ul {
             list-style: none;
         }
 
-        .card-content li {
+        .menu-items li {
             margin-bottom: 12px;
         }
 
-        .card-content a {
+        .menu-items a {
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 12px 18px;
+            border-radius: 12px;
             text-decoration: none;
             color: #333;
             font-weight: 500;
@@ -123,7 +132,7 @@
             cursor: pointer;
         }
 
-        .card-content a:hover {
+        .menu-items a:hover {
             background: #e9ecef;
             transform: translateX(5px);
         }
@@ -223,14 +232,17 @@
         <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
         <div class="stars">★ ★ ★ ★ ★</div>
         <div class="divider"></div>
-        <p>Kelime kartları herkese açık • Testler için giriş yapın</p>
+        <p>Başlıklara tıklayarak içerikleri görün</p>
     </div>
 
-    <div class="menu-table">
-        <!-- OKUMA TESTLERİ -->
-        <div class="menu-card">
-            <div class="card-header">📖 OKUMA TESTLERİ</div>
-            <div class="card-content">
+    <!-- OKUMA TESTLERİ -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">📖</span> OKUMA TESTLERİ</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="requireLogin('okuma1.html')"><span class="test-adi">📄 Okuma Testi 1</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
                     <li><a onclick="requireLogin('okuma2.html')"><span class="test-adi">📄 Okuma Testi 2</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
@@ -238,11 +250,16 @@
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- A1 KELİME KARTLARI -->
-        <div class="menu-card">
-            <div class="card-header">🃟 A1 KELİME KARTLARI</div>
-            <div class="card-content">
+    <!-- A1 KELİME KARTLARI -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">🃟</span> A1 KELİME KARTLARI</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a href="kartlar.html"><span class="test-adi">🇹🇷 Selamlaşma Kartları</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🏠 Günlük Hayat</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
@@ -250,11 +267,16 @@
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- B2/C1 KELİME KARTLARI -->
-        <div class="menu-card">
-            <div class="card-header">📚 B2/C1 KELİME KARTLARI</div>
-            <div class="card-content">
+    <!-- B2/C1 KELİME KARTLARI -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">📚</span> B2/C1 KELİME KARTLARI</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📖 Akademik Kelimeler</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">💼 İş Dünyası</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
@@ -262,11 +284,16 @@
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- DİNLEME TESTLERİ -->
-        <div class="menu-card">
-            <div class="card-header">🎧 DİNLEME TESTLERİ</div>
-            <div class="card-content">
+    <!-- DİNLEME TESTLERİ -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">🎧</span> DİNLEME TESTLERİ</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="requireLogin('dinleme1.html')"><span class="test-adi">🎵 Dinleme Testi 1</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
                     <li><a onclick="requireLogin('dinleme2.html')"><span class="test-adi">🎵 Dinleme Testi 2</span><span class="test-badge">🔒 Giriş Gerekli</span></a></li>
@@ -276,45 +303,62 @@
         </div>
     </div>
 
-    <!-- İKİNCİ SATIR: DİĞER İÇERİKLER -->
-    <div class="menu-table">
-        <!-- OKUMA ALIŞTIRMALARI -->
-        <div class="menu-card">
-            <div class="card-header">✍️ OKUMA ALIŞTIRMALARI</div>
-            <div class="card-content">
+    <!-- OKUMA ALIŞTIRMALARI -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">✍️</span> OKUMA ALIŞTIRMALARI</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📝 Boşluk Doldurma</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🔄 Eşleştirme</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- DİNLEME ALIŞTIRMALARI -->
-        <div class="menu-card">
-            <div class="card-header">🎤 DİNLEME ALIŞTIRMALARI</div>
-            <div class="card-content">
+    <!-- DİNLEME ALIŞTIRMALARI -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">🎤</span> DİNLEME ALIŞTIRMALARI</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🎧 Diyalog Tamamlama</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📝 Dikte Çalışması</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- YAZMA SORULARI/CEVAPLARI -->
-        <div class="menu-card">
-            <div class="card-header">📝 YAZMA SORULARI</div>
-            <div class="card-content">
+    <!-- YAZMA SORULARI/CEVAPLARI -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">📝</span> YAZMA SORULARI</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">✍️ Kompozisyon</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📧 Dilekçe Örnekleri</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                 </ul>
             </div>
         </div>
+    </div>
 
-        <!-- KONUŞMA SORULARI/CEVAPLARI -->
-        <div class="menu-card">
-            <div class="card-header">💬 KONUŞMA SORULARI</div>
-            <div class="card-content">
+    <!-- KONUŞMA SORULARI/CEVAPLARI -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">💬</span> KONUŞMA SORULARI</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🗣️ Günlük Konuşmalar</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🎭 Rol Yapma</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
@@ -323,11 +367,14 @@
         </div>
     </div>
 
-    <!-- ÜÇÜNCÜ SATIR: OKUMA METİNLERİ -->
-    <div class="menu-table">
-        <div class="menu-card">
-            <div class="card-header">📚 OKUMA METİNLERİ</div>
-            <div class="card-content">
+    <!-- OKUMA METİNLERİ -->
+    <div class="menu-btn">
+        <div class="menu-btn-header" onclick="toggleMenu(this)">
+            <span><span class="icon">📚</span> OKUMA METİNLERİ</span>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="menu-content">
+            <div class="menu-items">
                 <ul>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🌍 Küresel Isınma</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
                     <li><a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🤖 Yapay Zeka</span><span class="test-badge free-badge">✅ Ücretsiz</span></a></li>
@@ -338,7 +385,7 @@
     </div>
 
     <div class="footer">
-        💡 Kelime kartları ve alıştırmalar herkese açıktır. Okuma ve dinleme testleri için giriş yapmanız gereklidir.
+        💡 Başlıklara tıklayarak içerikleri açın. Kelime kartları ve alıştırmalar herkese açıktır. Testler için giriş yapın.
     </div>
 </div>
 
@@ -445,6 +492,12 @@ async function modalLogin() {
 function closeModal() {
     document.getElementById('loginModal').style.display = 'none';
     pendingUrl = null;
+}
+
+function toggleMenu(btn) {
+    btn.classList.toggle('active');
+    const content = btn.nextElementSibling;
+    content.classList.toggle('show');
 }
 
 window.onload = function() {
