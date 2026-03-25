@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Türkçe Test Merkezi - Hamza Hoca</title>
+    <title>Hamza Hoca - Türkçe Öğreniyorum</title>
     <style>
         * {
             margin: 0;
@@ -37,6 +37,20 @@
         .header p {
             color: rgba(255,255,255,0.8);
             font-size: 1.1rem;
+        }
+
+        .stars {
+            color: #F5C842;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            margin: 10px 0;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #F5C842, transparent);
+            margin: 20px auto;
         }
 
         .card {
@@ -303,14 +317,12 @@
 </div>
 
 <script>
-// Google Sheets bağlantısı
 const SHEET_ID = "11adJGi08o_bXfyzWuZoFVMiFOpS7c_LuM3ypeSkxHcU";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
 
 let userList = [];
 let pendingUrl = null;
 
-// Kullanıcı listesini çek
 async function fetchUserList() {
     try {
         const response = await fetch(SHEET_URL);
@@ -334,7 +346,6 @@ async function fetchUserList() {
     }
 }
 
-// Süre kontrolü
 function isExpired(expiryDateStr) {
     if (!expiryDateStr || expiryDateStr === "") return false;
     const today = new Date();
@@ -344,9 +355,7 @@ function isExpired(expiryDateStr) {
     return today > expiryDate;
 }
 
-// Giriş gerektiren teste tıklandığında
 function requireLogin(url) {
-    // Önce oturum var mı kontrol et
     if (sessionStorage.getItem('loggedInUser')) {
         window.location.href = url;
     } else {
@@ -358,7 +367,6 @@ function requireLogin(url) {
     }
 }
 
-// Modal üzerinden giriş
 async function modalLogin() {
     const username = document.getElementById('modalUsername').value.trim().toLowerCase();
     const password = document.getElementById('modalPassword').value.trim();
@@ -388,7 +396,6 @@ async function modalLogin() {
         return;
     }
     
-    // Giriş başarılı
     sessionStorage.setItem('loggedInUser', username);
     closeModal();
     if (pendingUrl) {
@@ -401,7 +408,6 @@ function closeModal() {
     pendingUrl = null;
 }
 
-// Sayfa yüklendiğinde kullanıcı listesini çek
 window.onload = function() {
     fetchUserList();
 };
