@@ -18,7 +18,7 @@ exports.handler = async (event) => {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat-v3-0324:free',
+        model: 'deepseek/deepseek-chat:free',
         messages: [
           { role: 'system', content: 'Sen deneyimli bir Turkce ogretmenisin. YALNIZCA gecerli JSON dondur, baska hicbir sey yazma.' },
           { role: 'user', content: prompt }
