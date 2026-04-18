@@ -366,19 +366,14 @@ async function analyzeEssay(mode) {
     const response = await fetch('/.netlify/functions/api', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.1, maxOutputTokens: 3000 },
-        systemInstruction: { parts: [{ text: 'Sen deneyimli bir Turkce ogretmenisin. YALNIZCA gecerli JSON dondur.' }] }
-      })
+      body: JSON.stringify({ prompt })
     });
-    if (!response.ok) { const e = await response.json().catch(()=>({})); throw new Error(e?.error?.message || 'Sunucu hatasi: ' + response.status); }
     const data = await response.json();
-    if (data.error) throw new Error('Gemini hatasi: ' + (data.error.message || JSON.stringify(data.error)));
-    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-    if (!rawText) throw new Error('Gemini bos yanit dondu. Tam yanit: ' + JSON.stringify(data).slice(0, 300));
+    if (data.error) throw new Error(data.error.message || JSON.stringify(data.error));
+    const rawText = data.text || '';
+    if (!rawText) throw new Error('Bos yanit dondu.');
     const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('JSON bulunamadi. Gemini yaniti: ' + rawText.slice(0, 300));
+    if (!jsonMatch) throw new Error('JSON bulunamadi. Yanit: ' + rawText.slice(0, 300));
     let jsonStr = jsonMatch[0].replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
     const result = JSON.parse(jsonStr);
     cachedResult = result; cachedEssay = essay;
