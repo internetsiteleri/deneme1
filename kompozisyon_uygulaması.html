@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Hoca ile Türkçe Öğreniyorum</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy: #1a2236; --navy-light: #223050; --gold: #c9a227; --gold-light: #e0b83a; --white: #f5f0e8; --gray: #8a8fa0; --red: #e05252; --green: #4caf6a; }
+  body { font-family: 'Lato', sans-serif; background: #e8e6e0; color: var(--navy); min-height: 100vh; }
+  .hero { background: var(--navy); text-align: center; padding: 40px 20px 50px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.08) 0%, transparent 70%); pointer-events: none; }
+  .hero-badge { display: inline-block; background: var(--gold); color: #000; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; margin-bottom: 22px; font-weight: 700; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px, 6vw, 64px); font-weight: 900; color: var(--gold); line-height: 1.1; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+  .stars { color: var(--gold); font-size: 20px; letter-spacing: 4px; margin-bottom: 6px; }
+  .hero-divider { width: 50px; height: 3px; background: var(--gold); margin: 12px auto 22px; border-radius: 2px; }
+  .hero-sub { color: var(--white); font-size: 13px; font-weight: 300; letter-spacing: 0.5px; margin-bottom: 20px; }
+  .btn-join { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: #000; font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; padding: 10px 26px; border-radius: 4px; cursor: pointer; text-decoration: none; transition: background 0.2s; border: none; }
+  .btn-join:hover { background: var(--gold-light); }
+  .btn-join .tg-icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .card { background: #fff; border-radius: 4px; margin: 22px auto; max-width: 820px; padding: 28px 32px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+  .section-badge { display: inline-block; border: 1px solid var(--navy); color: var(--navy); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 18px; font-weight: 700; }
+  .login-title { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--navy); margin-bottom: 6px; }
+  .login-sub { font-size: 13px; color: var(--gray); margin-bottom: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--navy); display: block; margin-bottom: 8px; }
+  .form-input { width: 100%; border: 1.5px solid #ddd; border-radius: 4px; padding: 12px 14px; font-family: 'Lato', sans-serif; font-size: 14px; color: var(--navy); background: #fafafa; outline: none; transition: border-color 0.2s; }
+  .form-input:focus { border-color: var(--gold); background: #fff; }
+  .btn-login { width: 100%; background: var(--navy); color: var(--white); font-family: 'Lato', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 14px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+  .btn-login:hover { background: var(--navy-light); }
+  .login-error { background: #fff0f0; border: 1.5px solid var(--red); border-radius: 4px; padding: 12px 16px; font-size: 13px; color: #a00; font-weight: 600; margin-top: 14px; text-align: center; }
+  .login-expired { background: #fff8e1; border: 1.5px solid var(--gold); border-radius: 4px; padding: 16px; font-size: 14px; color: #7a5c00; font-weight: 600; margin-top: 14px; text-align: center; line-height: 1.7; }
+  .login-expired a { color: var(--gold); font-weight: 700; }
+  .selector-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--navy); margin-bottom: 6px; }
+  .selector-sub { font-size: 13px; color: var(--gray); margin-bottom: 22px; }
+  .question-list { list-style: none; padding: 0; }
+  .question-list li { padding: 16px 18px; border-left: 3px solid #e0e0e0; margin-bottom: 12px; cursor: pointer; border-radius: 0 4px 4px 0; transition: all 0.2s; font-size: 14px; color: var(--navy); background: #fafafa; line-height: 1.6; }
+  .question-list li:hover { border-left-color: var(--gold); background: #fffbf0; }
+  .question-list li.selected { border-left-color: var(--navy); background: #eef1f8; font-weight: 700; }
+  .btn-select { display: block; width: 100%; max-width: 300px; margin: 20px auto 0; background: var(--gold); color: #111; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 16px 30px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+  .btn-select:hover { background: var(--gold-light); }
+  .btn-select:disabled { background: #ccc; cursor: not-allowed; }
+  .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .selected-question-box { background: var(--navy); border-radius: 6px; padding: 20px 24px; color: var(--white); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+  .selected-question-box strong { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 8px; }
+  .comp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .comp-badge { display: inline-block; border: 1px solid var(--gold); color: var(--gold); font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; font-weight: 700; }
+  .word-count { font-size: 12px; color: var(--gray); font-weight: 700; }
+  .word-count span { color: var(--navy); }
+  .word-target { font-size: 12px; color: var(--gray); margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
+  textarea { width: 100%; border: 1px solid #ddd; border-radius: 4px; padding: 14px; font-family: 'Lato', sans-serif; font-size: 14px; color: var(--navy); resize: vertical; background: #fafafa; outline: none; transition: border-color 0.2s; }
+  textarea:focus { border-color: var(--gold); background: #fff; }
+  textarea::placeholder { color: #aaa; font-style: italic; }
+  .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+  .btn-gold { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 11px 22px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+  .btn-gold:hover { background: var(--gold-light); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--navy); font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 10px 22px; border: 1.5px solid #ccc; border-radius: 4px; cursor: pointer; transition: border-color 0.2s; }
+  .btn-outline:hover { border-color: var(--navy); }
+  .btn-navy { display: inline-flex; align-items: center; gap: 8px; background: var(--navy); color: var(--white); font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 11px 22px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+  .btn-navy:hover { background: var(--navy-light); }
+  .ai-warning { background: #fff8e1; border: 1.5px solid var(--gold); border-radius: 6px; padding: 14px 20px; font-size: 13px; color: #7a5c00; text-align: center; margin-bottom: 16px; font-weight: 600; }
+  .score-card { background: var(--navy); border-radius: 8px; padding: 30px; text-align: center; color: var(--white); margin-bottom: 20px; }
+  .score-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .score-num { font-family: 'Playfair Display', serif; font-size: 72px; color: var(--gold); line-height: 1; }
+  .score-denom { font-size: 18px; color: var(--gray); margin-top: 4px; }
+  .score-level { font-size: 14px; color: var(--white); margin-top: 12px; font-weight: 300; letter-spacing: 1px; }
+  .error-section { background: #fff; border-radius: 6px; padding: 22px 26px; margin-bottom: 16px; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+  .error-section-title { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--navy); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--gold); }
+  .error-item { margin-bottom: 14px; padding: 12px 14px; border-radius: 6px; }
+  .error-item.wrong { background: #fff0f0; border-left: 4px solid var(--red); }
+  .error-item.correct { background: #f0faf3; border-left: 4px solid var(--green); }
+  .error-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; margin-bottom: 6px; }
+  .error-item.wrong .error-label { color: var(--red); }
+  .error-item.correct .error-label { color: var(--green); }
+  .error-text { font-size: 14px; color: var(--navy); line-height: 1.6; }
+  .wrong-word { color: var(--red); font-weight: 700; text-decoration: underline dotted; }
+  .correct-word { color: var(--green); font-weight: 700; }
+  .more-errors-note { font-size: 12px; color: var(--gray); font-style: italic; margin-top: 12px; padding: 8px 12px; background: #f5f5f5; border-radius: 4px; border-left: 3px solid var(--gold); }
+  .loading { text-align: center; padding: 40px; color: var(--navy); }
+  .spinner { width: 36px; height: 36px; border: 3px solid #ddd; border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .admin-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 4px; }
+  .admin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .admin-table th { background: var(--navy); color: var(--gold); padding: 10px 14px; text-align: left; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+  .admin-table td { padding: 10px 14px; border-bottom: 1px solid #eee; color: var(--navy); }
+  .admin-table tr:hover td { background: #fafafa; }
+  .status-active { color: var(--green); font-weight: 700; }
+  .status-expired { color: var(--red); font-weight: 700; }
+  .status-unlimited { color: var(--gold); font-weight: 700; }
+  .admin-form { background: #f9f9f9; border-radius: 6px; padding: 20px; margin-bottom: 20px; border: 1px solid #eee; }
+  .admin-form-title { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .admin-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .admin-form select { width: 100%; border: 1.5px solid #ddd; border-radius: 4px; padding: 10px 12px; font-family: 'Lato', sans-serif; font-size: 13px; color: var(--navy); background: #fff; outline: none; }
+  .sheets-info { background: #e8f5e9; border: 1.5px solid var(--green); border-radius: 6px; padding: 14px 18px; font-size: 12px; color: #2e7d32; margin-bottom: 20px; line-height: 1.8; }
+  .sheets-url-input { width: 100%; border: 1.5px solid #ddd; border-radius: 4px; padding: 10px 12px; font-family: 'Lato', sans-serif; font-size: 13px; margin-top: 8px; outline: none; }
+  .sheets-url-input:focus { border-color: var(--gold); }
+  .hidden { display: none; }
+  @media (max-width: 600px) { .card { padding: 20px 16px; margin: 14px 12px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">✦ Kompozisyon Pratiği ✦</div>
+  <h1>Hamza Hoca İle<br>Türkçe Öğreniyorum</h1>
+  <div class="stars">★★★★★</div>
+  <div class="hero-divider"></div>
+  <p class="hero-sub">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</p>
+  <a class="btn-join" href="https://t.me/TurkcheOzbekche" target="_blank">
+    <svg class="tg-icon" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="tgG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#2AABEE"/><stop offset="100%" stop-color="#229ED9"/></linearGradient></defs>
+      <circle cx="120" cy="120" r="120" fill="url(#tgG)"/>
+      <path d="M54 117.5l131-50.5c6-2.3 11 1.4 9 10l-22.3 105c-1.6 7.3-6 9-12.2 5.6l-33-24.3-15.9 15.3c-1.8 1.8-3.3 3.3-6.7 3.3l2.4-33.7 61.2-55.3c2.7-2.4-.6-3.7-4.1-1.3L76.8 139.5 45.2 130c-7-2.2-7.1-7 1.8-10.5z" fill="white"/>
+    </svg>
+    Kanala Katıl
+  </a>
+</div>
+
+<div class="card" id="screenLogin">
+  <span class="section-badge">🔐 Giriş</span>
+  <div class="login-title">Hoş Geldiniz</div>
+  <div class="login-sub">Devam etmek için kullanıcı adı ve şifrenizi girin.</div>
+  <div class="form-group">
+    <label class="form-label">Kullanıcı Adı</label>
+    <input class="form-input" type="text" id="loginUser" placeholder="Kullanıcı adınız..." autocomplete="username">
+  </div>
+  <div class="form-group">
+    <label class="form-label">Şifre</label>
+    <input class="form-input" type="password" id="loginPass" placeholder="Şifreniz..." autocomplete="current-password">
+  </div>
+  <button class="btn-login" onclick="doLogin()">Giriş Yap</button>
+  <div id="loginMsg"></div>
+</div>
+
+<div class="card hidden" id="screenSelector">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <span class="section-badge">📝 Soru Seçimi</span>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span id="welcomeUser" style="font-size:13px;color:var(--gray);"></span>
+      <button class="btn-outline" onclick="doLogout()" style="padding:6px 14px;font-size:11px;">Çıkış</button>
+    </div>
+  </div>
+  <div class="selector-title">Kompozisyon Sorusu Seçiniz</div>
+  <div class="selector-sub">Aşağıdaki sorulardan birini seçerek kompozisyon yazmaya başlayın.</div>
+  <div id="questionListArea"><div class="loading"><div class="spinner"></div><div>Sorular yükleniyor...</div></div></div>
+  <button class="btn-select" id="btnGoWrite" disabled onclick="goToWrite()">✏ Yazmaya Başla</button>
+</div>
+
+<div class="card hidden" id="screenWrite">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+    <span class="section-badge">✏ Kompozisyon</span>
+    <button class="btn-outline" onclick="goToSelector()" style="padding:6px 14px;font-size:11px;">← Soru Seç</button>
+  </div>
+  <div class="selected-question-box"><strong>📌 Soru</strong><span id="activeQuestionText"></span></div>
+  <div class="comp-header">
+    <span class="comp-badge">+ Kompozisyonunuzu Yazın</span>
+    <div class="word-count">Kelime: <span id="wordCount">0</span></div>
+  </div>
+  <textarea id="essayInput" rows="12" placeholder="Kompozisyonunuzu buraya yazın... (180–200 kelime)" oninput="updateWordCount()"></textarea>
+  <div class="word-target">
+    <span>180–200 kelime hedeflenmektedir.</span>
+    <span id="wordStatus"></span>
+  </div>
+  <div class="btn-row">
+    <button class="btn-gold" onclick="calculateScore()">⚡ Puanımı Hesapla</button>
+    <button class="btn-outline" onclick="showErrors()">⊙ Yanlışlarımı Göster</button>
+    <button class="btn-outline" onclick="resetEssay()">↺ Sıfırla</button>
+  </div>
+</div>
+
+<div id="screenResults" style="max-width:820px;margin:0 auto 30px;" class="hidden">
+  <div class="loading hidden" id="loadingDiv"><div class="spinner"></div><div>Kompozisyonunuz değerlendiriliyor...</div></div>
+  <div id="resultsContent"></div>
+</div>
+
+<div class="card hidden" id="screenAdmin">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+    <div class="admin-title">⚙️ Yönetici Paneli</div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-gold" onclick="goToSelectorAdmin()">← Uygulamaya Dön</button>
+      <button class="btn-outline" onclick="doLogout()" style="font-size:11px;">Çıkış</button>
+    </div>
+  </div>
+  <div class="sheets-info">
+    📊 <strong>Google Sheets Bağlantısı</strong><br>
+    Kullanıcılar ve sorular Google Sheets ile yönetilir.<br><br>
+    <strong>Tablo yapısı:</strong><br>
+    • <code>Kullanicilar</code> sayfası → sütunlar: <code>kullanici_adi | sifre | bitis_tarihi</code><br>
+    • <code>Sorular</code> sayfası → tek sütun başlığı: <code>soru</code> — her satır bir soru<br><br>
+    Bitiş tarihi formatı: <code>2026-04-30</code> | Sınırsız için: <code>sinirsiz</code><br><br>
+    <input type="text" class="sheets-url-input" id="sheetsUrlInput" placeholder="https://docs.google.com/spreadsheets/d/XXXXX/edit..." oninput="saveSheetUrl()">
+    <br><br>
+    <button class="btn-navy" onclick="loadUsersFromSheet()">🔄 Kullanıcıları Yükle</button>
+  </div>
+  <div class="admin-form">
+    <div class="admin-form-title">+ Yeni Kullanıcı Satırı Oluştur</div>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:12px;">Kopyalayın, Google Sheets tablosuna yeni satır olarak yapıştırın.</div>
+    <div class="admin-form-grid">
+      <div><div class="form-label">Kullanıcı Adı</div><input type="text" id="newUsername" placeholder="kullanici_adi" class="form-input"></div>
+      <div><div class="form-label">Şifre</div><input type="text" id="newPassword" placeholder="sifre123" class="form-input"></div>
+      <div><div class="form-label">Süre</div><select id="durationType" class="form-input" onchange="updateEndDate()"><option value="week1">1 Hafta</option><option value="week2">2 Hafta</option><option value="week3">3 Hafta</option><option value="month1">1 Ay</option><option value="month2">2 Ay</option><option value="month3">3 Ay</option><option value="unlimited">Sınırsız</option></select></div>
+      <div><div class="form-label">Bitiş Tarihi</div><input type="text" id="calcEndDate" class="form-input" readonly style="background:#f0f0f0;"></div>
+    </div>
+    <button class="btn-gold" onclick="copyUserRow()">📋 Satırı Kopyala</button>
+    <div id="copyMsg" style="font-size:12px;color:var(--green);margin-top:8px;"></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--navy);">Kullanıcı Listesi</div>
+    <button class="btn-outline" onclick="loadUsersFromSheet()" style="font-size:11px;padding:6px 12px;">🔄 Yenile</button>
+  </div>
+  <div id="userTableContainer"><div style="text-align:center;color:var(--gray);padding:20px;font-size:13px;">Google Sheets URL girin ve "Kullanıcıları Yükle" butonuna tıklayın.</div></div>
+</div>
+
+<script>
+// --- Sabit Google Sheets URL'leri ---
+// Kullanıcılar için sayfa (gid=0)
+const USERS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1LsCw5Wx1765X0h1pQvvI1e0KlBAVT0Ybas25aVoEWXM/edit?gid=0#gid=0';
+// Sorular için sayfa (gid=1697342470)
+const QUESTIONS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1LsCw5Wx1765X0h1pQvvI1e0KlBAVT0Ybas25aVoEWXM/edit?gid=1697342470#gid=1697342470';
+
+const ADMIN_USER = 'hamza';
+const ADMIN_PASS = '402640';
+const SHEETS_KEY = 'kompozisyon_sheetsUrl';
+
+const scoreTable = [
+  [17,75],[16.5,74],[16,72],[15.5,69],[15,67],[14.5,65],[14,63],[13.5,62],[13,61],[12.5,59],
+  [12,57],[11.5,56],[11,54],[10.5,53],[10,51],[9.5,50],[9,49],[8.5,47],[8,45],[7.5,43],
+  [7,42],[6.5,40],[6,38],[5.5,35],[5,32],[4.5,29],[4,26],[3.5,23],[3,21],[2.5,18],
+  [2,15],[1.5,13],[1,11],[0.5,10],[0,0]
+];
+function rawToFinalScore(raw) {
+  for (let i = 0; i < scoreTable.length; i++) { if (raw >= scoreTable[i][0]) return scoreTable[i][1]; }
+  return 0;
+}
+
+let currentUser = null, selectedQuestion = null, cachedResult = null, cachedEssay = '';
+
+function showScreen(id) {
+  ['screenLogin','screenSelector','screenWrite','screenResults','screenAdmin'].forEach(s => document.getElementById(s).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+async function doLogin() {
+  const username = document.getElementById('loginUser').value.trim().toLowerCase();
+  const password = document.getElementById('loginPass').value.trim();
+  const msgEl = document.getElementById('loginMsg');
+  msgEl.innerHTML = '<div style="text-align:center;padding:10px;color:var(--gray);font-size:13px;">Kontrol ediliyor...</div>';
+  if (!username || !password) { msgEl.innerHTML = '<div class="login-error">Lutfen kullanici adi ve sifrenizi girin.</div>'; return; }
+  
+  // Admin kontrolü
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    currentUser = { username: ADMIN_USER, isAdmin: true };
+    msgEl.innerHTML = '';
+    showScreen('screenAdmin');
+    loadAdminPanel();
+    return;
+  }
+  
+  // Kullanıcı doğrulama için SABIT URL'yi kullan
+  const sheetUrl = USERS_SHEET_URL;
+  if (!sheetUrl) { msgEl.innerHTML = '<div class="login-error">Sistem yapilandirilmamis. Yoneticiyle iletisime gecin.</div>'; return; }
+  try {
+    const users = await fetchUsers(sheetUrl);
+    const user = users.find(u => u.username.toLowerCase() === username && u.password === password);
+    if (!user) { msgEl.innerHTML = '<div class="login-error">Kullanici adi veya sifre hatali.</div>'; return; }
+    if (user.endDate.toLowerCase() !== 'sinirsiz') {
+      const end = new Date(user.endDate); end.setHours(23,59,59);
+      if (new Date() > end) { msgEl.innerHTML = '<div class="login-expired">Kullanim sureniz dolmustur.<br><br>Yeniden satin almak icin:<br><a href="https://t.me/HamzaOzaydin" target="_blank">@HamzaOzaydin</a></div>'; return; }
+    }
+    currentUser = { username: user.username, isAdmin: false };
+    msgEl.innerHTML = '';
+    document.getElementById('welcomeUser').textContent = 'Hos geldiniz, ' + user.username;
+    showScreen('screenSelector');
+    loadQuestions(); // Soruları yükle
+  } catch(e) { msgEl.innerHTML = '<div class="login-error">Baglanti hatasi: ' + e.message + '</div>'; }
+}
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('loginUser').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function doLogout() {
+  currentUser = null; selectedQuestion = null; cachedResult = null; cachedEssay = '';
+  document.getElementById('loginUser').value = ''; document.getElementById('loginPass').value = ''; document.getElementById('loginMsg').innerHTML = '';
+  showScreen('screenLogin');
+}
+
+function getSheetId(url) { const m = url.match(/\/d\/([a-zA-Z0-9-_]+)/); return m ? m[1] : null; }
+
+async function fetchSheet(url, sheetName) {
+  const id = getSheetId(url);
+  if (!id) throw new Error('Gecersiz Google Sheets URL.');
+  const res = await fetch('https://opensheet.elk.sh/' + id + '/' + encodeURIComponent(sheetName));
+  if (!res.ok) throw new Error('Tablo verisi alinamadi. Tablonun herkese acik oldugunu kontrol edin.');
+  return await res.json();
+}
+
+async function fetchUsers(url) {
+  const rows = await fetchSheet(url, 'Kullanicilar');
+  return rows.map(row => { const k = Object.keys(row); return { username:(row[k[0]]||'').trim(), password:(row[k[1]]||'').trim(), endDate:(row[k[2]]||'').trim() }; }).filter(u => u.username);
+}
+
+async function loadQuestions() {
+  const area = document.getElementById('questionListArea');
+  area.innerHTML = '<div class="loading"><div class="spinner"></div><div>Sorular yukleniyor...</div></div>';
+  document.getElementById('btnGoWrite').disabled = true;
+  selectedQuestion = null;
+  // Sorular için SABIT URL'yi kullan
+  const sheetUrl = QUESTIONS_SHEET_URL;
+  if (!sheetUrl) { area.innerHTML = '<div style="color:var(--red);font-size:13px;padding:16px;">Sistem yapilandirilmamis.</div>'; return; }
+  try {
+    const rows = await fetchSheet(sheetUrl, 'Sorular');
+    const questions = rows.map(row => Object.values(row)[0]).filter(q => q && q.toString().trim());
+    if (questions.length === 0) { area.innerHTML = '<div style="color:var(--red);font-size:13px;padding:16px;">Henuz soru eklenmemis.</div>'; return; }
+    let html = '<ul class="question-list">';
+    questions.forEach((q, i) => { html += '<li onclick="selectQ(' + i + ', this, decodeURIComponent(\'' + encodeURIComponent(q) + '\'))">' + q + '</li>'; });
+    html += '</ul>';
+    area.innerHTML = html;
+  } catch(e) { area.innerHTML = '<div style="color:var(--red);font-size:13px;padding:16px;">Sorular yuklenemedi: ' + e.message + '</div>'; }
+}
+
+function selectQ(index, el, text) {
+  document.querySelectorAll('.question-list li').forEach(li => li.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedQuestion = text;
+  document.getElementById('btnGoWrite').disabled = false;
+}
+
+function goToWrite() {
+  if (!selectedQuestion) return;
+  document.getElementById('activeQuestionText').textContent = selectedQuestion;
+  document.getElementById('essayInput').value = '';
+  document.getElementById('wordCount').textContent = '0';
+  document.getElementById('wordStatus').textContent = '';
+  cachedResult = null; cachedEssay = '';
+  document.getElementById('screenResults').classList.add('hidden');
+  document.getElementById('resultsContent').innerHTML = '';
+  showScreen('screenWrite');
+}
+
+function goToSelector() { document.getElementById('screenResults').classList.add('hidden'); showScreen('screenSelector'); }
+function goToSelectorAdmin() { showScreen('screenSelector'); loadQuestions(); }
+
+function updateWordCount() {
+  const text = document.getElementById('essayInput').value.trim();
+  const count = text ? text.split(/\s+/).filter(w => w.length > 0).length : 0;
+  document.getElementById('wordCount').textContent = count;
+  if (count < 180) document.getElementById('wordStatus').textContent = (180-count) + ' kelime daha yazin';
+  else if (count > 200) document.getElementById('wordStatus').textContent = count-200 + ' kelime fazla';
+  else document.getElementById('wordStatus').textContent = 'Hedef araliginda';
+}
+
+function resetEssay() {
+  document.getElementById('essayInput').value = ''; document.getElementById('wordCount').textContent = '0'; document.getElementById('wordStatus').textContent = '';
+  document.getElementById('screenResults').classList.add('hidden'); document.getElementById('resultsContent').innerHTML = '';
+  cachedResult = null; cachedEssay = '';
+}
+
+async function calculateScore() { await analyzeEssay('score'); }
+async function showErrors() { await analyzeEssay('errors'); }
+
+async function analyzeEssay(mode) {
+  const essay = document.getElementById('essayInput').value.trim();
+  if (!essay) { alert('Lutfen once kompozisyonunuzu yazin.'); return; }
+  document.getElementById('screenResults').classList.remove('hidden');
+  document.getElementById('resultsContent').innerHTML = '';
+  if (cachedResult && cachedEssay === essay) { renderResults(cachedResult, mode); return; }
+  document.getElementById('loadingDiv').classList.remove('hidden');
+  const question = selectedQuestion || 'Soru belirtilmemis';
+  const prompt = 'Asagidaki Turkce kompozisyonu degerlendir. Her hata bolumunde maksimum 5 hata goster.\n\nSORU: ' + question + '\n\nKOMPOZISYON: ' + essay + '\n\nSeviyeler: C1=5puan B2plus=4 B2=3 B1=2 A2=1 A1=0\n\nSADECE su JSON formatini dondur, baska hicbir sey yazma:\n{"rawScore":4.5,"level":"B2","grammar":{"errors":[{"wrong":"yanlis","correct":"dogru","explanation":"neden"}],"hasMore":false},"spelling":{"errors":[],"hasMore":false},"punctuation":{"errors":[],"hasMore":false},"vocabulary":{"errors":[],"hasMore":false},"coherence":{"positives":["iyi nokta"],"improvements":["gelistirme"]},"overallComment":"genel yorum"}';
+  try {
+    const response = await fetch('/.netlify/functions/api', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.1, maxOutputTokens: 3000 },
+        systemInstruction: { parts: [{ text: 'Sen deneyimli bir Turkce ogretmenisin. Kompozisyonlari degerlendir. YALNIZCA gecerli JSON dondur.' }] }
+      })
+    });
+    if (!response.ok) { const e = await response.json().catch(()=>({})); throw new Error(e?.error?.message || 'Sunucu hatasi: ' + response.status); }
+    const data = await response.json();
+    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error('Yanit JSON icermiyor.');
+    let jsonStr = jsonMatch[0].replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
+    const result = JSON.parse(jsonStr);
+    cachedResult = result; cachedEssay = essay;
+    document.getElementById('loadingDiv').classList.add('hidden');
+    renderResults(result, mode);
+  } catch(err) {
+    document.getElementById('loadingDiv').classList.add('hidden');
+    document.getElementById('resultsContent').innerHTML = '<div class="error-section"><p style="color:#c0392b;font-weight:700;margin-bottom:8px;">Bir hata olustu. Lutfen tekrar deneyin.</p><p style="color:#888;font-size:12px;">' + err.message + '</p></div>';
+  }
+}
+
+function renderResults(result, mode) {
+  const finalScore = rawToFinalScore(result.rawScore);
+  let html = '';
+  if (mode === 'score' || mode === 'both') {
+    html += '<div class="ai-warning">Bu bir yapay zeka uygulamasidir. Gercek sinavdaki sonuclar farkli olabilir.</div>';
+    html += '<div class="score-card"><div class="score-title">Kompozisyon Puaniniz</div><div class="score-num">' + finalScore + '</div><div class="score-denom">/ 100</div><div class="score-level">Seviye: ' + result.level + ' | Ham Puan: ' + result.rawScore + '/17</div><div style="margin-top:16px;font-size:13px;color:#ccc;line-height:1.6;">' + result.overallComment + '</div></div>';
+  }
+  if (mode === 'errors' || mode === 'both') {
+    html += renderErrorSection('Dilbilgisi Hatalari', result.grammar, '📝');
+    html += renderErrorSection('Imla Hatalari', result.spelling, '✍️');
+    html += renderErrorSection('Noktalama Hatalari', result.punctuation, '⊙');
+    html += renderErrorSection('Kelime Secimi', result.vocabulary, '💬');
+    if (result.coherence) {
+      html += '<div class="error-section"><div class="error-section-title">📊 Konu Butunlugu ve Yapi</div>';
+      (result.coherence.positives||[]).forEach(p => { html += '<div class="error-item correct"><div class="error-label">Olumlu</div><div class="error-text">' + p + '</div></div>'; });
+      (result.coherence.improvements||[]).forEach(i => { html += '<div class="error-item wrong"><div class="error-label">Gelistirilecek</div><div class="error-text">' + i + '</div></div>'; });
+      html += '</div>';
+    }
+  }
+  document.getElementById('resultsContent').innerHTML = html;
+  document.getElementById('screenResults').classList.remove('hidden');
+}
+
+function renderErrorSection(title, data, icon) {
+  if (!data || !data.errors) return '';
+  let html = '<div class="error-section"><div class="error-section-title">' + icon + ' ' + title + '</div>';
+  if (data.errors.length === 0) { html += '<div class="error-item correct"><div class="error-label">Harika</div><div class="error-text">Bu bolumde onemli bir hata tespit edilmedi.</div></div>'; }
+  else { data.errors.slice(0,5).forEach(e => { html += '<div class="error-item wrong"><div class="error-label">Hata</div><div class="error-text"><span class="wrong-word">' + (e.wrong||'') + '</span> → <span class="correct-word">' + (e.correct||'') + '</span><br><span style="font-size:13px;color:#555;">' + (e.explanation||'') + '</span></div></div>'; }); }
+  if (data.hasMore) html += '<div class="more-errors-note">Daha fazla hata var ancak gosterilmedi. Kompozisyonunuzu dikkatlice gozden gecirin.</div>';
+  html += '</div>';
+  return html;
+}
+
+function loadAdminPanel() {
+  // Admin panelinde de kullanıcılar için sabit URL'yi göster
+  const saved = USERS_SHEET_URL;
+  document.getElementById('sheetsUrlInput').value = saved;
+  updateEndDate();
+  if (saved) loadUsersFromSheet();
+}
+
+function saveSheetUrl() { 
+  // Admin panelindeki değişiklikleri kaydetme (isteğe bağlı, şimdilik sadece local storage'a)
+  localStorage.setItem(SHEETS_KEY, document.getElementById('sheetsUrlInput').value.trim()); 
+}
+
+async function loadUsersFromSheet() {
+  let url = document.getElementById('sheetsUrlInput').value.trim();
+  // Eğer URL boşsa veya değiştirilmemişse, varsayılan kullanıcı URL'sini kullan
+  if (!url || url === '') {
+    url = USERS_SHEET_URL;
+    document.getElementById('sheetsUrlInput').value = url;
+  }
+  saveSheetUrl();
+  const container = document.getElementById('userTableContainer');
+  container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray);">Yukleniyor...</div>';
+  try {
+    const users = await fetchUsers(url);
+    if (users.length === 0) { container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray);">Kullanici bulunamadi.</div>'; return; }
+    const today = new Date();
+    let html = '<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>#</th><th>Kullanici Adi</th><th>Sifre</th><th>Bitis Tarihi</th><th>Durum</th></tr></thead><tbody>';
+    users.forEach((u,i) => {
+      let status='', cls='';
+      if (u.endDate.toLowerCase()==='sinirsiz') { status='Sinirsiz'; cls='status-unlimited'; }
+      else { const end=new Date(u.endDate); end.setHours(23,59,59); if(today>end){status='Suresi Doldu';cls='status-expired';}else{const d=Math.ceil((end-today)/86400000);status='Aktif ('+d+' gun kaldi)';cls='status-active';} }
+      html += '<tr><td>'+(i+1)+'</td><td><strong>'+u.username+'</strong></td><td>'+u.password+'</td><td>'+u.endDate+'</td><td class="'+cls+'">'+status+'</td></tr>';
+    });
+    html += '</tbody></table></div>';
+    container.innerHTML = html;
+  } catch(e) { container.innerHTML = '<div class="login-error">'+e.message+'</div>'; }
+}
+
+function updateEndDate() {
+  const type = document.getElementById('durationType').value;
+  const today = new Date(); let end = new Date(today);
+  if(type==='week1') end.setDate(today.getDate()+7);
+  else if(type==='week2') end.setDate(today.getDate()+14);
+  else if(type==='week3') end.setDate(today.getDate()+21);
+  else if(type==='month1') end.setMonth(today.getMonth()+1);
+  else if(type==='month2') end.setMonth(today.getMonth()+2);
+  else if(type==='month3') end.setMonth(today.getMonth()+3);
+  else if(type==='unlimited') { document.getElementById('calcEndDate').value='sinirsiz'; return; }
+  document.getElementById('calcEndDate').value = end.toISOString().split('T')[0];
+}
+
+function copyUserRow() {
+  const u=document.getElementById('newUsername').value.trim(), p=document.getElementById('newPassword').value.trim(), d=document.getElementById('calcEndDate').value;
+  if(!u||!p){alert('Kullanici adi ve sifre girin.');return;}
+  navigator.clipboard.writeText(u+'\t'+p+'\t'+d).then(()=>{document.getElementById('copyMsg').textContent='Kopyalandi! Sheets e yapistirin.';setTimeout(()=>document.getElementById('copyMsg').textContent='',3000);});
+}
+
+// Uygulama başlangıcı
+showScreen('screenLogin');
+</script>
+</body>
+</html>
