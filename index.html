@@ -300,6 +300,11 @@
             <div class="icon">📖</div>
             <div class="title">OKUMA METİNLERİ</div>
         </div>
+        <!-- YENİ EKLENEN KOMPOZİSYON UYGULAMASI BUTONU -->
+        <div class="menu-btn" onclick="openCompositionApp()">
+            <div class="icon">✍️✨</div>
+            <div class="title">KOMPOZİSYON UYGULAMASI</div>
+        </div>
     </div>
 
     <!-- İÇERİK BÖLÜMLERİ -->
@@ -382,6 +387,7 @@
 
     <div class="footer">
         💡 Butonlara tıklayarak içerikleri açın. Kelime kartları ve alıştırmalar herkese açıktır. Testler için giriş yapın.
+        <br>✍️ Kompozisyon Uygulaması ile yazma becerilerinizi geliştirin!
     </div>
 </div>
 
@@ -504,6 +510,15 @@ function showSection(sectionId) {
         // Sayfayı yumuşakça o bölüme kaydır
         selectedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+}
+
+// KOMPOZİSYON UYGULAMASI - Doğrudan kompozisyon_uygulaması.html dosyasını açar
+function openCompositionApp() {
+    // Bu fonksiyon, kompozisyon uygulaması sayfasını yönlendirir.
+    // Eğer dosya "kompozisyon_uygulaması.html" olarak aynı dizinde bulunuyorsa çalışır.
+    // Giriş kontrolü yapmak isterseniz requireLogin ile değiştirebilirsiniz. 
+    // Şu an herkese açık olarak tasarlanmıştır.
+    window.location.href = "kompozisyon_uygulaması.html";
 }
 
 window.onload = function() {
