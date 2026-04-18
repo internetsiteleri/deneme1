@@ -300,10 +300,15 @@
             <div class="icon">📖</div>
             <div class="title">OKUMA METİNLERİ</div>
         </div>
-        <!-- YENİ EKLENEN KOMPOZİSYON UYGULAMASI BUTONU -->
+        <!-- KOMPOZİSYON UYGULAMASI BUTONU -->
         <div class="menu-btn" onclick="openCompositionApp()">
             <div class="icon">✍️✨</div>
             <div class="title">KOMPOZİSYON UYGULAMASI</div>
+        </div>
+        <!-- YENİ EKLENEN KOMPOZİSYON ARTIFACTS BUTONU -->
+        <div class="menu-btn" onclick="openCompositionArtifact()">
+            <div class="icon">🎨📝</div>
+            <div class="title">KOMPOZİSYON ARTIFACTS</div>
         </div>
     </div>
 
@@ -387,7 +392,7 @@
 
     <div class="footer">
         💡 Butonlara tıklayarak içerikleri açın. Kelime kartları ve alıştırmalar herkese açıktır. Testler için giriş yapın.
-        <br>✍️ Kompozisyon Uygulaması ile yazma becerilerinizi geliştirin!
+        <br>✍️ Kompozisyon Uygulaması ve Kompozisyon Artifacts ile yazma becerilerinizi geliştirin!
     </div>
 </div>
 
@@ -512,13 +517,15 @@ function showSection(sectionId) {
     }
 }
 
-// KOMPOZİSYON UYGULAMASI - Doğrudan kompozisyon_uygulaması.html dosyasını açar
+// KOMPOZİSYON UYGULAMASI - kompozisyon_uygulaması.html dosyasını açar
 function openCompositionApp() {
-    // Bu fonksiyon, kompozisyon uygulaması sayfasını yönlendirir.
-    // Eğer dosya "kompozisyon_uygulaması.html" olarak aynı dizinde bulunuyorsa çalışır.
-    // Giriş kontrolü yapmak isterseniz requireLogin ile değiştirebilirsiniz. 
-    // Şu an herkese açık olarak tasarlanmıştır.
     window.location.href = "kompozisyon_uygulaması.html";
+}
+
+// YENİ EKLENEN KOMPOZİSYON ARTIFACTS BUTONU - Claude Artifact bağlantısına yönlendirir
+function openCompositionArtifact() {
+    // Belirtilen Claude Artifact bağlantısına yönlendirme yapar
+    window.open("https://claude.ai/public/artifacts/d7035713-8cb1-44c7-b5ff-aa69539e46d2", "_blank");
 }
 
 window.onload = function() {
