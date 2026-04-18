@@ -41,7 +41,6 @@
   .btn-select { display: block; width: 100%; max-width: 300px; margin: 20px auto 0; background: var(--gold); color: #111; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 16px 30px; border: none; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
   .btn-select:hover { background: var(--gold-light); }
   .btn-select:disabled { background: #ccc; cursor: not-allowed; }
-  .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
   .selected-question-box { background: var(--navy); border-radius: 6px; padding: 20px 24px; color: var(--white); font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
   .selected-question-box strong { color: var(--gold); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 8px; }
   .comp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
@@ -213,12 +212,8 @@
 </div>
 
 <script>
-// --- Sabit Google Sheets URL'leri ---
-// Kullanıcılar için sayfa (gid=0)
 const USERS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1LsCw5Wx1765X0h1pQvvI1e0KlBAVT0Ybas25aVoEWXM/edit?gid=0#gid=0';
-// Sorular için sayfa (gid=1697342470)
 const QUESTIONS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1LsCw5Wx1765X0h1pQvvI1e0KlBAVT0Ybas25aVoEWXM/edit?gid=1697342470#gid=1697342470';
-
 const ADMIN_USER = 'hamza';
 const ADMIN_PASS = '402640';
 const SHEETS_KEY = 'kompozisyon_sheetsUrl';
@@ -248,8 +243,6 @@ async function doLogin() {
   const msgEl = document.getElementById('loginMsg');
   msgEl.innerHTML = '<div style="text-align:center;padding:10px;color:var(--gray);font-size:13px;">Kontrol ediliyor...</div>';
   if (!username || !password) { msgEl.innerHTML = '<div class="login-error">Lutfen kullanici adi ve sifrenizi girin.</div>'; return; }
-  
-  // Admin kontrolü
   if (username === ADMIN_USER && password === ADMIN_PASS) {
     currentUser = { username: ADMIN_USER, isAdmin: true };
     msgEl.innerHTML = '';
@@ -257,12 +250,8 @@ async function doLogin() {
     loadAdminPanel();
     return;
   }
-  
-  // Kullanıcı doğrulama için SABIT URL'yi kullan
-  const sheetUrl = USERS_SHEET_URL;
-  if (!sheetUrl) { msgEl.innerHTML = '<div class="login-error">Sistem yapilandirilmamis. Yoneticiyle iletisime gecin.</div>'; return; }
   try {
-    const users = await fetchUsers(sheetUrl);
+    const users = await fetchUsers(USERS_SHEET_URL);
     const user = users.find(u => u.username.toLowerCase() === username && u.password === password);
     if (!user) { msgEl.innerHTML = '<div class="login-error">Kullanici adi veya sifre hatali.</div>'; return; }
     if (user.endDate.toLowerCase() !== 'sinirsiz') {
@@ -273,7 +262,7 @@ async function doLogin() {
     msgEl.innerHTML = '';
     document.getElementById('welcomeUser').textContent = 'Hos geldiniz, ' + user.username;
     showScreen('screenSelector');
-    loadQuestions(); // Soruları yükle
+    loadQuestions();
   } catch(e) { msgEl.innerHTML = '<div class="login-error">Baglanti hatasi: ' + e.message + '</div>'; }
 }
 
@@ -306,11 +295,8 @@ async function loadQuestions() {
   area.innerHTML = '<div class="loading"><div class="spinner"></div><div>Sorular yukleniyor...</div></div>';
   document.getElementById('btnGoWrite').disabled = true;
   selectedQuestion = null;
-  // Sorular için SABIT URL'yi kullan
-  const sheetUrl = QUESTIONS_SHEET_URL;
-  if (!sheetUrl) { area.innerHTML = '<div style="color:var(--red);font-size:13px;padding:16px;">Sistem yapilandirilmamis.</div>'; return; }
   try {
-    const rows = await fetchSheet(sheetUrl, 'Sorular');
+    const rows = await fetchSheet(QUESTIONS_SHEET_URL, 'Sorular');
     const questions = rows.map(row => Object.values(row)[0]).filter(q => q && q.toString().trim());
     if (questions.length === 0) { area.innerHTML = '<div style="color:var(--red);font-size:13px;padding:16px;">Henuz soru eklenmemis.</div>'; return; }
     let html = '<ul class="question-list">';
@@ -370,18 +356,19 @@ async function analyzeEssay(mode) {
   const question = selectedQuestion || 'Soru belirtilmemis';
   const prompt = 'Asagidaki Turkce kompozisyonu degerlendir. Her hata bolumunde maksimum 5 hata goster.\n\nSORU: ' + question + '\n\nKOMPOZISYON: ' + essay + '\n\nSeviyeler: C1=5puan B2plus=4 B2=3 B1=2 A2=1 A1=0\n\nSADECE su JSON formatini dondur, baska hicbir sey yazma:\n{"rawScore":4.5,"level":"B2","grammar":{"errors":[{"wrong":"yanlis","correct":"dogru","explanation":"neden"}],"hasMore":false},"spelling":{"errors":[],"hasMore":false},"punctuation":{"errors":[],"hasMore":false},"vocabulary":{"errors":[],"hasMore":false},"coherence":{"positives":["iyi nokta"],"improvements":["gelistirme"]},"overallComment":"genel yorum"}';
   try {
-    const response = await fetch('/.netlify/functions/api', {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.1, maxOutputTokens: 3000 },
-        systemInstruction: { parts: [{ text: 'Sen deneyimli bir Turkce ogretmenisin. Kompozisyonlari degerlendir. YALNIZCA gecerli JSON dondur.' }] }
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: 'Sen deneyimli bir Turkce ogretmenisin. Kompozisyonlari degerlendir. YALNIZCA gecerli JSON dondur, baska hicbir sey yazma.',
+        messages: [{ role: 'user', content: prompt }]
       })
     });
     if (!response.ok) { const e = await response.json().catch(()=>({})); throw new Error(e?.error?.message || 'Sunucu hatasi: ' + response.status); }
     const data = await response.json();
-    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    const rawText = data.content?.[0]?.text || '';
     const jsonMatch = rawText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('Yanit JSON icermiyor.');
     let jsonStr = jsonMatch[0].replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '');
@@ -429,25 +416,18 @@ function renderErrorSection(title, data, icon) {
 }
 
 function loadAdminPanel() {
-  // Admin panelinde de kullanıcılar için sabit URL'yi göster
-  const saved = USERS_SHEET_URL;
-  document.getElementById('sheetsUrlInput').value = saved;
+  document.getElementById('sheetsUrlInput').value = USERS_SHEET_URL;
   updateEndDate();
-  if (saved) loadUsersFromSheet();
+  loadUsersFromSheet();
 }
 
-function saveSheetUrl() { 
-  // Admin panelindeki değişiklikleri kaydetme (isteğe bağlı, şimdilik sadece local storage'a)
-  localStorage.setItem(SHEETS_KEY, document.getElementById('sheetsUrlInput').value.trim()); 
+function saveSheetUrl() {
+  localStorage.setItem(SHEETS_KEY, document.getElementById('sheetsUrlInput').value.trim());
 }
 
 async function loadUsersFromSheet() {
   let url = document.getElementById('sheetsUrlInput').value.trim();
-  // Eğer URL boşsa veya değiştirilmemişse, varsayılan kullanıcı URL'sini kullan
-  if (!url || url === '') {
-    url = USERS_SHEET_URL;
-    document.getElementById('sheetsUrlInput').value = url;
-  }
+  if (!url) { url = USERS_SHEET_URL; document.getElementById('sheetsUrlInput').value = url; }
   saveSheetUrl();
   const container = document.getElementById('userTableContainer');
   container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--gray);">Yukleniyor...</div>';
@@ -486,7 +466,6 @@ function copyUserRow() {
   navigator.clipboard.writeText(u+'\t'+p+'\t'+d).then(()=>{document.getElementById('copyMsg').textContent='Kopyalandi! Sheets e yapistirin.';setTimeout(()=>document.getElementById('copyMsg').textContent='',3000);});
 }
 
-// Uygulama başlangıcı
 showScreen('screenLogin');
 </script>
 </body>
