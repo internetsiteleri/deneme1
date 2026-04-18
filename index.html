@@ -305,10 +305,10 @@
             <div class="icon">✍️✨</div>
             <div class="title">KOMPOZİSYON UYGULAMASI</div>
         </div>
-        <!-- YENİ EKLENEN KOMPOZİSYON ARTIFACTS BUTONU -->
+        <!-- YENİ EKLENEN KOMPOZİSYON ARTIFACTS BUTONU (KOMP. ARTIFACT. 1) -->
         <div class="menu-btn" onclick="openCompositionArtifact()">
-            <div class="icon">🎨📝</div>
-            <div class="title">KOMPOZİSYON ARTIFACTS</div>
+            <div class="icon">📄✨</div>
+            <div class="title">KOMP. ARTIFACT. 1</div>
         </div>
     </div>
 
@@ -522,10 +522,11 @@ function openCompositionApp() {
     window.location.href = "kompozisyon_uygulaması.html";
 }
 
-// YENİ EKLENEN KOMPOZİSYON ARTIFACTS BUTONU - Claude Artifact bağlantısına yönlendirir
+// YENİ EKLENEN KOMPOZİSYON ARTIFACT BUTONU (KOMP. ARTIFACT. 1)
+// Bu butona tıklandığında "kompozisyon_uygulamasi_artifacts.html" dosyasını açar.
 function openCompositionArtifact() {
-    // Belirtilen Claude Artifact bağlantısına yönlendirme yapar
-    window.open("https://claude.ai/public/artifacts/d7035713-8cb1-44c7-b5ff-aa69539e46d2", "_blank");
+    // Belirtilen isteğe göre: kompozisyon_uygulamasi_artifacts.html dosyasını aç
+    window.location.href = "kompozisyon_uygulamasi_artifacts.html";
 }
 
 window.onload = function() {
