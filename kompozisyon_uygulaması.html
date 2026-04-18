@@ -277,12 +277,32 @@ function doLogout() {
 
 function getSheetId(url) { const m = url.match(/\/d\/([a-zA-Z0-9-_]+)/); return m ? m[1] : null; }
 
+function getGidFromUrl(url) {
+  const m = url.match(/gid=(\d+)/);
+  return m ? m[1] : '0';
+}
+
 async function fetchSheet(url, sheetName) {
   const id = getSheetId(url);
   if (!id) throw new Error('Gecersiz Google Sheets URL.');
-  const res = await fetch('https://opensheet.elk.sh/' + id + '/' + encodeURIComponent(sheetName));
-  if (!res.ok) throw new Error('Tablo verisi alinamadi. Tablonun herkese acik oldugunu kontrol edin.');
-  return await res.json();
+  // sheetName yerine URL'deki gid'i kullan
+  const gid = sheetName === 'Kullanicilar' ? getGidFromUrl(USERS_SHEET_URL) : getGidFromUrl(QUESTIONS_SHEET_URL);
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}`;
+  const res = await fetch(csvUrl);
+  if (!res.ok) throw new Error('Tablo verisi alinamadi (' + res.status + '). Tablonun herkese acik oldugunu kontrol edin.');
+  const text = await res.text();
+  return csvToJson(text);
+}
+
+function csvToJson(csv) {
+  const lines = csv.trim().split('\n').map(l => l.split(',').map(c => c.trim().replace(/^"|"$/g, '')));
+  if (lines.length < 2) return [];
+  const headers = lines[0];
+  return lines.slice(1).map(row => {
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = row[i] || '');
+    return obj;
+  });
 }
 
 async function fetchUsers(url) {
