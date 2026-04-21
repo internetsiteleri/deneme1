@@ -305,10 +305,15 @@
             <div class="icon">✍️✨</div>
             <div class="title">KOMPOZİSYON UYGULAMASI</div>
         </div>
-        <!-- YENİ EKLENEN KOMPOZİSYON ARTIFACTS BUTONU (KOMP. ARTIFACT. 1) -->
+        <!-- KOMPOZİSYON ARTIFACTS BUTONU -->
         <div class="menu-btn" onclick="openCompositionArtifact()">
             <div class="icon">📄✨</div>
             <div class="title">KOMP. ARTIFACT. 1</div>
+        </div>
+        <!-- VİDEO DERSLER BUTONU -->
+        <div class="menu-btn" onclick="openVideoDersler()">
+            <div class="icon">🎬</div>
+            <div class="title">VİDEO DERSLER</div>
         </div>
     </div>
 
@@ -393,6 +398,7 @@
     <div class="footer">
         💡 Butonlara tıklayarak içerikleri açın. Kelime kartları ve alıştırmalar herkese açıktır. Testler için giriş yapın.
         <br>✍️ Kompozisyon Uygulaması ve Kompozisyon Artifacts ile yazma becerilerinizi geliştirin!
+        <br>🎬 Video Dersler ile soru çözüm tekniklerini öğrenin!
     </div>
 </div>
 
@@ -502,31 +508,29 @@ function closeModal() {
 }
 
 function showSection(sectionId) {
-    // Tüm bölümleri gizle
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
         section.classList.remove('show');
     });
     
-    // Seçilen bölümü göster
     const selectedSection = document.getElementById(sectionId);
     if (selectedSection) {
         selectedSection.classList.add('show');
-        // Sayfayı yumuşakça o bölüme kaydır
         selectedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 }
 
-// KOMPOZİSYON UYGULAMASI - kompozisyon_uygulaması.html dosyasını açar
 function openCompositionApp() {
     window.location.href = "kompozisyon_uygulaması.html";
 }
 
-// YENİ EKLENEN KOMPOZİSYON ARTIFACT BUTONU (KOMP. ARTIFACT. 1)
-// Bu butona tıklandığında "kompozisyon_uygulamasi_artifacts.html" dosyasını açar.
 function openCompositionArtifact() {
-    // Belirtilen isteğe göre: kompozisyon_uygulamasi_artifacts.html dosyasını aç
     window.location.href = "kompozisyon_uygulamasi_artifacts.html";
+}
+
+// VİDEO DERSLER - soru_cozum_teknikleri.html dosyasını açar
+function openVideoDersler() {
+    window.location.href = "soru_cozum_teknikleri.html";
 }
 
 window.onload = function() {
