@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Öğrenci Yazma & Konuşma Platformu | Cloudinary Ses Kaydı</title>
+    <title>Öğrenci Yazma & Konuşma Platformu | Cloudinary Ses Kaydı | Sheets Entegrasyonu</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -89,8 +89,7 @@
             <button onclick="login()">🚀 Giriş Yap</button>
             <div id="loginStatus" class="status"></div>
             <p style="text-align: center; margin-top: 18px; color: #475569; font-size: 13px; background: #f1f5f9; padding: 8px; border-radius: 40px;">
-                📌 Öğrenci: ahmet / 123456 &nbsp;|&nbsp; ayse / 123456<br>
-                👩‍🏫 Öğretmen: ogretmen / admin123
+                📌 Öğrenci: Google Sheets'teki hesaplar &nbsp;|&nbsp; 👩‍🏫 Öğretmen: ogretmen / admin123
             </p>
         </div>
 
@@ -166,12 +165,25 @@
     </div>
 
     <script>
-        // ============ ✅ CLOUDINARY BİLGİLERİ (DOĞRU) ============
-        const CLOUDINARY_CLOUD_NAME = 'dee5ahvyy';        // ✅ Cloud Name
-        const CLOUDINARY_UPLOAD_PRESET = 'konusma_yazma'; // ✅ Unsigned Preset
+        // ============ ✅ CLOUDINARY BİLGİLERİ ============
+        const CLOUDINARY_CLOUD_NAME = 'dee5ahvyy';
+        const CLOUDINARY_UPLOAD_PRESET = 'konusma_yazma';
         
-        // ============ Google Sheets (opsiyonel) ============
-        const GOOGLE_SCRIPT_URL = '';  // Varsa URL'nizi girin, yoksa localStorage çalışır
+        // ============ ✅ GOOGLE SHEETS CSV BAĞLANTISI (WEB'DE YAYINLA'DAN ALINAN) ============
+        // DİKKAT: Aşağıdaki URL'yi, kendi Sheets'iniz için "Dosya > Paylaş > Web'de yayınla" menüsünden alacağınız CSV bağlantısıyla değiştirin.
+        // Yayınlarken "Sayfa1"i seçin ve format olarak "CSV" (virgülle ayrılmış değerler) veya "TSV"yi seçin.
+        const GOOGLE_SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSy6oym2tef6XciZqVEyguw3Spl_NhGClqTnM6vDIC1o-ijKkXufu2o2QZ9Ip_YOyA28nzzulYjHSnZ/pub?output=csv';
+        // ↑ Yukarıdaki bağlantı ÖRNEKTİR. Kendi bağlantınızı koymalısınız. Eğer bağlantınız yoksa, aşağıdaki "LOAD_USERS_FROM_SHEETS" değişkenini false yapın.
+        
+        const LOAD_USERS_FROM_SHEETS = true; // Sheets'ten yüklemek istiyorsanız TRUE, yoksa FALSE yapıp aşağıdaki demoUsers kullanılır.
+        
+        // Yedek demo kullanıcılar (Sheets bağlantısı çalışmazsa veya LOAD_USERS_FROM_SHEETS = false ise kullanılır)
+        const demoUsers = [
+            { username: 'ahmet', password: '123456', name: 'Ahmet Yılmaz' },
+            { username: 'ayse', password: '123456', name: 'Ayşe Demir' }
+        ];
+        
+        let validUsers = []; // Başlangıçta boş, sayfa yüklenince doldurulacak.
         
         // ============ STATE ============
         let currentUser = null;
@@ -183,8 +195,60 @@
         let recordSeconds = 0;
         let isRecording = false;
         let currentStream = null;
-
-        // ============ LOGIN ============
+        
+        // ============ SHEETS'TEN KULLANICILARI YÜKLE ============
+        async function loadUsersFromSheets() {
+            if (!LOAD_USERS_FROM_SHEETS) {
+                console.log('Sheets yükleme kapalı, demo kullanıcılar kullanılıyor.');
+                validUsers = [...demoUsers];
+                return true;
+            }
+            
+            try {
+                showStatus('loginStatus', 'Kullanıcı bilgileri Google Sheets\'ten alınıyor...', 'info');
+                const response = await fetch(GOOGLE_SHEETS_CSV_URL);
+                if (!response.ok) throw new Error('CSV dosyası alınamadı.');
+                const csvText = await response.text();
+                
+                // CSV'yi satırlara ayır
+                const lines = csvText.split(/\r?\n/);
+                if (lines.length < 2) throw new Error('CSV dosyasında yeterli veri yok.');
+                
+                const users = [];
+                // Başlık satırını atla (kullaniciadi,sifre,tarih gibi)
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (line === '') continue;
+                    // Basit CSV ayrıştırma (tırnak içi virgülleri hesaba katmaz ama basit veri için yeterli)
+                    const parts = line.split(',');
+                    if (parts.length >= 2) {
+                        const username = parts[0].trim().replace(/^"|"$/g, '');
+                        const password = parts[1].trim().replace(/^"|"$/g, '');
+                        const name = (parts[2] || username).trim().replace(/^"|"$/g, ''); // isim sütunu yoksa kullanıcı adını isim yap
+                        if (username && password) {
+                            users.push({ username, password, name: name || username });
+                        }
+                    }
+                }
+                
+                if (users.length === 0) throw new Error('CSV\'den hiç kullanıcı okunamadı.');
+                validUsers = users;
+                console.log('Sheets\'ten yüklenen kullanıcılar:', validUsers);
+                showStatus('loginStatus', `${validUsers.length} kullanıcı başarıyla yüklendi. Giriş yapabilirsiniz.`, 'success');
+                setTimeout(() => {
+                    const st = document.getElementById('loginStatus');
+                    if(st) st.style.display = 'none';
+                }, 3000);
+                return true;
+            } catch (error) {
+                console.error('Sheets hatası:', error);
+                showStatus('loginStatus', `⚠️ Sheets bağlantı hatası: ${error.message}. Demo kullanıcılar kullanılıyor.`, 'error');
+                validUsers = [...demoUsers];
+                return false;
+            }
+        }
+        
+        // ============ LOGIN (Sheets'ten gelen kullanıcıları kontrol et) ============
         async function login() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
@@ -202,9 +266,13 @@
                 loadTeacherSubmissions();
                 return;
             }
-
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.username === username && u.password === password);
+            
+            // validUsers henüz yüklenmemişse yükle
+            if (validUsers.length === 0) {
+                await loadUsersFromSheets();
+            }
+            
+            const user = validUsers.find(u => u.username === username && u.password === password);
             
             if (user) {
                 currentUser = { username: username, name: user.name || username };
@@ -214,7 +282,7 @@
                 document.getElementById('studentName').textContent = currentUser.name;
                 loadMySubmissions();
             } else {
-                showStatus('loginStatus', '❌ Hatalı giriş! (Demo: ahmet/123456, ayse/123456, ogretmen/admin123)', 'error');
+                showStatus('loginStatus', '❌ Hatalı giriş! (Öğretmen: ogretmen/admin123, Öğrenci: Google Sheets\'teki hesaplar veya demo: ahmet/123456, ayse/123456)', 'error');
             }
         }
 
@@ -342,7 +410,7 @@
             currentStream = null;
         }
 
-        // Cloudinary'e Yükle (Unsigned preset ile)
+        // Cloudinary'e Yükle
         async function uploadToCloudinary(blob, question) {
             return new Promise(async (resolve, reject) => {
                 try {
@@ -490,31 +558,4 @@
                 localStorage.setItem('submissions', JSON.stringify(submissions));
                 loadTeacherSubmissions();
                 if (!isTeacher && currentUser) loadMySubmissions();
-                showStatus('loginStatus', 'Düzeltme kaydedildi!', 'success');
-                setTimeout(() => {
-                    const st = document.getElementById('loginStatus');
-                    if(st) st.style.display = 'none';
-                }, 1500);
-            }
-        }
-
-        function showStatus(id, message, type) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.textContent = message;
-            el.className = `status ${type}`;
-            el.style.display = 'block';
-            setTimeout(() => { if(el) el.style.display = 'none'; }, 4500);
-        }
-
-        // Demo kullanıcıları
-        if (!localStorage.getItem('users')) {
-            localStorage.setItem('users', JSON.stringify([
-                { username: 'ahmet', password: '123456', name: 'Ahmet Yılmaz' },
-                { username: 'ayse', password: '123456', name: 'Ayşe Demir' }
-            ]));
-        }
-        if (!localStorage.getItem('submissions')) localStorage.setItem('submissions', '[]');
-    </script>
-</body>
-</html>
+                showStatus('login
