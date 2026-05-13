@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Öğrenci Yazma & Konuşma Platformu | Cloudinary Ses Kaydı</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 28px; padding: 30px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); }
+        h1 { text-align: center; color: #1e293b; margin-bottom: 8px; }
+        .subtitle { text-align: center; color: #475569; margin-bottom: 32px; border-bottom: 2px solid #eef2ff; padding-bottom: 12px; }
+        
+        .login-section { max-width: 450px; margin: 0 auto; background: #f8fafc; padding: 28px; border-radius: 24px; }
+        .form-group { margin-bottom: 22px; }
+        label { display: block; margin-bottom: 8px; color: #0f172a; font-weight: 600; }
+        input, select, textarea { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 16px; font-size: 15px; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #667eea; }
+        textarea { min-height: 180px; resize: vertical; }
+        
+        button { 
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; border: none; border-radius: 40px; font-size: 16px; font-weight: 600; 
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; 
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(102,126,234,0.45); }
+        button:disabled { opacity: 0.55; cursor: not-allowed; }
+        
+        .tabs { display: flex; gap: 12px; margin-bottom: 28px; background: #f1f5f9; padding: 6px; border-radius: 60px; }
+        .tab { flex: 1; padding: 12px; text-align: center; background: transparent; border-radius: 40px; cursor: pointer; font-weight: 600; color: #334155; }
+        .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        
+        .record-section { text-align: center; padding: 28px 20px; background: #fefce8; border-radius: 32px; margin: 20px 0; border: 1px solid #fde047; }
+        .record-btn { 
+            width: 90px; height: 90px; border-radius: 50%; background: #dc2626; 
+            color: white; font-size: 36px; border: none; cursor: pointer; 
+            transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 20px rgba(220,38,38,0.3);
+        }
+        .record-btn:hover { transform: scale(1.07); background: #b91c1c; }
+        .record-btn.recording { background: #16a34a; animation: pulse 1.4s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22,163,74,0.6); } 70% { box-shadow: 0 0 0 18px rgba(22,163,74,0); } 100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); } }
+        
+        .timer { font-size: 32px; font-weight: 800; font-family: monospace; color: #0f172a; margin: 12px 0; }
+        .audio-preview { margin: 18px 0; background: #f1f5f9; padding: 10px; border-radius: 24px; }
+        
+        .status { padding: 14px; border-radius: 20px; margin: 16px 0; text-align: center; font-weight: 500; display: none; }
+        .status.success { background: #dcfce7; color: #166534; display: block; border-left: 5px solid #22c55e; }
+        .status.error { background: #fee2e2; color: #991b1b; display: block; border-left: 5px solid #ef4444; }
+        .status.info { background: #dbeafe; color: #1e40af; display: block; border-left: 5px solid #3b82f6; }
+        
+        .teacher-panel { display: none; }
+        .submission-card { background: #ffffff; border-radius: 24px; padding: 22px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+        .submission-header { display: flex; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+        .badge { padding: 6px 16px; border-radius: 40px; font-size: 12px; font-weight: 700; display: inline-block; }
+        .badge.yazma { background: #e0f2fe; color: #0369a1; }
+        .badge.konusma { background: #fce7f3; color: #be185d; }
+        .badge.yeni { background: #fff3e0; color: #e65100; }
+        .badge.duzeltildi { background: #e8f5e9; color: #2e7d32; }
+        
+        .hidden { display: none; }
+        .flex-buttons { display: flex; gap: 12px; margin-top: 12px; }
+        .small-btn { padding: 8px 16px; width: auto; background: #64748b; border-radius: 40px; font-size: 13px; }
+        .small-btn:hover { background: #475569; transform: translateY(-1px); }
+        
+        @media (max-width: 600px) { .container { padding: 18px; } .tabs { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Yazma & Konuşma Platformu</h1>
+        <p class="subtitle">Cloudinary ile Ses Kaydı | Öğretmen Düzeltme Sistemi</p>
+        
+        <!-- LOGIN -->
+        <div id="loginSection" class="login-section">
+            <div class="form-group">
+                <label>👤 Kullanıcı Adı</label>
+                <input type="text" id="username" placeholder="ahmet, ayse veya ogretmen">
+            </div>
+            <div class="form-group">
+                <label>🔒 Şifre</label>
+                <input type="password" id="password" placeholder="Şifre">
+            </div>
+            <button onclick="login()">🚀 Giriş Yap</button>
+            <div id="loginStatus" class="status"></div>
+            <p style="text-align: center; margin-top: 18px; color: #475569; font-size: 13px; background: #f1f5f9; padding: 8px; border-radius: 40px;">
+                📌 Öğrenci: ahmet / 123456 &nbsp;|&nbsp; ayse / 123456<br>
+                👩‍🏫 Öğretmen: ogretmen / admin123
+            </p>
+        </div>
+
+        <!-- STUDENT PANEL -->
+        <div id="studentPanel" class="hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+                <h2>✨ Hoş geldin, <span id="studentName" style="color:#667eea;"></span>!</h2>
+                <button onclick="logout()" style="width: auto; padding: 8px 24px; background: #64748b;">Çıkış</button>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('yazma')">✍️ Yazma</div>
+                <div class="tab" onclick="switchTab('konusma')">🎙️ Konuşma</div>
+            </div>
+
+            <div id="yazmaSection">
+                <div class="form-group">
+                    <label>📌 Soru Seçin</label>
+                    <select id="yazmaSoru">
+                        <option value="">-- Soru seçin --</option>
+                        <option value="Evinizin bahçesi var mı? Varsa neler var? Yoksa bahçe ister misiniz?">🏡 Evinizin bahçesi var mı?</option>
+                        <option value="En son ne zaman doktora gittiniz? Neden gitmiştiniz? Doktor sizi nasıl muayene etti?">🩺 En son ne zaman doktora gittiniz?</option>
+                        <option value="Hangi mevsimde doğdunuz? O mevsimi seviyor musunuz? Neden?">🍂 Hangi mevsimde doğdunuz?</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>📝 Cevabınız</label>
+                    <textarea id="yazmaCevap" placeholder="Cevabınızı yazın..."></textarea>
+                </div>
+                <button onclick="submitYazma()">📤 Gönder</button>
+                <div id="yazmaStatus" class="status"></div>
+            </div>
+
+            <div id="konusmaSection" class="hidden">
+                <div class="form-group">
+                    <label>🎤 Konuşma Sorusu</label>
+                    <select id="konusmaSoru">
+                        <option value="">-- Soru seçin --</option>
+                        <option value="Evinizin bahçesi var mı? Anlatın.">🏡 Evinizin bahçesi</option>
+                        <option value="En son ne zaman doktora gittiniz? Anlatın.">🩺 Doktor ziyaretiniz</option>
+                        <option value="Hangi mevsimde doğdunuz? Neden seversiniz?">🍂 Doğduğunuz mevsim</option>
+                    </select>
+                </div>
+                
+                <div class="record-section">
+                    <p>🎙️ Mikrofon izni verin ve kayda başlayın:</p>
+                    <button class="record-btn" id="recordBtn" onclick="toggleRecord()">🎤</button>
+                    <div class="timer" id="timer">00:00</div>
+                    <div class="audio-preview" id="audioPreview"></div>
+                    <div class="flex-buttons">
+                        <button class="small-btn" onclick="resetRecording()">🔄 Sıfırla</button>
+                    </div>
+                </div>
+                
+                <button onclick="submitKonusma()" id="submitKonusmaBtn" disabled>📡 Cloudinary'e Yükle & Gönder</button>
+                <div id="konusmaStatus" class="status"></div>
+            </div>
+
+            <div style="margin-top: 42px;">
+                <h3>📋 Gönderilerim</h3>
+                <div id="mySubmissions"></div>
+            </div>
+        </div>
+
+        <!-- TEACHER PANEL -->
+        <div id="teacherPanel" class="teacher-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <h2>👨‍🏫 Öğretmen Paneli</h2>
+                <button onclick="logout()" style="width: auto; padding: 8px 24px; background: #64748b;">Çıkış</button>
+            </div>
+            <div id="teacherSubmissions"></div>
+        </div>
+    </div>
+
+    <script>
+        // ============ ✅ CLOUDINARY BİLGİLERİ (DOĞRU) ============
+        const CLOUDINARY_CLOUD_NAME = 'dee5ahvyy';        // ✅ Cloud Name
+        const CLOUDINARY_UPLOAD_PRESET = 'konusma_yazma'; // ✅ Unsigned Preset
+        
+        // ============ Google Sheets (opsiyonel) ============
+        const GOOGLE_SCRIPT_URL = '';  // Varsa URL'nizi girin, yoksa localStorage çalışır
+        
+        // ============ STATE ============
+        let currentUser = null;
+        let isTeacher = false;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordedBlob = null;
+        let recordTimer = null;
+        let recordSeconds = 0;
+        let isRecording = false;
+        let currentStream = null;
+
+        // ============ LOGIN ============
+        async function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!username || !password) {
+                showStatus('loginStatus', 'Lütfen kullanıcı adı ve şifre girin', 'error');
+                return;
+            }
+
+            if (username === 'ogretmen' && password === 'admin123') {
+                currentUser = { username: 'ogretmen', name: 'Öğretmen' };
+                isTeacher = true;
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('teacherPanel').style.display = 'block';
+                loadTeacherSubmissions();
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = { username: username, name: user.name || username };
+                isTeacher = false;
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('studentPanel').classList.remove('hidden');
+                document.getElementById('studentName').textContent = currentUser.name;
+                loadMySubmissions();
+            } else {
+                showStatus('loginStatus', '❌ Hatalı giriş! (Demo: ahmet/123456, ayse/123456, ogretmen/admin123)', 'error');
+            }
+        }
+
+        function logout() {
+            if (mediaRecorder && isRecording) stopRecording();
+            if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+            currentUser = null;
+            isTeacher = false;
+            location.reload();
+        }
+
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('#studentPanel .tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            if (tab === 'yazma') {
+                tabs[0].classList.add('active');
+                document.getElementById('yazmaSection').classList.remove('hidden');
+                document.getElementById('konusmaSection').classList.add('hidden');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('yazmaSection').classList.add('hidden');
+                document.getElementById('konusmaSection').classList.remove('hidden');
+            }
+        }
+
+        // ============ YAZMA ============
+        async function submitYazma() {
+            const soru = document.getElementById('yazmaSoru').value;
+            const cevap = document.getElementById('yazmaCevap').value.trim();
+            
+            if (!soru || !cevap) {
+                showStatus('yazmaStatus', 'Lütfen soru seçin ve cevap yazın!', 'error');
+                return;
+            }
+
+            const data = {
+                id: Date.now(),
+                type: 'yazma',
+                username: currentUser.username,
+                name: currentUser.name,
+                soru: soru,
+                cevap: cevap,
+                tarih: new Date().toLocaleString('tr-TR'),
+                durum: 'Yeni',
+                duzeltme: ''
+            };
+            
+            saveToLocal(data);
+            showStatus('yazmaStatus', '✅ Yazma cevabınız başarıyla gönderildi!', 'success');
+            document.getElementById('yazmaCevap').value = '';
+            loadMySubmissions();
+        }
+
+        // ============ SES KAYDI ============
+        async function toggleRecord() {
+            if (!isRecording) {
+                await startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                currentStream = stream;
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) audioChunks.push(e.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    recordedBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    const audioUrl = URL.createObjectURL(recordedBlob);
+                    document.getElementById('audioPreview').innerHTML = `
+                        <audio controls src="${audioUrl}" style="width: 100%; border-radius: 40px;"></audio>
+                        <div style="font-size:12px; margin-top:8px;">✅ Kayıt hazır. Gönderebilirsiniz.</div>
+                    `;
+                    document.getElementById('submitKonusmaBtn').disabled = false;
+                };
+                
+                mediaRecorder.start(100);
+                isRecording = true;
+                const btn = document.getElementById('recordBtn');
+                btn.classList.add('recording');
+                btn.innerHTML = '⏹️';
+                
+                recordSeconds = 0;
+                if (recordTimer) clearInterval(recordTimer);
+                recordTimer = setInterval(() => {
+                    recordSeconds++;
+                    const mins = Math.floor(recordSeconds / 60).toString().padStart(2, '0');
+                    const secs = (recordSeconds % 60).toString().padStart(2, '0');
+                    document.getElementById('timer').textContent = `${mins}:${secs}`;
+                }, 1000);
+                
+            } catch (err) {
+                console.error(err);
+                showStatus('konusmaStatus', '🎤 Mikrofon erişimi gerekli! İzin verin.', 'error');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                if (currentStream) currentStream.getTracks().forEach(track => track.stop());
+                currentStream = null;
+                isRecording = false;
+                clearInterval(recordTimer);
+                const btn = document.getElementById('recordBtn');
+                btn.classList.remove('recording');
+                btn.innerHTML = '🎤';
+            }
+        }
+        
+        function resetRecording() {
+            if (isRecording) stopRecording();
+            recordedBlob = null;
+            document.getElementById('audioPreview').innerHTML = '';
+            document.getElementById('timer').textContent = '00:00';
+            document.getElementById('submitKonusmaBtn').disabled = true;
+            if (currentStream) currentStream.getTracks().forEach(t => t.stop());
+            currentStream = null;
+        }
+
+        // Cloudinary'e Yükle (Unsigned preset ile)
+        async function uploadToCloudinary(blob, question) {
+            return new Promise(async (resolve, reject) => {
+                try {
+                    const timestamp = Date.now();
+                    const safeUsername = currentUser.username.replace(/[^a-z0-9]/gi, '_');
+                    const shortQuestion = question.substring(0, 30).replace(/[^a-z0-9]/gi, '_');
+                    const fileName = `${safeUsername}_${shortQuestion}_${timestamp}.webm`;
+                    
+                    const formData = new FormData();
+                    formData.append('file', blob, fileName);
+                    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+                    
+                    const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
+                    console.log('Yükleniyor:', url);
+                    
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    if (data.secure_url) {
+                        resolve(data.secure_url);
+                    } else {
+                        reject(new Error('Cloudinary hatası: ' + JSON.stringify(data)));
+                    }
+                } catch (err) {
+                    reject(err);
+                }
+            });
+        }
+
+        async function submitKonusma() {
+            const soru = document.getElementById('konusmaSoru').value;
+            
+            if (!soru || !recordedBlob) {
+                showStatus('konusmaStatus', 'Lütfen soru seçin ve ses kaydı yapın!', 'error');
+                return;
+            }
+
+            showStatus('konusmaStatus', '📤 Ses dosyası Cloudinary\'e yükleniyor...', 'info');
+            
+            try {
+                const audioUrl = await uploadToCloudinary(recordedBlob, soru);
+                
+                const submissionData = {
+                    id: Date.now(),
+                    type: 'konusma',
+                    username: currentUser.username,
+                    name: currentUser.name,
+                    soru: soru,
+                    audioUrl: audioUrl,
+                    tarih: new Date().toLocaleString('tr-TR'),
+                    durum: 'Yeni',
+                    duzeltme: ''
+                };
+                
+                saveToLocal(submissionData);
+                showStatus('konusmaStatus', '✅ Ses kaydınız Cloudinary\'e yüklendi ve gönderildi!', 'success');
+                resetRecording();
+                document.getElementById('konusmaSoru').value = '';
+                loadMySubmissions();
+                
+            } catch (error) {
+                console.error('Cloudinary hatası:', error);
+                showStatus('konusmaStatus', '❌ Yükleme başarısız: ' + error.message, 'error');
+            }
+        }
+
+        // ============ LOCAL STORAGE ============
+        function saveToLocal(data) {
+            let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+            submissions.push(data);
+            localStorage.setItem('submissions', JSON.stringify(submissions));
+        }
+
+        function loadMySubmissions() {
+            const container = document.getElementById('mySubmissions');
+            let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+            submissions = submissions.filter(s => s.username === currentUser.username);
+            
+            if (submissions.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 24px;">📭 Henüz gönderiniz yok.</p>';
+                return;
+            }
+            
+            container.innerHTML = submissions.reverse().map(s => `
+                <div class="submission-card">
+                    <div class="submission-header">
+                        <div>
+                            <span class="badge ${s.type}">${s.type === 'yazma' ? '✍️ Yazma' : '🎙️ Konuşma'}</span>
+                            <span class="badge ${s.durum === 'Yeni' ? 'yeni' : 'duzeltildi'}">${s.durum}</span>
+                        </div>
+                        <span style="font-size:12px;">${s.tarih}</span>
+                    </div>
+                    <p><strong>Soru:</strong> ${s.soru.substring(0, 100)}</p>
+                    ${s.type === 'yazma' ? `<div style="background:#f8fafc; padding:12px; border-radius:18px;"><strong>Cevap:</strong> ${s.cevap}</div>` : 
+                      `<p><strong>Ses Kaydı:</strong> <a href="${s.audioUrl}" target="_blank" style="color:#667eea;">🎧 Cloudinary'de Dinle</a></p>`}
+                    ${s.duzeltme ? `<div style="background:#eef2ff; padding:12px; border-radius:18px; margin-top:12px;"><strong>📝 Öğretmen Düzeltmesi:</strong><br>${s.duzeltme}</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // ============ TEACHER PANEL ============
+        function loadTeacherSubmissions() {
+            const container = document.getElementById('teacherSubmissions');
+            let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+            
+            if (submissions.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; text-align: center; padding: 32px;">Henüz gönderi yok.</p>';
+                return;
+            }
+            
+            container.innerHTML = submissions.reverse().map(s => `
+                <div class="submission-card">
+                    <div class="submission-header">
+                        <div>
+                            <span class="badge ${s.type}">${s.type === 'yazma' ? '✍️ Yazma' : '🎙️ Konuşma'}</span>
+                            <span class="badge ${s.durum === 'Yeni' ? 'yeni' : 'duzeltildi'}">${s.durum}</span>
+                            <strong style="margin-left: 12px;">👩‍🎓 ${s.name} (${s.username})</strong>
+                        </div>
+                        <span style="font-size:12px;">${s.tarih}</span>
+                    </div>
+                    <p><strong>Soru:</strong> ${s.soru}</p>
+                    ${s.type === 'yazma' 
+                        ? `<div style="background:#f1f5f9; padding: 14px; border-radius: 20px; margin: 12px 0;"><strong>Öğrenci Cevabı:</strong><br>${s.cevap}</div>`
+                        : `<p><strong>🔊 Ses:</strong> <a href="${s.audioUrl}" target="_blank">🎵 Dinle (Cloudinary)</a></p>`
+                    }
+                    <div style="margin-top: 18px;">
+                        <textarea id="duzeltme-${s.id}" placeholder="Düzeltme yazın..." style="min-height: 80px; border-radius: 20px;">${s.duzeltme || ''}</textarea>
+                        <button onclick="saveDuzeltme(${s.id})" style="width: auto; padding: 10px 28px; margin-top: 10px;">✏️ Kaydet</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveDuzeltme(id) {
+            const duzeltme = document.getElementById(`duzeltme-${id}`).value;
+            let submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+            const index = submissions.findIndex(s => s.id === id);
+            
+            if (index !== -1) {
+                submissions[index].duzeltme = duzeltme;
+                submissions[index].durum = 'Düzeltildi';
+                localStorage.setItem('submissions', JSON.stringify(submissions));
+                loadTeacherSubmissions();
+                if (!isTeacher && currentUser) loadMySubmissions();
+                showStatus('loginStatus', 'Düzeltme kaydedildi!', 'success');
+                setTimeout(() => {
+                    const st = document.getElementById('loginStatus');
+                    if(st) st.style.display = 'none';
+                }, 1500);
+            }
+        }
+
+        function showStatus(id, message, type) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = message;
+            el.className = `status ${type}`;
+            el.style.display = 'block';
+            setTimeout(() => { if(el) el.style.display = 'none'; }, 4500);
+        }
+
+        // Demo kullanıcıları
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify([
+                { username: 'ahmet', password: '123456', name: 'Ahmet Yılmaz' },
+                { username: 'ayse', password: '123456', name: 'Ayşe Demir' }
+            ]));
+        }
+        if (!localStorage.getItem('submissions')) localStorage.setItem('submissions', '[]');
+    </script>
+</body>
+</html>
