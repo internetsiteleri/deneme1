@@ -256,31 +256,8 @@
         <p>Butonlara tıklayarak içerikleri görün</p>
     </div>
 
-    <!-- BUTONLAR (YAN YANA) -->
+    <!-- BUTONLAR (YAN YANA) - KALANLAR -->
     <div class="buttons-grid">
-        <div class="menu-btn" onclick="showSection('okumaTestleri')">
-            <div class="icon">📖</div>
-            <div class="title">OKUMA TESTLERİ</div>
-        </div>
-        <div class="menu-btn" onclick="showSection('a1Kelimeler')">
-            <div class="icon">🃟</div>
-            <div class="title">A1 KELİME KARTLARI</div>
-        </div>
-        <div class="menu-btn" onclick="showSection('b2c1Kelimeler')">
-            <div class="icon">📚</div>
-            <div class="title">B2/C1 KELİME KARTLARI</div>
-        </div>
-        <div class="menu-btn" onclick="showSection('dinlemeTestleri')">
-            <div class="icon">🎧</div>
-            <div class="title">DİNLEME TESTLERİ</div>
-        </div>
-    </div>
-
-    <div class="buttons-grid">
-        <div class="menu-btn" onclick="showSection('okumaAlistirmalar')">
-            <div class="icon">✍️</div>
-            <div class="title">OKUMA ALIŞTIRMALARI</div>
-        </div>
         <div class="menu-btn" onclick="showSection('yazmaSorulari')">
             <div class="icon">📝</div>
             <div class="title">YAZMA SORULARI</div>
@@ -289,79 +266,14 @@
             <div class="icon">💬</div>
             <div class="title">KONUŞMA SORULARI</div>
         </div>
-        <div class="menu-btn" onclick="showSection('dinlemeAlistirmalar')">
-            <div class="icon">🎤</div>
-            <div class="title">DİNLEME ALIŞTIRMALARI</div>
+        <div class="menu-btn" onclick="openOdevKontrol()">
+            <div class="icon">📋✏️</div>
+            <div class="title">ÖDEV KONTROLÜ</div>
         </div>
-    </div>
-
-    <div class="buttons-grid">
-        <div class="menu-btn" onclick="showSection('okumaMetinleri')">
-            <div class="icon">📖</div>
-            <div class="title">OKUMA METİNLERİ</div>
-        </div>
-        <!-- KOMPOZİSYON UYGULAMASI BUTONU -->
-        <div class="menu-btn" onclick="openCompositionApp()">
-            <div class="icon">✍️✨</div>
-            <div class="title">KOMPOZİSYON UYGULAMASI</div>
-        </div>
-        <!-- KOMPOZİSYON ARTIFACTS BUTONU -->
-        <div class="menu-btn" onclick="openCompositionArtifact()">
-            <div class="icon">📄✨</div>
-            <div class="title">KOMP. ARTIFACT. 1</div>
-        </div>
-        <!-- VİDEO DERSLER BUTONU -->
-        <div class="menu-btn" onclick="openVideoDersler()">
-            <div class="icon">🎬</div>
-            <div class="title">VİDEO DERSLER</div>
-        </div>
+        <div class="menu-btn" style="opacity:0; cursor:default; border-color:#1a2332;"></div>
     </div>
 
     <!-- İÇERİK BÖLÜMLERİ -->
-    <div id="okumaTestleri" class="content-section">
-        <div class="section-header">📖 OKUMA TESTLERİ</div>
-        <div class="section-items">
-            <a onclick="requireLogin('okuma1.html')"><span class="test-adi">📄 Okuma Testi 1</span><span class="test-badge">🔒 Giriş Gerekli</span></a>
-            <a onclick="requireLogin('okuma2.html')"><span class="test-adi">📄 Okuma Testi 2</span><span class="test-badge">🔒 Giriş Gerekli</span></a>
-            <a onclick="requireLogin('okuma3.html')"><span class="test-adi">📄 Okuma Testi 3</span><span class="test-badge">🔒 Giriş Gerekli</span></a>
-        </div>
-    </div>
-
-    <div id="a1Kelimeler" class="content-section">
-        <div class="section-header">🃟 A1 KELİME KARTLARI</div>
-        <div class="section-items">
-            <a href="kartlar.html"><span class="test-adi">🇹🇷 Selamlaşma Kartları</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🏠 Günlük Hayat</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🍽️ Yiyecekler</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-        </div>
-    </div>
-
-    <div id="b2c1Kelimeler" class="content-section">
-        <div class="section-header">📚 B2/C1 KELİME KARTLARI</div>
-        <div class="section-items">
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📖 Akademik Kelimeler</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">💼 İş Dünyası</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🌍 Soyut Kavramlar</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-        </div>
-    </div>
-
-    <div id="dinlemeTestleri" class="content-section">
-        <div class="section-header">🎧 DİNLEME TESTLERİ</div>
-        <div class="section-items">
-            <a onclick="requireLogin('dinleme1.html')"><span class="test-adi">🎵 Dinleme Testi 1</span><span class="test-badge">🔒 Giriş Gerekli</span></a>
-            <a onclick="requireLogin('dinleme2.html')"><span class="test-adi">🎵 Dinleme Testi 2</span><span class="test-badge">🔒 Giriş Gerekli</span></a>
-            <a onclick="requireLogin('dinleme3.html')"><span class="test-adi">🎵 Dinleme Testi 3</span><span class="test-badge">🔒 Giriş Gerekli</span></a>
-        </div>
-    </div>
-
-    <div id="okumaAlistirmalar" class="content-section">
-        <div class="section-header">✍️ OKUMA ALIŞTIRMALARI</div>
-        <div class="section-items">
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📝 Boşluk Doldurma</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🔄 Eşleştirme</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-        </div>
-    </div>
-
     <div id="yazmaSorulari" class="content-section">
         <div class="section-header">📝 YAZMA SORULARI</div>
         <div class="section-items">
@@ -378,27 +290,9 @@
         </div>
     </div>
 
-    <div id="dinlemeAlistirmalar" class="content-section">
-        <div class="section-header">🎤 DİNLEME ALIŞTIRMALARI</div>
-        <div class="section-items">
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🎧 Diyalog Tamamlama</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📝 Dikte Çalışması</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-        </div>
-    </div>
-
-    <div id="okumaMetinleri" class="content-section">
-        <div class="section-header">📖 OKUMA METİNLERİ</div>
-        <div class="section-items">
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🌍 Küresel Isınma</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🤖 Yapay Zeka</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🚗 Elektrikli Araçlar</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-        </div>
-    </div>
-
     <div class="footer">
-        💡 Butonlara tıklayarak içerikleri açın. Kelime kartları ve alıştırmalar herkese açıktır. Testler için giriş yapın.
-        <br>✍️ Kompozisyon Uygulaması ve Kompozisyon Artifacts ile yazma becerilerinizi geliştirin!
-        <br>🎬 Video Dersler ile soru çözüm tekniklerini öğrenin!
+        💡 Butonlara tıklayarak içerikleri açın.
+        <br>📋 Ödev Kontrolü ile konuşma ve yazma ödevlerinizi değerlendirin!
     </div>
 </div>
 
@@ -416,7 +310,8 @@
 </div>
 
 <script>
-const SHEET_ID = "11adJGi08o_bXfyzWuZoFVMiFOpS7c_LuM3ypeSkxHcU";
+// GÜNCELLENMİŞ GOOGLE SHEETS BAĞLANTISI
+const SHEET_ID = "1A9WkX140SktnCldNVcUN-RtGv3jUA0j-p3UV-t9qS6k";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
 
 let userList = [];
@@ -433,13 +328,27 @@ async function fetchUserList() {
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             if (row.c && row.c[0] && row.c[1]) {
+                // Tarih formatını düzenle (GG-AA-YYYY)
+                let expiryRaw = row.c[2]?.v?.toString().trim() || "";
+                let expiryDate = "";
+                if (expiryRaw) {
+                    // GG-AA-YYYY formatını YYYY-AA-GG'ye çevir
+                    const parts = expiryRaw.split('-');
+                    if (parts.length === 3) {
+                        expiryDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                    } else {
+                        expiryDate = expiryRaw;
+                    }
+                }
+                
                 userList.push({
                     username: row.c[0].v?.toString().toLowerCase().trim(),
                     password: row.c[1].v?.toString().trim(),
-                    expiryDate: row.c[2]?.v?.toString().trim() || ""
+                    expiryDate: expiryDate
                 });
             }
         }
+        console.log("Kullanıcı listesi yüklendi:", userList);
     } catch (error) {
         console.error("Google Sheets yüklenirken hata:", error);
     }
@@ -520,17 +429,9 @@ function showSection(sectionId) {
     }
 }
 
-function openCompositionApp() {
-    window.location.href = "kompozisyon_uygulaması.html";
-}
-
-function openCompositionArtifact() {
-    window.location.href = "kompozisyon_uygulamasi_artifacts.html";
-}
-
-// VİDEO DERSLER - soru_cozum_teknikleri.html dosyasını açar
-function openVideoDersler() {
-    window.location.href = "soru_cozum_teknikleri.html";
+// ÖDEV KONTROLÜ - konusma_yazma_deepseek.html dosyasını açar
+function openOdevKontrol() {
+    window.location.href = "konusma_yazma_deepseek.html";
 }
 
 window.onload = function() {
