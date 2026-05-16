@@ -2,8 +2,8 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamza Hoca - Türkçe Öğreniyorum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Hamza Hoca - Türkçe Öğreniyorum | Ödev ve Testler</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
             min-height: 100vh;
             padding: 40px 20px;
@@ -33,6 +33,7 @@
             color: #F5C842;
             margin-bottom: 10px;
             line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .header p {
@@ -54,7 +55,7 @@
             margin: 20px auto;
         }
 
-        /* BUTON GRİDİ */
+        /* BUTON GRİDİ (4 BUTON: yazma, konuşma, ödev kontrol, ödev gönder) */
         .buttons-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -82,12 +83,14 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
         }
 
         .menu-btn:hover {
             background: #2a3a4a;
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-color: #ffda6e;
         }
 
         .menu-btn .icon {
@@ -179,8 +182,10 @@
         .footer {
             text-align: center;
             margin-top: 40px;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.6);
             font-size: 0.8rem;
+            border-top: 1px solid rgba(245,200,66,0.3);
+            padding-top: 20px;
         }
 
         /* GİRİŞ MODALI */
@@ -191,23 +196,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(6px);
         }
         .modal-content {
             background: white;
-            border-radius: 24px;
+            border-radius: 28px;
             padding: 40px;
             max-width: 400px;
             width: 90%;
             text-align: center;
             position: relative;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
         }
         .modal-content h3 {
             font-size: 24px;
             margin-bottom: 10px;
+            color: #0D1B2A;
         }
         .modal-content p {
             color: #666;
@@ -218,8 +226,13 @@
             padding: 12px;
             margin-bottom: 15px;
             border: 2px solid #ddd;
-            border-radius: 10px;
+            border-radius: 14px;
             font-size: 16px;
+            transition: 0.2s;
+        }
+        .modal-content input:focus {
+            border-color: #F5C842;
+            outline: none;
         }
         .modal-content button {
             background: linear-gradient(135deg, #F5C842, #C9960A);
@@ -230,6 +243,12 @@
             border-radius: 40px;
             cursor: pointer;
             width: 100%;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+        .modal-content button:hover {
+            transform: scale(0.98);
+            background: linear-gradient(135deg, #e0b432, #b87f08);
         }
         .modal-error {
             color: #e74c3c;
@@ -241,9 +260,18 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: #999;
+            transition: 0.2s;
+        }
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        /* ek küçük animasyon */
+        .menu-btn:active {
+            transform: scale(0.97);
         }
     </style>
 </head>
@@ -253,10 +281,10 @@
         <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
         <div class="stars">★ ★ ★ ★ ★</div>
         <div class="divider"></div>
-        <p>Butonlara tıklayarak içerikleri görün</p>
+        <p>📌 Ders materyallerine erişmek için butonları keşfet</p>
     </div>
 
-    <!-- BUTONLAR (YAN YANA) - KALANLAR -->
+    <!-- BUTONLAR: 4 AKTİF BUTON (Yazma soruları, Konuşma soruları, Ödev Kontrolü, Ödev Gönder) -->
     <div class="buttons-grid">
         <div class="menu-btn" onclick="showSection('yazmaSorulari')">
             <div class="icon">📝</div>
@@ -270,52 +298,58 @@
             <div class="icon">📋✏️</div>
             <div class="title">ÖDEV KONTROLÜ</div>
         </div>
-        <div class="menu-btn" style="opacity:0; cursor:default; border-color:#1a2332;"></div>
+        <!-- YENİ EKLENEN BUTON: Ödev Gönder (3. butonun hemen yanı / 4. sırada) -->
+        <div class="menu-btn" onclick="openOdevGonder()">
+            <div class="icon">📤✨</div>
+            <div class="title">ÖDEV GÖNDER</div>
+        </div>
     </div>
 
     <!-- İÇERİK BÖLÜMLERİ -->
     <div id="yazmaSorulari" class="content-section">
         <div class="section-header">📝 YAZMA SORULARI</div>
         <div class="section-items">
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">✍️ Kompozisyon</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">📧 Dilekçe Örnekleri</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
+            <a onclick="alert('📌 Kompozisyon konuları yakında eklenecek. Şimdilik ücretsiz içerik!')"><span class="test-adi">✍️ Kompozisyon & Hikaye</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
+            <a onclick="alert('📧 Dilekçe örnekleri, iş mektupları için rehber. Yakında!')"><span class="test-adi">📧 Dilekçe & Resmi Yazı</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
+            <a onclick="alert('Paragraf tamamlama ve anlatım bozuklukları egzersizleri.')"><span class="test-adi">✏️ Anlatım Teknikleri</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
         </div>
     </div>
 
     <div id="konusmaSorulari" class="content-section">
         <div class="section-header">💬 KONUŞMA SORULARI</div>
         <div class="section-items">
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🗣️ Günlük Konuşmalar</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
-            <a onclick="alert('Hazırlanıyor...')"><span class="test-adi">🎭 Rol Yapma</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
+            <a onclick="alert('Günlük hayatta sık kullanılan kalıplar, diyaloglar.')"><span class="test-adi">🗣️ Günlük Konuşmalar</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
+            <a onclick="alert('Rol yapma senaryoları: market, hastane, iş görüşmesi.')"><span class="test-adi">🎭 Rol Yapma Aktiviteleri</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
+            <a onclick="alert('Aile, arkadaş, seyahat gibi temalara özel sorular.')"><span class="test-adi">💭 Temalı Konuşmalar</span><span class="test-badge free-badge">✅ Ücretsiz</span></a>
         </div>
     </div>
 
     <div class="footer">
-        💡 Butonlara tıklayarak içerikleri açın.
-        <br>📋 Ödev Kontrolü ile konuşma ve yazma ödevlerinizi değerlendirin!
+        💡 Butonlara tıklayarak ödev materyallerine ulaşın.<br>
+        📋 Ödev Kontrolü ile yapay zeka destekli değerlendirme, ✨ Ödev Gönder ile çalışmalarınızı iletebilirsiniz.
     </div>
 </div>
 
-<!-- GİRİŞ MODALI -->
+<!-- GİRİŞ MODALI (isterseniz kullanıcı doğrulaması için hazır) -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
-        <h3>🔐 Giriş Yapın</h3>
-        <p>Bu teste erişmek için lütfen giriş yapın.</p>
-        <input type="text" id="modalUsername" placeholder="Kullanıcı Adı">
+        <h3>🔐 Öğrenci Girişi</h3>
+        <p>Bu bölüme erişmek için kullanıcı bilgilerinizi girin.</p>
+        <input type="text" id="modalUsername" placeholder="Kullanıcı Adı (e-posta veya rumuz)">
         <input type="password" id="modalPassword" placeholder="Şifre">
-        <button onclick="modalLogin()">Giriş Yap</button>
-        <div class="modal-error" id="modalError">Kullanıcı adı veya şifre hatalı!</div>
+        <button onclick="modalLogin()">Giriş Yap ve Devam Et</button>
+        <div class="modal-error" id="modalError">Kullanıcı adı veya şifre hatalı / süresi dolmuş!</div>
     </div>
 </div>
 
 <script>
-// GÜNCELLENMİŞ GOOGLE SHEETS BAĞLANTISI
+// GOOGLE SHEETS BAĞLANTISI (mevcut yapı)
 const SHEET_ID = "1A9WkX140SktnCldNVcUN-RtGv3jUA0j-p3UV-t9qS6k";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
 
 let userList = [];
-let pendingUrl = null;
+let pendingUrl = null;      // giriş sonrası yönlendirme için (genel kullanım)
 
 async function fetchUserList() {
     try {
@@ -328,11 +362,9 @@ async function fetchUserList() {
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             if (row.c && row.c[0] && row.c[1]) {
-                // Tarih formatını düzenle (GG-AA-YYYY)
                 let expiryRaw = row.c[2]?.v?.toString().trim() || "";
                 let expiryDate = "";
                 if (expiryRaw) {
-                    // GG-AA-YYYY formatını YYYY-AA-GG'ye çevir
                     const parts = expiryRaw.split('-');
                     if (parts.length === 3) {
                         expiryDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
@@ -340,7 +372,6 @@ async function fetchUserList() {
                         expiryDate = expiryRaw;
                     }
                 }
-                
                 userList.push({
                     username: row.c[0].v?.toString().toLowerCase().trim(),
                     password: row.c[1].v?.toString().trim(),
@@ -348,9 +379,9 @@ async function fetchUserList() {
                 });
             }
         }
-        console.log("Kullanıcı listesi yüklendi:", userList);
+        console.log("✅ Kullanıcı listesi yüklendi, toplam:", userList.length);
     } catch (error) {
-        console.error("Google Sheets yüklenirken hata:", error);
+        console.error("❌ Google Sheets bağlantı hatası:", error);
     }
 }
 
@@ -363,6 +394,7 @@ function isExpired(expiryDateStr) {
     return today > expiryDate;
 }
 
+// Giriş gerektiren sayfa/link açma (mevcut mantık, ödev gönderme butonu için kullanılmayacak çünkü harici link)
 function requireLogin(url) {
     if (sessionStorage.getItem('loggedInUser')) {
         window.location.href = url;
@@ -393,7 +425,7 @@ async function modalLogin() {
     const user = userList.find(u => u.username === username && u.password === password);
     
     if (!user) {
-        errorDiv.textContent = 'Kullanıcı adı veya şifre hatalı!';
+        errorDiv.textContent = '❌ Kullanıcı adı veya şifre hatalı!';
         errorDiv.style.display = 'block';
         return;
     }
@@ -416,6 +448,7 @@ function closeModal() {
     pendingUrl = null;
 }
 
+// Bölüm göster / gizle (yazma-konuşma içerikleri)
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
@@ -429,13 +462,38 @@ function showSection(sectionId) {
     }
 }
 
-// ÖDEV KONTROLÜ - konusma_yazma_deepseek.html dosyasını açar
+// ÖDEV KONTROLÜ - konusma_yazma_deepseek.html dosyasını açar (mevcut)
 function openOdevKontrol() {
+    // Not: bu dosya aynı dizinde bulunmalıdır. Eğer farklı bir yerde ise düzenlenebilir.
     window.location.href = "konusma_yazma_deepseek.html";
 }
 
+// **** YENİ EKLENEN FONKSİYON: ÖDEV GÖNDER BUTONU ****
+// Açılması istenen adres: https://composition-creator-kit.lovable.app/
+function openOdevGonder() {
+    // Doğrudan belirtilen URL'yi yeni sekmede açabiliriz veya aynı pencerede.
+    // Kullanıcı deneyimi için yeni sekmede açmak daha iyi olur, ödev yükleme aracına yönlendirir.
+    window.open("https://composition-creator-kit.lovable.app/", "_blank");
+    // İsteğe bağlı olarak küçük bir bilgilendirme de yapılabilir:
+    // console.log("Ödev gönderme sayfası açılıyor: kompozisyon oluşturma asistanı");
+}
+// ************************************************
+
+// Sayfa yüklendiğinde kullanıcı listesini al, modal kapalı olsun
 window.onload = function() {
     fetchUserList();
+    // Varsayılan olarak hiçbir içerik gösterilmeyecek (sadece butonlara tıklanınca)
+    // Kullanıcı oturum bilgisini kontrol et (isteğe bağlı)
+    if (sessionStorage.getItem('loggedInUser')) {
+        console.log("Hoşgeldiniz, oturum açık: " + sessionStorage.getItem('loggedInUser'));
+    }
+    // Butonlara hafif dokunuş
+    const btns = document.querySelectorAll('.menu-btn');
+    btns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // Sadece tetikleme için (özel fonksiyonlar zaten mevcut)
+        });
+    });
 };
 </script>
 </body>
