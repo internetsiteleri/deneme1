@@ -470,12 +470,10 @@ function openOdevKontrol() {
 
 // **** YENİ EKLENEN FONKSİYON: ÖDEV GÖNDER BUTONU ****
 // Açılması istenen adres: https://composition-creator-kit.lovable.app/
+// GÜNCELLEME: Artık yeni sekme açılmaz, aynı sekmede yönlendirme yapılır.
 function openOdevGonder() {
-    // Doğrudan belirtilen URL'yi yeni sekmede açabiliriz veya aynı pencerede.
-    // Kullanıcı deneyimi için yeni sekmede açmak daha iyi olur, ödev yükleme aracına yönlendirir.
-    window.open("https://composition-creator-kit.lovable.app/", "_blank");
-    // İsteğe bağlı olarak küçük bir bilgilendirme de yapılabilir:
-    // console.log("Ödev gönderme sayfası açılıyor: kompozisyon oluşturma asistanı");
+    // Yeni sekme yerine aynı pencerede (mevcut sekmede) yönlendir.
+    window.location.href = "https://composition-creator-kit.lovable.app/";
 }
 // ************************************************
 
