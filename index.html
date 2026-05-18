@@ -55,7 +55,7 @@
             margin: 20px auto;
         }
 
-        /* BUTON GRİDİ (4 BUTON: yazma, konuşma, ödev kontrol, ödev gönder) */
+        /* BUTON GRİDİ (4 BUTON) */
         .buttons-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -179,6 +179,43 @@
             background: #2a9d8f;
         }
 
+        /* Ödev gönder bölümü için özel seçenek kartları (konuşma sorularındaki gibi) */
+        .odev-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 16px 20px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .odev-option:hover {
+            background: #eef2ff;
+            transform: translateX(6px);
+            border-color: #F5C842;
+        }
+        .odev-icon {
+            font-size: 1.6rem;
+            margin-right: 12px;
+        }
+        .odev-text {
+            flex: 1;
+        }
+        .odev-badge {
+            background: #eab30820;
+            color: #b45309;
+            padding: 4px 12px;
+            border-radius: 24px;
+            font-size: 0.75rem;
+            font-weight: normal;
+        }
+
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -269,7 +306,6 @@
             color: #333;
         }
         
-        /* ek küçük animasyon */
         .menu-btn:active {
             transform: scale(0.97);
         }
@@ -284,7 +320,7 @@
         <p>📌 Ders materyallerine erişmek için butonları keşfet</p>
     </div>
 
-    <!-- BUTONLAR: 4 AKTİF BUTON (Yazma soruları, Konuşma soruları, Ödev Kontrolü, Ödev Gönder) -->
+    <!-- BUTONLAR: 4 BUTON (Yazma, Konuşma, Ödev Kontrolü, Ödev Gönder) -->
     <div class="buttons-grid">
         <div class="menu-btn" onclick="showSection('yazmaSorulari')">
             <div class="icon">📝</div>
@@ -298,14 +334,15 @@
             <div class="icon">📋✏️</div>
             <div class="title">ÖDEV KONTROLÜ</div>
         </div>
-        <!-- YENİ EKLENEN BUTON: Ödev Gönder (3. butonun hemen yanı / 4. sırada) -->
-        <div class="menu-btn" onclick="openOdevGonder()">
+        <!-- ÖDEV GÖNDER BUTONU: artık showSection ile içerik açar (konuşma soruları gibi) -->
+        <div class="menu-btn" onclick="showSection('odevGonder')">
             <div class="icon">📤✨</div>
             <div class="title">ÖDEV GÖNDER</div>
         </div>
     </div>
 
     <!-- İÇERİK BÖLÜMLERİ -->
+    <!-- Yazma Soruları -->
     <div id="yazmaSorulari" class="content-section">
         <div class="section-header">📝 YAZMA SORULARI</div>
         <div class="section-items">
@@ -315,6 +352,7 @@
         </div>
     </div>
 
+    <!-- Konuşma Soruları -->
     <div id="konusmaSorulari" class="content-section">
         <div class="section-header">💬 KONUŞMA SORULARI</div>
         <div class="section-items">
@@ -324,13 +362,36 @@
         </div>
     </div>
 
+    <!-- YENİ: ÖDEV GÖNDER BÖLÜMÜ (konuşma soruları formatında, içinde iki seçenek) -->
+    <div id="odevGonder" class="content-section">
+        <div class="section-header">📤 ÖDEV GÖNDERİM SEÇENEKLERİ</div>
+        <div class="section-items" style="grid-template-columns: 1fr;">
+            <!-- Kompozisyon Gönder seçeneği -->
+            <div class="odev-option" id="kompozisyonGonderBtn">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="odev-icon">✍️📄</span>
+                    <span class="odev-text"><strong>Kompozisyon Gönder</strong><br><span style="font-size: 0.8rem; color: #475569;">Yapay zeka destekli kompozisyon aracına yönlendirilirsiniz.</span></span>
+                </div>
+                <span class="odev-badge">🚀 Yönlendir</span>
+            </div>
+            <!-- E-posta Gönder seçeneği -->
+            <div class="odev-option" id="epostaGonderBtn">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="odev-icon">📧✉️</span>
+                    <span class="odev-text"><strong>E-posta Gönder</strong><br><span style="font-size: 0.8rem; color: #475569;">Çalışmanızı doğrudan hocanıza e-posta ile iletin.</span></span>
+                </div>
+                <span class="odev-badge">📬 Mail Aç</span>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         💡 Butonlara tıklayarak ödev materyallerine ulaşın.<br>
         📋 Ödev Kontrolü ile yapay zeka destekli değerlendirme, ✨ Ödev Gönder ile çalışmalarınızı iletebilirsiniz.
     </div>
 </div>
 
-<!-- GİRİŞ MODALI (isterseniz kullanıcı doğrulaması için hazır) -->
+<!-- GİRİŞ MODALI (Google Sheets doğrulama) -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -344,12 +405,12 @@
 </div>
 
 <script>
-// GOOGLE SHEETS BAĞLANTISI (mevcut yapı)
+// GOOGLE SHEETS BAĞLANTISI (mevcut)
 const SHEET_ID = "1A9WkX140SktnCldNVcUN-RtGv3jUA0j-p3UV-t9qS6k";
 const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=0`;
 
 let userList = [];
-let pendingUrl = null;      // giriş sonrası yönlendirme için (genel kullanım)
+let pendingUrl = null;      // giriş sonrası yönlendirme için
 
 async function fetchUserList() {
     try {
@@ -394,7 +455,6 @@ function isExpired(expiryDateStr) {
     return today > expiryDate;
 }
 
-// Giriş gerektiren sayfa/link açma (mevcut mantık, ödev gönderme butonu için kullanılmayacak çünkü harici link)
 function requireLogin(url) {
     if (sessionStorage.getItem('loggedInUser')) {
         window.location.href = url;
@@ -448,7 +508,7 @@ function closeModal() {
     pendingUrl = null;
 }
 
-// Bölüm göster / gizle (yazma-konuşma içerikleri)
+// Bölüm göster / gizle (yazma, konuşma, ödev gönder)
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.content-section');
     sections.forEach(section => {
@@ -462,36 +522,50 @@ function showSection(sectionId) {
     }
 }
 
-// ÖDEV KONTROLÜ - konusma_yazma_deepseek.html dosyasını açar (mevcut)
+// ÖDEV KONTROLÜ - konusma_yazma_deepseek.html yönlendirmesi
 function openOdevKontrol() {
-    // Not: bu dosya aynı dizinde bulunmalıdır. Eğer farklı bir yerde ise düzenlenebilir.
     window.location.href = "konusma_yazma_deepseek.html";
 }
 
-// **** YENİ EKLENEN FONKSİYON: ÖDEV GÖNDER BUTONU ****
-// Açılması istenen adres: https://composition-creator-kit.lovable.app/
-// GÜNCELLEME: Artık yeni sekme açılmaz, aynı sekmede yönlendirme yapılır.
-function openOdevGonder() {
-    // Yeni sekme yerine aynı pencerede (mevcut sekmede) yönlendir.
+// ÖDEV GÖNDER bölümü içindeki işlevler (giriş gerektirmez, doğrudan çalışır)
+function openCompositionSender() {
+    // Kompozisyon gönder butonunun yönlendirmesi: composition-creator-kit.lovable.app
     window.location.href = "https://composition-creator-kit.lovable.app/";
 }
-// ************************************************
 
-// Sayfa yüklendiğinde kullanıcı listesini al, modal kapalı olsun
+function openEmailSender() {
+    // E-posta gönder: hocanın mail adresi (değiştirilebilir)
+    const mailAddress = "hamza.hoca@turkceogreniyorum.com";
+    const subject = encodeURIComponent("Türkçe Ödevi Teslimi - Kompozisyon / Çalışma");
+    const body = encodeURIComponent("Merhaba Hamza Hocam,\n\nÖdev çalışmamı ekte gönderiyorum. İyi değerlendirmeler.\n\nAd Soyad:\nSınıf/Numara:\n\nTeşekkürler.");
+    window.location.href = `mailto:${mailAddress}?subject=${subject}&body=${body}`;
+}
+
+// Sayfa yüklendiğinde buton dinleyicileri ve kullanıcı listesi
 window.onload = function() {
     fetchUserList();
-    // Varsayılan olarak hiçbir içerik gösterilmeyecek (sadece butonlara tıklanınca)
-    // Kullanıcı oturum bilgisini kontrol et (isteğe bağlı)
+    
+    // Ödev Gönder bölümü içindeki özel butonlara olay bağlama
+    const kompozisyonBtn = document.getElementById('kompozisyonGonderBtn');
+    const epostaBtn = document.getElementById('epostaGonderBtn');
+    
+    if (kompozisyonBtn) {
+        kompozisyonBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openCompositionSender();
+        });
+    }
+    
+    if (epostaBtn) {
+        epostaBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            openEmailSender();
+        });
+    }
+    
     if (sessionStorage.getItem('loggedInUser')) {
         console.log("Hoşgeldiniz, oturum açık: " + sessionStorage.getItem('loggedInUser'));
     }
-    // Butonlara hafif dokunuş
-    const btns = document.querySelectorAll('.menu-btn');
-    btns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            // Sadece tetikleme için (özel fonksiyonlar zaten mevcut)
-        });
-    });
 };
 </script>
 </body>
