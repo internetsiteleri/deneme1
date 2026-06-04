@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinleme Alıştırması 2 – Hamza Hoca</title>
+<style>
+  :root {
+    --gold:#F5C842; --gold-dark:#C9960A;
+    --bg:#0D1B2A; --text:#F0EAD6;
+    --correct:#2ECC71; --wrong:#E74C3C; --neutral:#3A506B;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    background:linear-gradient(135deg,#0D1B2A 0%,#1a2a3a 100%);
+    color:var(--text); min-height:100vh; overflow-x:hidden;
+  }
+  header { text-align:center; padding:2.5rem 1rem 1.2rem; }
+  .header-badge {
+    display:inline-block; background:linear-gradient(135deg,#F5C842,#C9960A);
+    color:#0D1B2A; font-size:.68rem; font-weight:800; letter-spacing:3px;
+    text-transform:uppercase; padding:.3rem 1.2rem; border-radius:50px; margin-bottom:.9rem;
+  }
+  header h1 { font-size:clamp(1.4rem,4.5vw,2.4rem); font-weight:800; color:#F5C842; line-height:1.3; }
+  .stars { font-size:1rem; opacity:.35; letter-spacing:6px; margin:.5rem 0; }
+  .divider { width:80px; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.8rem auto; border-radius:2px; }
+  header p { color:rgba(240,234,214,.42); font-size:.82rem; }
+
+  /* Telegram */
+  .tg-box { display:inline-flex; align-items:center; gap:1rem; background:rgba(22,32,50,.85); border:1.5px solid rgba(34,158,217,.3); border-radius:60px; padding:.75rem 1.5rem .75rem 1rem; flex-wrap:wrap; justify-content:center; }
+  .tg-btn { display:inline-flex; align-items:center; gap:.45rem; background:linear-gradient(135deg,#229ED9,#1A7FB0); color:#fff; text-decoration:none; font-weight:800; font-size:.92rem; padding:.65rem 1.5rem; border-radius:50px; box-shadow:0 4px 20px rgba(34,158,217,.4); transition:all .22s; }
+  .tg-btn:hover { transform:translateY(-2px); }
+
+  /* Player */
+  .player-wrap {
+    max-width:680px; margin:1.5rem auto; padding:0 1.5rem;
+  }
+  .player-box {
+    background:rgba(22,32,50,.9); border:1.5px solid rgba(245,200,66,.25);
+    border-radius:20px; padding:1.4rem 1.6rem; display:flex; flex-direction:column; gap:.9rem;
+  }
+  .player-label { font-size:.72rem; font-weight:800; color:var(--gold); letter-spacing:2px; text-transform:uppercase; opacity:.7; }
+  .player-title { font-size:1rem; font-weight:700; color:var(--text); }
+  audio {
+    width:100%; height:44px; border-radius:12px; outline:none;
+    accent-color:var(--gold);
+    filter: invert(0);
+  }
+  audio::-webkit-media-controls-panel { background:#1a2a3a; border-radius:12px; }
+
+  /* Progress + Score */
+  .meta-row { display:flex; justify-content:space-between; align-items:center; max-width:680px; margin:.5rem auto 0; padding:0 1.5rem; }
+  .progress-bar-wrap { flex:1; height:6px; background:rgba(255,255,255,.1); border-radius:3px; margin-right:1rem; overflow:hidden; }
+  .progress-bar-fill { height:100%; background:linear-gradient(90deg,#F5C842,#C9960A); border-radius:3px; transition:width .4s; }
+  .score-badge { background:rgba(245,200,66,.12); border:1px solid rgba(245,200,66,.3); border-radius:50px; padding:.3rem .9rem; font-size:.78rem; font-weight:800; color:var(--gold); white-space:nowrap; }
+
+  /* Questions */
+  .questions-wrap { max-width:680px; margin:1.5rem auto 3rem; padding:0 1.5rem; display:flex; flex-direction:column; gap:1.1rem; }
+
+  .q-card {
+    background:rgba(22,32,50,.85); border:1.5px solid rgba(245,200,66,.12);
+    border-radius:16px; padding:1.1rem 1.3rem; transition:border-color .25s;
+  }
+  .q-card.answered { border-color:rgba(245,200,66,.3); }
+
+  .q-header { display:flex; align-items:center; gap:.7rem; margin-bottom:.8rem; }
+  .q-num { background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A; font-size:.7rem; font-weight:900; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .q-text { font-size:.82rem; font-weight:700; color:rgba(240,234,214,.65); letter-spacing:.3px; }
+
+  .options { display:flex; flex-direction:column; gap:.55rem; }
+  .opt-btn {
+    display:flex; align-items:center; gap:.75rem;
+    background:rgba(255,255,255,.04); border:1.5px solid rgba(255,255,255,.1);
+    border-radius:10px; padding:.65rem 1rem; cursor:pointer;
+    text-align:left; transition:all .2s; font-family:inherit;
+  }
+  .opt-btn:hover:not(:disabled) { background:rgba(245,200,66,.08); border-color:rgba(245,200,66,.35); }
+  .opt-btn:disabled { cursor:default; }
+  .opt-letter {
+    width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.08);
+    border:1.5px solid rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center;
+    font-size:.72rem; font-weight:900; color:var(--gold); flex-shrink:0; transition:all .2s;
+  }
+  .opt-text { font-size:.84rem; font-weight:600; color:var(--text); line-height:1.4; }
+
+  /* States */
+  .opt-btn.selected { background:rgba(245,200,66,.12); border-color:rgba(245,200,66,.6); }
+  .opt-btn.selected .opt-letter { background:rgba(245,200,66,.25); border-color:var(--gold); color:var(--gold); }
+  .opt-btn.correct  { background:rgba(46,204,113,.15) !important; border-color:#2ECC71 !important; }
+  .opt-btn.correct .opt-letter  { background:#2ECC71 !important; border-color:#2ECC71 !important; color:#fff !important; }
+  .opt-btn.wrong    { background:rgba(231,76,60,.15) !important; border-color:#E74C3C !important; }
+  .opt-btn.wrong .opt-letter    { background:#E74C3C !important; border-color:#E74C3C !important; color:#fff !important; }
+  .opt-btn.reveal   { background:rgba(46,204,113,.08) !important; border-color:rgba(46,204,113,.4) !important; }
+  .opt-btn.reveal .opt-letter   { border-color:#2ECC71 !important; color:#2ECC71 !important; }
+
+  /* Check Button */
+  .check-wrap { max-width:680px; margin:0 auto 1.5rem; padding:0 1.5rem; text-align:center; }
+  .check-btn {
+    display:inline-flex; align-items:center; gap:.6rem;
+    background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A;
+    border:none; border-radius:50px; padding:.85rem 2.5rem;
+    font-weight:900; font-size:1rem; cursor:pointer; letter-spacing:.04em;
+    box-shadow:0 4px 20px rgba(245,200,66,.45); transition:all .22s;
+    font-family:inherit;
+  }
+  .check-btn:hover { transform:translateY(-2px); box-shadow:0 7px 26px rgba(245,200,66,.65); }
+  .check-btn:disabled { opacity:.45; cursor:default; transform:none; }
+
+  /* Result Banner */
+  .result-banner {
+    display:none; max-width:680px; margin:0 auto 2rem; padding:0 1.5rem;
+  }
+  .result-banner.show { display:block; }
+  .result-inner {
+    background:linear-gradient(135deg,rgba(245,200,66,.15),rgba(201,150,10,.1));
+    border:2px solid rgba(245,200,66,.4); border-radius:20px;
+    padding:1.8rem; text-align:center;
+  }
+  .result-inner h2 { font-size:1.5rem; color:var(--gold); margin-bottom:.5rem; }
+  .result-inner p { font-size:.9rem; color:rgba(240,234,214,.7); margin-bottom:1rem; }
+  .result-inner .big-score { font-size:2.8rem; font-weight:900; color:var(--gold); }
+  .restart-btn {
+    display:inline-flex; align-items:center; gap:.5rem;
+    background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A;
+    border:none; border-radius:50px; padding:.7rem 1.8rem;
+    font-weight:800; font-size:.9rem; cursor:pointer; margin-top:.8rem;
+    box-shadow:0 4px 16px rgba(245,200,66,.4); transition:all .2s;
+  }
+  .restart-btn:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(245,200,66,.6); }
+
+  .bottom-space { height:2rem; }
+</style>
+</head>
+<body>
+
+<div style="padding:18px 20px 0; max-width:680px; margin:0 auto;">
+  <button onclick="history.back()" style="display:inline-flex;align-items:center;gap:8px;background:#1a2332;border:2px solid #F5C842;border-radius:40px;padding:9px 20px;color:#F5C842;font-size:.85rem;font-weight:700;cursor:pointer;" onmouseover="this.style.background='#2a3a4a'" onmouseout="this.style.background='#1a2332'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Dinleme Alıştırması ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Ses kaydını dinleyin ve doğru seçeneği işaretleyin 🎧</p>
+</header>
+
+<div style="text-align:center;padding:.5rem 1rem 1rem;">
+  <div class="divider"></div><br>
+  <div class="tg-box">
+    <div style="width:44px;height:44px;flex-shrink:0;">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<!-- Audio Player -->
+<div class="player-wrap">
+  <div class="player-box">
+    <div class="player-label">🎧 Ses Kaydı</div>
+    <div class="player-title">Dinleme Alıştırması 2 — Cümleleri Tamamlayınız</div>
+    <audio id="mainAudio" controls>
+      <source src="https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/dinleme_alistirmasi_2.mp3" type="audio/mpeg">
+      Tarayıcınız ses dosyasını desteklemiyor.
+    </audio>
+    <div style="font-size:.72rem;color:rgba(240,234,214,.4);text-align:center;">⚠️ Her cümleyi iki defa dinleyeceksiniz</div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="meta-row">
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+  <div class="score-badge" id="scoreBadge">Seçilen: 0 / 8</div>
+</div>
+
+<!-- Questions -->
+<div class="questions-wrap" id="questionsWrap"></div>
+
+<!-- Check Button -->
+<div class="check-wrap">
+  <button class="check-btn" id="checkBtn" onclick="checkAnswers()">
+    ✅ Cevapları Kontrol Et
+  </button>
+</div>
+
+<!-- Result Banner -->
+<div class="result-banner" id="resultBanner">
+  <div class="result-inner">
+    <div class="big-score" id="bigScore"></div>
+    <h2 id="resultTitle"></h2>
+    <p id="resultMsg"></p>
+    <button class="restart-btn" onclick="restartQuiz()">🔄 Tekrar Dene</button>
+  </div>
+</div>
+
+<div class="bottom-space"></div>
+
+<script>
+const QUESTIONS = [
+  { num:1, label:"S1. Dinlediğiniz cümleyi tamamlayınız.", options:["A) iş yerime zamanında vardım.","B) geç kaldım.","C) hiçbir aksilik yaşamadım."], correct:1 },
+  { num:2, label:"S2. Dinlediğiniz cümleyi tamamlayınız.", options:["A) dosyalarımı yedeklemiştim.","B) ödevimi zaten bitirmiştim.","C) elektrik kesintisi yaşandı."], correct:2 },
+  { num:3, label:"S3. Dinlediğiniz cümleyi tamamlayınız.", options:["A) tam olarak onaylamadı.","B) konuyu beğendi.","C) heyecanla alkışladı."], correct:0 },
+  { num:4, label:"S4. Dinlediğiniz cümleyi tamamlayınız.", options:["A) dışarıda yemek yemek istedim.","B) birlikte vakit geçirmeyi çok seviyoruz.","C) yemeği kendim hazırlayacağım."], correct:1 },
+  { num:5, label:"S5. Dinlediğiniz cümleyi tamamlayınız.", options:["A) spor salonu açıktı.","B) yanlış antrenman programını izlemedim.","C) ekipmanlar arızalıydı."], correct:2 },
+  { num:6, label:"S6. Dinlediğiniz cümleyi tamamlayınız.", options:["A) kitapçıdan ayrıldım.","B) yeni bir roman aldım.","C) daha önce aldığım kitabı iade ettim."], correct:1 },
+  { num:7, label:"S7. Dinlediğiniz cümleyi tamamlayınız.", options:["A) öğrenciler sınav hazırlığı yapıyordu.","B) orada televizyon izleniyordu.","C) kütüphane çok kalabalıktı."], correct:0 },
+  { num:8, label:"S8. Dinlediğiniz cümleyi tamamlayınız.", options:["A) köy hayatı bana huzur veriyor.","B) soğuk havayı çok severim.","C) deniz havası bana iyi geliyor."], correct:2 }
+];
+
+let answers = new Array(QUESTIONS.length).fill(null);
+let checked = false;
+
+function letters(i){ return ['A','B','C'][i]; }
+
+function buildQuestions(){
+  const wrap = document.getElementById("questionsWrap");
+  wrap.innerHTML = "";
+  QUESTIONS.forEach((q, qi) => {
+    const card = document.createElement("div");
+    card.className = "q-card";
+    card.id = "qcard-"+qi;
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${q.num}</div>
+        <div class="q-text">${q.label}</div>
+      </div>
+      <div class="options" id="opts-${qi}">
+        ${q.options.map((opt, oi) => `
+          <button class="opt-btn" id="opt-${qi}-${oi}" onclick="selectAnswer(${qi},${oi})">
+            <div class="opt-letter">${letters(oi)}</div>
+            <div class="opt-text">${opt.slice(3)}</div>
+          </button>
+        `).join("")}
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+  updateProgress();
+}
+
+function selectAnswer(qi, oi){
+  if(checked) return;
+  // Deselect previous
+  if(answers[qi] !== null){
+    document.getElementById(`opt-${qi}-${answers[qi]}`).classList.remove("selected");
+  }
+  answers[qi] = oi;
+  // Select new
+  QUESTIONS[qi].options.forEach((_,i)=>{
+    document.getElementById(`opt-${qi}-${i}`).classList.remove("selected");
+  });
+  document.getElementById(`opt-${qi}-${oi}`).classList.add("selected");
+  updateProgress();
+}
+
+function updateProgress(){
+  const answered = answers.filter(a => a !== null).length;
+  const pct = (answered / QUESTIONS.length) * 100;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("scoreBadge").textContent = "Seçilen: " + answered + " / " + QUESTIONS.length;
+}
+
+function checkAnswers(){
+  if(checked) return;
+  checked = true;
+  document.getElementById("checkBtn").disabled = true;
+  let correctCount = 0;
+
+  QUESTIONS.forEach((q, qi) => {
+    const selected = answers[qi];
+    for(let i=0; i<q.options.length; i++){
+      const btn = document.getElementById(`opt-${qi}-${i}`);
+      btn.classList.remove("selected");
+      btn.disabled = true;
+      if(i === q.correct && selected === i){
+        btn.classList.add("correct");
+      } else if(i === selected && i !== q.correct){
+        btn.classList.add("wrong");
+      } else if(i === q.correct){
+        btn.classList.add("reveal");
+      }
+    }
+    if(selected === q.correct) correctCount++;
+  });
+
+  // Update score badge
+  document.getElementById("scoreBadge").textContent = "Doğru: " + correctCount + " / " + QUESTIONS.length;
+  document.getElementById("progressFill").style.width = "100%";
+
+  setTimeout(() => showResult(correctCount), 500);
+}
+
+function showResult(correctCount){
+  const banner = document.getElementById("resultBanner");
+  banner.classList.add("show");
+  const pct = Math.round((correctCount / QUESTIONS.length)*100);
+  document.getElementById("bigScore").textContent = correctCount + "/" + QUESTIONS.length;
+  let title, msg;
+  if(pct === 100){ title="Mükemmel! 🎉"; msg="Tüm soruları doğru yanıtladınız. Harika bir performans!"; }
+  else if(pct >= 75){ title="Çok İyi! 👏"; msg="Büyük çoğunluğunu doğru yaptınız. Biraz daha pratik yapın!"; }
+  else if(pct >= 50){ title="İyi Çalışma 💪"; msg="Yarısından fazlasını doğru yaptınız. Devam edin!"; }
+  else { title="Daha Fazla Pratik Gerekli 📚"; msg="Ses kaydını tekrar dinleyip tekrar deneyin."; }
+  document.getElementById("resultTitle").textContent = title;
+  document.getElementById("resultMsg").textContent = msg;
+  banner.scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+function restartQuiz(){
+  answers = new Array(QUESTIONS.length).fill(null);
+  checked = false;
+  document.getElementById("resultBanner").classList.remove("show");
+  document.getElementById("checkBtn").disabled = false;
+  buildQuestions();
+  window.scrollTo({ top:0, behavior:"smooth" });
+}
+
+buildQuestions();
+</script>
+
+<footer style="text-align:center;padding:0 1rem 2.5rem;font-size:.8rem;color:rgba(255,255,255,.4);">
+  <p>© 2026 <span style="color:#F5C842;">Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+</body>
+</html>

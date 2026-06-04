@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deyimler 1 – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  transition: opacity 0.3s;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+  padding: 0 1.5rem 4rem;
+  max-width: 1200px; margin: 0 auto;
+}
+
+.card-wrap {
+  height: 200px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+  transform-style: preserve-3d;
+}
+
+.card-wrap.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  top:0; left:0; width:100%; height:100%;
+  border-radius: 16px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: .5rem; padding: 1.2rem 1.4rem;
+  border: 1.5px solid rgba(245,200,66,0.20);
+  box-shadow: 0 6px 24px rgba(0,0,0,.4);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-front { background: linear-gradient(145deg, #1a2332, #0D1B2A); }
+
+.card-back {
+  background: linear-gradient(145deg, #103828, #071E12);
+  border-color: rgba(58,175,169,.25);
+  transform: rotateY(180deg);
+}
+
+.card-deyim {
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.35;
+  color: #F5C842;
+}
+
+.card-anlam {
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.55;
+  color: #b8f5ee;
+}
+
+.counter {
+  position: absolute;
+  top: 9px; left: 12px;
+  font-size: .56rem; font-weight: 800;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: .5px;
+}
+
+.flip-hint {
+  position: absolute; bottom: 8px;
+  font-size: .54rem; opacity: .18;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+}
+
+.card-wrap:hover {
+  box-shadow: 0 0 18px rgba(245,200,66,.22);
+  border-radius: 16px;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+.cards-grid { animation: popIn .4s ease; }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Deyimler 1 ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Türkçe Deyimler • Turkcha Iboralar</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<div class="section-title">Türkçe Deyimler • Turkcha Iboralar</div>
+<div class="cards-grid" id="cards-grid"></div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<script>
+const deyimler = [
+  { deyim: "Abuk sabuk konuşmak", anlam: "Düşünmeden, birbiriyle ilgisi olmayan, tutarsız, saçma sapan söz söylemek." },
+  { deyim: "Acısını çıkarmak", anlam: "Önceden uğradığı maddî ve manevî zararı sonradan gidermek; öç almak." },
+  { deyim: "Açık kapı bırakmak", anlam: "Gerektiğinde bir konuya yeniden dönebilme imkânı bırakmak, ileriyi düşünerek ılımlı davranmak." },
+  { deyim: "Ağırdan almak", anlam: "Bir işi yapmakta acele etmemek, yavaş davranmak, isteksiz görünmek." },
+  { deyim: "Ağzı kulaklarına varmak", anlam: "Çok sevinmek, sevindiği her hâlinden belli olmak." },
+  { deyim: "Ağzında bakla ıslanmamak", anlam: "Sır saklamayı becerememek, sırrı hemen açığa vurmak." },
+  { deyim: "Ağzından çıkanı kulağı duymamak", anlam: "Sözlerini tartmadan, düşünmeden, öfke içinde konuşmak." },
+  { deyim: "Ağzını bıçak açmamak", anlam: "Kırgınlıktan veya üzüntüden ötürü söz söyleyecek durumda olmamak." },
+  { deyim: "Ağzı var dili yok", anlam: "Oldukça sessiz, sakin, kendi hâlinde; derdini anlatmayan." },
+  { deyim: "Akla karayı seçmek", anlam: "Bir işi başarmak uğrunda çok yorulmak, sonuca kadar çok zahmet çekmek." },
+  { deyim: "Allem etmek, kallem etmek", anlam: "İstediğini elde etmek için her türlü kurnazlığa başvurmak." },
+  { deyim: "Ana baba günü", anlam: "Sıkıntılı kalabalık; telâşlı, tehlikeli, kimsenin kimseyi tanımadığı kalabalık." },
+];
+
+const grid = document.getElementById('cards-grid');
+
+deyimler.forEach((item, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'card-wrap';
+  wrap.innerHTML = `
+    <div class="card-inner">
+      <div class="card-face card-front">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+        <div class="card-deyim">${item.deyim}</div>
+        <span class="flip-hint">bosing / tıklayın</span>
+      </div>
+      <div class="card-face card-back">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+        <div class="card-anlam">${item.anlam}</div>
+        <span class="flip-hint">bosing / tıklayın</span>
+      </div>
+    </div>`;
+  wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+  grid.appendChild(wrap);
+});
+
+const btnWrap = document.getElementById('backBtnWrap');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    btnWrap.style.opacity = '0';
+    btnWrap.style.pointerEvents = 'none';
+  } else {
+    btnWrap.style.opacity = '1';
+    btnWrap.style.pointerEvents = 'auto';
+  }
+});
+</script>
+</body>
+</html>

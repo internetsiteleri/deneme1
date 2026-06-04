@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinleme Testi — Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --paper: #faf7f0;
+    --cream: #f2ead8;
+    --accent: #c0392b;
+    --gold: #b8860b;
+    --muted: #7a6a55;
+    --success: #2e7d52;
+    --error: #c0392b;
+    --border: #d4c5a9;
+    --shadow: rgba(26,18,9,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── BACK BUTTON ─────────────────────────────────────────── */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.2rem;
+    background: rgba(26,35,50,0.85);
+    color: #faf7f0;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(212,160,23,0.3);
+    cursor: pointer;
+    transition: background 0.2s;
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    z-index: 10;
+  }
+  .back-btn:hover { background: rgba(26,35,50,1); }
+  .back-btn svg { width: 14px; height: 14px; fill: #D4A017; }
+
+  /* ── HEADER ─────────────────────────────────────────────── */
+  header {
+    background: #1a2332;
+    color: #faf7f0;
+    padding: 3rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    border: 2px solid #D4A017;
+    border-radius: 30px;
+    padding: 0.35rem 1.2rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #1a2332;
+    background: #D4A017;
+    margin-bottom: 1.4rem;
+    font-family: 'Source Serif 4', serif;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #D4A017;
+    text-shadow: 0 1px 12px rgba(212,160,23,0.2);
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+    -webkit-text-stroke: 0.5px #D4A017;
+  }
+  .header-stars {
+    color: #D4A017;
+    font-size: 1.3rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .header-divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #D4A017, transparent);
+    margin: 0.5rem auto 2rem;
+  }
+  .header-cta-text {
+    font-size: 0.82rem;
+    color: #e8dfc8;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+    font-family: 'Source Serif 4', serif;
+  }
+  .tg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 2rem;
+    background: #D4A017;
+    color: #1a2332;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+    position: relative;
+    z-index: 2;
+  }
+  .tg-btn:hover { background: #c49010; transform: translateY(-2px); }
+  .tg-btn svg { flex-shrink: 0; fill: #229ED9; }
+
+  /* ── PROGRESS ────────────────────────────────────────────── */
+  .progress-wrap {
+    background: #1a2332;
+    padding: 0 2rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .segments-bar { flex: 1; display: flex; gap: 2px; }
+  .seg {
+    flex: 1;
+    height: 8px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s ease;
+  }
+  .seg.filled { background: #2e7d52; }
+  .progress-text {
+    color: #b8a890;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  /* ── AUDIO PLAYER ────────────────────────────────────────── */
+  .audio-wrap {
+    background: #1a2332;
+    padding: 0 2rem 1.5rem;
+  }
+  .audio-card {
+    background: #0f1820;
+    border: 1px solid rgba(212,160,23,0.25);
+    border-radius: 8px;
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .audio-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #D4A017;
+    white-space: nowrap;
+    font-family: 'Source Serif 4', serif;
+  }
+  .audio-card audio {
+    flex: 1;
+    min-width: 220px;
+    height: 36px;
+    accent-color: #D4A017;
+    filter: invert(1) hue-rotate(180deg) brightness(0.85);
+  }
+  .audio-note {
+    font-size: 0.68rem;
+    color: #6a7a8a;
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+  }
+
+  /* ── MAIN ───────────────────────────────────────────────── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── SECTION CARDS ──────────────────────────────────────── */
+  .section-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 2px 12px var(--shadow);
+    overflow: hidden;
+  }
+  .section-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2rem;
+  }
+  .section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    color: var(--cream);
+  }
+  .section-subtitle {
+    color: #b8a890;
+    font-size: 0.78rem;
+    margin-top: 2px;
+  }
+  .section-body { padding: 1.5rem; }
+
+  /* ── INSTRUCTIONS ───────────────────────────────────────── */
+  .instructions {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 1.2rem;
+    padding: 0.7rem 1rem;
+    border: 1px dashed var(--border);
+    border-radius: 2px;
+  }
+
+  /* ── OPTIONS GRID ───────────────────────────────────────── */
+  .options-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+  }
+  .options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.4rem;
+    padding: 0.8rem;
+    background: #fdf9f3;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .options-grid.col { flex-direction: column; gap: 0.3rem; }
+  .option-pill {
+    padding: 0.3rem 0.8rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-family: 'Source Serif 4', serif;
+  }
+  .option-pill strong { color: var(--accent); }
+
+  /* ── QUESTIONS ──────────────────────────────────────────── */
+  .question {
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid #ede5d4;
+  }
+  .question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+  .q-text {
+    font-size: 0.93rem;
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  /* ── CHOICES ────────────────────────────────────────────── */
+  .choices { display: flex; flex-direction: column; gap: 0.5rem; }
+  .choice-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 0.8rem;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.15s;
+    background: white;
+  }
+  .choice-label:hover { border-color: #D4A017; background: #fdf8ef; }
+  .choice-label input[type=radio] { display: none; }
+  .choice-key {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--muted);
+    min-width: 1.1rem;
+    margin-top: 0.05rem;
+  }
+  .choice-label.selected { border-color: #D4A017; background: #fdf8ef; }
+  .choice-label.correct { border-color: var(--success); background: #f0faf5; }
+  .choice-label.correct .choice-key { color: var(--success); }
+  .choice-label.wrong { border-color: var(--error); background: #fff5f5; }
+  .choice-label.wrong .choice-key { color: var(--error); }
+  .choice-label.show-answer { border-color: var(--success); background: #f0faf5; }
+  .choice-label.show-answer .choice-key { color: var(--success); }
+
+  /* ── SELECT (matching) ──────────────────────────────────── */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6a55' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    padding: 0.45rem 2rem 0.45rem 0.7rem;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    color: var(--ink);
+    cursor: pointer;
+    min-width: 80px;
+    transition: border-color 0.2s;
+  }
+  select:focus { outline: none; border-color: #D4A017; }
+  select.correct { border-color: var(--success); background-color: #f0faf5; }
+  select.wrong { border-color: var(--error); background-color: #fff5f5; }
+
+  /* ── MATCH ROWS ─────────────────────────────────────────── */
+  .match-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    padding: 0.7rem;
+    background: #fdf9f3;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    flex-wrap: wrap;
+  }
+  .match-num {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--accent);
+    min-width: 1.5rem;
+    padding-top: 0.25rem;
+  }
+  .match-text { flex: 1; font-size: 0.87rem; line-height: 1.55; }
+  .match-select { min-width: 80px; }
+
+  /* ── MAP SECTION ────────────────────────────────────────── */
+  .map-questions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  .map-q-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    background: #fdf9f3;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .map-q-label {
+    flex: 1;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .map-q-num {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── FEEDBACK ───────────────────────────────────────────── */
+  .q-feedback {
+    display: none;
+    font-size: 0.78rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 2px;
+    font-style: italic;
+  }
+  .q-feedback.correct { display: block; color: var(--success); background: #f0faf5; border-left: 3px solid var(--success); }
+  .q-feedback.wrong { display: block; color: var(--error); background: #fff5f5; border-left: 3px solid var(--error); }
+
+  /* ── EXPLANATION BOX ────────────────────────────────────── */
+  .q-explanation {
+    display: none;
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 2px;
+    background: #f8f5ee;
+    border-left: 3px solid var(--gold);
+    color: #4a3c28;
+    line-height: 1.6;
+  }
+  .q-explanation.show { display: block; }
+  .q-explanation strong { color: var(--gold); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.2rem; }
+
+  /* ── RESULTS ────────────────────────────────────────────── */
+  #results {
+    display: none;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 2px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    box-shadow: 0 4px 24px var(--shadow);
+    animation: fadeUp 0.5s ease;
+  }
+  #results h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--gold);
+  }
+  #results .score-label { font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #b8a890; margin-bottom: 0.3rem; }
+  #results .score-detail { font-size: 0.9rem; color: #b8a890; margin-top: 0.5rem; font-style: italic; }
+  #results .feedback { margin-top: 1rem; font-size: 1rem; color: var(--cream); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SUBMIT ─────────────────────────────────────────────── */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .btn-submit {
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    padding: 0.9rem 3rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+    padding: 0.9rem 2rem;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border-radius: 2px;
+    margin-left: 0.8rem;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .match-row { flex-direction: column; }
+    .map-questions { grid-template-columns: 1fr; }
+    select { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header>
+  <a href="javascript:history.back()" class="back-btn">
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M10 3L5 8l5 5" stroke="#D4A017" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Geri
+  </a>
+  <div class="header-badge">✦ DİNLEME TESTİ ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <span class="header-stars">★★★★★</span>
+  <div class="header-divider"></div>
+  <div class="header-cta-text">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</div>
+  <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.28 13.6l-2.965-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.959z"/>
+    </svg>
+    Kanala Katıl
+  </a>
+</header>
+
+<!-- ══ PROGRESS BAR ══ -->
+<div class="progress-wrap">
+  <div class="segments-bar" id="segmentsBar"></div>
+  <div class="progress-text" id="progressText">0 / 35</div>
+</div>
+
+<!-- ══ AUDIO PLAYER ══ -->
+<div class="audio-wrap">
+  <div class="audio-card">
+    <span class="audio-label">🎧 Dinleme Kaydı</span>
+    <audio id="mainAudio" controls preload="metadata">
+      <source src="dinleme_testi_6.mp3" type="audio/mpeg">
+      Tarayıcınız ses dosyasını desteklemiyor.
+    </audio>
+    <span class="audio-note">Sorulara geçmeden önce kaydı dinleyiniz.</span>
+  </div>
+</div>
+
+<main>
+
+<!-- RESULTS BOX -->
+<div id="results">
+  <div class="score-label">Doğru Cevap Sayısı</div>
+  <h2 id="scoreDisplay">–</h2>
+  <div class="score-detail" id="scoreDetail"></div>
+  <div id="pointsRow" style="display:none;margin-top:1.2rem;">
+    <div style="font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:#b8a890;margin-bottom:0.3rem;">Dinleme Puanı</div>
+    <div id="pointsDisplay" style="font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:#D4A017;"></div>
+    <div id="pointsDetail" style="font-size:0.82rem;color:#b8a890;margin-top:0.3rem;font-style:italic;"></div>
+  </div>
+  <div class="feedback" id="feedbackMsg"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BÖLÜM 1 — Konuşmacı İfadelerini Tamamlama (S1–S8)   -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Dinleme Metni — Konuşmacı İfadelerini Tamamlama</div>
+      <div class="section-subtitle">Sorular 1–8</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Her konuşmacının sözünü en iyi tamamlayan seçeneği işaretleyiniz.</div>
+
+    <!-- S1 -->
+    <div class="question">
+      <div class="q-label">Soru 1</div>
+      <div class="choices" id="choices1">
+        <label class="choice-label" onclick="selectChoice(this,'q1','A')"><input type="radio" name="q1" value="A"><span class="choice-key">A</span><span>Yarın öğlene kadar uyuyacağım.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q1','B')"><input type="radio" name="q1" value="B"><span class="choice-key">B</span><span>Bu gece erkenden yatıp dinlenmeliyim.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q1','C')"><input type="radio" name="q1" value="C"><span class="choice-key">C</span><span>Yarın planladığım bir işim yok.</span></label>
+      </div>
+      <div class="q-feedback" id="fb1"></div>
+      <div class="q-explanation" id="ex1"><strong>📝 Açıklama</strong>Ailesini ziyaret edeceğine göre <em>"Ailemle uzun süredir görüşmek istiyordum"</em> demesi mantıklı bir devam cümlesidir.</div>
+    </div>
+
+    <!-- S2 -->
+    <div class="question">
+      <div class="q-label">Soru 2</div>
+      <div class="choices" id="choices2">
+        <label class="choice-label" onclick="selectChoice(this,'q2','A')"><input type="radio" name="q2" value="A"><span class="choice-key">A</span><span>İzlediğim film çok sıkıcıydı.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q2','B')"><input type="radio" name="q2" value="B"><span class="choice-key">B</span><span>Sinema salonundan oldukça memnun ayrıldım.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q2','C')"><input type="radio" name="q2" value="C"><span class="choice-key">C</span><span>Bugün hiç vaktim yoktu, televizyon izlemedim.</span></label>
+      </div>
+      <div class="q-feedback" id="fb2"></div>
+      <div class="q-explanation" id="ex2"><strong>📝 Açıklama</strong>"Bugün çok güzel bir film izledim." — Bir şeyin güzel olması, o deneyimden <em>"memnun ayrılmak"</em> ile eş anlamlıdır.</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="question">
+      <div class="q-label">Soru 3</div>
+      <div class="choices" id="choices3">
+        <label class="choice-label" onclick="selectChoice(this,'q3','A')"><input type="radio" name="q3" value="A"><span class="choice-key">A</span><span>Eski bilgisayarımı tamir ettirdim.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q3','B')"><input type="radio" name="q3" value="B"><span class="choice-key">B</span><span>Teknolojiyle aram hiç iyi değildir.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q3','C')"><input type="radio" name="q3" value="C"><span class="choice-key">C</span><span>Artık işlerimi yeni cihazımla daha hızlı yapabilirim.</span></label>
+      </div>
+      <div class="q-feedback" id="fb3"></div>
+      <div class="q-explanation" id="ex3"><strong>📝 Açıklama</strong>"Yeni bir bilgisayar satın aldım." — Yeni bir bilgisayarın işlevi, eski sisteme göre <em>"işleri daha hızlı yapabilmektir"</em>.</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="question">
+      <div class="q-label">Soru 4</div>
+      <div class="choices" id="choices4">
+        <label class="choice-label" onclick="selectChoice(this,'q4','A')"><input type="radio" name="q4" value="A"><span class="choice-key">A</span><span>Akrabalarımı ziyaret edeceğim.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q4','B')"><input type="radio" name="q4" value="B"><span class="choice-key">B</span><span>Hafta sonu tüm vaktimi yalnız geçireceğim.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q4','C')"><input type="radio" name="q4" value="C"><span class="choice-key">C</span><span>Ailemle uzun süredir görüşmek istiyordum.</span></label>
+      </div>
+      <div class="q-feedback" id="fb4"></div>
+      <div class="q-explanation" id="ex4"><strong>📝 Açıklama</strong>"Ailesini ziyaret edeceğine göre." — Ailemle uzun süredir görüşmek istiyordum <em>"demek mantıklı bir devam cümlesi"</em> olur.</div>
+    </div>
+
+    <!-- S5 -->
+    <div class="question">
+      <div class="q-label">Soru 5</div>
+      <div class="choices" id="choices5">
+        <label class="choice-label" onclick="selectChoice(this,'q5','A')"><input type="radio" name="q5" value="A"><span class="choice-key">A</span><span>Toplantıya vaktinde yetişmeyi başardım.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q5','B')"><input type="radio" name="q5" value="B"><span class="choice-key">B</span><span>Trafik yüzünden görüşmenin başını kaçırdım.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q5','C')"><input type="radio" name="q5" value="C"><span class="choice-key">C</span><span>Toplantı salonuna herkesten önce girdim.</span></label>
+      </div>
+      <div class="q-feedback" id="fb5"></div>
+      <div class="q-explanation" id="ex5"><strong>📝 Açıklama</strong>"Toplantıya geç kaldım." — Geç kalmak, etkinliğin <em>"başını kaçırmak"</em> demektir. Trafik ise buna mantıklı bir gerekçe olarak sunulmuştur.</div>
+    </div>
+
+    <!-- S6 -->
+    <div class="question">
+      <div class="q-label">Soru 6</div>
+      <div class="choices" id="choices6">
+        <label class="choice-label" onclick="selectChoice(this,'q6','A')"><input type="radio" name="q6" value="A"><span class="choice-key">A</span><span>Akşam evde tek başıma oturacağım.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q6','B')"><input type="radio" name="q6" value="B"><span class="choice-key">B</span><span>Arkadaşlarımla aram bozuk, görüşmüyoruz.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q6','C')"><input type="radio" name="q6" value="C"><span class="choice-key">C</span><span>Sosyalleşmek için dışarıda bir plan yaptım.</span></label>
+      </div>
+      <div class="q-feedback" id="fb6"></div>
+      <div class="q-explanation" id="ex6"><strong>📝 Açıklama</strong>"Bu akşam arkadaşlarımla buluşacağım." — Arkadaşlarla buluşmak eylemi, <em>"sosyalleşmek"</em> ve <em>"dışarıda plan yapmak"</em> kavramlarıyla karşılanır.</div>
+    </div>
+
+    <!-- S7 -->
+    <div class="question">
+      <div class="q-label">Soru 7</div>
+      <div class="choices" id="choices7">
+        <label class="choice-label" onclick="selectChoice(this,'q7','A')"><input type="radio" name="q7" value="A"><span class="choice-key">A</span><span>Fast-food yerine sebze ağırlıklı yemekler yiyeceğim.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q7','B')"><input type="radio" name="q7" value="B"><span class="choice-key">B</span><span>Beslenme düzenimi değiştirmeyi hiç düşünmüyorum.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q7','C')"><input type="radio" name="q7" value="C"><span class="choice-key">C</span><span>Spor yapmaktan nefret ederim.</span></label>
+      </div>
+      <div class="q-feedback" id="fb7"></div>
+      <div class="q-explanation" id="ex7"><strong>📝 Açıklama</strong>"Daha sağlıklı beslenmek istiyorum." — Sağlıklı beslenme hedefi, <em>"fast-food yerine sebze ağırlıklı"</em> beslenmeyi içeren somut bir değişimdir.</div>
+    </div>
+
+    <!-- S8 -->
+    <div class="question">
+      <div class="q-label">Soru 8</div>
+      <div class="choices" id="choices8">
+        <label class="choice-label" onclick="selectChoice(this,'q8','A')"><input type="radio" name="q8" value="A"><span class="choice-key">A</span><span>Bu ay tatil yapıp dinleniyorum.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q8','B')"><input type="radio" name="q8" value="B"><span class="choice-key">B</span><span>İş yerinde neredeyse hiç işim yok.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q8','C')"><input type="radio" name="q8" value="C"><span class="choice-key">C</span><span>Boş zamanım çok az, sürekli projelerle uğraşıyorum.</span></label>
+      </div>
+      <div class="q-feedback" id="fb8"></div>
+      <div class="q-explanation" id="ex8"><strong>📝 Açıklama</strong>"Bu ay çok fazla çalışıyorum." — Çok çalışmak, <em>"boş zamanın az olması"</em> ve <em>"sürekli projelerle uğraşmak"</em> durumunu doğrular.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BÖLÜM 2 — Doğru / Yanlış (S9–S14)                   -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Dinleme Metni — Doğru / Yanlış</div>
+      <div class="section-subtitle">Zaman Yönetimi · Sorular 9–14</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Cümleler dinleme metnindeki bilgilerle uyumluysa <strong>Doğru (A)</strong>, çelişiyorsa <strong>Yanlış (B)</strong> seçeneğini işaretleyiniz.</div>
+
+    <!-- S9 -->
+    <div class="question">
+      <div class="q-label">Soru 9</div>
+      <div class="q-text">Zaman yönetimi, insanların doğuştan sahip olduğu ve sonradan değiştirilemeyen bir yetenektir.</div>
+      <div class="choices" id="choices9">
+        <label class="choice-label" onclick="selectChoice(this,'q9','A')"><input type="radio" name="q9" value="A"><span class="choice-key">A</span><span>Doğru</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q9','B')"><input type="radio" name="q9" value="B"><span class="choice-key">B</span><span>Yanlış</span></label>
+      </div>
+      <div class="q-feedback" id="fb9"></div>
+      <div class="q-explanation" id="ex9"><strong>📝 Açıklama</strong>Metinde "sonradan geliştirilebilen bir beceri" olduğu vurgulanıyor. Bu nedenle cümle yanlıştır.</div>
+    </div>
+
+    <!-- S10 -->
+    <div class="question">
+      <div class="q-label">Soru 10</div>
+      <div class="q-text">Verimli bir çalışma için en önemli stratejilerden biri, işlerin önem ve aciliyet durumuna göre birbirinden ayrılmasıdır.</div>
+      <div class="choices" id="choices10">
+        <label class="choice-label" onclick="selectChoice(this,'q10','A')"><input type="radio" name="q10" value="A"><span class="choice-key">A</span><span>Doğru</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q10','B')"><input type="radio" name="q10" value="B"><span class="choice-key">B</span><span>Yanlış</span></label>
+      </div>
+      <div class="q-feedback" id="fb10"></div>
+      <div class="q-explanation" id="ex10"><strong>📝 Açıklama</strong>Metinde "önemli ile acil işleri ayırt etmek verimliliğin anahtarıdır" deniyor. Cümle doğrudur.</div>
+    </div>
+
+    <!-- S11 -->
+    <div class="question">
+      <div class="q-label">Soru 11</div>
+      <div class="q-text">Metne göre üçüncü gruptaki bireyler, çok yoğun çalıştıkları için hedeflerine en hızlı ulaşan gruptur.</div>
+      <div class="choices" id="choices11">
+        <label class="choice-label" onclick="selectChoice(this,'q11','A')"><input type="radio" name="q11" value="A"><span class="choice-key">A</span><span>Doğru</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q11','B')"><input type="radio" name="q11" value="B"><span class="choice-key">B</span><span>Yanlış</span></label>
+      </div>
+      <div class="q-feedback" id="fb11"></div>
+      <div class="q-explanation" id="ex11"><strong>📝 Açıklama</strong>Üçüncü grup yoğun görünse de aslında "verimsizdir" ve önemsiz detaylarla vakit kaybeder. Cümle yanlıştır.</div>
+    </div>
+
+    <!-- S12 -->
+    <div class="question">
+      <div class="q-label">Soru 12</div>
+      <div class="q-text">En zorlu ve kritik görevlerin, insanın enerjisinin en yüksek olduğu saatlerde yapılması tavsiye edilmektedir.</div>
+      <div class="choices" id="choices12">
+        <label class="choice-label" onclick="selectChoice(this,'q12','A')"><input type="radio" name="q12" value="A"><span class="choice-key">A</span><span>Doğru</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q12','B')"><input type="radio" name="q12" value="B"><span class="choice-key">B</span><span>Yanlış</span></label>
+      </div>
+      <div class="q-feedback" id="fb12"></div>
+      <div class="q-explanation" id="ex12"><strong>📝 Açıklama</strong>Metinde "kritik görevleri enerjinin yüksek olduğu saatlere almak odaklanmayı güçlendirir" ifadesi geçiyor. Cümle doğrudur.</div>
+    </div>
+
+    <!-- S13 -->
+    <div class="question">
+      <div class="q-label">Soru 13</div>
+      <div class="q-text">Teknoloji ve dijital araçlar, her koşulda zaman yönetimini kolaylaştıran ve verimi artıran unsurlardır.</div>
+      <div class="choices" id="choices13">
+        <label class="choice-label" onclick="selectChoice(this,'q13','A')"><input type="radio" name="q13" value="A"><span class="choice-key">A</span><span>Doğru</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q13','B')"><input type="radio" name="q13" value="B"><span class="choice-key">B</span><span>Yanlış</span></label>
+      </div>
+      <div class="q-feedback" id="fb13"></div>
+      <div class="q-explanation" id="ex13"><strong>📝 Açıklama</strong>Metinde teknolojinin "bilinçli" kullanılması ve "dijital dikkat dağıtıcıların sınırlanması" gerektiği belirtiliyor. Yani her koşulda değil, bilinçli kullanımda faydalıdır. Cümle yanlıştır.</div>
+    </div>
+
+    <!-- S14 -->
+    <div class="question">
+      <div class="q-label">Soru 14</div>
+      <div class="q-text">Zaman yönetimi becerisi; sadece iş başarısını değil, bireyin mutluluk ve yaşam dengesini de olumlu etkiler.</div>
+      <div class="choices" id="choices14">
+        <label class="choice-label" onclick="selectChoice(this,'q14','A')"><input type="radio" name="q14" value="A"><span class="choice-key">A</span><span>Doğru</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q14','B')"><input type="radio" name="q14" value="B"><span class="choice-key">B</span><span>Yanlış</span></label>
+      </div>
+      <div class="q-feedback" id="fb14"></div>
+      <div class="q-explanation" id="ex14"><strong>📝 Açıklama</strong>Metnin sonunda daha "dengeli ve anlamlı bir yaşam" inşa etmeye yardımcı olduğu belirtiliyor. Cümle doğrudur.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BÖLÜM 3 — Duyuru Eşleştirme (S15–S18)               -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Dinleme Metni — Duyuru Eşleştirme</div>
+      <div class="section-subtitle">Sorular 15–18</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">4 konuşmacıyı (S15–S18) aşağıdaki durumlarla (A–F) eşleştiriniz. <strong>İki</strong> seçenek dışarıda kalacaktır.</div>
+
+    <div class="options-label">Durumlar (A–F)</div>
+    <div class="options-grid col">
+      <div class="option-pill"><strong>A)</strong> İnternet üzerinden yapılan alışverişlerde iade sürecindeki yenilikler anlatılmıştır.</div>
+      <div class="option-pill"><strong>B)</strong> Akıllı telefonların batarya ömrünü korumak için yapılması gerekenler sıralanmıştır.</div>
+      <div class="option-pill"><strong>C)</strong> Modern mimaride gürültüyü önleyen ses yalıtım yöntemlerinden bahsedilmiştir.</div>
+      <div class="option-pill"><strong>D)</strong> Yağmur sesinin ve doğanın insan zihni üzerindeki sakinleştirici etkisi vurgulanmıştır.</div>
+      <div class="option-pill"><strong>E)</strong> Sosyal medya uygulamalarındaki bir algoritma hatası ve kullanıcı tepkileri ele alınmıştır.</div>
+      <div class="option-pill"><strong>F)</strong> Şehir hayatındaki hava kirliliğinin insan sağlığı üzerindeki olumsuzlukları tartışılmıştır.</div>
+    </div>
+
+    <div class="match-row">
+      <div class="match-num">S15</div>
+      <div class="match-text">1. Konuşmacı</div>
+      <select id="q15" class="match-select" onchange="updateProgress()">
+        <option value="">—</option>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+        <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+      </select>
+      <div class="q-feedback" id="fb15"></div>
+      <div class="q-explanation" id="ex15"><strong>📝 Açıklama</strong>Yağmur ve doğa sesinin alfa dalgaları ve sakinlik üzerindeki etkisi. → <strong>D</strong></div>
+    </div>
+    <div class="match-row">
+      <div class="match-num">S16</div>
+      <div class="match-text">2. Konuşmacı</div>
+      <select id="q16" class="match-select" onchange="updateProgress()">
+        <option value="">—</option>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+        <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+      </select>
+      <div class="q-feedback" id="fb16"></div>
+      <div class="q-explanation" id="ex16"><strong>📝 Açıklama</strong>Kelime önerilerindeki algoritmik hata ve tartışmalar. → <strong>E</strong></div>
+    </div>
+    <div class="match-row">
+      <div class="match-num">S17</div>
+      <div class="match-text">3. Konuşmacı</div>
+      <select id="q17" class="match-select" onchange="updateProgress()">
+        <option value="">—</option>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+        <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+      </select>
+      <div class="q-feedback" id="fb17"></div>
+      <div class="q-explanation" id="ex17"><strong>📝 Açıklama</strong>Kapıdan iade alım seçeneği ve pratik alışveriş süreci. → <strong>A</strong></div>
+    </div>
+    <div class="match-row">
+      <div class="match-num">S18</div>
+      <div class="match-text">4. Konuşmacı</div>
+      <select id="q18" class="match-select" onchange="updateProgress()">
+        <option value="">—</option>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+        <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+      </select>
+      <div class="q-feedback" id="fb18"></div>
+      <div class="q-explanation" id="ex18"><strong>📝 Açıklama</strong>Binalardaki çok katmanlı yalıtım ve çift cam sistemleri. → <strong>C</strong> &nbsp;|&nbsp; Boşta kalanlar: <strong>B</strong> (batarya) ve <strong>F</strong> (hava kirliliği) metinde geçmiyor.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BÖLÜM 4 — Harita / Kroki (S19–S23)                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">Dinleme Metni — Bina Planı</div>
+      <div class="section-subtitle">Kültür ve Sanat Merkezi · Sorular 19–23</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Dinleme metnine göre haritadaki yerleri (A–I) işaretleyiniz. Seçilmemesi gereken <strong>dört</strong> seçenek bulunmaktadır.</div>
+
+    <!-- MAP VISUAL -->
+    <div style="background:#fdf9f3;border:1px solid var(--border);border-radius:4px;padding:1.2rem;margin-bottom:1.5rem;text-align:center;">
+      <img src="dinleme_testi_6krokisi.png" alt="Kültür Merkezi Yerleşim Planı" style="max-width:100%;height:auto;border-radius:4px;display:block;margin:0 auto;">
+    </div>
+
+    <!-- Map questions -->
+    <div class="map-questions">
+      <div class="map-q-row">
+        <div>
+          <div class="map-q-num">S19</div>
+          <div class="map-q-label">Müzik Odası</div>
+        </div>
+        <select id="q19" class="match-select" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+          <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+          <option value="G">G</option><option value="H">H</option><option value="I">I</option>
+        </select>
+        <div class="q-feedback" id="fb19"></div>
+        <div class="q-explanation" id="ex19"><strong>📝 Açıklama</strong>Müzik Odası → <strong>H</strong></div>
+      </div>
+      <div class="map-q-row">
+        <div>
+          <div class="map-q-num">S20</div>
+          <div class="map-q-label">Sanat Atölyesi</div>
+        </div>
+        <select id="q20" class="match-select" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+          <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+          <option value="G">G</option><option value="H">H</option><option value="I">I</option>
+        </select>
+        <div class="q-feedback" id="fb20"></div>
+        <div class="q-explanation" id="ex20"><strong>📝 Açıklama</strong>Sanat Atölyesi → <strong>I</strong></div>
+      </div>
+      <div class="map-q-row">
+        <div>
+          <div class="map-q-num">S21</div>
+          <div class="map-q-label">Kütüphane</div>
+        </div>
+        <select id="q21" class="match-select" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+          <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+          <option value="G">G</option><option value="H">H</option><option value="I">I</option>
+        </select>
+        <div class="q-feedback" id="fb21"></div>
+        <div class="q-explanation" id="ex21"><strong>📝 Açıklama</strong>Kütüphane → <strong>D</strong></div>
+      </div>
+      <div class="map-q-row">
+        <div>
+          <div class="map-q-num">S22</div>
+          <div class="map-q-label">Kayıt Ofisi</div>
+        </div>
+        <select id="q22" class="match-select" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+          <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+          <option value="G">G</option><option value="H">H</option><option value="I">I</option>
+        </select>
+        <div class="q-feedback" id="fb22"></div>
+        <div class="q-explanation" id="ex22"><strong>📝 Açıklama</strong>Kayıt Ofisi → <strong>A</strong></div>
+      </div>
+      <div class="map-q-row">
+        <div>
+          <div class="map-q-num">S23</div>
+          <div class="map-q-label">Bilgisayar Lab.</div>
+        </div>
+        <select id="q23" class="match-select" onchange="updateProgress()">
+          <option value="">—</option>
+          <option value="A">A</option><option value="B">B</option><option value="C">C</option>
+          <option value="D">D</option><option value="E">E</option><option value="F">F</option>
+          <option value="G">G</option><option value="H">H</option><option value="I">I</option>
+        </select>
+        <div class="q-feedback" id="fb23"></div>
+        <div class="q-explanation" id="ex23"><strong>📝 Açıklama</strong>Bilgisayar Laboratuvarı → <strong>F</strong></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BÖLÜM 5 — Diyalog Analizi (S24–S29)                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-title">Dinleme Metni — Diyalog Analizi</div>
+      <div class="section-subtitle">3 Diyalog · Sorular 24–29</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Üç farklı diyaloğu dinleyiniz ve sorulara (S24–S29) cevap veriniz.</div>
+
+    <!-- S24 -->
+    <div class="question">
+      <div class="q-label">Soru 24 — 1. Diyalog: Konuşmacıların etkinlik seçimindeki temel kriteri nedir?</div>
+      <div class="choices" id="choices24">
+        <label class="choice-label" onclick="selectChoice(this,'q24','A')"><input type="radio" name="q24" value="A"><span class="choice-key">A</span><span>Şehirdeki en uygun fiyatlı festivali bulmak.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q24','B')"><input type="radio" name="q24" value="B"><span class="choice-key">B</span><span>Günün yorgunluğunu atabilecekleri huzurlu bir ortam seçmek.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q24','C')"><input type="radio" name="q24" value="C"><span class="choice-key">C</span><span>Akustik grubun popülerliği nedeniyle caz müziğinden vazgeçmek.</span></label>
+      </div>
+      <div class="q-feedback" id="fb24"></div>
+      <div class="q-explanation" id="ex24"><strong>📝 Açıklama</strong>Metindeki "kafa dağıtmak" ve "dinlendirici" ifadeleri huzurlu bir ortamı işaret eder.</div>
+    </div>
+
+    <!-- S25 -->
+    <div class="question">
+      <div class="q-label">Soru 25 — 1. Diyalog: Planlanan akşam programıyla ilgili hangisi söylenebilir?</div>
+      <div class="choices" id="choices25">
+        <label class="choice-label" onclick="selectChoice(this,'q25','A')"><input type="radio" name="q25" value="A"><span class="choice-key">A</span><span>Önce müzik etkinliğine gidip sonra akşam yemeği yiyeceklerdir.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q25','B')"><input type="radio" name="q25" value="B"><span class="choice-key">B</span><span>Hareketli bir konser yerine, daha düşük tempolu bir performansı tercih etmişlerdir.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q25','C')"><input type="radio" name="q25" value="C"><span class="choice-key">C</span><span>Bilet fiyatlarının yüksek olması nedeniyle sadece yemek yeme kararı almışlardır.</span></label>
+      </div>
+      <div class="q-feedback" id="fb25"></div>
+      <div class="q-explanation" id="ex25"><strong>📝 Açıklama</strong>Akustik yerine daha sakin olan cazı seçmeleri, düşük tempolu bir tercihtir.</div>
+    </div>
+
+    <!-- S26 -->
+    <div class="question">
+      <div class="q-label">Soru 26 — 2. Diyalog: Kadın karakterin sergiye gitmeyi kabul etmesinin altındaki neden nedir?</div>
+      <div class="choices" id="choices26">
+        <label class="choice-label" onclick="selectChoice(this,'q26','A')"><input type="radio" name="q26" value="A"><span class="choice-key">A</span><span>Modern sanat konusunda uzmanlaşmak istemesi.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q26','B')"><input type="radio" name="q26" value="B"><span class="choice-key">B</span><span>Serginin görsel ve işitsel unsurlarının merak uyandırması.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q26','C')"><input type="radio" name="q26" value="C"><span class="choice-key">C</span><span>Arkadaş grubunun ısrarlarına dayanamaması.</span></label>
+      </div>
+      <div class="q-feedback" id="fb26"></div>
+      <div class="q-explanation" id="ex26"><strong>📝 Açıklama</strong>"Işık ve ses kullanımı ilginçmiş" ifadesi merak uyandırmayı karşılar.</div>
+    </div>
+
+    <!-- S27 -->
+    <div class="question">
+      <div class="q-label">Soru 27 — 2. Diyalog: Diyalogdaki kişiler sergiyi neden günün erken saatlerinde ziyaret etmek istiyorlar?</div>
+      <div class="choices" id="choices27">
+        <label class="choice-label" onclick="selectChoice(this,'q27','A')"><input type="radio" name="q27" value="A"><span class="choice-key">A</span><span>Online biletlerin sadece sabah saatlerinde geçerli olması nedeniyle.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q27','B')"><input type="radio" name="q27" value="B"><span class="choice-key">B</span><span>Sergi alanının akşam saatlerinde kapalı olacağını öğrenmeleri sebebiyle.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q27','C')"><input type="radio" name="q27" value="C"><span class="choice-key">C</span><span>İnsan yoğunluğuna maruz kalmadan eserleri rahatça inceleyebilmek için.</span></label>
+      </div>
+      <div class="q-feedback" id="fb27"></div>
+      <div class="q-explanation" id="ex27"><strong>📝 Açıklama</strong>"Kalabalık olmadan gezmek" ifadesi, yoğunluğa maruz kalmamak ile eş anlamlıdır.</div>
+    </div>
+
+    <!-- S28 -->
+    <div class="question">
+      <div class="q-label">Soru 28 — 3. Diyalog: Elif ve Sara'nın durumuyla ilgili hangisi doğrudur?</div>
+      <div class="choices" id="choices28">
+        <label class="choice-label" onclick="selectChoice(this,'q28','A')"><input type="radio" name="q28" value="A"><span class="choice-key">A</span><span>Farklı akademik disiplinlerde eğitim gören iki öğrencidirler.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q28','B')"><input type="radio" name="q28" value="B"><span class="choice-key">B</span><span>Aynı şehirlerden gelmiş ve daha önce tanışmış eski arkadaşlardır.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q28','C')"><input type="radio" name="q28" value="C"><span class="choice-key">C</span><span>Eğitim süreleri bittikten sonra birlikte İspanya'ya gitmeyi planlamaktadırlar.</span></label>
+      </div>
+      <div class="q-feedback" id="fb28"></div>
+      <div class="q-explanation" id="ex28"><strong>📝 Açıklama</strong>Mimarlık ve İşletme, "farklı akademik disiplinler" olarak tanımlanmıştır.</div>
+    </div>
+
+    <!-- S29 -->
+    <div class="question">
+      <div class="q-label">Soru 29 — 3. Diyalog: İkramlaşma ve plan süreci hakkında ne söylenebilir?</div>
+      <div class="choices" id="choices29">
+        <label class="choice-label" onclick="selectChoice(this,'q29','A')"><input type="radio" name="q29" value="A"><span class="choice-key">A</span><span>Sara, evde hazırladığı yiyecekleri Elif ile paylaşmayı teklif etmiştir.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q29','B')"><input type="radio" name="q29" value="B"><span class="choice-key">B</span><span>Elif, yurt dışından getirdiği bir lezzeti sunarak evdeki ilk etkileşimi başlatmıştır.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q29','C')"><input type="radio" name="q29" value="C"><span class="choice-key">C</span><span>Kahve içtikten hemen sonra alışveriş için evden ayrılmaya karar vermişlerdir.</span></label>
+      </div>
+      <div class="q-feedback" id="fb29"></div>
+      <div class="q-explanation" id="ex29"><strong>📝 Açıklama</strong>Kahve içtikten sonra markete gitme konusunda anlaşıyorlar. Elif yurt dışından getirdiği lezzeti sunarak ilk etkileşimi başlatmıştır.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- BÖLÜM 6 — Biyoteknoloji (S30–S35)                   -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div>
+      <div class="section-title">Dinleme Metni — Uzun Metin Soruları</div>
+      <div class="section-subtitle">Biyoteknoloji · Sorular 30–35</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Dinleme metnine göre aşağıdaki soruları cevaplayınız.</div>
+
+    <!-- S30 -->
+    <div class="question">
+      <div class="q-label">Soru 30 — Biyoteknolojik gelişmelerin günümüzdeki durumu için hangisi söylenebilir?</div>
+      <div class="choices" id="choices30">
+        <label class="choice-label" onclick="selectChoice(this,'q30','A')"><input type="radio" name="q30" value="A"><span class="choice-key">A</span><span>Hedeflenen teknolojik seviyeye tamamen ulaşılmıştır.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q30','B')"><input type="radio" name="q30" value="B"><span class="choice-key">B</span><span>Beklenen büyük dönüşümün henüz ilk safhalarındadır.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q30','C')"><input type="radio" name="q30" value="C"><span class="choice-key">C</span><span>İnsan yaşamını etkileme potansiyelini kaybetmiştir.</span></label>
+      </div>
+      <div class="q-feedback" id="fb30"></div>
+      <div class="q-explanation" id="ex30"><strong>📝 Açıklama</strong>Metindeki "henüz başlangıç aşamasında" ifadesi "ilk safhalar" ile örtüşür.</div>
+    </div>
+
+    <!-- S31 -->
+    <div class="question">
+      <div class="q-label">Soru 31 — Yuval Noah Harari'ye göre, gelecekteki tıbbi müdahalelerin en temel farkı ne olacaktır?</div>
+      <div class="choices" id="choices31">
+        <label class="choice-label" onclick="selectChoice(this,'q31','A')"><input type="radio" name="q31" value="A"><span class="choice-key">A</span><span>Sadece mevcut hastalıkları iyileştirmekle sınırlı kalmayıp insan kapasitesini de artırması.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q31','B')"><input type="radio" name="q31" value="B"><span class="choice-key">B</span><span>Genetik müdahalelerin sadece laboratuvar ortamında deneysel olarak yapılması.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q31','C')"><input type="radio" name="q31" value="C"><span class="choice-key">C</span><span>İnsan ve teknoloji arasındaki farkın daha belirgin hale gelmesini sağlaması.</span></label>
+      </div>
+      <div class="q-feedback" id="fb31"></div>
+      <div class="q-explanation" id="ex31"><strong>📝 Açıklama</strong>"Hastalıkları tedavi etmekle kalmayacak… özellikleri geliştirecek" çıkarımı yapılmıştır.</div>
+    </div>
+
+    <!-- S32 -->
+    <div class="question">
+      <div class="q-label">Soru 32 — CRISPR teknolojisi hakkında metindeki bilgilerden hangisine ulaşılabilir?</div>
+      <div class="choices" id="choices32">
+        <label class="choice-label" onclick="selectChoice(this,'q32','A')"><input type="radio" name="q32" value="A"><span class="choice-key">A</span><span>Sadece insan sağlığı alanında kullanılan bir yöntemdir.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q32','B')"><input type="radio" name="q32" value="B"><span class="choice-key">B</span><span>Hem kalıtsal hastalıkların önlenmesinde hem de gıda üretiminde verimlilik sağlar.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q32','C')"><input type="radio" name="q32" value="C"><span class="choice-key">C</span><span>Uygulanması en kolay ve risk içermeyen gen düzenleme tekniğidir.</span></label>
+      </div>
+      <div class="q-feedback" id="fb32"></div>
+      <div class="q-explanation" id="ex32"><strong>📝 Açıklama</strong>Hem kalıtsal hastalıklar hem de "tarım ve hayvancılıkta verimlilik" vurgulanmıştır.</div>
+    </div>
+
+    <!-- S33 -->
+    <div class="question">
+      <div class="q-label">Soru 33 — Dr. Ayşe Demir'in genetik çalışmalar konusundaki temel çekincesi nedir?</div>
+      <div class="choices" id="choices33">
+        <label class="choice-label" onclick="selectChoice(this,'q33','A')"><input type="radio" name="q33" value="A"><span class="choice-key">A</span><span>Genetik araştırmaların yeterince hızlı ilerlememesi.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q33','B')"><input type="radio" name="q33" value="B"><span class="choice-key">B</span><span>Genlerin birbirine bağlı yapısı nedeniyle yapılan müdahalelerin öngörülemeyen sonuçlar doğurma ihtimali.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q33','C')"><input type="radio" name="q33" value="C"><span class="choice-key">C</span><span>Uzun süreli deneyler yapmanın maliyet açısından sürdürülebilir olmaması.</span></label>
+      </div>
+      <div class="q-feedback" id="fb33"></div>
+      <div class="q-explanation" id="ex33"><strong>📝 Açıklama</strong>"Beklenmedik sonuçlar" ifadesi, "öngörülemeyen sonuçlar" ile eş anlamlıdır.</div>
+    </div>
+
+    <!-- S34 -->
+    <div class="question">
+      <div class="q-label">Soru 34 — Dinlediğiniz metinden aşağıdaki yargılardan hangisi çıkarılamaz?</div>
+      <div class="choices" id="choices34">
+        <label class="choice-label" onclick="selectChoice(this,'q34','A')"><input type="radio" name="q34" value="A"><span class="choice-key">A</span><span>Toplumdaki bazı önyargılar ve güvensizlik, biyoteknolojinin yayılmasını yavaşlatmaktadır.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q34','B')"><input type="radio" name="q34" value="B"><span class="choice-key">B</span><span>Genetik müdahalelerin maliyeti, bu teknolojinin geniş kitlelere ulaşmasında bir engeldir.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q34','C')"><input type="radio" name="q34" value="C"><span class="choice-key">C</span><span>Biyoteknolojik gelişmeler sonucunda insan doğası tamamen değiştiği için etik tartışmalar son bulmuştur.</span></label>
+      </div>
+      <div class="q-feedback" id="fb34"></div>
+      <div class="q-explanation" id="ex34"><strong>📝 Açıklama</strong>Metinde etik tartışmaların son bulduğu değil, "beraberinde getirdiği" söylenmektedir. Bu nedenle C seçeneği çıkarılamaz.</div>
+    </div>
+
+    <!-- S35 -->
+    <div class="question">
+      <div class="q-label">Soru 35 — Dinlediğiniz metinde hangisine değinilmemiştir?</div>
+      <div class="choices" id="choices35">
+        <label class="choice-label" onclick="selectChoice(this,'q35','A')"><input type="radio" name="q35" value="A"><span class="choice-key">A</span><span>Teknolojik gelişmelerin hukuki altyapısının henüz tam olarak oluşmadığına.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q35','B')"><input type="radio" name="q35" value="B"><span class="choice-key">B</span><span>Biyoteknolojik ürünlerin çevre kirliliğini azaltmadaki rollerine.</span></label>
+        <label class="choice-label" onclick="selectChoice(this,'q35','C')"><input type="radio" name="q35" value="C"><span class="choice-key">C</span><span>Gelecekte insan özelliklerinin bilinçli bir şekilde geliştirilebileceğine.</span></label>
+      </div>
+      <div class="q-feedback" id="fb35"></div>
+      <div class="q-explanation" id="ex35"><strong>📝 Açıklama</strong>Çevre kirliliği metinde hiç geçmemektedir. Bu nedenle B seçeneğine değinilmemiştir.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUBMIT -->
+<div class="submit-wrap">
+  <button class="btn-submit" onclick="submitTest()">Testi Bitir</button>
+  <button class="btn-reset" onclick="resetTest()">Sıfırla</button>
+</div>
+
+</main>
+
+<script>
+// ── CEVAP ANAHTARI ───────────────────────────────────────────
+const answers = {
+  q1:'C', q2:'B', q3:'C', q4:'C', q5:'B', q6:'C', q7:'A', q8:'C',
+  q9:'B', q10:'A', q11:'B', q12:'A', q13:'B', q14:'A',
+  q15:'D', q16:'E', q17:'A', q18:'C',
+  q19:'H', q20:'I', q21:'D', q22:'A', q23:'F',
+  q24:'B', q25:'B', q26:'B', q27:'C', q28:'A', q29:'B',
+  q30:'B', q31:'A', q32:'B', q33:'B', q34:'C', q35:'B'
+};
+
+const totalQ = 35;
+const userAnswers = {};
+
+// ── PUAN TABLOSU ─────────────────────────────────────────────
+const scoreTable = {
+  1:23, 2:26, 3:28, 4:30, 5:33, 6:34, 7:36, 8:38, 9:39, 10:41,
+  11:42, 12:44, 13:45, 14:47, 15:48, 16:50, 17:51, 18:53, 19:54,
+  20:55, 21:57, 22:58, 23:60, 24:61, 25:63, 26:65, 27:66, 28:68,
+  29:70, 30:72, 31:73, 32:74, 33:75, 34:75, 35:75
+};
+
+// ── RADIO SEÇİMİ ─────────────────────────────────────────────
+function selectChoice(label, name, val) {
+  const group = label.closest('.choices');
+  group.querySelectorAll('.choice-label').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+  userAnswers[name] = val;
+  updateProgress();
+}
+
+// ── SEGMENT BAR ──────────────────────────────────────────────
+function buildSegments() {
+  const bar = document.getElementById('segmentsBar');
+  bar.innerHTML = '';
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.id = 'seg' + i;
+    bar.appendChild(seg);
+  }
+}
+
+function updateProgress() {
+  let filled = 0;
+  Object.keys(answers).forEach(k => {
+    const el = document.getElementById(k);
+    if (el && el.tagName === 'SELECT' && el.value !== '') filled++;
+    else if (userAnswers[k]) filled++;
+  });
+  document.getElementById('progressText').textContent = filled + ' / ' + totalQ;
+}
+
+function fillSegments(correctCount) {
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.getElementById('seg' + i);
+    if (seg) seg.classList.toggle('filled', i < correctCount);
+  }
+  document.getElementById('progressText').textContent = correctCount + ' / ' + totalQ + ' doğru';
+}
+
+// ── TEST BİTİR ───────────────────────────────────────────────
+function submitTest() {
+  let correct = 0;
+
+  Object.keys(answers).forEach(k => {
+    const correctAns = answers[k];
+    let userAns = '';
+
+    const el = document.getElementById(k);
+    if (el && el.tagName === 'SELECT') {
+      userAns = el.value;
+    } else {
+      userAns = userAnswers[k] || '';
+    }
+
+    const num = k.replace('q','');
+    const fb = document.getElementById('fb' + num);
+    const ex = document.getElementById('ex' + num);
+    const isCorrect = userAns === correctAns;
+
+    if (isCorrect) {
+      correct++;
+      if (fb) { fb.className = 'q-feedback correct'; fb.textContent = '✓ Doğru'; }
+    } else {
+      if (fb) {
+        fb.className = 'q-feedback wrong';
+        fb.textContent = userAns
+          ? '✗ Yanlış — Doğru cevap: ' + correctAns
+          : '✗ Boş bırakıldı — Doğru cevap: ' + correctAns;
+      }
+    }
+
+    // Show explanation always after submit
+    if (ex) ex.classList.add('show');
+
+    if (el && el.tagName === 'SELECT') {
+      el.className = 'match-select ' + (isCorrect ? 'correct' : 'wrong');
+    }
+
+    const choicesDiv = document.getElementById('choices' + num);
+    if (choicesDiv) {
+      choicesDiv.querySelectorAll('.choice-label').forEach(lbl => {
+        const v = lbl.querySelector('input').value;
+        lbl.classList.remove('selected','correct','wrong','show-answer');
+        if (v === userAns && !isCorrect) lbl.classList.add('wrong');
+        if (v === correctAns) lbl.classList.add(isCorrect ? 'correct' : 'show-answer');
+      });
+    }
+  });
+
+  const pts = correct > 0 ? (scoreTable[correct] || 0) : 0;
+
+  document.getElementById('scoreDisplay').textContent = correct + ' / ' + totalQ;
+  document.getElementById('scoreDetail').textContent = '35 sorudan ' + correct + ' doğru cevap';
+  document.getElementById('pointsDisplay').textContent = pts + ' puan';
+  document.getElementById('pointsDetail').textContent = correct + ' doğru → Dinleme cetveli: ' + pts + ' puan';
+  document.getElementById('pointsRow').style.display = 'block';
+
+  let msg = '';
+  if (pts >= 70) msg = '🏆 Mükemmel! Çok iyi bir dinleme performansı!';
+  else if (pts >= 55) msg = '👍 İyi iş! Biraz daha pratikle mükemmel olacaksınız.';
+  else if (pts >= 41) msg = '📚 Orta seviye. Hatalı soruları gözden geçirin.';
+  else msg = '💪 Daha fazla dinleme pratiği yapmanız gerekiyor. Pes etmeyin!';
+
+  document.getElementById('feedbackMsg').textContent = msg;
+
+  fillSegments(correct);
+
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetTest() { location.reload(); }
+
+buildSegments();
+</script>
+
+</body>
+</html>

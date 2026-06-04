@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinleme Testi 3 – Hamza Hoca ile Türkçe Öğreniyorum</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --card: #1e2435;
+    --border: #2a3045;
+    --accent: #f5a623;
+    --accent2: #3ecfcf;
+    --correct: #4caf7d;
+    --wrong: #e05c5c;
+    --text: #e8eaf0;
+    --muted: #7a839a;
+    --radius: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  /* ── BACK BUTTON (added from test 4) ── */
+  .back-btn {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(30,36,53,.85);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color .15s, border-color .15s, background .15s;
+    z-index: 10;
+  }
+  .back-btn:hover { color: var(--accent); border-color: var(--accent); background: rgba(245,166,35,.08); }
+  .back-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #1a1f30 0%, #0f1117 60%);
+    border-bottom: 2px solid var(--accent);
+    padding: 28px 24px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% -20%, rgba(245,166,35,.15) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  header p {
+    color: var(--muted);
+    font-size: .85rem;
+    margin-top: 4px;
+  }
+  .audio-bar {
+    margin: 18px auto 0;
+    max-width: 480px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .audio-bar audio { flex: 1; height: 32px; filter: invert(1) brightness(.7) sepia(1) hue-rotate(20deg); }
+  .audio-label { font-size: .75rem; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 16px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--accent);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+  .section-desc {
+    font-size: .82rem;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    transition: border-color .2s;
+  }
+  .q-card:hover { border-color: #3a4260; }
+  .q-num {
+    font-family: 'Syne', sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--accent2);
+    letter-spacing: .08em;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-size: .92rem;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s, transform .1s;
+    user-select: none;
+    position: relative;
+  }
+  .option:hover { border-color: var(--accent2); background: #1f2438; transform: translateX(2px); }
+  .option.selected { border-color: var(--accent); background: rgba(245,166,35,.08); }
+  .option.correct { border-color: var(--correct); background: rgba(76,175,125,.12); }
+  .option.wrong { border-color: var(--wrong); background: rgba(224,92,92,.10); }
+  .option-key {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .8rem;
+    color: var(--accent);
+    min-width: 20px;
+    padding-top: 1px;
+  }
+  .option.correct .option-key { color: var(--correct); }
+  .option.wrong .option-key { color: var(--wrong); }
+  .option-text { font-size: .88rem; line-height: 1.5; }
+
+  /* ── TRUE/FALSE ── */
+  .tf-options { display: flex; gap: 10px; }
+  .tf-btn {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .8rem;
+    cursor: pointer;
+    transition: all .15s;
+    letter-spacing: .05em;
+  }
+  .tf-btn:hover { border-color: var(--accent2); color: var(--text); }
+  .tf-btn.selected { border-color: var(--accent); color: var(--accent); background: rgba(245,166,35,.08); }
+  .tf-btn.correct { border-color: var(--correct); color: var(--correct); background: rgba(76,175,125,.12); }
+  .tf-btn.wrong { border-color: var(--wrong); color: var(--wrong); background: rgba(224,92,92,.10); }
+
+  /* ── MATCH / MAP ── */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+  .match-label { font-size: .88rem; }
+  .match-select {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: .85rem;
+    padding: 7px 10px;
+    cursor: pointer;
+    min-width: 80px;
+    transition: border-color .15s;
+  }
+  .match-select:hover, .match-select:focus { border-color: var(--accent2); outline: none; }
+  .match-select.correct { border-color: var(--correct); }
+  .match-select.wrong { border-color: var(--wrong); }
+
+  /* ── MATCH options legend ── */
+  .match-legend {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: .82rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .match-legend span { color: var(--accent2); font-weight: 600; }
+
+  /* ── MAP ── */
+  .map-wrap {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .map-img {
+    flex: 0 0 auto;
+    max-width: 320px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .map-img img { width: 100%; display: block; }
+  .map-questions { flex: 1; min-width: 200px; }
+
+  /* ── SUBMIT / SCORE ── */
+  .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .btn {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+  }
+  .btn:hover { opacity: .88; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+  .btn-primary { background: var(--accent); color: #0f1117; }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { color: var(--text); border-color: #3a4260; }
+
+  /* ── SCORE PANEL ── */
+  #score-panel {
+    display: none;
+    background: linear-gradient(135deg, #1a2230, #111520);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  #score-panel.visible { display: block; animation: fadeIn .4s ease; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform:none; } }
+  .score-big {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .score-sub {
+    font-size: .9rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .score-breakdown {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .score-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: .82rem;
+  }
+  .score-item strong { display: block; font-size: 1.3rem; font-family: 'Syne', sans-serif; color: var(--accent2); }
+
+  /* ── FEEDBACK ICON ── */
+  .fb { margin-left: auto; font-size: .9rem; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap { margin-bottom: 32px; }
+  .progress-label { font-size: .75rem; color: var(--muted); margin-bottom: 6px; }
+  .progress-bar { height: 4px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 4px; width: 0%; transition: width .3s ease; }
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Back button added exactly as in test 4 -->
+  <a class="back-btn" onclick="history.back()" href="#">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Geri
+  </a>
+  <h1>🎧 Dinleme Testi 3</h1>
+  <p>Hamza Hoca ile Türkçe Öğreniyorum</p>
+  <div class="audio-bar">
+    <span class="audio-label">▶ Ses Kaydı</span>
+    <audio controls>
+      <source src="https://github.com/hamzaozaydin/testmerkezi/raw/main/dinleme_testi_3.mp3" type="audio/mpeg">
+      Tarayıcınız bu sesi desteklemiyor.
+    </audio>
+  </div>
+</header>
+
+<main>
+
+  <div class="progress-wrap">
+    <div class="progress-label" id="progress-label">0 / 35 soru yanıtlandı</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ BÖLÜM 1 ═══════════════════════════════════════ -->
+  <section>
+    <div class="section-header">
+      <span class="section-num">1. Dinleme</span>
+      <div>
+        <div class="section-title">Konuşmacı İfadelerini Tamamlama</div>
+        <div class="section-desc">Dinlediğiniz metne göre konuşmacının söyledikleriyle en uyumlu ifadeyi seçiniz.</div>
+      </div>
+    </div>
+
+    <!-- S1 -->
+    <div class="q-card">
+      <div class="q-num">SORU 1</div>
+      <div class="options" data-q="1" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Kursa gitmekten vazgeçtim.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Yarın matematik sınavım var.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Yeni kültürler tanımak ve kariyerimde ilerlemek istiyorum.</span></div>
+      </div>
+    </div>
+    <!-- S2 -->
+    <div class="q-card">
+      <div class="q-num">SORU 2</div>
+      <div class="options" data-q="2" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Çantamı evde unutmuşum.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Kampüs çok büyüktü ve biraz heyecanlıydım.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Hava bugün oldukça rüzgarlı.</span></div>
+      </div>
+    </div>
+    <!-- S3 -->
+    <div class="q-card">
+      <div class="q-num">SORU 3</div>
+      <div class="options" data-q="3" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Yemek yapmayı hiç sevmem.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Kendimi daha enerjik ve zinde hissetmek için.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Restoranlar son zamanlarda çok pahalı.</span></div>
+      </div>
+    </div>
+    <!-- S4 -->
+    <div class="q-card">
+      <div class="q-num">SORU 4</div>
+      <div class="options" data-q="4" data-answer="A">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Evet, dün akşam tüm raporları tamamladım.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Bilgisayarım aniden bozulmuştu.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Hafta sonu parkta biraz yürüdük.</span></div>
+      </div>
+    </div>
+    <!-- S5 -->
+    <div class="q-card">
+      <div class="q-num">SORU 5</div>
+      <div class="options" data-q="5" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Piyano çalmayı öğrenmek istiyorum.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Genellikle klasik müzik ve caz dinlerim.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Radyonun ses kalitesi çok düşüktü.</span></div>
+      </div>
+    </div>
+    <!-- S6 -->
+    <div class="q-card">
+      <div class="q-num">SORU 6</div>
+      <div class="options" data-q="6" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Kışın buralara çok kar yağar.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Evin mutfağını henüz yenilemedik.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Büyük şehrin gürültüsünden uzaklaşmak ve huzur bulmak istedik.</span></div>
+      </div>
+    </div>
+    <!-- S7 -->
+    <div class="q-card">
+      <div class="q-num">SORU 7</div>
+      <div class="options" data-q="7" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Uçak biletimi son anda iptal ettim.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Farklı bakış açıları kazandım ve ufkum genişledi.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Kaldığımız otel gerçekten çok konforluydu.</span></div>
+      </div>
+    </div>
+    <!-- S8 -->
+    <div class="q-card">
+      <div class="q-num">SORU 8</div>
+      <div class="options" data-q="8" data-answer="A">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Teorik bilgilerimi pratikle birleştirmek istedim.</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Dün akşam dışarı çıkıp yemek yedik.</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Telefonum çaldı ama yanıtlayamadım.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ BÖLÜM 2 ═══════════════════════════════════════ -->
+  <section>
+    <div class="section-header">
+      <span class="section-num">2. Dinleme</span>
+      <div>
+        <div class="section-title">Doğru / Yanlış</div>
+        <div class="section-desc">Dinlediğiniz metne göre aşağıdaki cümleler için <strong>DOĞRU</strong> ya da <strong>YANLIŞ</strong> seçeneklerinden birini işaretleyiniz.</div>
+      </div>
+    </div>
+
+    <div id="tf-questions"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ BÖLÜM 3 ═══════════════════════════════════════ -->
+  <section>
+    <div class="section-header">
+      <span class="section-num">3. Dinleme</span>
+      <div>
+        <div class="section-title">Duyuru Eşleştirme</div>
+        <div class="section-desc">Dinlediğiniz konuşmacılarla (1–4) aşağıdaki seçenekleri (A–F) eşleştiriniz. Seçilmemesi gereken <strong>İKİ</strong> seçenek bulunmaktadır.</div>
+      </div>
+    </div>
+
+    <div class="match-legend">
+      <span>A)</span> Şehir merkezinde kaybolan bir evcil hayvan ilanıdır.<br>
+      <span>B)</span> Ulaşıma yakın, bakımlı ve aydınlık bir kiralık ev ilanıdır.<br>
+      <span>C)</span> Bir kafede görev alacak çalışma arkadaşları aranmaktadır.<br>
+      <span>D)</span> Sahil kenarında unutulan/kaybedilen kişisel eşya ilanıdır.<br>
+      <span>E)</span> Düzenlenen kültürel etkinliğe giriş için ücret talep edilmemektedir.<br>
+      <span>F)</span> Bahar kermesine katılacak gönüllüler aranmaktadır.
+    </div>
+
+    <div class="q-card">
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="match-grid">
+          <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S15.</span> 1. Konuşmacı</div>
+          <select class="match-select" data-q="15" data-answer="B">
+            <option value="">–</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option>
+          </select>
+        </div>
+        <div class="match-grid">
+          <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S16.</span> 2. Konuşmacı</div>
+          <select class="match-select" data-q="16" data-answer="D">
+            <option value="">–</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option>
+          </select>
+        </div>
+        <div class="match-grid">
+          <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S17.</span> 3. Konuşmacı</div>
+          <select class="match-select" data-q="17" data-answer="C">
+            <option value="">–</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option>
+          </select>
+        </div>
+        <div class="match-grid">
+          <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S18.</span> 4. Konuşmacı</div>
+          <select class="match-select" data-q="18" data-answer="E">
+            <option value="">–</option>
+            <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ BÖLÜM 4 ═══════════════════════════════════════ -->
+  <section>
+    <div class="section-header">
+      <span class="section-num">4. Dinleme</span>
+      <div>
+        <div class="section-title">Yerleşke Planı (Kroki)</div>
+        <div class="section-desc">Dinleme metnine göre haritadaki (Kaynak) yerleri işaretleyiniz. Seçilmemesi gereken <strong>ÜÇ</strong> seçenek bulunmaktadır.</div>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <div class="map-img">
+        <img src="https://github.com/hamzaozaydin/testmerkezi/raw/main/3dinleme_testi_kroki.png" alt="Yerleşke Planı Krokisi" style="width:100%;display:block;border-radius:8px;">
+      </div>
+      <div class="map-questions">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div class="match-grid">
+            <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S19.</span> Laboratuvar</div>
+            <select class="match-select" data-q="19" data-answer="D">
+              <option value="">–</option>
+              <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option>
+            </select>
+          </div>
+          <div class="match-grid">
+            <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S20.</span> Okuma Salonu</div>
+            <select class="match-select" data-q="20" data-answer="B">
+              <option value="">–</option>
+              <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option>
+            </select>
+          </div>
+          <div class="match-grid">
+            <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S21.</span> Kafeterya</div>
+            <select class="match-select" data-q="21" data-answer="C">
+              <option value="">–</option>
+              <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option>
+            </select>
+          </div>
+          <div class="match-grid">
+            <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S22.</span> Halkla İlişkiler Ofisi</div>
+            <select class="match-select" data-q="22" data-answer="F">
+              <option value="">–</option>
+              <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option>
+            </select>
+          </div>
+          <div class="match-grid">
+            <div class="match-label"><span style="color:var(--accent2);font-weight:700;">S23.</span> Multimedya Odası</div>
+            <select class="match-select" data-q="23" data-answer="A">
+              <option value="">–</option>
+              <option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ BÖLÜM 5 ═══════════════════════════════════════ -->
+  <section>
+    <div class="section-header">
+      <span class="section-num">5. Dinleme</span>
+      <div>
+        <div class="section-title">Diyalog Analizi</div>
+        <div class="section-desc">Aşağıdaki soruları okuyunuz ve dinleme metnine göre en uygun seçeneği işaretleyiniz.</div>
+      </div>
+    </div>
+
+    <!-- S24 -->
+    <div class="q-card">
+      <div class="q-num">SORU 24 &nbsp;·&nbsp; 1. Diyalog</div>
+      <div class="q-text">Konuşmanın temel konusu nedir?</div>
+      <div class="options" data-q="24" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Sanat eserlerinin fiyatlarının artması</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Dijital ve fiziksel sanat deneyimlerinin karşılaştırılması</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Müzelerin ekonomik sorunları</span></div>
+        <div class="option" data-val="D"><span class="option-key">D)</span><span class="option-text">Sanat eğitiminin önemi</span></div>
+      </div>
+    </div>
+    <!-- S25 -->
+    <div class="q-card">
+      <div class="q-num">SORU 25 &nbsp;·&nbsp; 1. Diyalog</div>
+      <div class="q-text">Konuşmacının "birbirini tamamlayan seçenekler" ifadesi neyi anlatır?</div>
+      <div class="options" data-q="25" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Dijital sanatın gerçek sanattan daha üstün olduğunu</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Fiziksel müzelerin artık gereksiz olduğunu</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Her iki deneyimin de farklı avantajlar sunduğunu</span></div>
+        <div class="option" data-val="D"><span class="option-key">D)</span><span class="option-text">Sanatın sadece dijital ortamda var olması gerektiğini</span></div>
+      </div>
+    </div>
+    <!-- S26 -->
+    <div class="q-card">
+      <div class="q-num">SORU 26 &nbsp;·&nbsp; 2. Diyalog</div>
+      <div class="q-text">Konuşmacının scooterlar hakkındaki eleştirisi neye yöneliktir?</div>
+      <div class="options" data-q="26" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Fiyatlarının pahalı olmasına</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Kullanım kurallarının yetersizliğine</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Teknolojik olarak geri kalmış olmalarına</span></div>
+        <div class="option" data-val="D"><span class="option-key">D)</span><span class="option-text">Sadece turistler tarafından kullanılmasına</span></div>
+      </div>
+    </div>
+    <!-- S27 -->
+    <div class="q-card">
+      <div class="q-num">SORU 27 &nbsp;·&nbsp; 2. Diyalog</div>
+      <div class="q-text">Diyalogda scooterların olumlu yönü olarak ne vurgulanmıştır?</div>
+      <div class="options" data-q="27" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Eğlence amaçlı kullanımı</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Çevreyi kirletmemesi</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Trafik yoğunluğunu azaltma potansiyeli</span></div>
+        <div class="option" data-val="D"><span class="option-key">D)</span><span class="option-text">Uzun mesafelerde daha hızlı olması</span></div>
+      </div>
+    </div>
+    <!-- S28 -->
+    <div class="q-card">
+      <div class="q-num">SORU 28 &nbsp;·&nbsp; 3. Diyalog</div>
+      <div class="q-text">Her iki konuşmacının da kabul ettiği görüş hangisidir?</div>
+      <div class="options" data-q="28" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Yapay zekânın öğretmenlerin yerini tamamen alacağı</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Eğitimde teknolojinin gereksiz olduğu</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Yapay zekânın eğitimde yardımcı olabileceği</span></div>
+        <div class="option" data-val="D"><span class="option-key">D)</span><span class="option-text">Öğrencilerin teknoloji kullanmaması gerektiği</span></div>
+      </div>
+    </div>
+    <!-- S29 -->
+    <div class="q-card">
+      <div class="q-num">SORU 29 &nbsp;·&nbsp; 3. Diyalog</div>
+      <div class="q-text">Metnin genel bakış açısına göre aşağıdakilerden hangisi yanlıştır?</div>
+      <div class="options" data-q="29" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Yeni teknolojiler bazı avantajlar sunar</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Teknoloji insanın yerini tamamen alabilir</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Teknolojinin kullanımı bazı sorunlar doğurabilir</span></div>
+        <div class="option" data-val="D"><span class="option-key">D)</span><span class="option-text">İnsan faktörü bazı alanlarda önemini korur</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ BÖLÜM 6 ═══════════════════════════════════════ -->
+  <section>
+    <div class="section-header">
+      <span class="section-num">6. Dinleme</span>
+      <div>
+        <div class="section-title">Zaman Yönetimi</div>
+        <div class="section-desc">Dinleme metnine göre en uygun seçeneği (A, B veya C) işaretleyiniz.</div>
+      </div>
+    </div>
+
+    <!-- S30 -->
+    <div class="q-card">
+      <div class="q-num">SORU 30</div>
+      <div class="q-text">Metne göre zaman yönetimi neden günümüzde daha önemli hale gelmiştir?</div>
+      <div class="options" data-q="30" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">İnsanların daha az çalışmak istemesi</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Artan sorumluluklar ve dikkat dağıtıcı unsurlar nedeniyle</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Teknolojinin tamamen ortadan kalkması</span></div>
+      </div>
+    </div>
+    <!-- S31 -->
+    <div class="q-card">
+      <div class="q-num">SORU 31</div>
+      <div class="q-text">Etkili zaman yönetiminin ilk adımı nedir?</div>
+      <div class="options" data-q="31" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Başkalarının çalışma programını kopyalamak</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Kendi verimlilik alışkanlıklarını tanımak</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Sadece hızlı çalışmaya odaklanmak</span></div>
+      </div>
+    </div>
+    <!-- S32 -->
+    <div class="q-card">
+      <div class="q-num">SORU 32</div>
+      <div class="q-text">Aşağıdakilerden hangisi zaman yönetimini olumsuz etkileyen bir faktördür?</div>
+      <div class="options" data-q="32" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">İşleri öncelik sırasına koymak</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Verimli saatlerde çalışmak</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Sürekli gelen bildirimler ve dijital dikkat dağıtıcılar</span></div>
+      </div>
+    </div>
+    <!-- S33 -->
+    <div class="q-card">
+      <div class="q-num">SORU 33</div>
+      <div class="q-text">Metne göre dengeli bir yaşam tarzı neden önemlidir?</div>
+      <div class="options" data-q="33" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Daha az sorumluluk almak için</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Sadece boş zamanları artırmak için</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Uzun vadede verimliliği ve sağlığı korumak için</span></div>
+      </div>
+    </div>
+    <!-- S34 -->
+    <div class="q-card">
+      <div class="q-num">SORU 34</div>
+      <div class="q-text">Metinde verilen bilgilere göre aşağıdakilerden hangisi doğrudur?</div>
+      <div class="options" data-q="34" data-answer="C">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Zaman yönetimi doğuştan gelen bir yetenektir</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Herkes günün aynı saatlerinde verimli çalışır</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Zaman yönetimi geliştirilebilen bir beceridir</span></div>
+      </div>
+    </div>
+    <!-- S35 -->
+    <div class="q-card">
+      <div class="q-num">SORU 35</div>
+      <div class="q-text">Metnin genel mesajı aşağıdakilerden hangisidir?</div>
+      <div class="options" data-q="35" data-answer="B">
+        <div class="option" data-val="A"><span class="option-key">A)</span><span class="option-text">Daha fazla çalışmak her zaman başarı getirir</span></div>
+        <div class="option" data-val="B"><span class="option-key">B)</span><span class="option-text">Zamanı bilinçli ve dengeli kullanmak yaşam kalitesini artırır</span></div>
+        <div class="option" data-val="C"><span class="option-key">C)</span><span class="option-text">Teknoloji tamamen zararlıdır ve kullanılmamalıdır</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ACTIONS ═══ -->
+  <div class="actions">
+    <button class="btn btn-primary" onclick="checkAll()">✓ Cevapları Kontrol Et</button>
+    <button class="btn btn-ghost" onclick="resetAll()">↺ Sıfırla</button>
+  </div>
+
+  <!-- ═══ SCORE ═══ -->
+  <div id="score-panel">
+    <div class="score-big" id="score-pts">—</div>
+    <div class="score-sub">puan</div>
+    <div class="score-breakdown">
+      <div class="score-item"><strong id="score-correct">—</strong>Doğru</div>
+      <div class="score-item"><strong id="score-wrong">—</strong>Yanlış</div>
+      <div class="score-item"><strong id="score-blank">—</strong>Boş</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── TRUE/FALSE DATA ──────────────────────────────────────────────
+const tfData = [
+  { q: 9,  text: "Su kıtlığı sorunu dünya genelinde etkisini hissettiren bir tehdittir.", answer: "D" },
+  { q: 10, text: "Sanayileşme ve nüfus artışı, su kaynaklarının kirlenmesine neden olan faktörler arasındadır.", answer: "D" },
+  { q: 11, text: "Tarımsal verimin düşmesi ile su kaynaklarının azalması arasında bir ilişki yoktur.", answer: "Y" },
+  { q: 12, text: "Su krizinin temel nedenlerinden biri, insanların aşırı tüketim ve kimyasal atık gibi faaliyetleridir.", answer: "D" },
+  { q: 13, text: "Su kaynaklarını korumak ve tasarruf yapmak sadece hükümetlerin görevidir.", answer: "Y" },
+  { q: 14, text: "Bireysel olarak edinilecek çevre dostu alışkanlıklar su kriziyle mücadelede etkilidir.", answer: "D" },
+];
+
+const tfContainer = document.getElementById('tf-questions');
+tfData.forEach(item => {
+  const div = document.createElement('div');
+  div.className = 'q-card';
+  div.innerHTML = `
+    <div class="q-num">SORU ${item.q}</div>
+    <div class="q-text">${item.text}</div>
+    <div class="tf-options" data-q="${item.q}" data-answer="${item.answer}">
+      <button class="tf-btn" data-val="D" onclick="selectTF(this)">DOĞRU</button>
+      <button class="tf-btn" data-val="Y" onclick="selectTF(this)">YANLIŞ</button>
+    </div>`;
+  tfContainer.appendChild(div);
+});
+
+// ── SCORING TABLE ────────────────────────────────────────────────
+const scoreTable = [0,23,26,28,30,33,34,36,38,39,41,42,44,45,47,48,50,51,53,54,55,57,58,60,61,63,65,66,68,70,72,73,74,75,75,75];
+
+// ── ANSWER STORE ─────────────────────────────────────────────────
+const answers = {};
+
+// ── MULTIPLE CHOICE ──────────────────────────────────────────────
+document.querySelectorAll('.options').forEach(group => {
+  group.querySelectorAll('.option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      group.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      answers[group.dataset.q] = opt.dataset.val;
+      updateProgress();
+    });
+  });
+});
+
+// ── TRUE/FALSE ───────────────────────────────────────────────────
+function selectTF(btn) {
+  const group = btn.closest('.tf-options');
+  group.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[group.dataset.q] = btn.dataset.val;
+  updateProgress();
+}
+
+// ── SELECT (match/map) ───────────────────────────────────────────
+document.querySelectorAll('.match-select').forEach(sel => {
+  sel.addEventListener('change', () => {
+    answers[sel.dataset.q] = sel.value;
+    updateProgress();
+  });
+});
+
+// ── PROGRESS ─────────────────────────────────────────────────────
+function updateProgress() {
+  const answered = Object.keys(answers).filter(k => answers[k] && answers[k] !== '').length;
+  document.getElementById('progress-label').textContent = `${answered} / 35 soru yanıtlandı`;
+  document.getElementById('progress-fill').style.width = (answered / 35 * 100) + '%';
+}
+
+// ── CHECK ALL ────────────────────────────────────────────────────
+function checkAll() {
+  let correct = 0, wrong = 0, blank = 0;
+
+  // MCQ
+  document.querySelectorAll('.options').forEach(group => {
+    const q = group.dataset.q;
+    const ans = group.dataset.answer;
+    const sel = answers[q];
+    group.querySelectorAll('.option').forEach(opt => {
+      opt.classList.remove('selected','correct','wrong');
+      if (opt.dataset.val === ans) opt.classList.add('correct');
+      else if (opt.dataset.val === sel && sel !== ans) opt.classList.add('wrong');
+    });
+    if (!sel) blank++;
+    else if (sel === ans) correct++;
+    else wrong++;
+  });
+
+  // T/F
+  document.querySelectorAll('.tf-options').forEach(group => {
+    const q = group.dataset.q;
+    const ans = group.dataset.answer;
+    const sel = answers[q];
+    group.querySelectorAll('.tf-btn').forEach(btn => {
+      btn.classList.remove('selected','correct','wrong');
+      if (btn.dataset.val === ans) btn.classList.add('correct');
+      else if (btn.dataset.val === sel && sel !== ans) btn.classList.add('wrong');
+    });
+    if (!sel) blank++;
+    else if (sel === ans) correct++;
+    else wrong++;
+  });
+
+  // Selects
+  document.querySelectorAll('.match-select').forEach(sel => {
+    const ans = sel.dataset.answer;
+    const val = sel.value;
+    sel.classList.remove('correct','wrong');
+    if (!val) blank++;
+    else if (val === ans) { correct++; sel.classList.add('correct'); }
+    else { wrong++; sel.classList.add('wrong'); }
+  });
+
+  const pts = scoreTable[correct] || 0;
+  document.getElementById('score-pts').textContent = pts;
+  document.getElementById('score-correct').textContent = correct;
+  document.getElementById('score-wrong').textContent = wrong;
+  document.getElementById('score-blank').textContent = blank;
+  const panel = document.getElementById('score-panel');
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ── RESET ────────────────────────────────────────────────────────
+function resetAll() {
+  for (const k in answers) delete answers[k];
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.match-select').forEach(s => { s.value = ''; s.classList.remove('correct','wrong'); });
+  document.getElementById('score-panel').classList.remove('visible');
+  updateProgress();
+}
+</script>
+</body>
+</html>

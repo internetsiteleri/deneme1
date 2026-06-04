@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinleme Anlama – Diyaloglar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 2px 16px rgba(80,50,20,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 52px 28px 80px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  .player-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+
+  .player-status {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+
+  .audio-wrapper {
+    margin: 12px 0;
+  }
+
+  audio {
+    width: 100%;
+    max-width: 520px;
+    accent-color: var(--accent);
+    border-radius: 8px;
+  }
+
+  .audio-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-style: italic;
+  }
+
+  .dialog-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 32px 0 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .dialog-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s;
+  }
+
+  .question-card.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-card.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-stem {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+
+  .options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .radio-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--bg);
+  }
+
+  .radio-option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option.selected-radio {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .radio-option.disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .radio-option.correct-highlight {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .radio-option.wrong-highlight {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .radio-input {
+    margin-top: 2px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .radio-input:disabled { cursor: default; }
+
+  .radio-label {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink);
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .disabled .radio-label,
+  .disabled .radio-input { cursor: default; }
+
+  .feedback-row {
+    display: none;
+    margin-top: 14px;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .question-card.correct .feedback-row {
+    display: block;
+    background: rgba(45,122,80,0.08);
+    color: var(--correct);
+  }
+
+  .question-card.wrong .feedback-row {
+    display: block;
+    background: rgba(185,58,58,0.08);
+    color: var(--wrong);
+  }
+
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .btn-check { background: var(--accent); color: white; }
+  .btn-check:hover { background: #6b3510; }
+  .btn-answers { background: transparent; color: var(--gold); border: 1.5px solid var(--gold); }
+  .btn-reset { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 28px;
+    padding: 24px;
+    background: var(--surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .answer-key {
+    display: none;
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    padding: 24px;
+  }
+
+  .answer-key.visible { display: block; }
+
+  .ak-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+
+  .ak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+  }
+
+  .ak-item {
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 7px;
+    font-size: 14px;
+  }
+
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 28px 16px; }
+    .player-card { padding: 20px; }
+    .radio-option { padding: 8px 12px; }
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .back-btn:hover {
+    background: var(--accent-light);
+    transform: translateX(-2px);
+  }
+</style>
+</head>
+<body>
+<a class="back-btn" onclick="history.back()">&#8592; Geri</a>
+<div class="page">
+
+  <div class="header">
+    <div class="eyebrow">Dinleme Anlama · 3 Diyalog · 6 Soru</div>
+    <h1>Diyaloglar</h1>
+    <p class="subheading">Diyalogları dikkatle dinleyin ve doğru cevabı işaretleyin</p>
+    <div class="rule"></div>
+  </div>
+
+  <div class="player-card">
+    <div class="player-status">🎧 DİNLEME MODÜLÜ</div>
+    <div class="audio-wrapper">
+      <audio id="mainAudio" controls>
+        <source src="dinleme_alistirmasi_4.mp3" type="audio/mpeg">
+        Tarayıcınız ses oynatmayı desteklemiyor.
+      </audio>
+    </div>
+    <p class="audio-note">Ses kaydını dinlemeden önce soruları okumanız için 30 saniye süreniz vardır. Ses kaydını en az iki kez dinlemeniz önerilir.</p>
+  </div>
+
+  <!-- 1. Diyalog -->
+  <div class="dialog-label">1. Diyalog</div>
+
+  <div id="qcard-1" class="question-card">
+    <div class="q-stem">
+      <span class="q-num">S1</span>
+      Karşılıklı konuşmada, ekonomik problemlerin seyahat planları üzerindeki etkisiyle ilgili hangi sonuca varılabilir?
+    </div>
+    <div class="options-group" id="options-1">
+      <div class="radio-option" data-q="1" data-val="A">
+        <input type="radio" class="radio-input" name="q1" id="q1_A" value="A">
+        <label class="radio-label" for="q1_A">A) Ayşe, maddi problemler nedeniyle tatil planlarında tereddüt yaşarken, Ali iş seyahatleri sayesinde bu etkiyi daha az hissediyor.</label>
+      </div>
+      <div class="radio-option" data-q="1" data-val="B">
+        <input type="radio" class="radio-input" name="q1" id="q1_B" value="B">
+        <label class="radio-label" for="q1_B">B) Her iki kişi de ekonomik sıkıntılar nedeniyle tatil planlarını tamamen iptal ettireceğine inanıyor.</label>
+      </div>
+      <div class="radio-option" data-q="1" data-val="C">
+        <input type="radio" class="radio-input" name="q1" id="q1_C" value="C">
+        <label class="radio-label" for="q1_C">C) İkisi de ekonomik dalgalanmaların seyahat güvenliği üzerinde olumlu etkisi olduğunu düşünüyor.</label>
+      </div>
+    </div>
+    <div class="feedback-row" id="fb-1"></div>
+  </div>
+
+  <div id="qcard-2" class="question-card">
+    <div class="q-stem">
+      <span class="q-num">S2</span>
+      Konuşmada geleceğe dair planların nasıl etkilendiği söylenebilir?
+    </div>
+    <div class="options-group" id="options-2">
+      <div class="radio-option" data-q="2" data-val="A">
+        <input type="radio" class="radio-input" name="q2" id="q2_A" value="A">
+        <label class="radio-label" for="q2_A">A) Her iki kişi de kariyer ve kişisel planlarını netleştirmiş durumda.</label>
+      </div>
+      <div class="radio-option" data-q="2" data-val="B">
+        <input type="radio" class="radio-input" name="q2" id="q2_B" value="B">
+        <label class="radio-label" for="q2_B">B) Gelecekle ilgili planların, belirsizlik kazandığı vurgulanıyor.</label>
+      </div>
+      <div class="radio-option" data-q="2" data-val="C">
+        <input type="radio" class="radio-input" name="q2" id="q2_C" value="C">
+        <label class="radio-label" for="q2_C">C) Sadece Ayşe gelecekteki planlarını gözden geçirirken, Ali mevcut iş seyahatlerine odaklanmayı sürdürüyor.</label>
+      </div>
+    </div>
+    <div class="feedback-row" id="fb-2"></div>
+  </div>
+
+  <!-- 2. Diyalog -->
+  <div class="dialog-label">2. Diyalog</div>
+
+  <div id="qcard-3" class="question-card">
+    <div class="q-stem">
+      <span class="q-num">S1</span>
+      Leyla'nın Murat'a karşı tavrı nasıldır?
+    </div>
+    <div class="options-group" id="options-3">
+      <div class="radio-option" data-q="3" data-val="A">
+        <input type="radio" class="radio-input" name="q3" id="q3_A" value="A">
+        <label class="radio-label" for="q3_A">A) Destekleyici ve teşvik edici</label>
+      </div>
+      <div class="radio-option" data-q="3" data-val="B">
+        <input type="radio" class="radio-input" name="q3" id="q3_B" value="B">
+        <label class="radio-label" for="q3_B">B) Israrcı ve yönlendirici</label>
+      </div>
+      <div class="radio-option" data-q="3" data-val="C">
+        <input type="radio" class="radio-input" name="q3" id="q3_C" value="C">
+        <label class="radio-label" for="q3_C">C) Kayıtsız ve ilgisiz</label>
+      </div>
+    </div>
+    <div class="feedback-row" id="fb-3"></div>
+  </div>
+
+  <div id="qcard-4" class="question-card">
+    <div class="q-stem">
+      <span class="q-num">S2</span>
+      Murat'ın Leyla'ya verdiği tepkiler, Murat'ın hangi kişisel özelliğini yansıtıyor?
+    </div>
+    <div class="options-group" id="options-4">
+      <div class="radio-option" data-q="4" data-val="A">
+        <input type="radio" class="radio-input" name="q4" id="q4_A" value="A">
+        <label class="radio-label" for="q4_A">A) Kararsızlık ve belirsizlik</label>
+      </div>
+      <div class="radio-option" data-q="4" data-val="B">
+        <input type="radio" class="radio-input" name="q4" id="q4_B" value="B">
+        <label class="radio-label" for="q4_B">B) Uyumluluk ve itaatkârlık</label>
+      </div>
+      <div class="radio-option" data-q="4" data-val="C">
+        <input type="radio" class="radio-input" name="q4" id="q4_C" value="C">
+        <label class="radio-label" for="q4_C">C) Kararlılık ve tutarlılık</label>
+      </div>
+    </div>
+    <div class="feedback-row" id="fb-4"></div>
+  </div>
+
+  <!-- 3. Diyalog -->
+  <div class="dialog-label">3. Diyalog</div>
+
+  <div id="qcard-5" class="question-card">
+    <div class="q-stem">
+      <span class="q-num">S1</span>
+      Caner'in sergisini ziyaret eden insanların tepkisi nasıldı?
+    </div>
+    <div class="options-group" id="options-5">
+      <div class="radio-option" data-q="5" data-val="A">
+        <input type="radio" class="radio-input" name="q5" id="q5_A" value="A">
+        <label class="radio-label" for="q5_A">A) Olumsuz yorumlar yaptılar.</label>
+      </div>
+      <div class="radio-option" data-q="5" data-val="B">
+        <input type="radio" class="radio-input" name="q5" id="q5_B" value="B">
+        <label class="radio-label" for="q5_B">B) Düşündüğünden daha ilgililerdi.</label>
+      </div>
+      <div class="radio-option" data-q="5" data-val="C">
+        <input type="radio" class="radio-input" name="q5" id="q5_C" value="C">
+        <label class="radio-label" for="q5_C">C) Sergiyi ilgi çekici bulmadılar.</label>
+      </div>
+    </div>
+    <div class="feedback-row" id="fb-5"></div>
+  </div>
+
+  <div id="qcard-6" class="question-card">
+    <div class="q-stem">
+      <span class="q-num">S2</span>
+      Caner bu sergiyle kariyerinde ne yapmak istemiştir?
+    </div>
+    <div class="options-group" id="options-6">
+      <div class="radio-option" data-q="6" data-val="A">
+        <input type="radio" class="radio-input" name="q6" id="q6_A" value="A">
+        <label class="radio-label" for="q6_A">A) Ressamlığı bırakmak</label>
+      </div>
+      <div class="radio-option" data-q="6" data-val="B">
+        <input type="radio" class="radio-input" name="q6" id="q6_B" value="B">
+        <label class="radio-label" for="q6_B">B) İlerlemek istemiştir.</label>
+      </div>
+      <div class="radio-option" data-q="6" data-val="C">
+        <input type="radio" class="radio-input" name="q6" id="q6_C" value="C">
+        <label class="radio-label" for="q6_C">C) Eski tarzına dönmek</label>
+      </div>
+    </div>
+    <div class="feedback-row" id="fb-6"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-check" onclick="checkAllAnswers()">KONTROL ET</button>
+    <button class="btn-answers" onclick="toggleAnswerKey()">CEVAPLAR</button>
+    <button class="btn-reset" onclick="resetAll()">SIFIRLA</button>
+  </div>
+
+  <div class="score-banner" id="scoreBanner">
+    <div class="score-big" id="scoreNumber">0/6</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="answer-key" id="answerKey">
+    <div class="ak-title">📋 Cevap Anahtarı</div>
+    <div class="ak-grid">
+      <div class="ak-item"><strong>1. Diyalog S1</strong> → A</div>
+      <div class="ak-item"><strong>1. Diyalog S2</strong> → B</div>
+      <div class="ak-item"><strong>2. Diyalog S1</strong> → B</div>
+      <div class="ak-item"><strong>2. Diyalog S2</strong> → C</div>
+      <div class="ak-item"><strong>3. Diyalog S1</strong> → B</div>
+      <div class="ak-item"><strong>3. Diyalog S2</strong> → B</div>
+    </div>
+  </div>
+
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum · Dinleme Etkinliği</div>
+</div>
+
+<script>
+  const TOTAL = 6;
+
+  const correctAnswers = { 1:'A', 2:'B', 3:'B', 4:'C', 5:'B', 6:'B' };
+
+  const optionsData = {
+    1: [
+      { val:'A', label:'Ayşe, maddi problemler nedeniyle tatil planlarında tereddüt yaşarken, Ali iş seyahatleri sayesinde bu etkiyi daha az hissediyor.' },
+      { val:'B', label:'Her iki kişi de ekonomik sıkıntılar nedeniyle tatil planlarını tamamen iptal ettireceğine inanıyor.' },
+      { val:'C', label:'İkisi de ekonomik dalgalanmaların seyahat güvenliği üzerinde olumlu etkisi olduğunu düşünüyor.' }
+    ],
+    2: [
+      { val:'A', label:'Her iki kişi de kariyer ve kişisel planlarını netleştirmiş durumda.' },
+      { val:'B', label:'Gelecekle ilgili planların, belirsizlik kazandığı vurgulanıyor.' },
+      { val:'C', label:'Sadece Ayşe gelecekteki planlarını gözden geçirirken, Ali mevcut iş seyahatlerine odaklanmayı sürdürüyor.' }
+    ],
+    3: [
+      { val:'A', label:'Destekleyici ve teşvik edici' },
+      { val:'B', label:'Israrcı ve yönlendirici' },
+      { val:'C', label:'Kayıtsız ve ilgisiz' }
+    ],
+    4: [
+      { val:'A', label:'Kararsızlık ve belirsizlik' },
+      { val:'B', label:'Uyumluluk ve itaatkârlık' },
+      { val:'C', label:'Kararlılık ve tutarlılık' }
+    ],
+    5: [
+      { val:'A', label:'Olumsuz yorumlar yaptılar.' },
+      { val:'B', label:'Düşündüğünden daha ilgililerdi.' },
+      { val:'C', label:'Sergiyi ilgi çekici bulmadılar.' }
+    ],
+    6: [
+      { val:'A', label:'Ressamlığı bırakmak' },
+      { val:'B', label:'İlerlemek istemiştir.' },
+      { val:'C', label:'Eski tarzına dönmek' }
+    ]
+  };
+
+  let selected = {};
+  let checkedState = {};
+
+  for (let q = 1; q <= TOTAL; q++) {
+    ['A','B','C'].forEach(val => {
+      const radio = document.getElementById(`q${q}_${val}`);
+      if (!radio) return;
+      radio.addEventListener('change', () => {
+        if (checkedState[q]) return;
+        if (radio.checked) {
+          selected[q] = val;
+          document.getElementById(`qcard-${q}`).classList.remove('correct','wrong');
+          const fb = document.getElementById(`fb-${q}`);
+          if (fb) fb.textContent = '';
+          document.querySelectorAll(`#options-${q} .radio-option`).forEach(d => d.classList.remove('selected-radio'));
+          radio.closest('.radio-option').classList.add('selected-radio');
+        }
+      });
+    });
+  }
+
+  function checkAllAnswers() {
+    let score = 0;
+    for (let q = 1; q <= TOTAL; q++) {
+      const ans = selected[q];
+      const card = document.getElementById(`qcard-${q}`);
+      const fb = document.getElementById(`fb-${q}`);
+      const optCont = document.getElementById(`options-${q}`);
+      const allDivs = optCont ? optCont.querySelectorAll('.radio-option') : [];
+
+      checkedState[q] = true;
+      allDivs.forEach(div => {
+        div.classList.add('disabled');
+        const r = div.querySelector('.radio-input');
+        if (r) r.disabled = true;
+      });
+
+      if (!ans) {
+        card.classList.add('wrong');
+        fb.textContent = '⚠ Cevap seçilmemiş.';
+        continue;
+      }
+
+      if (ans === correctAnswers[q]) {
+        card.classList.add('correct');
+        fb.textContent = '✓ Doğru cevap!';
+        score++;
+        allDivs.forEach(div => {
+          if (div.getAttribute('data-val') === correctAnswers[q]) div.classList.add('correct-highlight');
+        });
+      } else {
+        card.classList.add('wrong');
+        const cl = correctAnswers[q];
+        const ct = optionsData[q].find(o => o.val === cl)?.label || cl;
+        fb.textContent = `✗ Yanlış. Doğru cevap: ${cl}) ${ct}`;
+        allDivs.forEach(div => {
+          const v = div.getAttribute('data-val');
+          if (v === ans) div.classList.add('wrong-highlight');
+          if (v === correctAnswers[q]) div.classList.add('correct-highlight');
+        });
+      }
+    }
+    const banner = document.getElementById('scoreBanner');
+    banner.style.display = 'block';
+    document.getElementById('scoreNumber').textContent = `${score}/${TOTAL}`;
+    banner.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  function toggleAnswerKey() {
+    const key = document.getElementById('answerKey');
+    key.classList.toggle('visible');
+    if (key.classList.contains('visible')) key.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  function resetAll() {
+    selected = {};
+    checkedState = {};
+    for (let q = 1; q <= TOTAL; q++) {
+      const card = document.getElementById(`qcard-${q}`);
+      if (card) card.classList.remove('correct','wrong');
+      const fb = document.getElementById(`fb-${q}`);
+      if (fb) fb.textContent = '';
+      const optCont = document.getElementById(`options-${q}`);
+      if (optCont) {
+        optCont.querySelectorAll('.radio-option').forEach(div => {
+          div.classList.remove('disabled','selected-radio','correct-highlight','wrong-highlight');
+          const r = div.querySelector('.radio-input');
+          if (r) { r.checked = false; r.disabled = false; }
+        });
+      }
+    }
+    document.getElementById('scoreBanner').style.display = 'none';
+    document.getElementById('answerKey').classList.remove('visible');
+    const audio = document.getElementById('mainAudio');
+    if (audio) { audio.pause(); audio.currentTime = 0; }
+  }
+</script>
+</body>
+</html>
