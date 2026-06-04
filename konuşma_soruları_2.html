@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konuşma Soruları 2 – Hamza Hoca</title>
+<style>
+  :root { --gold:#F5C842; --gold-dark:#C9960A; --bg:#0D1B2A; --bg2:#162032; --text:#F0EAD6; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; background:linear-gradient(135deg,#0D1B2A 0%,#1a2a3a 100%); color:var(--text); min-height:100vh; overflow-x:hidden; }
+  header { text-align:center; padding:2.5rem 1rem 1.2rem; }
+  .header-badge { display:inline-block; background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A; font-size:.68rem; font-weight:800; letter-spacing:3px; text-transform:uppercase; padding:.3rem 1.2rem; border-radius:50px; margin-bottom:.9rem; }
+  header h1 { font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:clamp(1.4rem,4.5vw,2.5rem); font-weight:800; color:#F5C842; line-height:1.3; letter-spacing:.02em; }
+  .stars { text-align:center; font-size:1rem; opacity:.35; letter-spacing:6px; margin:.5rem 0; }
+  .divider { width:80px; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.8rem auto; border-radius:2px; }
+  header p { color:rgba(240,234,214,.42); font-size:.82rem; letter-spacing:.4px; }
+  .telegram-section { text-align:center; padding:.5rem 1rem 1rem; }
+  .tg-box { display:inline-flex; align-items:center; gap:1rem; background:rgba(22,32,50,.85); border:1.5px solid rgba(34,158,217,.3); border-radius:60px; padding:.75rem 1.5rem .75rem 1rem; flex-wrap:wrap; justify-content:center; }
+  .tg-logo-wrap { width:44px; height:44px; flex-shrink:0; }
+  .tg-btn { display:inline-flex; align-items:center; gap:.45rem; background:linear-gradient(135deg,#229ED9,#1A7FB0); color:#fff; text-decoration:none; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-weight:800; font-size:.92rem; padding:.65rem 1.5rem; border-radius:50px; box-shadow:0 4px 20px rgba(34,158,217,.4); transition:all .22s; white-space:nowrap; }
+  .tg-btn:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(34,158,217,.55); }
+  .section-block { margin-bottom:2.5rem; }
+  .section-title-main { text-align:center; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-size:1.1rem; color:var(--gold); letter-spacing:2px; text-transform:uppercase; margin:1.5rem 0 .4rem; opacity:.9; }
+  .section-subtitle { text-align:center; font-size:.75rem; color:rgba(240,234,214,.4); letter-spacing:1px; margin-bottom:1.2rem; }
+  .section-divider { width:120px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:.4rem auto 1.2rem; border-radius:2px; }
+  .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; padding:0 1.5rem; max-width:1200px; margin:0 auto; }
+  .card-wrap { height:230px; cursor:pointer; perspective:1000px; -webkit-perspective:1000px; }
+  .card-wrap.tall { height:420px; }
+  .card-wrap.multi { height:340px; }
+  .card-wrap.img-card { height:320px; }
+  .card-inner { position:relative; width:100%; height:100%; transition:transform .6s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d; -webkit-transform-style:preserve-3d; }
+  .card-wrap.flipped .card-inner { transform:rotateY(180deg); -webkit-transform:rotateY(180deg); }
+  .card-face { position:absolute; top:0; left:0; width:100%; height:100%; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.45rem; padding:1rem 1.3rem; border:1.5px solid rgba(245,200,66,.15); box-shadow:0 6px 24px rgba(0,0,0,.4); -webkit-backface-visibility:hidden; backface-visibility:hidden; }
+  .card-front { background:linear-gradient(145deg,#1E3552,#122133); }
+  .card-front.s2 { background:linear-gradient(145deg,#1E3552,#122133); }
+  .card-front.s3 { background:linear-gradient(145deg,#1E3552,#122133); }
+  .card-front.s4 { background:linear-gradient(145deg,#1E3552,#122133); }
+  .card-back, .card-back.s2, .card-back.s3, .card-back.s4 { background:linear-gradient(145deg,#103828,#071E12); border-color:rgba(58,175,169,.25); transform:rotateY(180deg); -webkit-transform:rotateY(180deg); }
+  .card-back .card-keyword { color:#7EFFF5; }
+  .card-back .card-sep { background:#7EFFF5; }
+  .card-front .card-keyword { color:#FFF3A3; }
+  .card-front .card-sep { background:#FFF3A3; }
+  .card-keyword { font-size:1rem; font-weight:900; text-align:center; letter-spacing:.3px; line-height:1.3; }
+  .card-sep { width:40px; height:2px; border-radius:2px; opacity:.3; flex-shrink:0; }
+  .card-sentence { font-size:.74rem; font-weight:600; text-align:center; line-height:1.55; opacity:.75; letter-spacing:.1px; }
+  .counter { position:absolute; top:9px; left:12px; font-size:.56rem; font-weight:800; opacity:.25; letter-spacing:.5px; }
+  .flip-hint { position:absolute; bottom:8px; font-size:.54rem; opacity:.18; letter-spacing:1px; text-transform:uppercase; }
+  .card-wrap:hover { box-shadow:0 0 18px rgba(245,200,66,.22); border-radius:16px; }
+  .timer-btn { display:inline-flex; align-items:center; gap:.4rem; background:linear-gradient(135deg,#F5C842,#C9960A); color:#0D1B2A; border:none; cursor:pointer; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; font-weight:800; font-size:.78rem; padding:.38rem .9rem; border-radius:50px; box-shadow:0 3px 12px rgba(245,200,66,.4); transition:all .18s; white-space:nowrap; flex-shrink:0; }
+  .timer-btn:hover { transform:translateY(-1px); box-shadow:0 5px 18px rgba(245,200,66,.6); }
+  .timer-btn:disabled { opacity:.5; cursor:default; transform:none; }
+  .timer-display { font-size:.9rem; font-weight:900; color:#F5C842; letter-spacing:1px; min-width:2.4rem; text-align:center; display:none; }
+  .timer-display.warning { color:#FF6B6B; }
+  .timer-row { display:flex; align-items:center; gap:.5rem; margin-top:.3rem; }
+  .multi-front-qs { width:100%; text-align:left; }
+  .multi-front-q-item { font-size:.72rem; font-weight:700; color:#FFF3A3; padding:.3rem 0; border-bottom:1px solid rgba(255,243,163,.1); line-height:1.35; }
+  .multi-front-q-item:last-child { border-bottom:none; }
+  .q-num { opacity:.45; margin-right:.3rem; font-weight:900; }
+  .multi-back-item { width:100%; border-top:1px solid rgba(126,255,245,.12); padding-top:.45rem; margin-top:.4rem; }
+  .multi-back-item:first-child { border-top:none; padding-top:0; margin-top:0; }
+  .multi-back-q { font-size:.61rem; font-weight:800; color:#7EFFF5; opacity:.65; letter-spacing:.3px; margin-bottom:.2rem; }
+  .multi-back-a { font-size:.68rem; font-weight:600; color:var(--text); line-height:1.5; opacity:.88; }
+  /* Image card front: two images side by side */
+  .img-row { display:flex; gap:.5rem; justify-content:center; width:100%; }
+  .img-row img { width:48%; height:110px; object-fit:cover; border-radius:8px; border:1.5px solid rgba(245,200,66,.2); }
+  .bottom-space { height:3rem; }
+</style>
+</head>
+<body>
+<!-- GERİ BUTONU -->
+<div style="padding:18px 20px 0; max-width:1200px; margin:0 auto;">
+  <button onclick="history.back()" style="display:inline-flex;align-items:center;gap:8px;background:#1a2332;border:2px solid #F5C842;border-radius:40px;padding:9px 20px;color:#F5C842;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .22s,transform .18s,box-shadow .22s;" onmouseover="this.style.background='#2a3a4a';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1a2332';this.style.transform='none'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Geri
+  </button>
+</div>
+
+
+<header>
+  <div class="header-badge">✦ Soru & Cevap Kartları ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Karta tıklayın → Cevabı görün 🔄</p>
+</header>
+<div class="telegram-section">
+  <div class="divider"></div><br>
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+<div id="app"></div>
+<div class="bottom-space"></div>
+<script>
+const IMG1 = "data:image/jpeg;base64,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";
+const IMG2 = "data:image/jpeg;base64,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";
+
+const s1Cards = [
+  { q:"Bugüne kadar hangi kitapları okudunuz?", a:"Bugüne kadar farklı alanlarda birçok kitap okudum. Özellikle roman, kişisel gelişim ve tarih kitaplarını okumayı seviyorum. Bunun yanında, eğitim hayatımla ilgili akademik kitaplar da okudum. Bu sayede, hem bilgi birikimim arttı hem de olaylara bakış açım gelişti.", timer:30 },
+  { q:"En sevdiğiniz ders hangisidir?", a:"En sevdiğim ders Türkçedir. Çünkü bu derste kendimi daha doğru ve etkili bir şekilde ifade etmeyi öğreniyorum. Ayrıca, okuma ve konuşma becerilerimi geliştirdiği için benim için oldukça faydalıdır.", timer:30 },
+  { q:"Aile üyeleriniz hakkında bilgi veriniz.", a:"Ailem anne, baba ve kardeşlerimden oluşmaktadır. Herkesin aile içinde farklı bir görevi vardır. Özellikle, ailem bana her zaman destek olur. Bu nedenle, aile bağlarının çok önemli olduğunu düşünüyorum.", timer:30 }
+];
+
+const s2Cards = [
+  { q:"Resimlerde ne görüyorsunuz?", a:"Resimlerde ders çalışan öğrenciler görüyorum. Bir resimde öğrenci sessiz bir ortamda tek başına çalışıyor, diğer resimde ise daha düzenli bir çalışma alanı bulunuyor. Her iki resim de, ders çalışmanın önemini göstermektedir.", timer:45, hasImages:true },
+  { q:"Sizce en verimli ders çalışma saati hangisidir?", a:"Bence en verimli ders çalışma saati kişiden kişiye değişir. Ancak, genellikle sabah saatlerinde zihnin daha açık olduğu düşünülmektedir. Bu yüzden, sabah ders çalışmak daha verimli olabilir.", timer:30 },
+  { q:"Siz gece mi yoksa gündüz mü ders çalışmayı tercih edersiniz?", a:"Ben gündüz ders çalışmayı tercih ederim. Çünkü gün ışığında daha iyi odaklanabiliyorum. Ayrıca, gece ders çalışmak beni daha çabuk yoruyor.", timer:30 }
+];
+
+const s3Multi = {
+  timer: 120,
+  questions: [
+    { q:"Zenginlik ve mutluluk hakkında ne düşünüyorsunuz?", a:"Zenginlik ve mutluluk arasında doğrudan bir ilişki olduğunu düşünmüyorum. Elbette, maddi imkânlar hayatı kolaylaştırır. Ancak, mutluluk daha çok iç huzur ve insan ilişkileriyle ilgilidir." },
+    { q:"Zenginlik mutluluğu getirir mi?", a:"Zenginlik mutluluğu kısmen getirebilir. Özellikle, temel ihtiyaçlar karşılandığında insan kendini daha rahat hisseder. Fakat, sadece para uzun vadede mutluluk sağlamaz." },
+    { q:"Sizin için hangisi daha önemli: zenginlik mi, mutluluk mu?", a:"Benim için mutluluk daha önemlidir. Çünkü insan mutlu olmadıktan sonra zenginliğin fazla bir anlamı kalmaz. Bu nedenle, huzurlu bir yaşamı tercih ederim." }
+  ]
+};
+
+const s4Card = {
+  timer: 120,
+  q: "Çevre kirliliğini önlemek için çöp atmaya yönelik cezalar daha caydırıcı hale getirilmelidir.",
+  a: `<b>✅ Lehine:</b> Daha yüksek cezalar insanları çöp atmaktan caydırabilir. Ayrıca, kamusal alanların temiz kalmasına katkı sağlar. Bununla birlikte, bu cezalar temizlik çalışmaları için maddi kaynak oluşturabilir.<br><br><b>❌ Aleyhine:</b> Yüksek cezalar çöpü kazara atan kişiler için adil olmayabilir. Ayrıca, cezaların uygulanması ve denetlenmesi zor olabilir. Bunun yanında, cezalar çevre kirliliğinin temel nedenlerini tek başına çözmeyebilir.<br><br><b>📌 Sonuç:</b> Cezalar önemli bir araçtır; ancak, çevre bilincini artıran eğitim çalışmalarıyla desteklenmesi daha etkili olacaktır.`
+};
+
+function formatTime(sec) {
+  const m = Math.floor(sec/60), s = sec%60;
+  return m>0 ? m+":"+String(s).padStart(2,"0") : String(s);
+}
+
+function attachTimer(wrap, btn, disp, seconds) {
+  let interval=null, remaining=seconds, running=false;
+  function flip() { wrap.classList.add("flipped"); stopTimer(); }
+  function stopTimer() { if(interval){clearInterval(interval);interval=null;} running=false; btn.disabled=true; btn.textContent="✓ Süre Bitti"; }
+  function reset() { if(interval){clearInterval(interval);interval=null;} running=false; remaining=seconds; btn.disabled=false; btn.textContent="Süreyi Başlat"; disp.style.display="none"; disp.textContent=formatTime(seconds); disp.classList.remove("warning"); }
+  function startTimer() {
+    if(running) return; running=true; btn.disabled=true; btn.textContent="⏱";
+    disp.style.display="inline-block"; disp.textContent=formatTime(remaining);
+    interval = setInterval(()=>{ remaining--; disp.textContent=formatTime(remaining); if(remaining<=5)disp.classList.add("warning"); if(remaining<=0)flip(); },1000);
+  }
+  btn.addEventListener("click", e=>{ e.stopPropagation(); startTimer(); });
+  wrap.addEventListener("click", ()=>{ if(!wrap.classList.contains("flipped")){ flip(); } else { wrap.classList.remove("flipped"); reset(); } });
+}
+
+function sectionHeader(title, subtitle) {
+  return `<div class="section-title-main">${title}</div><div class="section-subtitle">${subtitle}</div><div class="section-divider"></div>`;
+}
+
+const app = document.getElementById("app");
+
+// Bölüm 1.1
+(function(){
+  const block=document.createElement("div"); block.className="section-block";
+  block.innerHTML=sectionHeader("Bölüm 1.1","Okuma & Aile")+`<div class="cards-grid" id="g1"></div>`;
+  app.appendChild(block); const grid=block.querySelector("#g1");
+  s1Cards.forEach((card,i)=>{
+    const wrap=document.createElement("div"); wrap.className="card-wrap";
+    wrap.innerHTML=`<div class="card-inner">
+      <div class="card-face card-front">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        <div class="card-keyword" style="font-size:.88rem;">${card.q}</div>
+        <div class="card-sep"></div>
+        <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(card.timer)}</span></div>
+        <span class="flip-hint">tıklayın → cevap</span>
+      </div>
+      <div class="card-face card-back">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        <div class="card-sentence" style="font-size:.82rem;opacity:.9;line-height:1.65;text-align:center;color:var(--text);">${card.a}</div>
+        <span class="flip-hint">tıklayın → soru</span>
+      </div>
+    </div>`;
+    attachTimer(wrap,wrap.querySelector(".timer-btn"),wrap.querySelector(".timer-display"),card.timer);
+    grid.appendChild(wrap);
+  });
+})();
+
+// Bölüm 1.2
+(function(){
+  const block=document.createElement("div"); block.className="section-block";
+  block.innerHTML=sectionHeader("Bölüm 1.2","Ders Çalışma")+`<div class="cards-grid" id="g2"></div>`;
+  app.appendChild(block); const grid=block.querySelector("#g2");
+  s2Cards.forEach((card,i)=>{
+    const wrap=document.createElement("div");
+    wrap.className = card.hasImages ? "card-wrap img-card" : "card-wrap";
+    const frontContent = card.hasImages
+      ? `<div class="card-keyword" style="font-size:.88rem;">${card.q}</div>
+         <div class="card-sep"></div>
+         <div class="img-row"><img src="${IMG1}" alt="Resim 1"><img src="${IMG2}" alt="Resim 2"></div>
+         <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(card.timer)}</span></div>`
+      : `<div class="card-keyword" style="font-size:.88rem;">${card.q}</div>
+         <div class="card-sep"></div>
+         <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(card.timer)}</span></div>`;
+    wrap.innerHTML=`<div class="card-inner">
+      <div class="card-face card-front s2">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        ${frontContent}
+        <span class="flip-hint">tıklayın → cevap</span>
+      </div>
+      <div class="card-face card-back s2">
+        <span class="counter">${String(i+1).padStart(2,"0")}</span>
+        <div class="card-sentence" style="font-size:.82rem;opacity:.9;line-height:1.65;text-align:center;color:var(--text);">${card.a}</div>
+        <span class="flip-hint">tıklayın → soru</span>
+      </div>
+    </div>`;
+    attachTimer(wrap,wrap.querySelector(".timer-btn"),wrap.querySelector(".timer-display"),card.timer);
+    grid.appendChild(wrap);
+  });
+})();
+
+// Bölüm 2 (multi)
+(function(){
+  const block=document.createElement("div"); block.className="section-block";
+  block.innerHTML=sectionHeader("Bölüm 2","Zenginlik & Mutluluk")+`<div class="cards-grid" id="g3"></div>`;
+  app.appendChild(block); const grid=block.querySelector("#g3");
+  const wrap=document.createElement("div"); wrap.className="card-wrap multi";
+  const frontQs=s3Multi.questions.map((q,i)=>`<div class="multi-front-q-item"><span class="q-num">${i+1}.</span>${q.q}</div>`).join("");
+  const backItems=s3Multi.questions.map((q,i)=>`<div class="multi-back-item"><div class="multi-back-q">${i+1}. ${q.q}</div><div class="multi-back-a">${q.a}</div></div>`).join("");
+  wrap.innerHTML=`<div class="card-inner">
+    <div class="card-face card-front s3">
+      <span class="counter">Bölüm 2</span>
+      <div class="multi-front-qs">${frontQs}</div>
+      <div class="card-sep" style="margin-top:.3rem;"></div>
+      <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(s3Multi.timer)}</span></div>
+      <span class="flip-hint">tıklayın → cevaplar</span>
+    </div>
+    <div class="card-face card-back s3" style="justify-content:flex-start;padding-top:1rem;overflow:hidden;">
+      <span class="counter">Bölüm 2</span>
+      <div style="width:100%;overflow-y:auto;max-height:100%;padding-bottom:1.4rem;">${backItems}</div>
+      <span class="flip-hint">tıklayın → sorular</span>
+    </div>
+  </div>`;
+  attachTimer(wrap,wrap.querySelector(".timer-btn"),wrap.querySelector(".timer-display"),s3Multi.timer);
+  grid.appendChild(wrap);
+})();
+
+// Bölüm 3
+(function(){
+  const block=document.createElement("div"); block.className="section-block";
+  block.innerHTML=sectionHeader("Bölüm 3","Tartışma: Çevre Kirliliği & Cezalar")+`<div class="cards-grid" id="g4"></div>`;
+  app.appendChild(block); const grid=block.querySelector("#g4");
+  const wrap=document.createElement("div"); wrap.className="card-wrap tall";
+  wrap.innerHTML=`<div class="card-inner">
+    <div class="card-face card-front s4">
+      <span class="counter">Bölüm 3</span>
+      <div class="card-keyword" style="font-size:.88rem;line-height:1.4;">${s4Card.q}</div>
+      <div class="card-sep"></div>
+      <div class="timer-row"><button class="timer-btn">Süreyi Başlat</button><span class="timer-display">${formatTime(s4Card.timer)}</span></div>
+      <span class="flip-hint">tıklayın → cevap</span>
+    </div>
+    <div class="card-face card-back s4" style="justify-content:flex-start;padding-top:1.2rem;overflow:hidden;">
+      <span class="counter">Bölüm 3</span>
+      <div style="width:100%;overflow-y:auto;max-height:100%;padding-bottom:1.5rem;">
+        <div style="font-size:.8rem;opacity:.92;line-height:1.75;color:var(--text);">${s4Card.a}</div>
+      </div>
+      <span class="flip-hint">tıklayın → soru</span>
+    </div>
+  </div>`;
+  attachTimer(wrap,wrap.querySelector(".timer-btn"),wrap.querySelector(".timer-display"),s4Card.timer);
+  grid.appendChild(wrap);
+})();
+</script>
+
+<footer style="text-align:center;padding:0 1rem 2.5rem;font-size:.8rem;color:rgba(255,255,255,.4);font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;">
+  <p>© 2026 <span style="color:#F5C842;">Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+</body>
+</html>
