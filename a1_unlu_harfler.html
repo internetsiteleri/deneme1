@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ünlü Harfler – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Eklenen içerik stilleri - mevcut temaya uyumlu */
+.content-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  animation: popIn 0.4s ease-out;
+}
+
+.voice-banner {
+  background: rgba(245, 200, 66, 0.12);
+  border-left: 4px solid #F5C842;
+  border-radius: 20px;
+  padding: 12px 20px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #F5C842;
+  font-size: 0.85rem;
+  backdrop-filter: blur(4px);
+}
+
+.topic-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+  margin: 20px auto 30px;
+}
+
+.topic-card {
+  flex: 1;
+  min-width: 280px;
+  background: rgba(21, 32, 48, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 48px;
+  padding: 24px 20px 30px;
+  box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s, box-shadow 0.3s;
+  border: 1px solid rgba(245, 200, 66, 0.25);
+}
+
+.topic-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 40px -12px rgba(0, 0, 0, 0.45);
+  border-color: #F5C842;
+}
+
+.card-icon {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+}
+
+.topic-card h2 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  border-left: 5px solid #F5C842;
+  padding-left: 16px;
+  color: #F5C842;
+}
+
+.ses-listesi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 20px 0 16px;
+  justify-content: center;
+}
+
+.ses-harfi {
+  background: #1e2e3e;
+  width: 65px;
+  height: 65px;
+  border-radius: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  font-family: monospace;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid #F5C842;
+  color: #F5C842;
+  background: #0f1a24;
+}
+
+.ses-harfi:hover {
+  background: #2a3f50;
+  transform: scale(1.05);
+  border-color: #ffd966;
+}
+
+.ses-harfi.playing {
+  animation: pulseGold 0.7s ease infinite;
+  background: #F5C842;
+  color: #0D1B2A;
+  border-color: #fff;
+}
+
+@keyframes pulseGold {
+  0% { box-shadow: 0 0 0 0 rgba(245, 200, 66, 0.7); }
+  70% { box-shadow: 0 0 0 12px rgba(245, 200, 66, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(245, 200, 66, 0); }
+}
+
+.ornek-kelimeler {
+  background: rgba(30, 46, 62, 0.6);
+  border-radius: 28px;
+  padding: 16px 12px;
+  margin-top: 12px;
+}
+
+.ornek-kelimeler p {
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  color: #F5C842;
+  letter-spacing: 1px;
+}
+
+.kelime-listesi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.kelime-item {
+  background: rgba(245, 200, 66, 0.12);
+  padding: 6px 14px;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid rgba(245, 200, 66, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+}
+
+.kelime-item:hover {
+  background: rgba(245, 200, 66, 0.25);
+  transform: scale(1.02);
+  border-color: #F5C842;
+}
+
+.kelime-item.playing {
+  background: #F5C842;
+  color: #0D1B2A;
+  border-color: #fff;
+}
+
+.info-alani {
+  max-width: 1000px;
+  margin: 30px auto 20px;
+  background: rgba(21, 32, 48, 0.9);
+  border-radius: 48px;
+  padding: 20px 28px;
+  text-align: center;
+  border: 1px solid rgba(245, 200, 66, 0.3);
+}
+
+.info-alani p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #e0e0e0;
+}
+
+.info-alani strong {
+  color: #F5C842;
+}
+
+/* Sert sessizler kısmı tamamen kaldırıldı - sadece ünlüler kalacak */
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Ünlü Harf Kartları ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Ünlü Harfler</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">Ünlü Harfler</div>
+
+<!-- ========== SADECE KALIN VE İNCE ÜNLÜLER (SERT SESSİZLER ÇIKARILMIŞTIR) ========== -->
+<div class="content-wrapper">
+  <div class="topic-grid">
+    <!-- KALIN ÜNLÜLER -->
+    <div class="topic-card">
+      <div class="card-icon">📢</div>
+      <h2>Kalın Ünlüler</h2>
+      <div class="ses-listesi" id="kalin-harfler"></div>
+      <div class="ornek-kelimeler">
+        <p>🔊 Örnek kelimeler (tıkla dinle)</p>
+        <div class="kelime-listesi" id="kalin-kelimeler"></div>
+      </div>
+      <div class="">
+           </div>
+    </div>
+
+    <!-- İNCE ÜNLÜLER -->
+    <div class="topic-card">
+      <div class="card-icon">🎶</div>
+      <h2>İnce Ünlüler</h2>
+      <div class="ses-listesi" id="ince-harfler"></div>
+      <div class="ornek-kelimeler">
+        <p>🔊 Örnek kelimeler (tıkla dinle)</p>
+        <div class="kelime-listesi" id="ince-kelimeler"></div>
+      </div>
+      <div class="">
+      </div>
+    </div>
+  </div>
+
+  <div class="info-alani">
+    <p>🗣️ <strong>Büyük Ünlü Uyumu</strong> : Kalın ünlülerden sonra kalın, ince ünlülerden sonra ince ünlü gelir.<br>
+    📖 Her harfe veya kelimeye tıklayarak doğru Türkçe telaffuzu duyabilirsiniz.</p>
+  </div>
+
+  <footer>
+    <p>Hamza Hoca ile Türkçe Öğreniyorum</p>
+    <p><span>✨ Ses bilgisi • A1 seviye ✨</span></p>
+  </footer>
+</div>
+
+<script>
+  // ses sentezleme
+  let trVoice = null;
+  function initVoices() {
+    const voices = speechSynthesis.getVoices();
+    if(!voices.length) return;
+    trVoice = voices.find(v => v.lang === 'tr-TR') || voices.find(v => v.lang.startsWith('tr')) || null;
+  }
+  if('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = initVoices;
+    initVoices();
+    setTimeout(() => { if(!trVoice) initVoices(); }, 300);
+  }
+
+  function cancelSpeechAndClear() {
+    if(window.speechSynthesis) speechSynthesis.cancel();
+    document.querySelectorAll('.playing').forEach(el => el.classList.remove('playing'));
+  }
+
+  function speakText(text, targetElement) {
+    if(!window.speechSynthesis) return;
+    cancelSpeechAndClear();
+    setTimeout(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'tr-TR';
+      utterance.rate = 0.85;
+      utterance.pitch = 1.0;
+      if(trVoice) utterance.voice = trVoice;
+      if(targetElement) {
+        targetElement.classList.add('playing');
+        utterance.onend = () => targetElement.classList.remove('playing');
+        utterance.onerror = () => targetElement.classList.remove('playing');
+      }
+      speechSynthesis.speak(utterance);
+    }, 30);
+  }
+
+  // ---- KALIN ÜNLÜLER ----
+  const kalinHarfler = [
+    { harf: 'A' }, { harf: 'I' }, { harf: 'O' }, { harf: 'U' }
+  ];
+  const inceHarfler = [
+    { harf: 'E' }, { harf: 'İ' }, { harf: 'Ö' }, { harf: 'Ü' }
+  ];
+
+  const kalinEkKelime = ['kalın', 'ağaç', 'ılıman', 'çanta', 'uzay', 'akıl', 'orman', 'uçak'];
+  const inceEkKelime = ['ince', 'ev', 'iğne', 'özgür', 'üzüm', 'ekmek', 'ilgi', 'öykü'];
+
+  // Kalın harfler
+  const kalinContainer = document.getElementById('kalin-harfler');
+  const kalinKelimeContainer = document.getElementById('kalin-kelimeler');
+  kalinHarfler.forEach(item => {
+    const span = document.createElement('div');
+    span.className = 'ses-harfi';
+    span.textContent = item.harf;
+    span.addEventListener('click', () => speakText(item.harf, span));
+    kalinContainer.appendChild(span);
+  });
+  kalinEkKelime.forEach(kelime => {
+    const kelimeSpan = document.createElement('div');
+    kelimeSpan.className = 'kelime-item';
+    kelimeSpan.innerHTML = `<span>🔊</span> ${kelime}`;
+    kelimeSpan.addEventListener('click', () => speakText(kelime, kelimeSpan));
+    kalinKelimeContainer.appendChild(kelimeSpan);
+  });
+
+  // İnce harfler
+  const inceContainer = document.getElementById('ince-harfler');
+  const inceKelimeContainer = document.getElementById('ince-kelimeler');
+  inceHarfler.forEach(item => {
+    const span = document.createElement('div');
+    span.className = 'ses-harfi';
+    span.textContent = item.harf;
+    span.addEventListener('click', () => speakText(item.harf, span));
+    inceContainer.appendChild(span);
+  });
+  inceEkKelime.forEach(kelime => {
+    const kelimeSpan = document.createElement('div');
+    kelimeSpan.className = 'kelime-item';
+    kelimeSpan.innerHTML = `<span>🔊</span> ${kelime}`;
+    kelimeSpan.addEventListener('click', () => speakText(kelime, kelimeSpan));
+    inceKelimeContainer.appendChild(kelimeSpan);
+  });
+
+  // Ses desteği uyarısı
+  if(!window.speechSynthesis) {
+    const banner = document.createElement('div');
+    banner.className = 'voice-banner';
+    banner.innerHTML = '🔊 Ses sentezi tarayıcınızda desteklenmiyor. Modern bir tarayıcı önerilir.';
+    document.querySelector('.content-wrapper').prepend(banner);
+  }
+
+  window.addEventListener('load', () => {
+    if(window.speechSynthesis) speechSynthesis.cancel();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Hoca ile Türkçe Öğreniyorum</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9960A;
+    --bg: #0D1B2A;
+    --bg2: #162032;
+    --text: #F0EAD6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(245,200,66,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58,175,169,0.06) 0%, transparent 50%);
+  }
+
+  header { text-align: center; padding: 2.5rem 1rem 1.2rem; }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 0.3rem 1.2rem; border-radius: 50px; margin-bottom: 0.9rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 900; line-height: 1.25;
+    background: linear-gradient(135deg, #F5C842 0%, #FFF3A3 50%, #C9960A 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: 1px;
+  }
+
+  .stars { text-align:center; font-size:1rem; opacity:.35; letter-spacing:6px; margin:.5rem 0; }
+
+  .divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0.8rem auto; border-radius: 2px;
+  }
+
+  header p { color: rgba(240,234,214,0.42); font-size:.82rem; letter-spacing:.4px; }
+
+  .telegram-section { text-align: center; padding: 0.5rem 1rem 1rem; }
+
+  .tg-box {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: rgba(22,32,50,0.85);
+    border: 1.5px solid rgba(34,158,217,0.3);
+    border-radius: 60px; padding: .75rem 1.5rem .75rem 1rem;
+    flex-wrap: wrap; justify-content: center;
+  }
+
+  .tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+  .tg-btn {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff; text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: .92rem;
+    padding: .65rem 1.5rem; border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,.4);
+    transition: all .22s; white-space: nowrap;
+  }
+
+  .tg-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,158,217,.55); }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: .95rem; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin: .5rem 0 1rem; opacity: .75;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem; padding: 0 1.5rem 3.5rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .card-wrap {
+    height: 200px; cursor: pointer;
+    perspective: 1000px; -webkit-perspective: 1000px;
+  }
+
+  .card-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+    transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+  }
+
+  .card-wrap.flipped .card-inner {
+    transform: rotateY(180deg); -webkit-transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: .45rem; padding: 1rem 1.3rem;
+    border: 1.5px solid rgba(245,200,66,0.15);
+    box-shadow: 0 6px 24px rgba(0,0,0,.4);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  }
+
+  .card-front { background: linear-gradient(145deg, #1E3552, #122133); }
+
+  .card-back {
+    background: linear-gradient(145deg, #103828, #071E12);
+    border-color: rgba(58,175,169,.25);
+    transform: rotateY(180deg); -webkit-transform: rotateY(180deg);
+  }
+
+  /* Front: two TR words stacked */
+  .card-front-words {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    text-align: center;
+  }
+
+  .word-main {
+    font-size: 1.25rem; font-weight: 900;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    line-height: 1.1;
+    color: #FFF3A3;
+  }
+
+  .word-alt {
+    font-size: 1.05rem; font-weight: 800;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    color: rgba(255,243,163,0.65);
+    line-height: 1.1;
+  }
+
+  .word-uz {
+    font-size: .82rem; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+    color: rgba(240,234,214,0.5);
+    margin-top: 1px;
+  }
+
+  /* Back: synonym only */
+  .card-back-word {
+    font-size: 1.5rem; font-weight: 900;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: #7EFFF5; text-align: center;
+    line-height: 1.15;
+  }
+
+  .card-back-label {
+    font-size: .65rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    opacity: .4; margin-top: 2px;
+    color: #7EFFF5;
+  }
+
+  .card-sep { width: 40px; height: 2px; border-radius: 2px; opacity: .25; flex-shrink: 0; }
+  .card-front .card-sep { background: #FFF3A3; }
+  .card-back  .card-sep { background: #7EFFF5; }
+
+  .counter {
+    position: absolute; top: 9px; left: 12px;
+    font-size: .56rem; font-weight: 800; opacity: .22; letter-spacing: .5px;
+  }
+
+  .flip-hint {
+    position: absolute; bottom: 8px;
+    font-size: .5rem; opacity: .16; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Speaker button */
+  .speaker-btn {
+    position: absolute; top: 8px; right: 10px;
+    background: none; border: none; cursor: pointer;
+    padding: 4px; border-radius: 50%;
+    transition: transform .15s, opacity .15s;
+    opacity: .38;
+    z-index: 10;
+  }
+
+  .speaker-btn:hover { opacity: 1; transform: scale(1.2); }
+  .speaker-btn.playing { opacity: 1; }
+  .speaker-btn svg { display: block; }
+
+  /* Gold speaker on front, teal on back */
+  .card-front .speaker-btn svg path { fill: #F5C842; }
+  .card-back  .speaker-btn svg path { fill: #7EFFF5; }
+
+  .card-wrap:hover { box-shadow: 0 0 18px rgba(245,200,66,.2); border-radius: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">✦ Eş Anlamlı Kelimeler ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Karta bosing → Tarjimani ko'ring 🔄 &nbsp;|&nbsp; 🔊 uchun hoparlörga bosing</p>
+</header>
+
+<div class="telegram-section">
+  <div class="divider"></div><br>
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<div class="section-title">Eş Anlamlılar • Sinonimlar</div>
+<div class="cards-grid" id="cards-grid"></div>
+
+<script>
+const words = [
+  { tr1: "Cevap",    tr2: "Yanıt",      uz: "Javob",      speak: "Cevap, Yanıt" },
+  { tr1: "Sene",     tr2: "Yıl",        uz: "Yil",        speak: "Sene, Yıl" },
+  { tr1: "Fakir",    tr2: "Yoksul",     uz: "Kambag'al",  speak: "Fakir, Yoksul" },
+  { tr1: "Doktor",   tr2: "Hekim",      uz: "Shifokor",   speak: "Doktor, Hekim" },
+  { tr1: "Mektep",   tr2: "Okul",       uz: "Maktab",     speak: "Mektep, Okul" },
+  { tr1: "Soru",     tr2: "Sual",       uz: "Savol",      speak: "Soru, Sual" },
+  { tr1: "Vazife",   tr2: "Görev",      uz: "Vazifa",     speak: "Vazife, Görev" },
+  { tr1: "Baş",      tr2: "Kafa",       uz: "Bosh",       speak: "Baş, Kafa" },
+  { tr1: "Konuk",    tr2: "Misafir",    uz: "Mehmon",     speak: "Konuk, Misafir" },
+  { tr1: "Ak",       tr2: "Beyaz",      uz: "Oq",         speak: "Ak, Beyaz" },
+  { tr1: "Kelime",   tr2: "Sözcük",     uz: "So'z",       speak: "Kelime, Sözcük" },
+  { tr1: "Olay",     tr2: "Hadise",     uz: "Hodisa",     speak: "Olay, Hadise" },
+  { tr1: "Ama",      tr2: "Fakat",      uz: "Ammo / Lekin", speak: "Ama, Fakat" },
+  { tr1: "Vatan",    tr2: "Yurt",       uz: "Vatan / Yurt", speak: "Vatan, Yurt" },
+  { tr1: "Örnek",    tr2: "Misal",      uz: "Misol",      speak: "Örnek, Misal" },
+  { tr1: "Yas",      tr2: "Matem",      uz: "Motam",      speak: "Yas, Matem" },
+  { tr1: "Güçlü",    tr2: "Kuvvetli",   uz: "Kuchli",     speak: "Güçlü, Kuvvetli" },
+  { tr1: "Delil",    tr2: "Kanıt",      uz: "Dalil / Isbot", speak: "Delil, Kanıt" },
+  { tr1: "Kalp",     tr2: "Yürek",      uz: "Yurak",      speak: "Kalp, Yürek" },
+  { tr1: "Yaşlı",    tr2: "İhtiyar",    uz: "Qari",       speak: "Yaşlı, İhtiyar" },
+];
+
+function speakerIcon() {
+  return `<svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor" opacity="1"/>
+    <path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function speak(text, btn) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'tr-TR';
+  utt.rate = 0.9;
+  utt.onstart  = () => btn.classList.add('playing');
+  utt.onend    = () => btn.classList.remove('playing');
+  utt.onerror  = () => btn.classList.remove('playing');
+  window.speechSynthesis.speak(utt);
+}
+
+const grid = document.getElementById('cards-grid');
+
+words.forEach((item, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'card-wrap';
+
+  wrap.innerHTML = `
+    <div class="card-inner">
+
+      <!-- FRONT -->
+      <div class="card-face card-front">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+
+        <button class="speaker-btn" title="Seslendir" data-speak="${item.tr1}">
+          ${speakerIcon()}
+        </button>
+
+        <div class="card-front-words">
+          <div class="word-main">${item.tr1}</div>
+          <div class="card-sep" style="margin:6px auto;"></div>
+          <div class="word-uz" style="font-size:.95rem; color:rgba(240,234,214,0.55); letter-spacing:1px; text-transform:uppercase; font-weight:800;">${item.uz}</div>
+        </div>
+
+        <span class="flip-hint">bosing / tıklayın ↺</span>
+      </div>
+
+      <!-- BACK -->
+      <div class="card-face card-back">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+
+        <button class="speaker-btn" title="Seslendir" data-speak="${item.tr2}">
+          ${speakerIcon()}
+        </button>
+
+        <div class="card-back-word">${item.tr2}</div>
+
+        <span class="flip-hint">bosing / tıklayın ↺</span>
+      </div>
+
+    </div>`;
+
+  // Flip on card click (not on button)
+  wrap.addEventListener('click', (e) => {
+    if (e.target.closest('.speaker-btn')) return;
+    wrap.classList.toggle('flipped');
+  });
+
+  // Speaker buttons
+  wrap.querySelectorAll('.speaker-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      speak(btn.dataset.speak, btn);
+    });
+  });
+
+  grid.appendChild(wrap);
+});
+</script>
+</body>
+</html>

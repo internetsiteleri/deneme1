@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Özbekçe – Türkçe Kelime Kartları | Hamza Hoca</title>
+    <style>
+        /* === Akrabalık Adları teması (koyu, altın detaylar, gradient, 3D flip) === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            padding: 0 0 2rem 0;
+        }
+
+        /* Geri butonu (sticky) */
+        .home-btn-wrap {
+            padding: 18px 20px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+            transition: opacity 0.3s;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a2332;
+            border: 2px solid #F5C842;
+            border-radius: 40px;
+            padding: 9px 20px;
+            color: #F5C842;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background .22s, transform .18s, box-shadow .22s;
+        }
+
+        .home-btn:hover {
+            background: #2a3a4a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+            color: #F5C842;
+        }
+
+        /* header & rozet */
+        header {
+            text-align: center;
+            padding: 2rem 1rem 1.2rem;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #F5C842, #C9960A);
+            color: #0D1B2A;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 0.3rem 1.2rem;
+            border-radius: 50px;
+            margin-bottom: 0.9rem;
+        }
+
+        header h1 {
+            font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+            font-weight: 800;
+            color: #F5C842;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            letter-spacing: 0.02em;
+        }
+
+        .header-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #F5C842, transparent);
+            margin: 0 auto 10px;
+        }
+
+        .stars {
+            font-size: 1rem;
+            color: #F5C842;
+            letter-spacing: .4em;
+            margin-bottom: 6px;
+            opacity: .7;
+        }
+
+        .subtitle {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        /* telegram bölümü */
+        .telegram-section {
+            text-align: center;
+            padding: 0.5rem 1rem 1rem;
+        }
+
+        .tg-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(26,35,50,0.85);
+            border: 1.5px solid rgba(34,158,217,0.3);
+            border-radius: 60px;
+            padding: .75rem 1.5rem .75rem 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tg-logo-wrap {
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+        }
+
+        .tg-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            background: linear-gradient(135deg, #229ED9, #1A7FB0);
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 800;
+            font-size: .92rem;
+            padding: .65rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(34,158,217,.4);
+            transition: all .22s;
+            white-space: nowrap;
+        }
+
+        .tg-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(34,158,217,.55);
+        }
+
+        /* bölüm başlığı */
+        .section-title {
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: .85rem;
+            color: #F5C842;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: .5rem 0 1rem;
+            opacity: .75;
+        }
+
+        /* kategori sekme çubuğu */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin: 0 1rem 2rem 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(245,200,66,0.2);
+        }
+        .tab-btn {
+            background: rgba(26,35,50,0.7);
+            border: 1px solid rgba(245,200,66,0.3);
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(2px);
+        }
+        .tab-btn:hover {
+            background: #2a3a4a;
+            color: #F5C842;
+            border-color: #F5C842;
+        }
+        .tab-btn.active {
+            background: #F5C842;
+            color: #0D1B2A;
+            border-color: #F5C842;
+            box-shadow: 0 0 8px rgba(245,200,66,0.5);
+        }
+        .counter-info {
+            text-align: center;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+            margin: -1rem 0 1rem 0;
+            letter-spacing: 0.5px;
+        }
+
+        /* kart grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
+            padding: 0 1.5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* kart wrap (3D flip) */
+        .card-wrap {
+            height: 195px;
+            cursor: pointer;
+            perspective: 1000px;
+            -webkit-perspective: 1000px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+            transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
+        }
+
+        .card-wrap.flipped .card-inner {
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+        }
+
+        /* yüzeyler */
+        .card-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .45rem;
+            padding: 1rem 1.3rem;
+            border: 1.5px solid rgba(245,200,66,0.20);
+            box-shadow: 0 6px 24px rgba(0,0,0,.4);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* ön yüz (Özbekçe) */
+        .card-front {
+            background: linear-gradient(145deg, #1a2332, #0D1B2A);
+        }
+
+        /* arka yüz (Türkçe) */
+        .card-back {
+            background: linear-gradient(145deg, #103828, #071E12);
+            border-color: rgba(58,175,169,.25);
+            transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+        }
+
+        /* kelime stilleri */
+        .card-word-oz {
+            font-size: 1.15rem;
+            font-weight: 900;
+            text-align: center;
+            letter-spacing: .3px;
+            line-height: 1.3;
+            color: #F5C842;
+        }
+
+        .card-word-tr {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: .2px;
+            line-height: 1.3;
+            color: #7EFFF5;
+        }
+
+        .counter {
+            position: absolute;
+            top: 9px;
+            left: 12px;
+            font-size: .56rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: .5px;
+        }
+
+        /* ses butonu */
+        .speak-btn {
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: rgba(255,255,255,0.35);
+            transition: color .2s, transform .15s;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .speak-btn:hover {
+            color: rgba(255,255,255,0.85);
+            transform: scale(1.2);
+        }
+
+        .speak-btn.playing {
+            color: #F5C842;
+        }
+
+        .card-back .speak-btn.playing {
+            color: #7EFFF5;
+        }
+
+        /* flip ipucu */
+        .flip-hint {
+            position: absolute;
+            bottom: 8px;
+            font-size: .54rem;
+            opacity: .18;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .card-wrap:hover {
+            box-shadow: 0 0 18px rgba(245,200,66,.22);
+            border-radius: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 0 1rem 2.5rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+        }
+
+        footer span {
+            color: #F5C842;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(.95) translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .cards-grid {
+            animation: popIn .4s ease;
+        }
+
+        @media (max-width: 640px) {
+            .cards-grid {
+                padding: 0 1rem 3rem;
+                gap: 1rem;
+            }
+            .card-wrap {
+                height: 180px;
+            }
+            .card-word-oz, .card-word-tr {
+                font-size: 1rem;
+            }
+            .tab-btn {
+                padding: 0.3rem 0.9rem;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="home-btn-wrap" id="backBtnWrap">
+    <button class="home-btn" onclick="history.back()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Geri
+    </button>
+</div>
+
+<header>
+    <div class="header-badge">✦ A1 Kelime Kartları ✦</div>
+    <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+    <div class="header-line"></div>
+    <div class="stars">★ ★ ★ ★ ★</div>
+    <p class="subtitle">Özbekçe – Türkçe Kapsamlı Kelime Seti • 80+ Kelime</p>
+</header>
+
+<div class="telegram-section">
+    <div class="tg-box">
+        <div class="tg-logo-wrap">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+                <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+                <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+            </svg>
+        </div>
+        <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+            Kanala Katıl
+        </a>
+    </div>
+</div>
+
+<div class="section-title">✨ KARIŞIK KELİMELER • ARALASH SO‘ZLAR ✨</div>
+
+<!-- Kategori Sekmeleri -->
+<div class="category-tabs" id="categoryTabs"></div>
+<div class="counter-info" id="counterInfo"></div>
+
+<div class="cards-grid" id="cards-grid"></div>
+
+<footer>
+    <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu | Özbekçe Destekli Kartlar</p>
+</footer>
+
+<script>
+    // ==================== KELİME LİSTESİ (orijinal 80+ kelime) ====================
+    const words = [
+        { oz: "Salom", tr: "Merhaba", category: "Selamlama" },
+        { oz: "Xayr", tr: "Hoşça kal / Güle güle", category: "Selamlama" },
+        { oz: "Rahmat", tr: "Teşekkür ederim", category: "Selamlama" },
+        { oz: "Iltimos", tr: "Lütfen", category: "Selamlama" },
+        { oz: "Kechirasiz", tr: "Özür dilerim / Pardon", category: "Selamlama" },
+        { oz: "Ha", tr: "Evet", category: "Selamlama" },
+        { oz: "Yo'q", tr: "Hayır", category: "Selamlama" },
+        { oz: "Yaxshi", tr: "İyi / Güzel", category: "Selamlama" },
+        { oz: "Qanday", tr: "Nasıl", category: "Selamlama" },
+        { oz: "Nima", tr: "Ne", category: "Selamlama" },
+        { oz: "Bir", tr: "Bir", category: "Sayılar" },
+        { oz: "Ikki", tr: "İki", category: "Sayılar" },
+        { oz: "Uch", tr: "Üç", category: "Sayılar" },
+        { oz: "To'rt", tr: "Dört", category: "Sayılar" },
+        { oz: "Besh", tr: "Beş", category: "Sayılar" },
+        { oz: "Olti", tr: "Altı", category: "Sayılar" },
+        { oz: "Yetti", tr: "Yedi", category: "Sayılar" },
+        { oz: "Sakkiz", tr: "Sekiz", category: "Sayılar" },
+        { oz: "To'qqiz", tr: "Dokuz", category: "Sayılar" },
+        { oz: "O'n", tr: "On", category: "Sayılar" },
+        { oz: "Qizil", tr: "Kırmızı", category: "Renkler" },
+        { oz: "Ko'k", tr: "Mavi", category: "Renkler" },
+        { oz: "Yashil", tr: "Yeşil", category: "Renkler" },
+        { oz: "Sariq", tr: "Sarı", category: "Renkler" },
+        { oz: "Oq", tr: "Beyaz", category: "Renkler" },
+        { oz: "Qora", tr: "Siyah", category: "Renkler" },
+        { oz: "To'q sariq", tr: "Turuncu", category: "Renkler" },
+        { oz: "Jigarrang", tr: "Kahverengi", category: "Renkler" },
+        { oz: "Uy", tr: "Ev", category: "Günlük Hayat" },
+        { oz: "Kitob", tr: "Kitap", category: "Günlük Hayat" },
+        { oz: "Suv", tr: "Su", category: "Günlük Hayat" },
+        { oz: "Maktab", tr: "Okul", category: "Günlük Hayat" },
+        { oz: "Shahar", tr: "Şehir", category: "Günlük Hayat" },
+        { oz: "Ko'cha", tr: "Sokak", category: "Günlük Hayat" },
+        { oz: "Kun", tr: "Gün", category: "Günlük Hayat" },
+        { oz: "Kecha", tr: "Gece / Dün", category: "Günlük Hayat" },
+        { oz: "Do'st", tr: "Arkadaş / Dost", category: "Günlük Hayat" },
+        { oz: "Ish", tr: "İş", category: "Günlük Hayat" },
+        { oz: "Pul", tr: "Para", category: "Günlük Hayat" },
+        { oz: "Vaqt", tr: "Zaman / Vakit", category: "Günlük Hayat" },
+        { oz: "Kelmoq", tr: "Gelmek", category: "Fiiller" },
+        { oz: "Ketmoq", tr: "Gitmek", category: "Fiiller" },
+        { oz: "Yemoq", tr: "Yemek", category: "Fiiller" },
+        { oz: "Ichmoq", tr: "İçmek", category: "Fiiller" },
+        { oz: "Ko'rmoq", tr: "Görmek", category: "Fiiller" },
+        { oz: "Eshitmoq", tr: "Duymak / Dinlemek", category: "Fiiller" },
+        { oz: "Gapirmoq", tr: "Konuşmak", category: "Fiiller" },
+        { oz: "Sevmoq", tr: "Sevmek", category: "Fiiller" },
+        { oz: "O'qimoq", tr: "Okumak", category: "Fiiller" },
+        { oz: "Yozmoq", tr: "Yazmak", category: "Fiiller" },
+        { oz: "Uxlamoq", tr: "Uyumak", category: "Fiiller" },
+        { oz: "Yugurmoq", tr: "Koşmak", category: "Fiiller" },
+        { oz: "Katta", tr: "Büyük", category: "Sıfatlar" },
+        { oz: "Kichik", tr: "Küçük", category: "Sıfatlar" },
+        { oz: "Yomon", tr: "Kötü", category: "Sıfatlar" },
+        { oz: "Chiroyli", tr: "Güzel", category: "Sıfatlar" },
+        { oz: "Yangi", tr: "Yeni", category: "Sıfatlar" },
+        { oz: "Eski", tr: "Eski", category: "Sıfatlar" },
+        { oz: "Issiq", tr: "Sıcak", category: "Sıfatlar" },
+        { oz: "Sovuq", tr: "Soğuk", category: "Sıfatlar" },
+        { oz: "Tez", tr: "Hızlı", category: "Sıfatlar" },
+        { oz: "Oila", tr: "Aile", category: "Aile" },
+        { oz: "Ona", tr: "Anne", category: "Aile" },
+        { oz: "Ota", tr: "Baba", category: "Aile" },
+        { oz: "Aka", tr: "Ağabey", category: "Aile" },
+        { oz: "Opa", tr: "Abla", category: "Aile" },
+        { oz: "Uka", tr: "Erkek kardeş (küçük)", category: "Aile" },
+        { oz: "Singil", tr: "Kız kardeş (küçük)", category: "Aile" },
+        { oz: "Bola", tr: "Çocuk", category: "Aile" },
+        { oz: "Non", tr: "Ekmek", category: "Yiyecekler" },
+        { oz: "Go'sht", tr: "Et", category: "Yiyecekler" },
+        { oz: "Sabzavot", tr: "Sebze", category: "Yiyecekler" },
+        { oz: "Meva", tr: "Meyve", category: "Yiyecekler" },
+        { oz: "Tuxum", tr: "Yumurta", category: "Yiyecekler" },
+        { oz: "Sut", tr: "Süt", category: "Yiyecekler" },
+        { oz: "Choy", tr: "Çay", category: "Yiyecekler" },
+        { oz: "Qahva", tr: "Kahve", category: "Yiyecekler" },
+        { oz: "Shirin", tr: "Tatlı", category: "Yiyecekler" },
+        { oz: "Tuz", tr: "Tuz", category: "Yiyecekler" }
+    ];
+
+    // Benzersiz kategorileri al ve "Tümü" ekle
+    const categories = ["Tümü", ...new Set(words.map(w => w.category))];
+    
+    let activeCategory = "Tümü";
+    
+    // speaker ikonu
+    const speakerIcon = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
+
+    // seslendirme (Türkçe telaffuz)
+    function speakTurkish(text, btnElement) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'tr-TR';
+        utterance.rate = 0.9;
+        document.querySelectorAll('.speak-btn').forEach(btn => btn.classList.remove('playing'));
+        if (btnElement) btnElement.classList.add('playing');
+        utterance.onend = () => { if (btnElement) btnElement.classList.remove('playing'); };
+        utterance.onerror = () => { if (btnElement) btnElement.classList.remove('playing'); };
+        window.speechSynthesis.speak(utterance);
+    }
+
+    const gridContainer = document.getElementById('cards-grid');
+    const tabsContainer = document.getElementById('categoryTabs');
+    const counterInfo = document.getElementById('counterInfo');
+
+    // Filtrelenmiş kelimeleri getir
+    function getFilteredWords() {
+        if (activeCategory === "Tümü") return words;
+        return words.filter(w => w.category === activeCategory);
+    }
+
+    // Kartları render et (kategori etiketi artık yok)
+    function renderCards() {
+        const filtered = getFilteredWords();
+        gridContainer.innerHTML = '';
+        counterInfo.innerText = `📚 ${filtered.length} / ${words.length} kelime gösteriliyor`;
+
+        filtered.forEach((item, idx) => {
+            const cardWrap = document.createElement('div');
+            cardWrap.className = 'card-wrap';
+            const cardNumber = String(idx + 1).padStart(2, '0');
+            const ozWord = item.oz;
+            const trWord = item.tr;
+
+            cardWrap.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-face card-front">
+                        <span class="counter">${cardNumber}</span>
+                        <button class="speak-btn" data-word="${escapeAttr(trWord)}" title="Türkçe Telaffuz">${speakerIcon}</button>
+                        <div class="card-word-oz">${escapeHtml(ozWord)}</div>
+                        <span class="flip-hint">bosing / tıklayın</span>
+                    </div>
+                    <div class="card-face card-back">
+                        <span class="counter">${cardNumber}</span>
+                        <button class="speak-btn" data-word="${escapeAttr(trWord)}" title="Türkçe Telaffuz">${speakerIcon}</button>
+                        <div class="card-word-tr">${escapeHtml(trWord)}</div>
+                        <span class="flip-hint">bosing / tıklayın</span>
+                    </div>
+                </div>
+            `;
+
+            // ses butonları
+            const speakBtns = cardWrap.querySelectorAll('.speak-btn');
+            speakBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const wordToSpeak = btn.getAttribute('data-word');
+                    if (wordToSpeak) speakTurkish(wordToSpeak, btn);
+                });
+            });
+
+            // flip işlemi
+            cardWrap.addEventListener('click', (e) => {
+                if (!e.target.closest('.speak-btn')) {
+                    cardWrap.classList.toggle('flipped');
+                }
+            });
+
+            gridContainer.appendChild(cardWrap);
+        });
+    }
+
+    // Sekme butonlarını oluştur
+    function renderTabs() {
+        tabsContainer.innerHTML = '';
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = `tab-btn ${activeCategory === cat ? 'active' : ''}`;
+            btn.innerText = cat;
+            btn.addEventListener('click', () => {
+                activeCategory = cat;
+                renderTabs();    // aktiflik görünümünü güncelle
+                renderCards();   // kartları yenile
+                // flip durumunu sıfırlamak için tüm kartların flipped sınıfını kaldır
+                document.querySelectorAll('.card-wrap').forEach(cw => cw.classList.remove('flipped'));
+            });
+            tabsContainer.appendChild(btn);
+        });
+    }
+
+    // escape fonksiyonları
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    function escapeAttr(str) {
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // Başlat
+    renderTabs();
+    renderCards();
+
+    // geri butonu scroll animasyonu
+    const backWrap = document.getElementById('backBtnWrap');
+    if (backWrap) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 60) {
+                backWrap.style.opacity = '0';
+                backWrap.style.pointerEvents = 'none';
+            } else {
+                backWrap.style.opacity = '1';
+                backWrap.style.pointerEvents = 'auto';
+            }
+        });
+    }
+
+    window.addEventListener('beforeunload', () => {
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+    });
+</script>
+</body>
+</html>

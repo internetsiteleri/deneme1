@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Çıkmış Sorular – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+  /* Kopyalamayı engelle */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+/* ===== SORULAR BÖLÜMÜ ===== */
+.content-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+.bolum-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 2.5rem 0 1.2rem;
+}
+
+.bolum-badge {
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 50px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.bolum-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #F5C842, transparent);
+  opacity: 0.3;
+}
+
+.soru-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.soru-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245,200,66,0.12);
+  border-left: 3px solid #F5C842;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.6;
+  transition: background .2s, border-color .2s;
+}
+
+.soru-item:hover {
+  background: rgba(245,200,66,0.06);
+  border-left-color: #F5C842;
+}
+
+/* Karşılaştırma kartları */
+.kiyaslama-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.kiyaslama-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: background .2s;
+}
+
+.kiyaslama-card:hover {
+  background: rgba(245,200,66,0.06);
+}
+
+.kiyaslama-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.kiyaslama-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #F5C842;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.kiyaslama-meta {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.kiyaslama-soru {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  line-height: 1.5;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Münazara listesi */
+.munazara-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245,200,66,0.12);
+  border-left: 3px solid #4AB8F5;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.6;
+  transition: background .2s;
+}
+
+.munazara-item:hover {
+  background: rgba(74,184,245,0.06);
+}
+
+/* Koruma overlay - kopyalamayı daha da zorlaştırır */
+.copy-protect {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.95) translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.soru-item, .kiyaslama-card, .munazara-item {
+  animation: popIn 0.3s ease both;
+}
+</style>
+</head>
+<body>
+
+<!-- Kopyalamayı engelleyen overlay -->
+<div class="copy-protect" id="copyProtect"></div>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ 2026 Çıkmış Sorular ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">2026 • Ocak-Nisan Arasında Çıkmış Bazı Sınav Soruları</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<!-- ============ İÇERİK ============ -->
+<div class="content-wrap">
+
+  <!-- 1. BÖLÜM -->
+  <div class="bolum-header">
+    <div class="bolum-badge">1. Bölüm</div>
+    <div class="bolum-line"></div>
+  </div>
+  <div class="soru-list">
+    <div class="soru-item">Sabahları genellikle ne yaparsınız?</div>
+    <div class="soru-item">Sabahları yürüyüş yapar mısınız?</div>
+    <div class="soru-item">Kahvaltıda neler yersiniz / hazırlarsınız?</div>
+    <div class="soru-item">Günde kaç saat uyursunuz?</div>
+    <div class="soru-item">Güneşli havada ne yapmaktan hoşlanırsınız?</div>
+    <div class="soru-item">Yağmurlu havada neler yaparsınız?</div>
+    <div class="soru-item">Boş zamanlarınızda neler yaparsınız?</div>
+    <div class="soru-item">Hafta sonu genellikle ne yaparsınız?</div>
+    <div class="soru-item">Ders çalışırken müzik dinler misiniz?</div>
+    <div class="soru-item">Alışverişi sever misiniz?</div>
+    <div class="soru-item">Kütüphaneye ne sıklıkla gidersiniz?</div>
+    <div class="soru-item">Evinizin bahçesi var mı?</div>
+    <div class="soru-item">Ev işlerini yapar mısınız? Yapmaktan hoşlanmadığınız işler nelerdir?</div>
+    <div class="soru-item">Teknolojik aletleri (telefon, bilgisayar) günde kaç saat ve ne amaçla kullanıyorsunuz?</div>
+    <div class="soru-item">İlk kez telefonu ne zaman kullandınız?</div>
+    <div class="soru-item">Bisiklet kullanır mısınız?</div>
+    <div class="soru-item">Yüzmeyi biliyor musunuz?</div>
+    <div class="soru-item">Koşu bandının avantajları nelerdir?</div>
+    <div class="soru-item">Soba ile ısınmanın avantajları ve dezavantajları nelerdir?</div>
+    <div class="soru-item">Ailenizden bahseder misiniz? En çok kime benziyorsunuz?</div>
+    <div class="soru-item">Ailenizde en çok sevdiğiniz yaşlı kişi kimdir?</div>
+    <div class="soru-item">En çok kiminle sohbet edersiniz?</div>
+    <div class="soru-item">Sohbet etmeyi en çok arzu ettiğiniz kişi kimdir? Onu tarif eder misiniz?</div>
+    <div class="soru-item">En yakın arkadaşınızdan bahseder misiniz?</div>
+    <div class="soru-item">En iyi okul arkadaşınız kimdir?</div>
+    <div class="soru-item">Arkadaşlarınızla vakit geçirmeyi sever misiniz?</div>
+    <div class="soru-item">Arkadaşlarınızla seyahat etmeyi sever misiniz?</div>
+    <div class="soru-item">Komşularınızla ilişkileriniz nasıl?</div>
+    <div class="soru-item">Ailenizde alışverişi genellikle kim yapar?</div>
+    <div class="soru-item">Sizce iyi bir arkadaş nasıl olmalıdır?</div>
+    <div class="soru-item">Geniş bir ailede (kalabalık) yaşamak ister misiniz? Neden?</div>
+    <div class="soru-item">Ailenizde daha çok kitap mı okunur, yoksa teknolojik aletlerle (telefon, tablet) mi vakit geçirilir?</div>
+    <div class="soru-item">Eviniz nasıl bir evdir? Tanımlar mısınız?</div>
+    <div class="soru-item">Evinizde (odanızda) değiştirmek istediğiniz bir şey var mı?</div>
+    <div class="soru-item">En sevdiğiniz yemek nedir?</div>
+    <div class="soru-item">Yemek yapmayı sever misiniz?</div>
+    <div class="soru-item">Sağlıklı beslenmek neden önemlidir?</div>
+    <div class="soru-item">Lokantaya sık sık gider misiniz?</div>
+    <div class="soru-item">En son ne zaman hastaneye / doktora gittiniz?</div>
+    <div class="soru-item">Çocukluk anılarınızdan en unutamadığınız hangisi?</div>
+    <div class="soru-item">Çocukluğunuzda en çok hangi oyunları oynardınız?</div>
+    <div class="soru-item">Çocukluğunuzda oyuncaklarla oynar mıydınız? En sevdiğiniz oyuncak neydi?</div>
+    <div class="soru-item">Meslek seçerken nelere dikkat ediyorsunuz?</div>
+    <div class="soru-item">Sizin için iyi yemek hazırlayan kişi kimdir?</div>
+    <div class="soru-item">En sevdiğiniz ders hangisiydi / hangisi?</div>
+    <div class="soru-item">Öğrenciler için hangi dersleri öğrenmek daha faydalıdır?</div>
+    <div class="soru-item">En sevdiğiniz öğretmeniniz size ne kazandırdı?</div>
+    <div class="soru-item">Resim çizmeyi sever misiniz? Hangi sanat dalıyla ilgilenirsiniz?</div>
+    <div class="soru-item">Hangi tür filmleri izlemeyi seviyorsunuz?</div>
+    <div class="soru-item">En son izlediğiniz film nedir?</div>
+    <div class="soru-item">En son ne zaman sinemaya gittiniz?</div>
+    <div class="soru-item">Televizyonda hangi programları / türleri izlemekten hoşlanırsınız?</div>
+    <div class="soru-item">Ne tür kitaplar okumaktan hoşlanırsınız?</div>
+    <div class="soru-item">"İyi ki okudum" dediğiniz bir kitap var mı? Anlatır mısınız?</div>
+    <div class="soru-item">En son okuduğunuz kitabın konusu neydi?</div>
+    <div class="soru-item">İyimser olmak insan hayatını nasıl etkiler?</div>
+    <div class="soru-item">İnsanlar neden geçmişi romantize eder (özlemle hatırlar)?</div>
+  </div>
+
+  <!-- 1.2 BÖLÜM – Resim Karşılaştırması -->
+  <div class="bolum-header">
+    <div class="bolum-badge">1.2 Bölüm • Resimli Sorular</div>
+    <div class="bolum-line"></div>
+  </div>
+  <div class="kiyaslama-grid">
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">1</div>
+      <div class="kiyaslama-title">Bilgisayar Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Masaüstü bilgisayarla çalışan kişi.<br>
+        📷 Resim 2: Dizüstü bilgisayarla çalışan kişi.
+      </div>
+      <div class="kiyaslama-soru">Bilgisayar mı yoksa dizüstü bilgisayar mı tercih edersiniz? Neden?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">2</div>
+      <div class="kiyaslama-title">Film İzleme Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Sinemada film izleyenler.<br>
+        📷 Resim 2: Evde film izleyenler.
+      </div>
+      <div class="kiyaslama-soru">Karşılaştırınız. Hangisini tercih edersiniz? Neden?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">3</div>
+      <div class="kiyaslama-title">Aile Zamanı Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Cep telefonu/tabletle vakit geçiren aile.<br>
+        📷 Resim 2: Kitap okuyan aile.
+      </div>
+      <div class="kiyaslama-soru">Sizin ailenizde durum nasıl? Hangisi daha iyidir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">4</div>
+      <div class="kiyaslama-title">İçecek Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Bir kadın elinde kahve tutuyor.<br>
+        📷 Resim 2: Bir kadın elinde çay tutuyor.
+      </div>
+      <div class="kiyaslama-soru">Çayın faydaları nelerdir? Kahvenin zararları nelerdir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">5</div>
+      <div class="kiyaslama-title">Okul Türü Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Devlet okulu.<br>
+        📷 Resim 2: Özel okul.
+      </div>
+      <div class="kiyaslama-soru">Devlet okulunun sunduğu fırsatlar nelerdir? Özel okulun dezavantajları nelerdir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">6</div>
+      <div class="kiyaslama-title">Eğitim Türü Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Yüz yüze eğitim.<br>
+        📷 Resim 2: Çevrim içi (online) eğitim.
+      </div>
+      <div class="kiyaslama-soru">Hangisi daha verimlidir? Beğendiğiniz ve beğenmediğiniz yönler nelerdir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">7</div>
+      <div class="kiyaslama-title">Ulaşım Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Tren.<br>
+        📷 Resim 2: Uçak.
+      </div>
+      <div class="kiyaslama-soru">Metroya binmenin faydaları nelerdir? Uçakla seyahat etmenin avantajları nelerdir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">8</div>
+      <div class="kiyaslama-title">Spor Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Açık havada koşan kişi.<br>
+        📷 Resim 2: Spor salonunda koşu bandında koşan kişi.
+      </div>
+      <div class="kiyaslama-soru">Hangisini tercih edersiniz? Koşu bandının avantajları nelerdir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">9</div>
+      <div class="kiyaslama-title">Çalışma Ortamı Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Kafede dizüstü bilgisayar kullanan erkek.<br>
+        📷 Resim 2: Ofiste masaüstü bilgisayar kullanan erkek.
+      </div>
+      <div class="kiyaslama-soru">İkisini karşılaştırınız.</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">10</div>
+      <div class="kiyaslama-title">Sebze Alışverişi Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Bir çiftçi tarlasında sebze (lahana) tutuyor.<br>
+        📷 Resim 2: Bir kişi markette sebzeleri inceliyor.
+      </div>
+      <div class="kiyaslama-soru">Siz sebzeleri genelde nereden satın alırsınız?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">11</div>
+      <div class="kiyaslama-title">Hava ve Tatil Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Karlı havada kızakla kayan aile.<br>
+        📷 Resim 2: Sıcak havada iki çocuğuyla evde vakit geçiren anne.
+      </div>
+      <div class="kiyaslama-soru">Sıcak hava mı yoksa soğuk hava mı daha iyidir? Tatil için hangisi daha uygundur?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">12</div>
+      <div class="kiyaslama-title">Savaş ve Barış Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Elinde tüfekli asker, savaş kalıntıları, ateşler.<br>
+        📷 Resim 2: Temiz doğa, gökyüzü, çiçekler (barış).
+      </div>
+      <div class="kiyaslama-soru">Bu resimler size savaş ve barış hakkında ne düşündürüyor? Barışın önemi nedir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">13</div>
+      <div class="kiyaslama-title">Ders Çalışma Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Arkadaşlarla birlikte ders çalışan öğrenciler.<br>
+        📷 Resim 2: Tek başına ders çalışan öğrenci.
+      </div>
+      <div class="kiyaslama-soru">Ders çalışmak için arkadaşlarla birlikte çalışmak mı yoksa yalnız çalışmak mı daha iyidir? Neden?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">14</div>
+      <div class="kiyaslama-title">Yemek Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Fast-food (hazır yemek) yiyen kişi.<br>
+        📷 Resim 2: Ev yemeği yiyen aile.
+      </div>
+      <div class="kiyaslama-soru">Hazır yemek (fast-food) mi yoksa ev yemeği mi tercih edersiniz? Neden?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">15</div>
+      <div class="kiyaslama-title">İçecek Zamanı Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Sıcak içecek (kahve/kakao) içen kişi.<br>
+        📷 Resim 2: Soğuk içecek içen kişi.
+      </div>
+      <div class="kiyaslama-soru">Sıcak içecekleri ne zaman tüketirsiniz? Soğuk içeceklerin avantajları nelerdir?</div>
+    </div>
+
+    <div class="kiyaslama-card">
+      <div class="kiyaslama-num">16</div>
+      <div class="kiyaslama-title">Ödeme Aracı Karşılaştırması</div>
+      <div class="kiyaslama-meta">
+        📷 Resim 1: Nakit para ile ödeme yapan kişi.<br>
+        📷 Resim 2: Banka/kredi kartı ile ödeme yapan kişi.
+      </div>
+      <div class="kiyaslama-soru">Nakit para mı yoksa banka/kredi kartı mı kullanmayı tercih edersiniz? Neden?</div>
+    </div>
+
+  </div>
+
+  <!-- 2. BÖLÜM -->
+  <div class="bolum-header">
+    <div class="bolum-badge">2. Bölüm</div>
+    <div class="bolum-line"></div>
+  </div>
+  <div class="soru-list">
+    <div class="soru-item">Başarılı olmak sizin için ne demektir?</div>
+    <div class="soru-item">Başarı kazanmak nedir?</div>
+    <div class="soru-item">Başarılı olmak için en önemli üç özellik nedir?</div>
+    <div class="soru-item">Sizce başarı, şans mı yoksa çalışmanın bir sonucu mu?</div>
+    <div class="soru-item">Spor yapmayı sever misiniz?</div>
+    <div class="soru-item">En sevdiğiniz spor nedir?</div>
+    <div class="soru-item">İnsanlar neden spor yapmalıdır?</div>
+    <div class="soru-item">Hata yapmak insanı geliştirir mi? En büyük hatanız nedir?</div>
+    <div class="soru-item">Fedakarlık nedir? Hiç fedakarlık yaptınız mı?</div>
+    <div class="soru-item">İnsanlar neden korkar? En son ne zaman korktunuz, nasıl hissettiniz? Fobileriniz var mı?</div>
+    <div class="soru-item">En son ne zaman önemli bir karar verdiniz? Bu karar sürecinde birinden yardım aldınız mı?</div>
+    <div class="soru-item">Rekabet ettiğiniz (yarıştığınız) bir zamanı anlatır mısınız? Kendinizi nasıl hissettiniz?</div>
+    <div class="soru-item">Haksızlığa uğradığınız (iftiraya maruz kaldığınız) bir olayı anlatır mısınız? Nasıl hissettiniz?</div>
+    <div class="soru-item">En son ne zaman bir başarı elde ettiniz? Bu başarı için neler yaptınız? Başarınızı devam ettirmek için ne yapıyorsunuz?</div>
+    <div class="soru-item">Hayatınızdaki en zor sınav veya deneyim hangisiydi?</div>
+    <div class="soru-item">En son ne zaman yalnız kaldınız? Yalnız kaldığınızda neler yaparsınız? Yalnız kalmanın faydaları var mı?</div>
+    <div class="soru-item">Saygı nedir? Ailede saygı sizin için ne ifade ediyor?</div>
+    <div class="soru-item">Güven nedir? Güven duygusunun hayatımızdaki yeri nedir?</div>
+    <div class="soru-item">Empati nedir? Empati kurmak neden önemlidir?</div>
+    <div class="soru-item">Özgüven nedir? Özgüvenli olmak iyi midir? Özgüven ve kibir arasındaki fark nedir?</div>
+    <div class="soru-item">Kendinizi en güçlü hissettiğiniz anı anlatır mısınız?</div>
+    <div class="soru-item">Motivasyonunuzu nasıl artırırsınız? Hedef belirlemek neden önemlidir?</div>
+    <div class="soru-item">Zor bir durumda sakin kalmak için ne yaparsınız? İnsanlar neden stres yaşar?</div>
+    <div class="soru-item">Hayatımızda risk almak gerekli midir? En son ne zaman risk aldınız?</div>
+    <div class="soru-item">Gelenek ve görenekler modern dünyada korunmalı mı? Neden?</div>
+    <div class="soru-item">Barış nedir? Savaş ve barış arasındaki fark nedir? Barış neden önemlidir?</div>
+    <div class="soru-item">Sabır nedir? Sabırsız olduğunuz bir durumu anlatır mısınız?</div>
+    <div class="soru-item">Bir insan neden gurur duyar? Hayatınızda en çok gurur duyduğunuz şey nedir?</div>
+  </div>
+
+  <!-- 3. BÖLÜM -->
+  <div class="bolum-header">
+    <div class="bolum-badge">3. Bölüm</div>
+    <div class="bolum-line"></div>
+  </div>
+  <div class="soru-list">
+    <div class="munazara-item">Enerji kullanımında fosil yakıtlardan tamamen vazgeçilmeli mi?</div>
+    <div class="munazara-item">Çevre kirliliğini azaltmak için fosil yakıtlar bırakılmalı mı?</div>
+    <div class="munazara-item">Güneş panellerinin kullanımı yaygınlaştırılmalı mıdır?</div>
+    <div class="munazara-item">Tarım ilaçlarının yasaklanması doğru mudur?</div>
+    <div class="munazara-item">Elektrikli araçlara geçiş zorunlu hale getirilmeli mi?</div>
+    <div class="munazara-item">Doğal ürünlerle (bitkilerle) tedavi yapmak doğru mudur? (Lehine / Aleyhine)</div>
+    <div class="munazara-item">Büyük işleri insanların yerine robotların yapması doğru mu?</div>
+    <div class="munazara-item">Sigara ve tütün ürünleri sağlıklı yaşam için devlet tarafından yasaklanmalı mı?</div>
+    <div class="munazara-item">Dünya dışında yaşam (uzay) mümkün mü?</div>
+    <div class="munazara-item">İnsanların yerine robotların çalıştırılması doğru mudur?</div>
+    <div class="munazara-item">Gençlerin online eğitim almasının avantaj ve dezavantajları nelerdir?</div>
+    <div class="munazara-item">Geri dönüşüm eğitimi küçük yaşlardan itibaren verilmeli mi?</div>
+    <div class="munazara-item">Aşırı nüfus artışı varken devletler neden çok çocuklu aileleri desteklesin?</div>
+    <div class="munazara-item">Uzay turizmi gelecekte yaygınlaşır mı?</div>
+    <div class="munazara-item">Yapay zeka ile trafik sistemlerinin yönetilmesi doğru mu?</div>
+  </div>
+
+</div><!-- /content-wrap -->
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca ile Türkçe Öğreniyorum</span> </p>
+  <p style="margin-top:6px;font-size:0.72rem;opacity:0.5;"><a href="https://t.me/TurkcheOzbekche" style="color:#F5C842;text-decoration:none;">@TurkcheOzbekche</a></p>
+</footer>
+
+<script>
+// ====== KOPYA KORUMA ======
+
+// Sağ tık menüsünü engelle
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+// Ctrl+C, Ctrl+A, Ctrl+U, Ctrl+S, F12 kısayollarını engelle
+document.addEventListener('keydown', function(e) {
+  // Ctrl+C / Ctrl+X / Ctrl+A / Ctrl+U / Ctrl+S / Ctrl+P
+  if (e.ctrlKey && (
+    e.key === 'c' || e.key === 'C' ||
+    e.key === 'x' || e.key === 'X' ||
+    e.key === 'a' || e.key === 'A' ||
+    e.key === 'u' || e.key === 'U' ||
+    e.key === 's' || e.key === 'S' ||
+    e.key === 'p' || e.key === 'P'
+  )) {
+    e.preventDefault();
+    return false;
+  }
+  // F12 – DevTools
+  if (e.key === 'F12') {
+    e.preventDefault();
+    return false;
+  }
+  // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
+  if (e.ctrlKey && e.shiftKey && (
+    e.key === 'I' || e.key === 'i' ||
+    e.key === 'J' || e.key === 'j' ||
+    e.key === 'C' || e.key === 'c'
+  )) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+// Seçimi engelle (metin seçilince otomatik temizle)
+document.addEventListener('selectstart', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+// Kopyalamayı engelle
+document.addEventListener('copy', function(e) {
+  e.preventDefault();
+  e.clipboardData.setData('text/plain', '© Hamza Hoca ile Türkçe Öğreniyorum | t.me/TurkcheOzbekche');
+  return false;
+});
+
+// Sürükle-bırak ile kopyalamayı engelle
+document.addEventListener('dragstart', function(e) {
+  e.preventDefault();
+  return false;
+});
+
+// Print screen uyarısı (tam engelleme mümkün değil ama caydırıcı)
+document.addEventListener('keyup', function(e) {
+  if (e.key === 'PrintScreen') {
+    navigator.clipboard.writeText('© Hamza Hoca ile Türkçe Öğreniyorum | t.me/TurkcheOzbekche');
+  }
+});
+</script>
+
+</body>
+</html>

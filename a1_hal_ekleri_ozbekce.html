@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Ad Durum Ekleri (Kelishik Qo‘shimchalari) – Hamza Hoca</title>
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  .home-btn-wrap {
+    padding: 18px 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2332;
+    border: 2px solid #F5C842;
+    border-radius: 40px;
+    padding: 9px 20px;
+    color: #F5C842;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .22s, transform .18s, box-shadow .22s;
+  }
+
+  .home-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    color: #F5C842;
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1.2rem;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 0.9rem;
+  }
+
+  header h1 {
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 800;
+    color: #F5C842;
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F5C842, transparent);
+    margin: 0 auto 10px;
+  }
+
+  .stars {
+    font-size: 1rem;
+    color: #F5C842;
+    letter-spacing: .4em;
+    margin-bottom: 6px;
+    opacity: .7;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .telegram-section {
+    text-align: center;
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .tg-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(26,35,50,0.85);
+    border: 1.5px solid rgba(34,158,217,0.3);
+    border-radius: 60px;
+    padding: .75rem 1.5rem .75rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tg-logo-wrap {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+  }
+
+  .tg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: .92rem;
+    padding: .65rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,.4);
+    transition: all .22s;
+    white-space: nowrap;
+  }
+
+  .tg-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(34,158,217,.55);
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: .85rem;
+    color: #F5C842;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: .5rem 0 1rem;
+    opacity: .75;
+  }
+
+  .page-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 20px 70px;
+  }
+
+  .grammar-card {
+    background: #1a2332;
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 28px;
+    padding: 28px 32px 36px;
+    margin-bottom: 40px;
+  }
+
+  .grammar-card h2 {
+    color: #F5C842;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-left: 4px solid #F5C842;
+    padding-left: 18px;
+  }
+
+  .grammar-card h3 {
+    color: #F5C842;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 24px 0 16px 0;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+    border-left: 3px solid #F5C842;
+    padding-left: 20px;
+    margin-bottom: 28px;
+  }
+
+  .rule-box {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border-left: 4px solid #F5C842;
+  }
+
+  .example-list {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+  }
+
+  .example-list p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+  }
+
+  .example-list strong {
+    color: #F5C842;
+  }
+
+  .exercise-box {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border: 1px solid rgba(245,200,66,0.2);
+  }
+
+  .exercise-item {
+    margin: 16px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(245,200,66,0.1);
+  }
+
+  .exercise-item:last-child {
+    border-bottom: none;
+  }
+
+  .exercise-text {
+    font-size: 0.95rem;
+    flex: 2;
+    min-width: 200px;
+  }
+
+  .answer-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 200px;
+  }
+
+  .answer-input {
+    background: #0D1B2A;
+    border: 1px solid rgba(245,200,66,0.4);
+    border-radius: 12px;
+    padding: 8px 14px;
+    color: white;
+    font-family: inherit;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .answer-input:focus {
+    outline: none;
+    border-color: #F5C842;
+  }
+
+  .feedback {
+    font-size: 0.75rem;
+    padding-left: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .feedback.correct {
+    color: #6fcf97;
+  }
+
+  .feedback.wrong {
+    color: #e74c3c;
+  }
+
+  .feedback-icon {
+    font-size: 0.85rem;
+  }
+
+  .check-all-btn {
+    background: #F5C842;
+    color: #0D1B2A;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 15px 0 5px;
+    transition: 0.2s;
+    display: inline-block;
+  }
+
+  .check-all-btn:hover {
+    background: #e0b42b;
+    transform: scale(1.02);
+  }
+
+  .reset-btn {
+    background: #2c3e50;
+    color: #F5C842;
+    border: 1px solid #F5C842;
+    border-radius: 30px;
+    padding: 8px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin: 15px 0 5px 10px;
+    transition: 0.2s;
+    display: inline-block;
+  }
+
+  .reset-btn:hover {
+    background: #1a2a3a;
+  }
+
+  .score-badge {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 16px;
+    background: #0D1B2A;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #F5C842;
+  }
+
+  footer {
+    text-align: center;
+    padding: 0 1rem 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  footer span {
+    color: #F5C842;
+  }
+
+  @media (max-width: 720px) {
+    .grammar-card {
+      padding: 20px;
+    }
+    .exercise-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .answer-wrapper {
+      width: 100%;
+    }
+    .tg-box {
+      flex-direction: column;
+      padding: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12" />
+      <polyline points="12 19 5 12 12 5" />
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ DURUM EKLERİ ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Kelishik Qo'shimchalari • Ad Durum Ekleri</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9" />
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white" />
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<div class="section-title">Kelishik qo'shimchalari – Ad Durum Ekleri</div>
+
+<div class="page-wrapper">
+
+  <!-- Giriş -->
+  <div class="grammar-card">
+    <div class="intro-text">
+      Turk tilida oltita kelishik mavjud: Yalın Durum, İlgi Durumu, Belirtme Durumu, Yönelme Durumu, Bulunma Durumu, Ayrılma Durumu.
+    </div>
+  </div>
+
+  <!-- 1. YALIN DURUM -->
+  <div class="grammar-card">
+    <h2>1. Yalın Durum -</h2>
+    <div class="intro-text">
+      Kelime hiçbir ek almaz. ❓ Kim? Ne?
+    </div>
+    <div class="example-list">
+      <p><strong>»</strong> Kitap burada.</p>
+      <p><strong>»</strong> Ali geliyor.</p>
+    </div>
+  </div>
+
+  <!-- 2. İLGİ DURUMU (yeni alıştırma ile) -->
+  <div class="grammar-card">
+    <h2>2. İlgi Durumu (Qaratqich kelishigi)</h2>
+    <div class="intro-text">
+      <strong>Qo'shimchalar:</strong> undosh harf bilan tugagan so'zlarga <strong>-ın, -in, -un, -ün</strong>; unli harf bilan tugagan so'zlarga <strong>-nın, -nin, -nun, -nün</strong>.<br>
+      ❓ <strong>Kimin? Neyin? Nerenin?</strong>
+    </div>
+    <div class="rule-box">
+      <p><strong>Örnekler:</strong> ev-in, okul-un, sınıf-ın, süt-ün, çanta-nın, bahçe-nin, tiyatro-nun, ütü-nün</p>
+      <p><strong>Kişi Zamirleri:</strong> Ben-im, Sen-in, O-nun, Biz-im, Siz-in, Onlar-ın</p>
+    </div>
+    <div class="example-list">
+      <p><strong>»</strong> Sınıfın penceresi açık.</p>
+      <p><strong>»</strong> Evin balkonu var.</p>
+      <p><strong>»</strong> Sinemanın önünde bekliyorum.</p>
+      <p><strong>»</strong> Masanın üstünde kitaplar var.</p>
+      <p><strong>»</strong> Sibel’in saçı çok uzundur.</p>
+    </div>
+
+    <!-- 2-mashq - YENİ İÇERİK (10 MADDE) -->
+    <h3>✍️ 2-mashq</h3>
+    <div class="exercise-box" id="exIlgi">
+      <div class="exercise-item">
+        <span class="exercise-text">1. Ali…………... kitap………...</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi1">
+          <div class="feedback" id="fbIlgi1"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">2. Apartman…… asansör………</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi2">
+          <div class="feedback" id="fbIlgi2"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">3. Okul………… müdür…….</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi3">
+          <div class="feedback" id="fbIlgi3"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">4. Ahmet………. araba……..</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi4">
+          <div class="feedback" id="fbIlgi4"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">5. Sınıf………… kapı……….</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi5">
+          <div class="feedback" id="fbIlgi5"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">6. Öğrenci…….. çanta……..</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi6">
+          <div class="feedback" id="fbIlgi6"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">7. Öğretmen….. gözlük…….</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi7">
+          <div class="feedback" id="fbIlgi7"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">8. Köy………… çeşme……..</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi8">
+          <div class="feedback" id="fbIlgi8"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">9. Kalem……… renk……….</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi9">
+          <div class="feedback" id="fbIlgi9"></div>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <span class="exercise-text">10.Öğrenci……. kafa……….</span>
+        <div class="answer-wrapper">
+          <input type="text" class="answer-input" id="ilgi10">
+          <div class="feedback" id="fbIlgi10"></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button class="check-all-btn" id="checkIlgiBtn">🔍 Kontrol Et</button>
+      <button class="reset-btn" id="resetIlgiBtn">⟳ Temizle</button>
+    </div>
+    <div id="ilgiScore" class="score-badge"></div>
+  </div>
+
+  <!-- 3. BELİRTME DURUMU -->
+  <div class="grammar-card">
+    <h2>3. Belirtme Durumu (Tushum kelishigi)</h2>
+    <div class="intro-text">
+      <strong>Qo'shimchalar: -ı, -i, -u, -ü</strong>. Unli bilan tugagan so'zlardan so'ng <strong>-y-</strong> undoshi orttiriladi.<br>
+      ❓ <strong>Kimi? Neyi? Nereyi?</strong>
+    </div>
+    <div class="rule-box">
+      <p><strong>Örnekler:</strong> sınıf-ı, kalem-i, okul-u, otobüs-ü, hastane-y-i, sinema-y-ı, banyo-y-u, köprü-y-ü</p>
+      <p><strong>Kişi Zamirleri:</strong> Ben-i, Sen-i, O-n-u, Biz-i, Siz-i, Onlar-ı</p>
+    </div>
+    <div class="example-list">
+      <p><strong>»</strong> Öğretmen kalemi aldı.</p>
+      <p><strong>»</strong> Masayı / masanı farkı: masayı (belirtme), masanı (senin masan)</p>
+    </div>
+
+    <h3>✍️ mashq</h3>
+    <div class="exercise-box" id="exBel">
+      <div class="exercise-item"><span class="exercise-text">Tuzluk….. verir misin?</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel1"><div class="feedback" id="fbBel1"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Ülkem…… çok özledim.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel2"><div class="feedback" id="fbBel2"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Nermin uyku…… çok sever.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel3"><div class="feedback" id="fbBel3"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Ali sabah otobüs….. kaçırdı.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel4"><div class="feedback" id="fbBel4"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Soru…… herkes anladı mı?</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel5"><div class="feedback" id="fbBel5"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Ben hayvanlar….. severim.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel6"><div class="feedback" id="fbBel6"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Akşam ben….. ara.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel7"><div class="feedback" id="fbBel7"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Çamaşırlarım….. dün yıkadım.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel8"><div class="feedback" id="fbBel8"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Kardeşim vazo….. kırdı.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bel9"><div class="feedback" id="fbBel9"></div></div></div>
+    </div>
+    <div style="text-align:center"><button class="check-all-btn" id="checkBelBtn">🔍 Kontrol Et</button><button class="reset-btn" id="resetBelBtn">⟳ Temizle</button></div>
+    <div id="belScore" class="score-badge"></div>
+  </div>
+
+  <!-- 4. YÖNELME DURUMU -->
+  <div class="grammar-card">
+    <h2>4. Yönelme Durumu (Jo'nalish kelishigi)</h2>
+    <div class="intro-text">
+      <strong>Qo'shimchalar: -a, -e</strong>. Unli bilan tugagan so'zlardan so'ng <strong>-y-</strong> undoshi orttiriladi.<br>
+      ❓ <strong>Kime? Neye? Nereye?</strong>
+    </div>
+    <div class="rule-box">
+      <p><strong>Örnekler:</strong> duvar-a, deniz-e, muz-a, değirmen-e, çanta-y-a, şemsiye-y-e, elma-y-a, bahçe-y-e</p>
+      <p><strong>Kişi Zamirleri:</strong> Ben-a (bana), Sen-a (sana), O-n-a, Biz-e, Siz-e, Onlar-a</p>
+    </div>
+    <div class="example-list">
+      <p><strong>»</strong> Şu defteri bana ver.</p>
+      <p><strong>»</strong> Öğretmen öğrenciye ödev verdi</p>
+    </div>
+
+    <h3>✍️ mashq</h3>
+    <div class="exercise-box" id="exYon">
+      <div class="exercise-item"><span class="exercise-text">Ali Bey bu akşam Adana…….. gidiyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon1"><div class="feedback" id="fbYon1"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Dağçılar Ağrı Dağı….. tırmanıyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon2"><div class="feedback" id="fbYon2"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Çimler…… basmayınız.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon3"><div class="feedback" id="fbYon3"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Dün sen….. çok kızdım.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon4"><div class="feedback" id="fbYon4"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Halı….. çay döktüm.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon5"><div class="feedback" id="fbYon5"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Maç…… yetiştik.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon6"><div class="feedback" id="fbYon6"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Ayağım…… diken battı.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon7"><div class="feedback" id="fbYon7"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Ben….. yardım eder misin?</span><div class="answer-wrapper"><input type="text" class="answer-input" id="yon8"><div class="feedback" id="fbYon8"></div></div></div>
+    </div>
+    <div style="text-align:center"><button class="check-all-btn" id="checkYonBtn">🔍 Kontrol Et</button><button class="reset-btn" id="resetYonBtn">⟳ Temizle</button></div>
+    <div id="yonScore" class="score-badge"></div>
+  </div>
+
+  <!-- 5. BULUNMA DURUMU -->
+  <div class="grammar-card">
+    <h2>5. Bulunma Durumu (O'rin-payt kelishigi)</h2>
+    <div class="intro-text">
+      <strong>Qo'shimchalar: -da, -de / -ta, -te</strong>. f, s, t, k, ç, ş, h, p jarangsiz undoshlari bilan tugagan so'zlardan so'ng <strong>-ta, -te</strong>.<br>
+      ❓ <strong>Kimde? Nede? Nerede?</strong>
+    </div>
+    <div class="rule-box">
+      <p><strong>Örnekler:</strong> Ev-de, dosya-da, kasa-da, pencere-de, sınıf-ta, ağaç-ta, sepet-te, çiçek-te</p>
+    </div>
+    <div class="example-list">
+      <p><strong>»</strong> Başka yere gitmem, sizde kalmak istiyorum.</p>
+    </div>
+
+    <h3>✍️ mashq</h3>
+    <div class="exercise-box" id="exBul">
+      <div class="exercise-item"><span class="exercise-text">O, yurt….. kalıyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul1"><div class="feedback" id="fbBul1"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Karşı masa…… oturuyorlar.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul2"><div class="feedback" id="fbBul2"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">İnsanlar caddeler….. yürüyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul3"><div class="feedback" id="fbBul3"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Aslı havuz….. yüzer.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul4"><div class="feedback" id="fbBul4"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Ben Taşkent….. büyüdüm.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul5"><div class="feedback" id="fbBul5"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Biz Özbekistan…… yaşıyoruz.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul6"><div class="feedback" id="fbBul6"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Cebim….. para yok.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul7"><div class="feedback" id="fbBul7"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Bahar….. çiçekler çok güzeldir.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="bul8"><div class="feedback" id="fbBul8"></div></div></div>
+    </div>
+    <div style="text-align:center"><button class="check-all-btn" id="checkBulBtn">🔍 Kontrol Et</button><button class="reset-btn" id="resetBulBtn">⟳ Temizle</button></div>
+    <div id="bulScore" class="score-badge"></div>
+  </div>
+
+  <!-- 6. AYRILMA DURUMU -->
+  <div class="grammar-card">
+    <h2>6. Ayrılma Durumu (Chiqish kelishigi)</h2>
+    <div class="intro-text">
+      <strong>Qo'shimchalar: -dan, -den / -tan, -ten</strong>. f, s, t, k, ç, ş, h, p jarangsiz undoshlari bilan tugagan so'zlardan so'ng <strong>-tan, -ten</strong>.<br>
+      ❓ <strong>Kimden? Neden? Nereden?</strong>
+    </div>
+    <div class="rule-box">
+      <p><strong>Örnekler:</strong> araba-dan, yol-dan, öğretmen-den, deniz-den, uçak-tan, kitap-tan, otobüs-ten, soğuk-tan</p>
+      <p><strong>Kişi Zamirleri:</strong> Ben-den, Sen-den, O-n-dan, Biz-den, Siz-den, Onlar-dan</p>
+    </div>
+
+    <h3>✍️ mashq</h3>
+    <div class="exercise-box" id="exAyr">
+      <div class="exercise-item"><span class="exercise-text">İstanbul….. Ankara’ya trenle geldik.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr1"><div class="feedback" id="fbAyr1"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Bahçe……. bir demet çiçek topladım.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr2"><div class="feedback" id="fbAyr2"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Çalışmak…… gözleri ağrıyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr3"><div class="feedback" id="fbAyr3"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Akdeniz, Karadeniz….. daha büyüktür.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr4"><div class="feedback" id="fbAyr4"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Dedemler...... eve, saat sekizde döndük.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr5"><div class="feedback" id="fbAyr5"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Elif, ben….. hikâye kitabı istedi.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr6"><div class="feedback" id="fbAyr6"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Polisler adam….. şüphelendiler.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr7"><div class="feedback" id="fbAyr7"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Yaşlı kadın pencere….. bakıyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr8"><div class="feedback" id="fbAyr8"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Kardeşim herkes….. utanır.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr9"><div class="feedback" id="fbAyr9"></div></div></div>
+      <div class="exercise-item"><span class="exercise-text">Çocuk köpek….. çok korkuyor.</span><div class="answer-wrapper"><input type="text" class="answer-input" id="ayr10"><div class="feedback" id="fbAyr10"></div></div></div>
+    </div>
+    <div style="text-align:center"><button class="check-all-btn" id="checkAyrBtn">🔍 Kontrol Et</button><button class="reset-btn" id="resetAyrBtn">⟳ Temizle</button></div>
+    <div id="ayrScore" class="score-badge"></div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<script>
+  // Tüm doğru cevaplar
+  const ilgiAnswers = ["Ali'nin kitabı", "Apartmanın asansörü", "okulun müdürü", "Ahmet'in arabası", "Sınıfın kapısı", "Öğrencinin çantası", "Öğretmenin gözlüğü", "Köyün çeşmesi", "Kalemin rengi", "Öğrencinin kafası"];
+  const belAnswers = ["tuzluğu", "ülkemi", "uykuyu", "otobüsü", "soruyu", "hayvanları", "beni", "çamaşırlarımı", "vazoyu"];
+  const yonAnswers = ["Adana'ya", "dağına", "çimlere", "sana", "halıya", "maça", "ayağıma", "bana"];
+  const bulAnswers = ["yurtta", "masada", "caddelerde", "havuzda", "Taşkent'te", "Özbekistan'da", "cebimde", "baharda"];
+  const ayrAnswers = ["İstanbul'dan", "bahçeden", "çalışmaktan", "Karadeniz'den", "dedemlerden", "benden", "adamdan", "pencereden", "herkesten", "köpekten"];
+
+  function normalize(t) { return t.toLowerCase().replace(/\s+/g, ' ').trim(); }
+
+  function checkExercise(answers, inputIds, feedbackIds, scoreId) {
+    let correct = 0;
+    for (let i = 0; i < answers.length; i++) {
+      let user = document.getElementById(inputIds[i]).value.trim();
+      let isOk = normalize(user) === normalize(answers[i]);
+      if (isOk) correct++;
+      let fbDiv = document.getElementById(feedbackIds[i]);
+      if (isOk) {
+        fbDiv.innerHTML = `<span class="feedback-icon">✅</span> Doğru!`;
+        fbDiv.className = "feedback correct";
+      } else {
+        fbDiv.innerHTML = `<span class="feedback-icon">❌</span> Yanlış. Doğru cevap: <strong>${answers[i]}</strong>`;
+        fbDiv.className = "feedback wrong";
+      }
+    }
+    document.getElementById(scoreId).innerHTML = `🎯 Toplam: ${correct}/${answers.length} doğru`;
+  }
+
+  function resetExercise(inputIds, feedbackIds, scoreId) {
+    for (let i = 0; i < inputIds.length; i++) {
+      document.getElementById(inputIds[i]).value = "";
+      document.getElementById(feedbackIds[i]).innerHTML = "";
+      document.getElementById(feedbackIds[i]).className = "feedback";
+    }
+    document.getElementById(scoreId).innerHTML = "";
+  }
+
+  // İlgi Durumu
+  const ilgiInputs = ["ilgi1","ilgi2","ilgi3","ilgi4","ilgi5","ilgi6","ilgi7","ilgi8","ilgi9","ilgi10"];
+  const ilgiFbs = ["fbIlgi1","fbIlgi2","fbIlgi3","fbIlgi4","fbIlgi5","fbIlgi6","fbIlgi7","fbIlgi8","fbIlgi9","fbIlgi10"];
+  document.getElementById("checkIlgiBtn").onclick = () => checkExercise(ilgiAnswers, ilgiInputs, ilgiFbs, "ilgiScore");
+  document.getElementById("resetIlgiBtn").onclick = () => resetExercise(ilgiInputs, ilgiFbs, "ilgiScore");
+
+  // Belirtme
+  const belInputs = ["bel1","bel2","bel3","bel4","bel5","bel6","bel7","bel8","bel9"];
+  const belFbs = ["fbBel1","fbBel2","fbBel3","fbBel4","fbBel5","fbBel6","fbBel7","fbBel8","fbBel9"];
+  document.getElementById("checkBelBtn").onclick = () => checkExercise(belAnswers, belInputs, belFbs, "belScore");
+  document.getElementById("resetBelBtn").onclick = () => resetExercise(belInputs, belFbs, "belScore");
+
+  // Yönelme
+  const yonInputs = ["yon1","yon2","yon3","yon4","yon5","yon6","yon7","yon8"];
+  const yonFbs = ["fbYon1","fbYon2","fbYon3","fbYon4","fbYon5","fbYon6","fbYon7","fbYon8"];
+  document.getElementById("checkYonBtn").onclick = () => checkExercise(yonAnswers, yonInputs, yonFbs, "yonScore");
+  document.getElementById("resetYonBtn").onclick = () => resetExercise(yonInputs, yonFbs, "yonScore");
+
+  // Bulunma
+  const bulInputs = ["bul1","bul2","bul3","bul4","bul5","bul6","bul7","bul8"];
+  const bulFbs = ["fbBul1","fbBul2","fbBul3","fbBul4","fbBul5","fbBul6","fbBul7","fbBul8"];
+  document.getElementById("checkBulBtn").onclick = () => checkExercise(bulAnswers, bulInputs, bulFbs, "bulScore");
+  document.getElementById("resetBulBtn").onclick = () => resetExercise(bulInputs, bulFbs, "bulScore");
+
+  // Ayrılma
+  const ayrInputs = ["ayr1","ayr2","ayr3","ayr4","ayr5","ayr6","ayr7","ayr8","ayr9","ayr10"];
+  const ayrFbs = ["fbAyr1","fbAyr2","fbAyr3","fbAyr4","fbAyr5","fbAyr6","fbAyr7","fbAyr8","fbAyr9","fbAyr10"];
+  document.getElementById("checkAyrBtn").onclick = () => checkExercise(ayrAnswers, ayrInputs, ayrFbs, "ayrScore");
+  document.getElementById("resetAyrBtn").onclick = () => resetExercise(ayrInputs, ayrFbs, "ayrScore");
+</script>
+</body>
+</html>

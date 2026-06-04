@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>İsim Tamlamaları (Compound Nouns) – Hamza Hoca</title>
+<style>
+  /* ========== GLOBAL STYLES ========== */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+    min-height: 100vh;
+    color: white;
+  }
+
+  .home-btn-wrap {
+    padding: 18px 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2332;
+    border: 2px solid #F5C842;
+    border-radius: 40px;
+    padding: 9px 20px;
+    color: #F5C842;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .22s, transform .18s, box-shadow .22s;
+    text-decoration: none;
+    margin-bottom: 0;
+  }
+  .back-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+
+  .page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 20px 70px;
+  }
+
+  .article-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .article-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 800;
+    color: #F5C842;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .article-meta {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F5C842, transparent);
+    margin: 0 0 28px;
+  }
+
+  .grammar-card {
+    background: #1a2332;
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 28px;
+    padding: 28px 32px 36px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(2px);
+  }
+
+  .grammar-card h2 {
+    color: #F5C842;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border-left: 4px solid #F5C842;
+    padding-left: 18px;
+  }
+
+  .grammar-card h3 {
+    color: #F5C842;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 24px 0 16px 0;
+  }
+
+  .grammar-card h4 {
+    color: #F5C842;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 20px 0 12px 0;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+    border-left: 3px solid #F5C842;
+    padding-left: 20px;
+    margin-bottom: 28px;
+  }
+
+  .bilingual-note {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 16px 22px;
+    margin: 20px 0;
+    color: #e0e0e0;
+    border-left: 4px solid #F5C842;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  /* iki sütunlu yan yana tablo */
+  .two-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 20px 0;
+  }
+  .col {
+    flex: 1;
+    min-width: 240px;
+    background: #0D1B2A;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(245,200,66,0.2);
+  }
+  .col-title {
+    background: rgba(245,200,66,0.18);
+    padding: 12px 16px;
+    font-weight: 700;
+    color: #F5C842;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(245,200,66,0.3);
+  }
+  .col-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(245,200,66,0.1);
+    color: rgba(255,255,255,0.85);
+  }
+  .col-item:last-child {
+    border-bottom: none;
+  }
+  .col-item .vowel {
+    font-weight: 700;
+    color: #F5C842;
+  }
+  .col-item .suffix {
+    font-family: monospace;
+    font-size: 1rem;
+  }
+
+  .two-columns-special {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 20px 0;
+  }
+  .col-special-left {
+    flex: 1;
+    min-width: 180px;
+    background: #0D1B2A;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(245,200,66,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .col-special-left .center-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #F5C842;
+    text-align: center;
+    padding: 30px 20px;
+    letter-spacing: 2px;
+  }
+  .col-special-right {
+    flex: 2;
+    min-width: 260px;
+    background: #0D1B2A;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(245,200,66,0.2);
+  }
+  .col-special-right .col-title {
+    background: rgba(245,200,66,0.18);
+    padding: 12px 16px;
+    font-weight: 700;
+    color: #F5C842;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(245,200,66,0.3);
+  }
+
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0D1B2A;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .custom-table th {
+    background: rgba(245,200,66,0.18);
+    padding: 12px 16px;
+    text-align: left;
+    color: #F5C842;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(245,200,66,0.3);
+  }
+
+  .custom-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(245,200,66,0.1);
+    color: rgba(255,255,255,0.85);
+    vertical-align: top;
+  }
+
+  .custom-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .highlight-cell {
+    font-weight: 700;
+    color: #F5C842;
+  }
+
+  .example-list {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+  }
+
+  .example-list p {
+    margin: 8px 0;
+    font-size: 1rem;
+  }
+
+  .example-list strong {
+    color: #F5C842;
+  }
+
+  .warning-note {
+    background: #0D1B2A;
+    padding: 14px 20px;
+    border-radius: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+    font-size: 0.9rem;
+  }
+
+  .warning-note strong {
+    color: #F5C842;
+  }
+
+  .exercise-box {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    border: 1px solid rgba(245,200,66,0.2);
+  }
+
+  .exercise-box p {
+    margin: 10px 0;
+    font-size: 0.98rem;
+    line-height: 1.8;
+  }
+
+  .suffix-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 15px 0;
+  }
+
+  .suffix-card {
+    background: #0D1B2A;
+    border-radius: 16px;
+    padding: 12px 18px;
+    border-left: 3px solid #F5C842;
+    min-width: 140px;
+  }
+
+  .suffix-card strong {
+    color: #F5C842;
+  }
+
+  footer {
+    text-align: center;
+    padding: 0 1rem 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+  footer span {
+    color: #F5C842;
+  }
+
+  /* ========== INTERACTIVE EXERCISE STYLES ========== */
+  .exercise-input {
+    background: #1a2d42;
+    border: 2px solid rgba(245,200,66,0.4);
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    padding: 4px 10px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    min-width: 140px;
+    vertical-align: middle;
+  }
+  .exercise-input:focus {
+    border-color: #F5C842;
+    background: #1e3450;
+  }
+  .exercise-input.correct {
+    border-color: #4CAF50;
+    background: rgba(76,175,80,0.15);
+  }
+  .exercise-input.wrong {
+    border-color: #f44336;
+    background: rgba(244,67,54,0.15);
+  }
+  .exercise-input.disabled-input {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* suffix inputs (smaller, inline) */
+  .suffix-input {
+    background: #1a2d42;
+    border: 2px solid rgba(245,200,66,0.4);
+    border-radius: 6px;
+    color: #F5C842;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    width: 55px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .suffix-input:focus {
+    border-color: #F5C842;
+    background: #1e3450;
+  }
+  .suffix-input.correct {
+    border-color: #4CAF50;
+    background: rgba(76,175,80,0.15);
+    color: #4CAF50;
+  }
+  .suffix-input.wrong {
+    border-color: #f44336;
+    background: rgba(244,67,54,0.15);
+    color: #f44336;
+  }
+
+  .feedback-icon {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 1.1rem;
+    vertical-align: middle;
+  }
+
+  .feedback-text {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 0.82rem;
+    vertical-align: middle;
+    font-style: italic;
+  }
+  .feedback-text.correct-msg { color: #4CAF50; }
+  .feedback-text.wrong-msg { color: #f44336; }
+
+  .check-btn {
+    display: block;
+    margin: 18px 0 4px auto;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 28px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.2s, opacity 0.2s;
+    letter-spacing: 0.04em;
+  }
+  .check-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245,200,66,0.35);
+  }
+  .check-btn:active {
+    transform: translateY(0);
+  }
+
+  .score-badge {
+    display: inline-block;
+    margin-left: 12px;
+    background: rgba(245,200,66,0.15);
+    border: 1px solid rgba(245,200,66,0.4);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    color: #F5C842;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  .result-summary {
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: none;
+  }
+  .result-summary.all-correct {
+    background: rgba(76,175,80,0.15);
+    border: 1px solid rgba(76,175,80,0.4);
+    color: #4CAF50;
+  }
+  .result-summary.has-errors {
+    background: rgba(244,67,54,0.1);
+    border: 1px solid rgba(244,67,54,0.3);
+    color: #ffb3ae;
+  }
+
+  @media (max-width: 720px) {
+    .grammar-card {
+      padding: 20px;
+    }
+    .custom-table th, .custom-table td {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+    }
+    .two-columns {
+      flex-direction: column;
+    }
+    .two-columns-special {
+      flex-direction: column;
+    }
+    .col-special-left .center-text {
+      font-size: 1.5rem;
+      padding: 20px;
+    }
+    .exercise-input {
+      min-width: 100px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<div class="page-wrapper">
+  <div class="article-badge">✦ DİL BİLGİSİ ✦</div>
+  <h1 class="article-title">İsim Tamlamaları</h1>
+  <div class="article-meta">A2 / B1 Seviyesi &nbsp;·&nbsp; Tamlamalar</div>
+  <div class="header-line"></div>
+
+  <!-- ==================== 1. BELİRTİLİ İSİM TAMLAMASI ==================== -->
+  <div class="grammar-card">
+    <h2>1. Belirtili İsim Tamlaması</h2>
+    <div class="intro-text">
+      Tamlayanın ilgi ekini <strong>(-In / -nIn)</strong>, tamlananın da 3. tekil kişi iyelik ekini <strong>(-I / -sI)</strong> aldığı tamlamalardır. Belirtili isim tamlamasını bulmak için tamlanana <strong>"Neyin?", "Kimin?"</strong> sorularını sormak gerekir. Bu tamlamalar tamlayana ait olmayı, onunla ilgili olmayı anlatır.
+    </div>
+
+    <h3>📌 Ek Tablosu</h3>
+    <div class="two-columns">
+      <div class="col">
+        <div class="col-title">🔹 Tamlayan Eki (İlgi Eki)</div>
+        <div class="col-item"><span class="vowel">a, ı</span> <span>→</span> <span class="suffix">-(n)in</span></div>
+        <div class="col-item"><span class="vowel">e, i</span> <span>→</span> <span class="suffix">-(n)in</span></div>
+        <div class="col-item"><span class="vowel">o, u</span> <span>→</span> <span class="suffix">-(n)un</span></div>
+        <div class="col-item"><span class="vowel">ö, ü</span> <span>→</span> <span class="suffix">-(n)ün</span></div>
+      </div>
+      <div class="col">
+        <div class="col-title">🔸 Tamlanan Eki (3. Tekil İyelik)</div>
+        <div class="col-item"><span class="vowel">a, ı</span> <span>→</span> <span class="suffix">-(s)i</span></div>
+        <div class="col-item"><span class="vowel">e, i</span> <span>→</span> <span class="suffix">-(s)i</span></div>
+        <div class="col-item"><span class="vowel">o, u</span> <span>→</span> <span class="suffix">-(s)u</span></div>
+        <div class="col-item"><span class="vowel">ö, ü</span> <span>→</span> <span class="suffix">-(s)ü</span></div>
+      </div>
+    </div>
+
+    <div class="bilingual-note">
+      <strong>Özbekçe Açıklama:</strong> Aniq qo'shma otlar ikki qismdan tashkil topadi: "egalik qiluvchi (aniqlovchi)" va "egalik qilinuvchi (aniqlanuvchi)". Bu qo'shma otlar asosan egalik munosabatini yoki aniqlovchi bilan aniqlanuvchi o'rtasidagi yaqin aloqani bildiradi (masalan: benim arabam → mening mashinam, dersin sonu → darsning oxiri).<br>
+      - Egasi qo'shimchasi (-In/-nIn) olgan so'z egalik qiluvchini, ya'ni egani bildiradi. "Kimning?", "kimga tegishli?" yoki "nimaning?" kabi savollar aniqlanuvchiga berilib, aniqlovchini topishga yordam beradi. Ingliz tilidan farqli ravishda, egalik qilinuvchi, ya'ni aniqlanuvchi ot ham (-I/-sI) qo'shimchasini oladi.
+    </div>
+
+    <h3>Örnekler</h3>
+    <div class="example-list">
+      <p><strong>»</strong> Pencerenin camı</p>
+      <p><strong>»</strong> Kapının kolu</p>
+      <p><strong>»</strong> Arabanın aynası</p>
+      <p><strong>»</strong> Ayşe'nin annesi</p>
+      <p><strong>»</strong> Sınıfın kapısı</p>
+    </div>
+
+    <!-- ALIŞTIRMA 1: Belirtili tamlama yazma -->
+    <h3>Alıştırma: Örnekteki gibi yazınız.</h3>
+    <div class="exercise-box" id="ex1">
+      <p><strong>Ali / çanta:</strong> Ali'nin çantası</p>
+      <p><strong>Ayşe / telefon:</strong> <input class="exercise-input" data-answer="Ayşe'nin telefonu" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>Ev / boya:</strong> <input class="exercise-input" data-answer="Evin boyası" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>Hakan / defter:</strong> <input class="exercise-input" data-answer="Hakan'ın defteri" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>Okul / bahçe:</strong> <input class="exercise-input" data-answer="Okulun bahçesi" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>Çay / şeker:</strong> <input class="exercise-input" data-answer="Çayın şekeri" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <button class="check-btn" onclick="checkExercise('ex1')">✓ Kontrol Et</button>
+      <div class="result-summary" id="ex1-result"></div>
+    </div>
+
+    <div class="warning-note">
+      <strong>Hatırlatma:</strong> Sonu sert ünsüzle biten kelimelere (p, ç, t, k) ünlü ile başlayan bir ek geldiğinde <strong>ünsüz yumuşaması</strong> olur (sözlük → sözlüğü, kitap → kitabı gibi).<br>
+      Özel isimlerde bu değişim sadece telaffuzda yapılır, yazarken kesme işareti kullanıldığı için harf değiştirilmez: <strong>Murat'ın arabası</strong>.
+    </div>
+
+    <div class="bilingual-note">
+      <strong>Eslatma:</strong> Oxiri qattiq undosh bilan tugagan so'zlarga (p, ç, t, k) unli bilan boshlanuvchi qo'shimcha qo'shilganda undosh yumshashi yuz beradi (sözlük → sözlüğü, kitap → kitabı kabi).<br>
+      Maxsus (atoqli) otlarda esa bu o'zgarish faqat talaffuzda bo'ladi, yozishda esa apostrof ishlatilgani uchun harf o'zgarmaydi: <strong>Murat'ın arabası</strong>.
+    </div>
+
+    <!-- ALIŞTIRMA 2: Ek tamamlama (belirtili) -->
+    <h3>Alıştırma: Cümleleri tamamlayınız.</h3>
+    <div class="exercise-box" id="ex2">
+      <p>1. Öğrenci<input class="suffix-input" data-answer="nin" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         kalem<input class="suffix-input" data-answer="i" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         masanın üzerinde duruyor.</p>
+      <p>2. Maalesef bilgisayar<input class="suffix-input" data-answer="ın" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         ekran<input class="suffix-input" data-answer="ı" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         aniden karardı.</p>
+      <p>3. Bugün Zeynep<input class="suffix-input" data-answer="'in" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         kardeş<input class="suffix-input" data-answer="i" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         okulda ilk gününe başladı.</p>
+      <p>4. Ankara, Türkiye<input class="suffix-input" data-answer="'nin" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         başkent<input class="suffix-input" data-answer="i" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         olarak çok önemli bir şehirdir.</p>
+      <p>5. Parkta oynayan çocuk<input class="suffix-input" data-answer="un" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         ayakkabı<input class="suffix-input" data-answer="sı" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         çamur olmuş.</p>
+      <p>6. Maalesef telefon<input class="suffix-input" data-answer="un" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         şarj<input class="suffix-input" data-answer="ı" placeholder="___"><span class="feedback-icon"></span><span class="feedback-text"></span>
+         bitmek üzere.</p>
+      <button class="check-btn" onclick="checkExercise('ex2')">✓ Kontrol Et</button>
+      <div class="result-summary" id="ex2-result"></div>
+    </div>
+
+    <!-- İsim tamlaması + Hal ekleri -->
+    <h3>📌 İsim Tamlaması + Hâl Ekleri</h3>
+    <div class="intro-text">
+      İsim tamlamalarından sonra hâl ekleri gelirse araya <strong>-n-</strong> yardımcı sesi girer.
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr><th>Tamlayan Eki</th><th>Tamlanan Eki</th><th>Ad Durum Eki (Hâl Eki)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>a, ı → -(n)in</td><td>a, ı → -(s)i</td><td rowspan="4">-(n)dA, -(n)dAn, -(n)A, -(n)I<br><span style="font-size:0.8rem;">(bulunma, ayrılma, yönelme, belirtme) + yardımcı ses -n-</span></td></tr>
+        <tr><td>e, i → -(n)in</td><td>e, i → -(s)i</td></tr>
+        <tr><td>o, u → -(n)un</td><td>o, u → -(s)u</td></tr>
+        <tr><td>ö, ü → -(n)ün</td><td>ö, ü → -(s)ü</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Ad Durum Ekli Tamlama Örnekleri</h3>
+    <div class="example-list">
+      <p><strong>Oda / kapı / -I (Belirtme Hâli)</strong><br>
+      Tamlama: Odanın kapısı<br>
+      Cümle: <strong>Odanın kapısını</strong> kapat.</p>
+      
+      <p><strong>Televizyon / kumanda / -A (Yönelme Hâli)</strong><br>
+      Tamlama: Televizyonun kumandası<br>
+      Cümle: Lütfen <strong>televizyonun kumandasına</strong> dokunma.</p>
+      
+      <p><strong>Okul / kapı / -dA (Bulunma Hâli)</strong><br>
+      Tamlama: Okulun kapısı<br>
+      Cümle: Öğrenciler <strong>okulun kapısında</strong> bekliyorlar.</p>
+      
+      <p><strong>Ali / oda / -dAn (Ayrılma Hâli)</strong><br>
+      Tamlama: Ali'nin odası<br>
+      Cümle: Az önce <strong>Ali'nin odasından</strong> sesler geldi.</p>
+    </div>
+  </div>
+
+  <!-- ==================== 2. BELİRTİSİZ İSİM TAMLAMASI ==================== -->
+  <div class="grammar-card">
+    <h2>2. Belirtisiz İsim Tamlaması</h2>
+    <div class="intro-text">
+      Tamlayanı yalın hâlde (eksiz) bulunan, tamlananı 3. tekil kişi iyelik ekini <strong>(-I / -sI)</strong> alan tamlamalardır. Bu tamlama bir nesnenin türünü ve adını gösterir.
+    </div>
+
+    <div class="bilingual-note">
+      <strong>Özbekçe Açıklama:</strong> Bu qo'shma otlar yoki biror obyektning nomini bildiradi (Boğaz Köprüsü → Bosfor ko'prigi), yoki obyektning turi, navi yoki toifasini ko'rsatadi (mercimek çorbası → yasmiq sho'rva) yoki diş fırçası → tish cho'tkasi).<br>
+      Bu yerda egalik munosabati yo'q, shuning uchun aniqlovchi (birinchi so'z) egalik qo'shimchasini olmaydi. Biroq ingliz tilidan farqli ravishda, aniqlanuvchi (ikkinchi so'z) noaniq qo'shma ot hosil qilish uchun -I/-sI qo'shimchasini olishi kerak.
+    </div>
+
+    <h3>📌 Tamlanan Eki (Belirtisiz Tamlamada)</h3>
+    <div class="two-columns-special">
+      <div class="col-special-left">
+        <div class="center-text">isim</div>
+      </div>
+      <div class="col-special-right">
+        <div class="col-title">🔸 Tamlanan Eki (3. Tekil İyelik)</div>
+        <div class="col-item"><span class="vowel">a, ı</span> <span>→</span> <span class="suffix">-(s)i</span></div>
+        <div class="col-item"><span class="vowel">e, i</span> <span>→</span> <span class="suffix">-(s)i</span></div>
+        <div class="col-item"><span class="vowel">o, u</span> <span>→</span> <span class="suffix">-(s)u</span></div>
+        <div class="col-item"><span class="vowel">ö, ü</span> <span>→</span> <span class="suffix">-(s)ü</span></div>
+      </div>
+    </div>
+
+    <h3>Örnekler</h3>
+    <div class="example-list">
+      <p><strong>»</strong> güneş gözlüğü</p>
+      <p><strong>»</strong> yemek masası</p>
+      <p><strong>»</strong> Türk kahvesi</p>
+      <p><strong>»</strong> yatak odası</p>
+    </div>
+
+    <!-- ALIŞTIRMA 3: Belirtisiz tamlama yazma -->
+    <h3>Alıştırma: Örnekteki gibi yazınız.</h3>
+    <div class="exercise-box" id="ex3">
+      <p><strong>ütü / masa:</strong> ütü masası</p>
+      <p><strong>yaz / tatil:</strong> <input class="exercise-input" data-answer="yaz tatili" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>kol / saat:</strong> <input class="exercise-input" data-answer="kol saati" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>çamaşır / makine:</strong> <input class="exercise-input" data-answer="çamaşır makinesi" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <p><strong>kredi / kart:</strong> <input class="exercise-input" data-answer="kredi kartı" placeholder="Yazınız..."> <span class="feedback-icon"></span><span class="feedback-text"></span></p>
+      <button class="check-btn" onclick="checkExercise('ex3')">✓ Kontrol Et</button>
+      <div class="result-summary" id="ex3-result"></div>
+    </div>
+
+    <!-- ALIŞTIRMA 4: Ek tamamlama (belirtisiz) -->
+    <h3>Alıştırma: Cümleleri tamamlayınız.</h3>
+    <div class="exercise-box" id="ex4">
+      <p>1. Edebiyat öğretmen<input class="suffix-input" data-answer="i" placeholder="___">
+         yaz tatilinde okumamız için birçok kitap önerdi.
+         <span class="feedback-icon"></span></p>
+      <p>2. Diş hekim<input class="suffix-input" data-answer="i" placeholder="___">
+         tatilde olduğu için haftaya randevu alabildim.
+         <span class="feedback-icon"></span></p>
+      <p>3. En büyük hayalim kimya mühendis<input class="suffix-input" data-answer="i" placeholder="___">
+         olmak.
+         <span class="feedback-icon"></span></p>
+      <p>4. Sabah ezan<input class="suffix-input" data-answer="ı" placeholder="___">
+         ile yola çıktım.
+         <span class="feedback-icon"></span></p>
+      <p>5. Ispanağı yedikçe ağzıma toprak koku<input class="suffix-input" data-answer="su" placeholder="___">
+         geliyor.
+         <span class="feedback-icon"></span></p>
+      <p>6. Bu akşam matematik ödev<input class="suffix-input" data-answer="i" placeholder="___">
+         yapacağım.
+         <span class="feedback-icon"></span></p>
+      <button class="check-btn" onclick="checkExercise('ex4')">✓ Kontrol Et</button>
+      <div class="result-summary" id="ex4-result"></div>
+    </div>
+
+    <!-- İsim tamlaması + Hal ekleri (Belirtisiz) -->
+    <h3>📌 İsim Tamlaması + Hâl Ekleri (Belirtisiz)</h3>
+    <div class="intro-text">
+      İsim tamlamalarından sonra hâl ekleri gelirse araya <strong>-n-</strong> yardımcı sesi girer.
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr><th>Tamlanan Eki</th><th>Ad Durum Eki (Hâl Eki)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>a, ı → -(s)i</td><td>-(n)dA (bulunma)</td></tr>
+        <tr><td>e, i → -(s)i</td><td>-(n)dAn (ayrılma)</td></tr>
+        <tr><td>o, u → -(s)u</td><td>-(n)A (yönelme)</td></tr>
+        <tr><td>ö, ü → -(s)ü</td><td>-(n)I (belirtme)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Örnekler</h3>
+    <div class="example-list">
+      <p><strong>»</strong> Masa örtüsü<span class="highlight-cell">nü</span> yıkamayı unutma.</p>
+      <p><strong>»</strong> Ahmet bugün Türkçe sınavı<span class="highlight-cell">na</span> girdi.</p>
+      <p><strong>»</strong> Tuzluk yemek masası<span class="highlight-cell">nda</span>.</p>
+      <p><strong>»</strong> Taksim meydanı<span class="highlight-cell">ndan</span> eve kadar yürüdüm.</p>
+    </div>
+
+    <!-- ALIŞTIRMA 5: Hâl ekleri tamamlama -->
+    <h3>Alıştırma: Cümleleri tamamlayınız.</h3>
+    <div class="exercise-box" id="ex5">
+      <p>1. Bu sene okula yeni bir tarih öğretmen<input class="suffix-input" data-answer="i" placeholder="___">
+         gelmiş.
+         <span class="feedback-icon"></span></p>
+      <p>2. Mehmet dolaptan alet çantası<input class="suffix-input" data-answer="nı" placeholder="___">
+         verir misin?
+         <span class="feedback-icon"></span></p>
+      <p>3. Bu sene öğrencilerin okul üniforma<input class="suffix-input" data-answer="ları" placeholder="___">
+         değişecektir.
+         <span class="feedback-icon"></span></p>
+      <p>4. Lütfen bu çöp kova<input class="suffix-input" data-answer="sını" placeholder="___">
+         boşaltın.
+         <span class="feedback-icon"></span></p>
+      <p>5. Bu haftaki yemek liste<input class="suffix-input" data-answer="si" placeholder="___">
+         hâlâ panoya asılmamış.
+         <span class="feedback-icon"></span></p>
+      <p>6. Yeni aldığımız yemek masa<input class="suffix-input" data-answer="sı" placeholder="___">
+         odadaki dolabın yanına koyulacak.
+         <span class="feedback-icon"></span></p>
+      <button class="check-btn" onclick="checkExercise('ex5')">✓ Kontrol Et</button>
+      <div class="result-summary" id="ex5-result"></div>
+    </div>
+
+    <div class="warning-note">
+      <strong>Not:</strong> Bazı belirtisiz isim tamlamaları belirtili yapılabilirken bazıları yapılamaz.<br>
+      ✓ kapı kolu → kapının kolu olur &nbsp;&nbsp;|&nbsp;&nbsp; ✗ telefon görüşmesi → telefonun görüşmesi olmaz<br>
+      ✓ bahçe kapısı → bahçenin kapısı olur &nbsp;&nbsp;|&nbsp;&nbsp; ✗ çamaşır makinesi → çamaşırın makinesi olmaz
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<script>
+  // Türkçe karakterleri normalize et (büyük/küçük harf duyarsız karşılaştırma için)
+  function normalizeTurkish(str) {
+    return str
+      .toLowerCase()
+      .replace(/İ/g, 'i')
+      .replace(/I/g, 'ı')
+      .replace(/Ğ/g, 'ğ')
+      .replace(/Ş/g, 'ş')
+      .replace(/Ç/g, 'ç')
+      .replace(/Ö/g, 'ö')
+      .replace(/Ü/g, 'ü')
+      .trim();
+  }
+
+  function checkExercise(exId) {
+    const box = document.getElementById(exId);
+    const inputs = box.querySelectorAll('input.exercise-input, input.suffix-input');
+    let correct = 0;
+    let total = 0;
+
+    inputs.forEach(input => {
+      const answer = input.dataset.answer;
+      const userVal = input.value;
+      const icon = input.nextElementSibling;
+      const feedbackText = (icon && icon.classList.contains('feedback-icon')) ? icon.nextElementSibling : null;
+
+      total++;
+
+      // Clear old state
+      input.classList.remove('correct', 'wrong');
+      if (icon) { icon.textContent = ''; icon.className = 'feedback-icon'; }
+      if (feedbackText && feedbackText.classList.contains('feedback-text')) {
+        feedbackText.textContent = '';
+        feedbackText.className = 'feedback-text';
+      }
+
+      if (!userVal.trim()) {
+        input.classList.add('wrong');
+        if (icon) icon.textContent = '✗';
+        if (feedbackText) {
+          feedbackText.textContent = `Doğrusu: ${answer}`;
+          feedbackText.className = 'feedback-text wrong-msg';
+        }
+        return;
+      }
+
+      // Accept multiple valid forms by splitting on '|' in data-answer
+      const validAnswers = answer.split('|').map(a => normalizeTurkish(a));
+      const isCorrect = validAnswers.includes(normalizeTurkish(userVal));
+
+      if (isCorrect) {
+        input.classList.add('correct');
+        if (icon) icon.textContent = '✓';
+        correct++;
+      } else {
+        input.classList.add('wrong');
+        if (icon) icon.textContent = '✗';
+        if (feedbackText) {
+          feedbackText.textContent = `Doğrusu: ${answer.split('|')[0]}`;
+          feedbackText.className = 'feedback-text wrong-msg';
+        }
+      }
+
+      input.classList.add('disabled-input');
+      input.disabled = true;
+    });
+
+    // Show summary
+    const resultDiv = document.getElementById(exId + '-result');
+    resultDiv.style.display = 'block';
+    if (correct === total) {
+      resultDiv.className = 'result-summary all-correct';
+      resultDiv.textContent = `🎉 Tebrikler! ${total} sorudan ${correct} tanesini doğru yaptınız!`;
+    } else {
+      resultDiv.className = 'result-summary has-errors';
+      resultDiv.textContent = `${total} sorudan ${correct} tanesini doğru yaptınız. Hatalı cevapları kontrol edin.`;
+    }
+
+    // Change button to reset
+    const btn = box.querySelector('.check-btn');
+    btn.textContent = '↺ Tekrar Dene';
+    btn.onclick = () => resetExercise(exId);
+  }
+
+  function resetExercise(exId) {
+    const box = document.getElementById(exId);
+    const inputs = box.querySelectorAll('input.exercise-input, input.suffix-input');
+
+    inputs.forEach(input => {
+      input.value = '';
+      input.classList.remove('correct', 'wrong', 'disabled-input');
+      input.disabled = false;
+      const icon = input.nextElementSibling;
+      if (icon && icon.classList.contains('feedback-icon')) {
+        icon.textContent = '';
+      }
+      const feedbackText = icon && icon.nextElementSibling;
+      if (feedbackText && feedbackText.classList.contains('feedback-text')) {
+        feedbackText.textContent = '';
+        feedbackText.className = 'feedback-text';
+      }
+    });
+
+    const resultDiv = document.getElementById(exId + '-result');
+    resultDiv.style.display = 'none';
+    resultDiv.textContent = '';
+
+    const btn = box.querySelector('.check-btn');
+    btn.textContent = '✓ Kontrol Et';
+    btn.onclick = () => checkExercise(exId);
+  }
+
+  // Enter key desteği
+  document.querySelectorAll('.exercise-input, .suffix-input').forEach(input => {
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const box = input.closest('.exercise-box');
+        if (box) checkExercise(box.id);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

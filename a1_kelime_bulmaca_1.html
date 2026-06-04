@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kök Alıştırması – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+  text-decoration: none;
+}
+.back-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+/* Header stilleri */
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header {
+  text-align: center;
+  padding: 2.5rem 1rem 1.2rem;
+}
+
+header h1 {
+  font-size: clamp(1.4rem, 4.5vw, 2.4rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+}
+
+.stars {
+  font-size: 1rem;
+  opacity: 0.35;
+  letter-spacing: 6px;
+  margin: 0.5rem 0;
+}
+
+.divider {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0.8rem auto;
+  border-radius: 2px;
+}
+
+header p {
+  color: rgba(240, 234, 214, 0.42);
+  font-size: 0.82rem;
+}
+
+/* Telegram Butonu */
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(22, 32, 50, 0.85);
+  border: 1.5px solid rgba(34, 158, 217, 0.3);
+  border-radius: 60px;
+  padding: 0.75rem 1.5rem 0.75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.92rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34, 158, 217, 0.4);
+  transition: all 0.22s;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+}
+
+.tg-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.header-content {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.page-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.level-badge {
+  display: inline-block;
+  background: rgba(245,200,66,0.12);
+  border: 1px solid rgba(245,200,66,0.3);
+  color: #F5C842;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+/* ---- KÖK SECTION ---- */
+.kok-section {
+  background: #1a2332;
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 20px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+}
+
+.kok-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(245,200,66,0.12);
+}
+
+.kok-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.kok-word {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #F5C842;
+}
+
+.word-list {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.anchor-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.anchor-tick { color: #4caf8a; font-size: 0.9rem; flex-shrink: 0; }
+.anchor-word { font-weight: 700; color: rgba(255,255,255,0.85); flex-shrink: 0; }
+.anchor-def  { font-size: 0.85rem; color: rgba(255,255,255,0.45); }
+
+.puzzle-meaning {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.7);
+  padding: 10px 20px 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  align-self: center;
+}
+
+.puzzle-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.letter-boxes {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.letter-box {
+  width: 34px;
+  height: 34px;
+  border: 2px solid rgba(245,200,66,0.35);
+  border-radius: 7px;
+  background: rgba(255,255,255,0.04);
+  color: #F5C842;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition: border-color .18s, background .18s, box-shadow .18s;
+  caret-color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.letter-box:focus {
+  border-color: #F5C842;
+  background: rgba(245,200,66,0.08);
+  box-shadow: 0 0 0 3px rgba(245,200,66,0.15);
+}
+.letter-box.correct {
+  border-color: #2ECC71 !important;
+  background: rgba(46,204,113,0.25) !important;
+  color: #2ECC71 !important;
+}
+.letter-box.wrong {
+  border-color: #E74C3C !important;
+  background: rgba(231,76,60,0.2) !important;
+  color: #E74C3C !important;
+  animation: shake .25s ease;
+}
+.letter-box.disabled-box {
+  background: rgba(255,255,255,0.02);
+  border-color: rgba(245,200,66,0.2);
+  color: rgba(245,200,66,0.4);
+  cursor: not-allowed;
+}
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px); }
+  75%      { transform: translateX(4px); }
+}
+
+.check-btn, .hint-btn {
+  background: rgba(245,200,66,0.1);
+  border: 1.5px solid rgba(245,200,66,0.35);
+  border-radius: 8px;
+  color: #F5C842;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background .18s, border-color .18s, transform .15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.check-btn:hover, .hint-btn:hover {
+  background: rgba(245,200,66,0.2);
+  border-color: #F5C842;
+  transform: translateY(-1px);
+}
+.check-btn:active, .hint-btn:active { transform: translateY(0); }
+
+.hint-btn {
+  background: rgba(34,158,217,0.15);
+  border-color: rgba(34,158,217,0.4);
+  color: #6bc8f5;
+}
+.hint-btn:hover {
+  background: rgba(34,158,217,0.3);
+  border-color: #229ED9;
+}
+
+.result-icon {
+  font-size: 1.1rem;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.result-icon.correct-icon { color: #2ECC71; }
+.result-icon.wrong-icon { color: #E74C3C; }
+
+/* score bar */
+.score-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(245,200,66,0.06);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 12px;
+  padding: 12px 20px;
+  margin-bottom: 28px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+}
+.score-num {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #F5C842;
+}
+.legend {
+  display: flex;
+  gap: 18px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+
+@media (max-width: 600px) {
+  .word-list { grid-template-columns: 1fr; }
+  .kok-section { padding: 18px 16px; }
+  .letter-box { width: 30px; height: 30px; font-size: 0.9rem; }
+  .puzzle-right { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Kelime Bilgisi ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Köklerden kelime türetme alıştırması yapın 🧩</p>
+</header>
+
+<div class="header-content">
+  <div class="divider"></div><br>
+  <div class="tg-box">
+    <div class="tg-icon">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<div class="page-wrapper">
+  <div class="level-badge">A2 / B1 Seviyesi • Kelime Türetme</div>
+
+  <div class="score-bar">
+    <div>Doğru cevaplar: <span class="score-num" id="scoreDisplay">0</span> / <span id="totalDisplay">0</span></div>
+    <div class="legend">
+    </div>
+  </div>
+
+  <!-- ===================== KÖK 1: YAZ ===================== -->
+  <div class="kok-section">
+    <div class="kok-header">
+      <span class="kok-label">🎯 Kök</span>
+      <span class="kok-word">yaz-</span>
+<span class="anchor-def">harflerle bir şey oluşturmak, kaleme almak</span>
+    </div>
+    <div class="word-list">
+      <div class="anchor-row">
+                 </div>
+        <span class="puzzle-meaning">yazı yazan makine (printer)</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-yaz-1"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('yaz-1','yazıcı')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('yaz-1','yazıcı')">Kontrol</button>
+          <span class="result-icon" id="icon-yaz-1"></span>
+        </div>
+        <span class="puzzle-meaning">yazı ile ilgili olan, sözlü olmayan</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-yaz-2"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('yaz-2','yazılı')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('yaz-2','yazılı')">Kontrol</button>
+          <span class="result-icon" id="icon-yaz-2"></span>
+        </div>
+        <span class="puzzle-meaning">yaz mevsiminde</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-yaz-3"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('yaz-3','yazın')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('yaz-3','yazın')">Kontrol</button>
+          <span class="result-icon" id="icon-yaz-3"></span>
+        </div>
+        <span class="puzzle-meaning">yaz mevsimine uygun olan (ev, kıyafet vb.)</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-yaz-4"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('yaz-4','yazlık')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('yaz-4','yazlık')">Kontrol</button>
+          <span class="result-icon" id="icon-yaz-4"></span>
+        </div>
+    </div>
+  </div>
+
+  <!-- ===================== KÖK 2: BİL ===================== -->
+  <div class="kok-section">
+    <div class="kok-header">
+      <span class="kok-label">🎯 Kök</span>
+      <span class="kok-word">bil-</span>
+  <span class="anchor-def">bir konu hakkında bilgi sahibi olmak</span>
+    </div>
+    <div class="word-list">
+      <div class="anchor-row">
+            </div>
+        <span class="puzzle-meaning">öğrenilmiş şey, malumat</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-bil-1"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('bil-1','bilgi')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('bil-1','bilgi')">Kontrol</button>
+          <span class="result-icon" id="icon-bil-1"></span>
+        </div>
+        <span class="puzzle-meaning">çok şey bilen kişi</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-bil-2"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('bil-2','bilgin')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('bil-2','bilgin')">Kontrol</button>
+          <span class="result-icon" id="icon-bil-2"></span>
+        </div>
+        <span class="puzzle-meaning">farkında olma durumu</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-bil-3"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('bil-3','bilinç')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('bil-3','bilinç')">Kontrol</button>
+          <span class="result-icon" id="icon-bil-3"></span>
+        </div>
+        <span class="puzzle-meaning">ne yaptığını bilen, farkında olan</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-bil-4"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('bil-4','bilinçli')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('bil-4','bilinçli')">Kontrol</button>
+          <span class="result-icon" id="icon-bil-4"></span>
+        </div>
+    </div>
+  </div>
+
+  <!-- ===================== KÖK 3: AL ===================== -->
+  <div class="kok-section">
+    <div class="kok-header">
+      <span class="kok-label">🎯 Kök</span>
+      <span class="kok-word">al-</span>
+        <span class="anchor-def">bir şeyi edinmek</span>
+    </div>
+    <div class="word-list">
+      <div class="anchor-row">
+      </div>
+        <span class="puzzle-meaning">satın alan kişi / cihaz</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-al-1"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('al-1','alıcı')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('al-1','alıcı')">Kontrol</button>
+          <span class="result-icon" id="icon-al-1"></span>
+        </div>
+        <span class="puzzle-meaning">satın alma işi</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-al-2"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('al-2','alım')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('al-2','alım')">Kontrol</button>
+          <span class="result-icon" id="icon-al-2"></span>
+        </div>
+        <span class="puzzle-meaning">başka bir yerden alınan söz/yazı</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-al-3"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('al-3','alıntı')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('al-3','alıntı')">Kontrol</button>
+          <span class="result-icon" id="icon-al-3"></span>
+        </div>
+        <span class="puzzle-meaning">satın alma ve satma işi</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-al-4"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('al-4','alışveriş')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('al-4','alışveriş')">Kontrol</button>
+          <span class="result-icon" id="icon-al-4"></span>
+        </div>
+    </div>
+  </div>
+
+  <!-- ===================== KÖK 4: DÜŞ ===================== -->
+  <div class="kok-section">
+    <div class="kok-header">
+      <span class="kok-label">🎯 Kök</span>
+      <span class="kok-word">düşün-</span>
+        <span class="anchor-def">aşağı doğru hareket etmek</span>
+    </div>
+    <div class="word-list">
+      <div class="anchor-row">
+      </div>
+         <span class="puzzle-meaning">fikir, akıldan geçen şey</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-dus-2"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('dus-2','düşünce')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('dus-2','düşünce')">Kontrol</button>
+          <span class="result-icon" id="icon-dus-2"></span>
+        </div>
+        <span class="puzzle-meaning">başkalarını önemseyen, nazik</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-dus-3"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('dus-3','düşünceli')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('dus-3','düşünceli')">Kontrol</button>
+          <span class="result-icon" id="icon-dus-3"></span>
+        </div>
+    </div>
+  </div>
+
+  <!-- ===================== KÖK 5: SEV ===================== -->
+  <div class="kok-section">
+    <div class="kok-header">
+      <span class="kok-label">🎯 Kök</span>
+      <span class="kok-word">sev-</span>
+        <span class="anchor-def">birine karşı iyi duygular beslemek</span>
+    </div>
+    <div class="word-list">
+      <div class="anchor-row">
+        </div>
+        <span class="puzzle-meaning">sevme duygusu</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-sev-1"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('sev-1','sevgi')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('sev-1','sevgi')">Kontrol</button>
+          <span class="result-icon" id="icon-sev-1"></span>
+        </div>
+        <span class="puzzle-meaning">sevilen kişi</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-sev-2"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('sev-2','sevgili')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('sev-2','sevgili')">Kontrol</button>
+          <span class="result-icon" id="icon-sev-2"></span>
+        </div>
+        <span class="puzzle-meaning">tatlı, hoş görünen</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-sev-3"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('sev-3','sevimli')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('sev-3','sevimli')">Kontrol</button>
+          <span class="result-icon" id="icon-sev-3"></span>
+        </div>
+        <span class="puzzle-meaning">itici, hoş olmayan</span>
+        <div class="puzzle-right">
+          <div class="letter-boxes" id="boxes-sev-4"></div>
+          <button class="hint-btn" onclick="revealRandomLetter('sev-4','sevimsiz')">Harf</button>
+          <button class="check-btn" onclick="checkAnswer('sev-4','sevimsiz')">Kontrol</button>
+          <span class="result-icon" id="icon-sev-4"></span>
+        </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<script>
+// Ses efektleri için AudioContext
+let audioContext = null;
+
+function playSound(type) {
+  try {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    if (type === 'correct') {
+      oscillator.frequency.value = 880;
+      gainNode.gain.value = 0.3;
+      oscillator.type = 'sine';
+      oscillator.start();
+      gainNode.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.3);
+      oscillator.stop(audioContext.currentTime + 0.3);
+    } else {
+      oscillator.frequency.value = 220;
+      gainNode.gain.value = 0.25;
+      oscillator.type = 'sawtooth';
+      oscillator.start();
+      gainNode.gain.exponentialRampToValueAtTime(0.00001, audioContext.currentTime + 0.4);
+      oscillator.stop(audioContext.currentTime + 0.4);
+    }
+  } catch(e) {
+    console.log('Ses çalınamadı:', e);
+  }
+}
+
+const answers = {
+  'yaz-1': 'yazıcı',
+  'yaz-2': 'yazılı',
+  'yaz-3': 'yazın',
+  'yaz-4': 'yazlık',
+  'bil-1': 'bilgi',
+  'bil-2': 'bilgin',
+  'bil-3': 'bilinç',
+  'bil-4': 'bilinçli',
+  'al-1':  'alıcı',
+  'al-2':  'alım',
+  'al-3':  'alıntı',
+  'al-4':  'alışveriş',
+  'dus-1': 'düşünmek',
+  'dus-2': 'düşünce',
+  'dus-3': 'düşünceli',
+  'dus-4': 'düşüş',
+  'sev-1': 'sevgi',
+  'sev-2': 'sevgili',
+  'sev-3': 'sevimli',
+  'sev-4': 'sevimsiz',
+};
+
+const checked = {};
+const revealedLetters = {};
+
+function buildBoxes() {
+  let total = 0;
+  for (const [id, word] of Object.entries(answers)) {
+    const container = document.getElementById('boxes-' + id);
+    if (!container) continue;
+    total++;
+    revealedLetters[id] = [];
+    for (let i = 0; i < word.length; i++) {
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.maxLength = 1;
+      inp.className = 'letter-box';
+      inp.dataset.id = id;
+      inp.dataset.idx = i;
+      inp.autocomplete = 'off';
+      inp.autocorrect = 'off';
+      inp.autocapitalize = 'off';
+      inp.spellcheck = false;
+
+      inp.addEventListener('input', function() {
+        if (this.value.length >= 1) {
+          this.value = this.value[this.value.length - 1];
+          const next = getBox(id, i + 1);
+          if (next) next.focus();
+        }
+      });
+
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Backspace' && this.value === '') {
+          const prev = getBox(id, i - 1);
+          if (prev) { prev.value = ''; prev.focus(); }
+        }
+        if (e.key === 'Enter') checkAnswer(id, answers[id]);
+      });
+
+      container.appendChild(inp);
+    }
+  }
+  document.getElementById('totalDisplay').textContent = total;
+}
+
+function getBox(id, idx) {
+  return document.querySelector(`.letter-box[data-id="${id}"][data-idx="${idx}"]`);
+}
+
+function getTyped(id) {
+  return Array.from(document.querySelectorAll(`.letter-box[data-id="${id}"]`))
+    .map(b => b.value).join('');
+}
+
+function revealRandomLetter(id, correctWord) {
+  if (checked[id]) return;
+  
+  const boxes = document.querySelectorAll(`.letter-box[data-id="${id}"]`);
+  const wordLength = correctWord.length;
+  
+  const unrevealedIndices = [];
+  for (let i = 0; i < wordLength; i++) {
+    if (!revealedLetters[id].includes(i) && boxes[i] && boxes[i].value === '') {
+      unrevealedIndices.push(i);
+    }
+  }
+  
+  if (unrevealedIndices.length === 0) return;
+  
+  const randomIndex = unrevealedIndices[Math.floor(Math.random() * unrevealedIndices.length)];
+  const correctLetter = correctWord[randomIndex];
+  
+  boxes[randomIndex].value = correctLetter;
+  revealedLetters[id].push(randomIndex);
+  
+  boxes[randomIndex].style.transform = 'scale(1.05)';
+  boxes[randomIndex].style.borderColor = '#229ED9';
+  setTimeout(() => {
+    boxes[randomIndex].style.transform = '';
+    boxes[randomIndex].style.borderColor = '';
+  }, 300);
+  
+  const allFilled = Array.from(boxes).every(b => b.value !== '');
+  if (allFilled) {
+    checkAnswer(id, correctWord);
+  }
+}
+
+function checkAnswer(id, correct) {
+  const typed = getTyped(id).toLowerCase().trim();
+  const boxes = document.querySelectorAll(`.letter-box[data-id="${id}"]`);
+  const iconSpan = document.getElementById('icon-' + id);
+
+  boxes.forEach(b => b.classList.remove('correct', 'wrong'));
+
+  if (typed === correct.toLowerCase()) {
+    playSound('correct');
+    
+    boxes.forEach(b => { 
+      b.classList.add('correct'); 
+      b.disabled = true;
+      b.classList.add('disabled-box');
+    });
+    iconSpan.innerHTML = '✅';
+    iconSpan.classList.remove('wrong-icon');
+    iconSpan.classList.add('correct-icon');
+    if (!checked[id]) { 
+      checked[id] = true; 
+      updateScore(); 
+    }
+  } else {
+    playSound('wrong');
+    
+    boxes.forEach(b => b.classList.add('wrong'));
+    iconSpan.innerHTML = '❌';
+    iconSpan.classList.remove('correct-icon');
+    iconSpan.classList.add('wrong-icon');
+    setTimeout(() => boxes.forEach(b => b.classList.remove('wrong')), 600);
+    const first = Array.from(boxes).find(b => b.value === '') || boxes[0];
+    if (first) first.focus();
+  }
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = Object.keys(checked).length;
+}
+
+// Sayfa yüklendiğinde AudioContext'i kullanıcı etkileşimiyle başlat
+document.body.addEventListener('click', function initAudio() {
+  if (audioContext && audioContext.state === 'suspended') {
+    audioContext.resume();
+  }
+}, { once: true });
+
+buildBoxes();
+</script>
+</body>
+</html>
