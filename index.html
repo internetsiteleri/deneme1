@@ -434,12 +434,8 @@ footer span { color: #F5C842; }
                 <div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="readingTextLocked"></div></div>
             </div>
         </div>
-        <!-- E-Kitaplar / Sesli Kitaplar sekmesi (direk yönlendirme butonu yerine içerik gösterimi, ancak orijinal yapıda bu sayfaya yönlendirme vardı. Kullanıcı deneyimi için yönlendirme butonu koyalım) -->
+        <!-- E-Kitaplar / Sesli Kitaplar sekmesi -->
         <div id="reading-ekitaplar-tab" class="reading-tab-panel">
-            <div style="text-align: center; padding: 40px 20px;">
-                <p style="font-size:1.1rem; color:#333; margin-bottom:24px;">📚 E-Kitaplar ve Sesli Kitaplar içeriğine gitmek için butona tıklayın.</p>
-                <button onclick="window.location.href='ekitaplar_seslikitaplar.html'" style="background:#1a2332; border:2px solid #F5C842; border-radius:48px; padding:14px 32px; font-size:1rem; font-weight:bold; color:#F5C842; cursor:pointer;">📘 E-KİTAPLAR / SESLİ KİTAPLAR SAYFASINA GİT</button>
-            </div>
         </div>
     </div>
 </div>
@@ -527,10 +523,7 @@ function switchReadingTab(tab) {
         btns[0].classList.add('active');
         btns[1].classList.remove('active');
     } else {
-        ekitaplarTab.classList.add('active-panel');
-        metinlerTab.classList.remove('active-panel');
-        btns[1].classList.add('active');
-        btns[0].classList.remove('active');
+        window.location.href = 'ekitaplar_seslikitaplar.html';
     }
 }
 function openVideo(src) { const player = document.getElementById('videoPlayer'); player.src = src; player.load(); document.getElementById('videoOverlay').classList.add('show'); }
