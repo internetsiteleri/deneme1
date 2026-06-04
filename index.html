@@ -425,7 +425,7 @@ footer span { color: #F5C842; }
             <button class="questions-sub-btn" onclick="switchQuestionTab('yazma')"><span>✍️</span> YAZMA SORULARI</button>
         </div>
         <div id="konusma-sorulari-content" class="questions-sub-content active"><div class="two-col-grid"><div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items" id="speakingFree"></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="speakingLocked"></div></div></div></div>
-        <div id="yazma-sorulari-content" class="questions-sub-content"><div class="two-col-grid"><div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items" id="writingFreeInner"></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="writingLockedInner"></div></div></div></div>
+        <div id="yazma-sorulari-content" class="questions-sub-content"></div>
     </div>
 </div>
 
@@ -519,8 +519,8 @@ function switchQuestionTab(tab) {
         document.getElementById('konusma-sorulari-content').classList.add('active');
         document.querySelector('.questions-sub-btn:first-child').classList.add('active');
     } else {
-        document.getElementById('yazma-sorulari-content').classList.add('active');
-        document.querySelector('.questions-sub-btn:last-child').classList.add('active');
+        // Yazma Soruları butonuna tıklandığında direkt yazma_sorulari.html sayfasına yönlendir
+        window.location.href = 'yazma_sorulari.html';
     }
 }
 // Okuma Yap paneli sekme geçişleri
@@ -605,13 +605,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const speakFree=[["2026_ocak_nisan_cikmis_sorular.html","2026 Ocak-Nisan Çıkmış Sorular"],["konuşma_soruları_1.html","Konuşma Soruları 1"],["konuşma_soruları_2.html","Konuşma Soruları 2"],["konusma_soruları_ucretsiz_3.html","Konuşma Soruları 3"],["konusma_soruları_ucretsiz_4.html","Konuşma Soruları 4"],["konusma_soruları_ucretsiz_5.html","Konuşma Soruları 5"],["konusma_soruları_ucretsiz_6.html","Konuşma Soruları 6"],["konusma_soruları_ucretsiz_7.html","Konuşma Soruları 7"],["konusma_soruları_ucretsiz_8.html","Konuşma Soruları 8"]];
   const speakFreeDiv=document.getElementById('speakingFree'); if(speakFreeDiv) speakFree.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; speakFreeDiv.appendChild(a); });
   const speakLockedDiv=document.getElementById('speakingLocked'); if(speakLockedDiv) for(let i=1;i<=14;i++){ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('konusma_sorulari_${i}.html')`); div.innerHTML=`<span>Konuşma Soruları ${i}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; speakLockedDiv.appendChild(div); }
-  // Yazma Soruları
-  const writingFree = [["yazma_sorusu_1.html","Yazma Sorusu 1"],["yazma_sorusu_2.html","Yazma Sorusu 2"],["yazma_sorusu_3.html","Yazma Sorusu 3"],["yazma_sorusu_4.html","Yazma Sorusu 4"],["yazma_sorusu_5.html","Yazma Sorusu 5"]];
-  const writingLocked = [["yazma_sorusu_6.html","Yazma Sorusu 6"],["yazma_sorusu_7.html","Yazma Sorusu 7"],["yazma_sorusu_8.html","Yazma Sorusu 8"],["yazma_sorusu_9.html","Yazma Sorusu 9"],["yazma_sorusu_10.html","Yazma Sorusu 10"]];
-  const writingFreeContainer = document.getElementById('writingFreeInner');
-  if(writingFreeContainer) writingFree.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; writingFreeContainer.appendChild(a); });
-  const writingLockedContainer = document.getElementById('writingLockedInner');
-  if(writingLockedContainer) writingLocked.forEach(([h,t])=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${h}')`); div.innerHTML=`<span>${t}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; writingLockedContainer.appendChild(div); });
+  
+  // Yazma Soruları içeriği tamamen kaldırıldı - artık butona tıklayınca yazma_sorulari.html'a yönlendiriyor
+  
   // Oyunlar
   const gamesFree=[["deyimler_carki.html","Deyim Çarkı 1"],["fiiller_carki_b1_1.unite.html","B1-Fiiller Çarkı 1"]];
   const gFreeDiv=document.getElementById('gamesFree'); if(gFreeDiv) gamesFree.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; gFreeDiv.appendChild(a); });
