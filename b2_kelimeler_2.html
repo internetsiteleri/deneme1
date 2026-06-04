@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamza Hoca ile Türkçe Öğreniyorum</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #F5C842;
+    --gold-dark: #C9960A;
+    --bg: #0D1B2A;
+    --bg2: #162032;
+    --text: #F0EAD6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(245,200,66,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(58,175,169,0.06) 0%, transparent 50%);
+  }
+
+  header { text-align: center; padding: 2.5rem 1rem 1.2rem; }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem; font-weight: 800;
+    letter-spacing: 3px; text-transform: uppercase;
+    padding: 0.3rem 1.2rem; border-radius: 50px; margin-bottom: 0.9rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 900; line-height: 1.25;
+    background: linear-gradient(135deg, #F5C842 0%, #FFF3A3 50%, #C9960A 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    letter-spacing: 1px;
+  }
+
+  .stars { text-align:center; font-size:1rem; opacity:.35; letter-spacing:6px; margin:.5rem 0; }
+
+  .divider {
+    width: 80px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0.8rem auto; border-radius: 2px;
+  }
+
+  header p { color: rgba(240,234,214,0.42); font-size:.82rem; letter-spacing:.4px; }
+
+  .telegram-section { text-align: center; padding: 0.5rem 1rem 1rem; }
+
+  .tg-box {
+    display: inline-flex; align-items: center; gap: 1rem;
+    background: rgba(22,32,50,0.85);
+    border: 1.5px solid rgba(34,158,217,0.3);
+    border-radius: 60px; padding: .75rem 1.5rem .75rem 1rem;
+    flex-wrap: wrap; justify-content: center;
+  }
+
+  .tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+  .tg-btn {
+    display: inline-flex; align-items: center; gap: .45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff; text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: .92rem;
+    padding: .65rem 1.5rem; border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,.4);
+    transition: all .22s; white-space: nowrap;
+  }
+
+  .tg-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,158,217,.55); }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: .95rem; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin: .5rem 0 1rem; opacity: .75;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.2rem; padding: 0 1.5rem 3.5rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .card-wrap {
+    height: 175px; cursor: pointer;
+    perspective: 1000px; -webkit-perspective: 1000px;
+  }
+
+  .card-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.6s cubic-bezier(.4,.2,.2,1);
+    transform-style: preserve-3d; -webkit-transform-style: preserve-3d;
+  }
+
+  .card-wrap.flipped .card-inner {
+    transform: rotateY(180deg); -webkit-transform: rotateY(180deg);
+  }
+
+  .card-face {
+    position: absolute; top:0; left:0; width:100%; height:100%;
+    border-radius: 16px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: .5rem; padding: 1rem 1.3rem;
+    border: 1.5px solid rgba(245,200,66,0.15);
+    box-shadow: 0 6px 24px rgba(0,0,0,.4);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  }
+
+  .card-front { background: linear-gradient(145deg, #1E3552, #122133); }
+
+  .card-back {
+    background: linear-gradient(145deg, #103828, #071E12);
+    border-color: rgba(58,175,169,.25);
+    transform: rotateY(180deg); -webkit-transform: rotateY(180deg);
+  }
+
+  .card-keyword {
+    font-size: 1.15rem; font-weight: 900;
+    text-align: center; letter-spacing: .3px; line-height: 1.2;
+  }
+
+  .card-front .card-keyword { color: #FFF3A3; }
+  .card-back  .card-keyword { color: #7EFFF5; }
+
+  .card-sep { width: 40px; height: 2px; border-radius: 2px; opacity: .3; flex-shrink: 0; }
+  .card-front .card-sep { background: #FFF3A3; }
+  .card-back  .card-sep { background: #7EFFF5; }
+
+  .card-sentence {
+    font-size: .75rem; font-weight: 600;
+    text-align: center; line-height: 1.5; opacity: .75; letter-spacing: .1px;
+  }
+
+  .card-front .card-sentence .hl {
+    font-weight: 900; opacity: 1; color: #FFF3A3;
+    text-decoration: underline; text-decoration-color: rgba(245,200,66,0.5); text-underline-offset: 2px;
+  }
+
+  .card-back .card-sentence .hl {
+    font-weight: 900; opacity: 1; color: #7EFFF5;
+    text-decoration: underline; text-decoration-color: rgba(58,175,169,0.5); text-underline-offset: 2px;
+  }
+
+  .counter {
+    position: absolute; top: 9px; left: 12px;
+    font-size: .56rem; font-weight: 800; opacity: .25; letter-spacing: .5px;
+  }
+
+  .flip-hint {
+    position: absolute; bottom: 8px;
+    font-size: .54rem; opacity: .18; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .card-wrap:hover { box-shadow: 0 0 18px rgba(245,200,66,.22); border-radius: 16px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">✦ Öğrenme Kartları ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Karta bosing → Tarjimani ko'ring 🔄 &nbsp;|&nbsp; Karta tıklayın → Çeviri görün</p>
+</header>
+
+<div class="telegram-section">
+  <div class="divider"></div><br>
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">Kanala Katıl</a>
+  </div>
+</div>
+
+<div class="section-title">Akademik So'zlar • Akademik Kelimeler</div>
+<div class="cards-grid" id="cards-grid"></div>
+
+<script>
+const words = [
+  {
+    uzWord: "Tahlil qilmoq",
+    uzSentence: "Ma'lumotlarni <hl>tahlil qildik</hl> va xulosaga keldik.",
+    trWord: "Tahlil etmek / Analiz etmek",
+    trSentence: "Verileri <hl>analiz ettik</hl> ve sonuca ulaştık."
+  },
+  {
+    uzWord: "Muammo",
+    uzSentence: "Bu <hl>muammoni</hl> birgalikda hal qilamiz.",
+    trWord: "Sorun / Problem",
+    trSentence: "Bu <hl>sorunu</hl> birlikte çözeceğiz."
+  },
+  {
+    uzWord: "Natija",
+    uzSentence: "Tadqiqotning <hl>natijasi</hl> kutilganidan yaxshi chiqdi.",
+    trWord: "Sonuç / Netice",
+    trSentence: "Araştırmanın <hl>neticesi</hl> beklenenden iyi çıktı."
+  },
+  {
+    uzWord: "Maqsad",
+    uzSentence: "Bizning asosiy <hl>maqsadimiz</hl> sifatni oshirishdir.",
+    trWord: "Amaç / Hedef",
+    trSentence: "Temel <hl>amacımız</hl> kaliteyi artırmaktır."
+  },
+  {
+    uzWord: "Jarayon",
+    uzSentence: "O'rganish <hl>jarayoni</hl> vaqt talab qiladi.",
+    trWord: "Süreç",
+    trSentence: "Öğrenme <hl>süreci</hl> zaman gerektirir."
+  },
+  {
+    uzWord: "Metod",
+    uzSentence: "Yangi <hl>metod</hl> ishni osonlashtirdi.",
+    trWord: "Metot / Yöntem",
+    trSentence: "Yeni <hl>yöntem</hl> işi kolaylaştırdı."
+  },
+  {
+    uzWord: "Tushuncha",
+    uzSentence: "Bu <hl>tushunchani</hl> to'liq tushunish kerak.",
+    trWord: "Kavram",
+    trSentence: "Bu <hl>kavramı</hl> tam olarak anlamak gerekiyor."
+  },
+  {
+    uzWord: "Omil",
+    uzSentence: "Muvaffaqiyatning asosiy <hl>omili</hl> mehnatdir.",
+    trWord: "Faktör / Etken",
+    trSentence: "Başarının temel <hl>faktörü</hl> çalışmaktır."
+  },
+  {
+    uzWord: "Bog'liq",
+    uzSentence: "Bu masala iqtisodiyotga <hl>bog'liq</hl>.",
+    trWord: "Bağlı / İlgili",
+    trSentence: "Bu konu ekonomiye <hl>bağlı</hl>."
+  },
+  {
+    uzWord: "Muhokama qilmoq",
+    uzSentence: "Biz bu mavzuni sinf oldida <hl>muhokama qildik</hl>.",
+    trWord: "Muhakeme etmek / Tartışmak",
+    trSentence: "Bu konuyu sınıf önünde <hl>tartıştık</hl>."
+  },
+  {
+    uzWord: "Taqqoslamoq",
+    uzSentence: "Ikki natijani <hl>taqqoslab</hl> ko'ring.",
+    trWord: "Karşılaştırmak",
+    trSentence: "İki sonucu <hl>karşılaştırıp</hl> bakın."
+  },
+  {
+    uzWord: "Rivojlanmoq",
+    uzSentence: "Har kuni o'qib, <hl>rivojlanib</hl> boring.",
+    trWord: "Gelişmek",
+    trSentence: "Her gün okuyarak <hl>gelişmeye</hl> devam edin."
+  },
+  {
+    uzWord: "Baholash",
+    uzSentence: "O'qituvchi ishni adolatli <hl>baholadi</hl>.",
+    trWord: "Değerlendirme",
+    trSentence: "Öğretmen çalışmayı adil şekilde <hl>değerlendirdi</hl>."
+  },
+  {
+    uzWord: "Izchillik",
+    uzSentence: "Muvaffaqiyat uchun <hl>izchillik</hl> zarur.",
+    trWord: "Tutarlılık",
+    trSentence: "Başarı için <hl>tutarlılık</hl> şarttır."
+  },
+  {
+    uzWord: "Amalga oshirmoq",
+    uzSentence: "Rejani <hl>amalga oshirish</hl> uchun harakat qildik.",
+    trWord: "Uygulamak / Gerçekleştirmek",
+    trSentence: "Planı <hl>uygulamak</hl> için çaba gösterdik."
+  },
+];
+
+function highlight(text) {
+  return text.replace(/<hl>(.*?)<\/hl>/g, '<span class="hl">$1</span>');
+}
+
+const grid = document.getElementById('cards-grid');
+
+words.forEach((item, i) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'card-wrap';
+  wrap.innerHTML = `
+    <div class="card-inner">
+      <div class="card-face card-front">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+        <div class="card-keyword">${item.uzWord}</div>
+        <div class="card-sep"></div>
+        <div class="card-sentence">${highlight(item.uzSentence)}</div>
+        <span class="flip-hint">bosing / tıklayın</span>
+      </div>
+      <div class="card-face card-back">
+        <span class="counter">${String(i+1).padStart(2,'0')}</span>
+        <div class="card-keyword">${item.trWord}</div>
+        <div class="card-sep"></div>
+        <div class="card-sentence">${highlight(item.trSentence)}</div>
+        <span class="flip-hint">bosing / tıklayın</span>
+      </div>
+    </div>`;
+  wrap.addEventListener('click', () => wrap.classList.toggle('flipped'));
+  grid.appendChild(wrap);
+});
+</script>
+</body>
+</html>

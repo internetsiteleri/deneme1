@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelime Sıralama – Hamza Hoca</title>
+  <style>
+    :root {
+      --gold: #F5C842;
+      --gold-dark: #C9960A;
+      --bg: #0D1B2A;
+      --bg2: #162032;
+      --text: #F0EAD6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 0 0 40px;
+      position: relative;
+    }
+
+    /* Geri butonu stili - sol üst köşe, sabit ama sayfa ile kayar */
+    .back-button {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: rgba(13, 27, 42, 0.7);
+      backdrop-filter: blur(6px);
+      border: 1.5px solid rgba(245, 200, 66, 0.35);
+      border-radius: 40px;
+      padding: 0.5rem 1.1rem;
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      font-family: inherit;
+    }
+
+    .back-button:hover {
+      background: rgba(245, 200, 66, 0.2);
+      border-color: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(245, 200, 66, 0.25);
+      color: #FFE6A3;
+    }
+
+    .back-button:active {
+      transform: translateY(1px);
+    }
+
+    /* Geri ok simgesi */
+    .back-icon {
+      font-size: 1.2rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    /* Header düzeni: buton ile başlık çakışmasın diye header'a relative + margin-top */
+    header {
+      text-align: center;
+      padding: 2.5rem 1rem 1.2rem;
+      position: relative;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #F5C842, #C9960A);
+      color: #0D1B2A;
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: .3rem 1.2rem;
+      border-radius: 50px;
+      margin-bottom: .9rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+      font-weight: 800;
+      color: #F5C842;
+      line-height: 1.3;
+      letter-spacing: .02em;
+    }
+
+    .stars {
+      text-align: center;
+      font-size: 1rem;
+      opacity: .35;
+      letter-spacing: 6px;
+      margin: .5rem 0;
+    }
+
+    .divider {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: .8rem auto;
+      border-radius: 2px;
+    }
+
+    header p {
+      color: rgba(240,234,214,.42);
+      font-size: .82rem;
+      letter-spacing: .4px;
+    }
+
+    .score-board {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .score-label {
+      font-size: 1rem;
+      color: rgba(240,234,214,.7);
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .score-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #0D1B2A;
+      background: linear-gradient(135deg, #F5C842, #C9960A);
+      border-radius: 50px;
+      padding: 4px 22px;
+      min-width: 70px;
+      text-align: center;
+      transition: transform 0.2s;
+      box-shadow: 0 4px 16px rgba(245,200,66,.35);
+    }
+
+    .score-value.bump {
+      transform: scale(1.3);
+    }
+
+    .sentences-container {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 0 1.2rem;
+    }
+
+    .sentence-panel {
+      background: linear-gradient(145deg, #1E3552, #122133);
+      border: 1.5px solid rgba(245,200,66,.15);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: 0 6px 24px rgba(0,0,0,.4);
+      transition: box-shadow 0.2s, border-color 0.3s;
+    }
+
+    .sentence-panel.completed {
+      background: linear-gradient(145deg, #103828, #071E12);
+      border-color: rgba(58,175,120,.4);
+      box-shadow: 0 6px 28px rgba(58,175,120,.2);
+    }
+
+    .sentence-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .sentence-number {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: .7;
+    }
+
+    .completed-badge {
+      display: none;
+      font-size: 0.78rem;
+      background: linear-gradient(135deg, #38a169, #276749);
+      color: #fff;
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-weight: 700;
+      margin-left: auto;
+      box-shadow: 0 2px 8px rgba(56,161,105,.4);
+    }
+
+    .sentence-panel.completed .completed-badge {
+      display: inline-block;
+    }
+
+    .drop-zone {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 50px;
+      background: rgba(13,27,42,.5);
+      border: 2px dashed rgba(245,200,66,.25);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .drop-zone.drag-over {
+      border-color: var(--gold);
+      background: rgba(245,200,66,.07);
+    }
+
+    .sentence-panel.completed .drop-zone {
+      border-color: rgba(58,175,120,.35);
+      background: rgba(7,30,18,.4);
+    }
+
+    .word-slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 62px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: rgba(22,32,50,.8);
+      color: #FFF3A3;
+      border: 1.5px solid rgba(245,200,66,.2);
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+      cursor: default;
+      user-select: none;
+    }
+
+    .word-slot[data-filled="1"]:not(.correct) {
+      cursor: pointer;
+    }
+
+    .word-slot[data-filled="1"]:not(.correct):hover {
+      opacity: 0.7;
+    }
+
+    .word-slot.correct {
+      background: rgba(16,56,40,.9);
+      color: #7EFFF5;
+      border-color: rgba(126,255,245,.35);
+    }
+
+    .word-slot.wrong {
+      background: rgba(80,20,20,.8);
+      color: #FEB2B2;
+      border-color: rgba(254,178,178,.3);
+    }
+
+    .word-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 44px;
+    }
+
+    .word-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 15px;
+      background: rgba(245,200,66,.12);
+      border: 1.5px solid rgba(245,200,66,.35);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gold);
+      cursor: grab;
+      user-select: none;
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+
+    .word-chip:hover {
+      background: rgba(245,200,66,.22);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(245,200,66,.25);
+    }
+
+    .word-chip:active {
+      cursor: grabbing;
+      transform: scale(0.97);
+    }
+
+    .word-chip.dragging {
+      opacity: 0.35;
+    }
+
+    .reset-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      background: linear-gradient(135deg, #F5C842, #C9960A);
+      color: #0D1B2A;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: .78rem;
+      padding: .38rem .9rem;
+      border-radius: 50px;
+      box-shadow: 0 3px 12px rgba(245,200,66,.3);
+      transition: all .18s;
+      margin: 0 0 14px;
+    }
+
+    .reset-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 18px rgba(245,200,66,.5);
+    }
+
+    .celebrate {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-top: 30px;
+      padding: 20px;
+      display: none;
+      text-shadow: 0 0 20px rgba(245,200,66,.4);
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    .word-slot.pop-anim {
+      animation: pop 0.35s ease;
+    }
+
+    /* Mobil uyum: buton konumunu biraz ayarla */
+    @media (max-width: 640px) {
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.75rem;
+      }
+      header {
+        padding-top: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Geri butonu: sol üst köşe, sayfa ile kayar (absolute) -->
+<a href="#" class="back-button" id="backButton">
+  <span class="back-icon">←</span>
+  <span>Geri</span>
+</a>
+
+<header>
+  <div class="header-badge">✦ Kelime Sıralama Oyunu ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <div class="divider"></div>
+  <p>Kelimeleri sürükleyerek doğru sıraya dizin · Her cümle 5 puan</p>
+</header>
+
+<div class="score-board">
+  <span class="score-label">Toplam Puan:</span>
+  <span class="score-value" id="score">0</span>
+</div>
+
+<div class="sentences-container" id="sentences-container"></div>
+
+<div class="celebrate" id="celebrate">🎉 Tebrikler! Tüm cümleler tamamlandı! 🎉</div>
+
+<script>
+  const sentences = [
+    "Sağlıklı bir yaşam için düzenli egzersiz yapmanın yanı sıra dengeli beslenmeye de dikkat etmeliyiz.",
+    "Yeni yönetici çalışanların görüşlerine önem verdiğini sık sık vurguluyor.",
+    "Tatil planlarımızı yaparken bütçemizi aşmamaya özen gösterdik.",
+    "Onun bu kadar kısa sürede başardıkları gerçekten takdire değer.",
+    "Ne yazık ki beklenen yağmurlar bir türlü gelmedi ve topraklar kurumaya devam ediyor.",
+    "Teknoloji bağımlılığı özellikle gençler arasında giderek yaygınlaşıyor.",
+    "Kendimi daha iyi ifade edebilmek için her gün kitap okumaya çalışıyorum.",
+    "Küresel ısınmanın yol açtığı ekolojik dengedeki bozulma birçok canlı türünün neslini tehlikeye atmaktadır.",
+    "Sanal gerçeklik teknolojileri eğitimden sağlığa kadar pek çok alanda devrim yaratma potansiyeli taşımaktadır.",
+    "Bireysel özgürlükler ile toplumsal düzen arasındaki hassas dengeyi korumak modern demokrasilerin en büyük sınamasıdır."
+  ];
+
+  let totalScore = 0;
+  let completedCount = 0;
+  const scoreEl = document.getElementById('score');
+  const container = document.getElementById('sentences-container');
+
+  function tokenize(sentence) {
+    return sentence.replace(/[.,!?;:]/g, '').split(' ').filter(w => w.length > 0);
+  }
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function bumpScore() {
+    scoreEl.classList.remove('bump');
+    void scoreEl.offsetWidth;
+    scoreEl.classList.add('bump');
+    setTimeout(() => scoreEl.classList.remove('bump'), 300);
+  }
+
+  let draggedChipId = null;
+  let draggedSentenceIdx = null;
+
+  sentences.forEach((sentence, sIdx) => {
+    const words = tokenize(sentence);
+    const shuffled = shuffle(words);
+
+    const panel = document.createElement('div');
+    panel.className = 'sentence-panel';
+    panel.dataset.idx = sIdx;
+
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'sentence-panel-header';
+    headerDiv.innerHTML = `<span class="sentence-number">Cümle ${sIdx + 1}</span>
+      <span class="completed-badge">✓ Tamamlandı +5 puan</span>`;
+
+    const dropZone = document.createElement('div');
+    dropZone.className = 'drop-zone';
+    dropZone.dataset.sIdx = sIdx;
+
+    words.forEach((word, wIdx) => {
+      const slot = document.createElement('div');
+      slot.className = 'word-slot';
+      slot.dataset.wIdx = wIdx;
+      slot.dataset.sIdx = sIdx;
+      slot.dataset.expected = word;
+      slot.textContent = '—';
+
+      slot.addEventListener('dragover', e => {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+      });
+      slot.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        handleDropOnSlot(slot, sIdx);
+      });
+      slot.addEventListener('click', () => {
+        returnSlotWord(slot, panel);
+      });
+
+      dropZone.appendChild(slot);
+    });
+
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.classList.add('drag-over');
+    });
+    dropZone.addEventListener('dragleave', e => {
+      if (!dropZone.contains(e.relatedTarget)) {
+        dropZone.classList.remove('drag-over');
+      }
+    });
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const emptySlot = Array.from(dropZone.querySelectorAll('.word-slot')).find(s => s.dataset.filled !== '1');
+      if (emptySlot) handleDropOnSlot(emptySlot, sIdx);
+    });
+
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'reset-btn';
+    resetBtn.textContent = 'Sıfırla';
+    resetBtn.addEventListener('click', () => resetSentence(panel, sIdx));
+
+    const wordPool = document.createElement('div');
+    wordPool.className = 'word-pool';
+    wordPool.dataset.sIdx = sIdx;
+
+    shuffled.forEach((word, wIdx) => {
+      const chipId = `chip-${sIdx}-${wIdx}`;
+      const chip = document.createElement('div');
+      chip.className = 'word-chip';
+      chip.draggable = true;
+      chip.textContent = word;
+      chip.dataset.word = word;
+      chip.dataset.chipId = chipId;
+      chip.dataset.sIdx = sIdx;
+      chip.id = chipId;
+
+      chip.addEventListener('dragstart', e => {
+        draggedChipId = chipId;
+        draggedSentenceIdx = sIdx;
+        chip.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', chipId);
+      });
+      chip.addEventListener('dragend', () => {
+        chip.classList.remove('dragging');
+      });
+
+      wordPool.appendChild(chip);
+    });
+
+    panel.appendChild(headerDiv);
+    panel.appendChild(dropZone);
+    panel.appendChild(resetBtn);
+    panel.appendChild(wordPool);
+    container.appendChild(panel);
+  });
+
+  function handleDropOnSlot(slot, sIdx) {
+    if (sIdx !== draggedSentenceIdx) return;
+    if (slot.dataset.filled === '1') return;
+    if (!draggedChipId) return;
+
+    const chip = document.getElementById(draggedChipId);
+    if (!chip) return;
+
+    const word = chip.dataset.word;
+
+    slot.textContent = word;
+    slot.dataset.filled = '1';
+    slot.dataset.placedWord = word;
+    slot.dataset.placedChipId = draggedChipId;
+    chip.style.display = 'none';
+
+    const isCorrect = word === slot.dataset.expected;
+    slot.classList.remove('correct', 'wrong');
+    slot.classList.add(isCorrect ? 'correct' : 'wrong');
+    slot.classList.add('pop-anim');
+    setTimeout(() => slot.classList.remove('pop-anim'), 400);
+
+    draggedChipId = null;
+    draggedSentenceIdx = null;
+
+    const panel = slot.closest('.sentence-panel');
+    checkCompletion(panel, sIdx);
+  }
+
+  function returnSlotWord(slot, panel) {
+    if (slot.dataset.filled !== '1') return;
+    if (panel.classList.contains('completed')) return;
+
+    const chipId = slot.dataset.placedChipId;
+    if (chipId) {
+      const chip = document.getElementById(chipId);
+      if (chip) chip.style.display = '';
+    }
+
+    slot.textContent = '—';
+    slot.dataset.filled = '';
+    slot.dataset.placedWord = '';
+    slot.dataset.placedChipId = '';
+    slot.classList.remove('correct', 'wrong', 'pop-anim');
+  }
+
+  function checkCompletion(panel, sIdx) {
+    const slots = panel.querySelectorAll('.word-slot');
+    const allFilled = Array.from(slots).every(s => s.dataset.filled === '1');
+    if (!allFilled) return;
+
+    const allCorrect = Array.from(slots).every(s => s.dataset.placedWord === s.dataset.expected);
+    if (allCorrect) {
+      // Sadece daha önce tamamlanmamışsa puan ekle
+      if (!panel.classList.contains('completed')) {
+        panel.classList.add('completed');
+        totalScore += 5;
+        scoreEl.textContent = totalScore;
+        bumpScore();
+        completedCount++;
+        if (completedCount === sentences.length) {
+          document.getElementById('celebrate').style.display = 'block';
+        }
+      }
+    }
+  }
+
+  function resetSentence(panel, sIdx) {
+    const wasCompleted = panel.classList.contains('completed');
+
+    const slots = panel.querySelectorAll('.word-slot');
+    slots.forEach(slot => {
+      const chipId = slot.dataset.placedChipId;
+      if (chipId) {
+        const chip = document.getElementById(chipId);
+        if (chip) chip.style.display = '';
+      }
+      slot.textContent = '—';
+      slot.dataset.filled = '';
+      slot.dataset.placedWord = '';
+      slot.dataset.placedChipId = '';
+      slot.classList.remove('correct', 'wrong', 'pop-anim');
+    });
+
+    if (wasCompleted) {
+      panel.classList.remove('completed');
+      totalScore = Math.max(0, totalScore - 5);
+      scoreEl.textContent = totalScore;
+      completedCount--;
+      // Tebrik mesajını gizle (eğer tüm cümleler tamamlanmış durumdaysa tekrar kontrol)
+      if (completedCount !== sentences.length) {
+        document.getElementById('celebrate').style.display = 'none';
+      } else {
+        // Eğer sıfırlama sonrası hala tamamlanmış sayısı aynı kalırsa (negatif olmaz) ama tamamlanmış sayısı azaldıysa gizle.
+        if (completedCount < sentences.length) {
+          document.getElementById('celebrate').style.display = 'none';
+        }
+      }
+    }
+  }
+
+  // ----- Geri butonu işlevselliği -----
+  const backBtn = document.getElementById('backButton');
+  if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Tarayıcı geçmişinde bir önceki sayfaya git (varsa)
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Geçmiş yoksa ana sayfa veya varsayılan yönlendirme (alternatif)
+        // Burada opsiyonel olarak bir üst sayfaya yönlendirme yapılabilir, fakat mevcut sayfada kalır.
+        // Kullanıcı deneyimi için: "javascript:void(0)" yerine geri gitme imkanı yoksa uyarı vermeyelim.
+        // Sadece placeholder olarak kalsın, fakat çoğu durumda geçmiş vardır.
+        console.log("Geri butonu kullanıldı, ancak tarayıcı geçmişi yok.");
+        // Alternatif: window.location.href = "/"  (ana sayfa) ama bu projeye özel değil.
+        // Sessizce kalmasını tercih ediyorum, buton her halükarda çalışır.
+      }
+    });
+  }
+</script>
+</body>
+</html>

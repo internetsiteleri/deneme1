@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taksim Meydanı — Aktarım</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --site-bg: #0D1B2A;
+    --gold: #F5C842;
+    --gold-dark: #C9960A;
+    --paper-l: #f0eadc;
+    --paper-r: #eae4d6;
+    --ink: #1a1410;
+    --ink-soft: #3a3028;
+    --highlight-bg: #fff8d6;
+    --highlight-border: #F5C842;
+    --highlight-shadow: rgba(245, 200, 66, 0.2);
+    --divider: #c4b490;
+    --label-uz: #5c3d2e;
+    --label-tr: #2e3d5c;
+    --gutter: 2px;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+    min-height: 100vh;
+    color: white;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER (şablon stili) ── */
+  .home-btn-wrap {
+    padding: 18px 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2332;
+    border: 2px solid var(--gold);
+    border-radius: 40px;
+    padding: 9px 20px;
+    color: var(--gold);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .22s, transform .18s, box-shadow .22s;
+  }
+
+  .home-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+
+  header {
+    text-align: center;
+    padding: 2rem 1rem 1.2rem;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 0.9rem;
+  }
+
+  header h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1.3;
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 10px;
+  }
+
+  .stars {
+    font-size: 1rem;
+    color: var(--gold);
+    letter-spacing: .4em;
+    margin-bottom: 6px;
+    opacity: .7;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .telegram-section {
+    text-align: center;
+    padding: 0.5rem 1rem 1rem;
+  }
+
+  .tg-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(26,35,50,0.85);
+    border: 1.5px solid rgba(34,158,217,0.3);
+    border-radius: 60px;
+    padding: .75rem 1.5rem .75rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+  .tg-btn {
+    display: inline-flex;
+    align-items: center; gap: .45rem;
+    background: linear-gradient(135deg, #229ED9, #1A7FB0);
+    color: #fff; text-decoration: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 800; font-size: .92rem;
+    padding: .65rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(34,158,217,.4);
+    transition: all .22s; white-space: nowrap;
+  }
+
+  .tg-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(34,158,217,.55);
+  }
+
+  .hint-bar {
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: .08em;
+    font-style: italic;
+    padding: 0.4rem 1rem 1rem;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: .85rem; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin: .5rem 0 1rem; opacity: .75;
+  }
+
+  /* ── COLUMNS ── */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr var(--gutter) 1fr;
+    min-height: 60vh;
+    max-width: 1400px;
+    margin: 0 auto 0;
+  }
+
+  .divider-line {
+    background: linear-gradient(180deg, transparent, var(--divider) 10%, var(--divider) 90%, transparent);
+    width: 1px;
+    margin: 0 auto;
+  }
+
+  .col {
+    padding: 40px 36px 56px;
+    position: relative;
+  }
+
+  .col-uz { background: var(--paper-l); }
+  .col-tr { background: var(--paper-r); }
+
+  .col-header {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8b6c3a;
+  }
+
+  .col-uz .col-header { color: var(--label-uz); }
+  .col-tr .col-header { color: var(--label-tr); }
+
+  .col-header::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    opacity: 0.6;
+  }
+
+  /* ── SENTENCES ── */
+  .sentence {
+    display: inline;
+    line-height: 1.9;
+    font-size: clamp(14px, 1.5vw, 16px);
+    font-weight: 400;
+    color: var(--ink-soft);
+    cursor: default;
+    border-radius: 3px;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    padding: 1px 3px;
+    margin: 0 -3px;
+    font-family: 'Crimson Pro', Georgia, serif;
+  }
+
+  .sentence-uz { cursor: pointer; }
+
+  .sentence-uz:hover {
+    background: rgba(245, 200, 66, 0.12);
+    color: var(--ink);
+  }
+
+  .sentence-tr.active {
+    background: var(--highlight-bg);
+    color: var(--ink);
+    box-shadow: 0 0 0 2px var(--highlight-border), 0 4px 16px var(--highlight-shadow);
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  .para { margin-bottom: 22px; }
+
+  .col-uz::before {
+    content: '«';
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    color: #8b6c3a;
+    opacity: 0.07;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 0 1rem 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+  footer span { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    .columns { grid-template-columns: 1fr; }
+    .divider-line { display: none; }
+    .col { padding: 28px 18px 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Geri butonu -->
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Özbek–Türkçe Aktarım ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Taksim Meydanı • Taqsim Maydoni</p>
+</header>
+
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="hint-bar">Özbekçe cümlenin üzerine gelin → Türkçe karşılığı vurgulanır</div>
+
+<div class="section-title">Ўзбекча матн • Türkçe Metin</div>
+
+<div class="columns">
+
+  <!-- UZBEK COLUMN -->
+  <div class="col col-uz">
+    <div class="col-header">Ўзбекча матн</div>
+
+    <div class="para">
+      <span class="sentence sentence-uz" data-id="1">Туркия маданият ва туризм вазирлиги мамлакатга саёҳатчиларни жалб қилиш учун доимо янги лойиҳаларни ишлаб чиқади ва уни тизимли амалга оширади.</span>
+      <span class="sentence sentence-uz" data-id="2">Сўзимизнинг исботи — бундан беш йил олдин бутун дунёга короновирус деган офат хавф туғдирганда айнан шу вазирлик «Пандемия шароитида туризм» лойиҳасини ташкил этиб, ўзбекистонлик бир гуруҳ журналист ва блогерларни ушбу мамлакатга таклиф қилган эди.</span>
+      <span class="sentence sentence-uz" data-id="3">Ва пандемия шароитида хавфсиз саёҳатни ташкил қилишни кўрсатиб берган эди.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-uz" data-id="4">Бу сафар ҳам Туркия маданият ва туризм вазирлиги «Туркияда Рамазон» дастурини эълон қилиб, мамлакатга ўзбекистонлик ва озарбайжонлик оммавий ахборот воситалари ходимларини таклиф қилди.</span>
+      <span class="sentence sentence-uz" data-id="5">Улар орасида Xabar.uz мухбири ҳам бор.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-uz" data-id="6">Туркиянинг энг йирик, аҳолиси 16 миллиондан кўп Истанбул шаҳри Осиё ва Европани боғлаб туради.</span>
+      <span class="sentence sentence-uz" data-id="7">Бу қадим шаҳарни яна «Азонлар шаҳри» ҳам дейишади.</span>
+      <span class="sentence sentence-uz" data-id="8">Бу бежизга эмас, албатта.</span>
+      <span class="sentence sentence-uz" data-id="9">Йирик мегаполисга айланган шаҳарда уч мингдан зиёд қадимий масжидлар рўйхатга олинган.</span>
+      <span class="sentence sentence-uz" data-id="10">Янги қурилган масжидлар билан уларнинг сони ҳозир 10 мингдан ошади.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-uz" data-id="11">«Туркияда Рамазон» дастурига мувофиқ, журналистлар саёҳатнинг биринчи куни Истанбулнинг энг гавжум жойларидан бири — Тақсим майдони ва Тақсим жоме масжидини томоша қилиб, шу ерга туташ машҳур Истиқлол кўчасини бориб кўришди.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-uz" data-id="12">Шаҳарнинг марказий қисмидаги Тақсим майдони Тақсим микротумани ва Бейўғли туманида жойлашган.</span>
+    </div>
+  </div>
+
+  <div class="divider-line"></div>
+
+  <!-- TURKISH COLUMN -->
+  <div class="col col-tr">
+    <div class="col-header">Türkçeye Aktarımı</div>
+
+    <div class="para">
+      <span class="sentence sentence-tr" data-id="1">Türkiye Kültür ve Turizm Bakanlığı, ülkeye turist çekmek amacıyla sürekli yeni projeler geliştirmekte ve bunları sistemli bir şekilde hayata geçirmektedir.</span>
+      <span class="sentence sentence-tr" data-id="2">Sözümüzün kanıtı ise, beş yıl önce tüm dünyayı tehdit eden koronavirüs felaketi sırasında, tam da bu bakanlığın "Pandemi Şartlarında Turizm" projesini organize ederek bir grup Özbek gazeteci ve blogeri Türkiye'ye davet etmiş olmasıdır.</span>
+      <span class="sentence sentence-tr" data-id="3">Böylece pandemi koşullarında güvenli seyahatin nasıl organize edileceğini göstermişti.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-tr" data-id="4">Bu kez de Türkiye Kültür ve Turizm Bakanlığı, "Türkiye'de Ramazan" programını ilan ederek, Özbekistanlı ve Azerbaycanlı medya mensuplarını ülkeye davet etti.</span>
+      <span class="sentence sentence-tr" data-id="5">Bu grup içerisinde Xabar.uz muhabiri de yer almakta.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-tr" data-id="6">Türkiye'nin en büyük ve nüfusu 16 milyonu aşan şehri İstanbul, Asya ve Avrupa'yı birbirine bağlamaktadır.</span>
+      <span class="sentence sentence-tr" data-id="7">Bu kadim şehre aynı zamanda "Ezanlar Şehri" de denilmektedir.</span>
+      <span class="sentence sentence-tr" data-id="8">Ki bu boşuna değildir.</span>
+      <span class="sentence sentence-tr" data-id="9">Megakent hâline gelen şehirde üç binden fazla tarihî cami kayıtlıdır.</span>
+      <span class="sentence sentence-tr" data-id="10">Yeni inşa edilen camilerle birlikte bu sayı bugün 10 bini aşmaktadır.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-tr" data-id="11">"Türkiye'de Ramazan" programı kapsamında, gazeteciler seyahatin ilk gününde İstanbul'un en yoğun noktalarından biri olan Taksim Meydanı ile Taksim Camiini gezmiş, hemen yanında yer alan ünlü İstiklal Caddesini de ziyaret etmişlerdir.</span>
+    </div>
+
+    <div class="para">
+      <span class="sentence sentence-tr" data-id="12">Şehrin merkezî kısmında bulunan Taksim Meydanı, Taksim semti ile Beyoğlu ilçesi sınırları içinde yer almaktadır.</span>
+    </div>
+  </div>
+
+</div>
+
+<footer><span>Hamza Hoca ile Türkçe Öğreniyorum</span> &nbsp;&nbsp;</footer>
+
+<script>
+  const uzSentences = document.querySelectorAll('.sentence-uz');
+  const trSentences = document.querySelectorAll('.sentence-tr');
+
+  let activeId = null;
+
+  function clearActive() {
+    trSentences.forEach(s => s.classList.remove('active'));
+    activeId = null;
+  }
+
+  function activateTr(id) {
+    clearActive();
+    const target = document.querySelector(`.sentence-tr[data-id="${id}"]`);
+    if (target) {
+      target.classList.add('active');
+      activeId = id;
+      // Smooth scroll into view if needed
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  uzSentences.forEach(uz => {
+    uz.addEventListener('mouseenter', () => {
+      activateTr(uz.dataset.id);
+    });
+    uz.addEventListener('mouseleave', () => {
+      clearActive();
+    });
+    uz.addEventListener('focus', () => {
+      activateTr(uz.dataset.id);
+    });
+    uz.addEventListener('blur', () => {
+      clearActive();
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Birleşik Zamanlar – Hamza Hoca</title>
+<style>
+  /* ========== GLOBAL STYLES (yapay_zeka.html ile uyumlu) ========== */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+    min-height: 100vh;
+    color: white;
+  }
+
+  .home-btn-wrap {
+    padding: 18px 20px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a2332;
+    border: 2px solid #F5C842;
+    border-radius: 40px;
+    padding: 9px 20px;
+    color: #F5C842;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background .22s, transform .18s, box-shadow .22s;
+    text-decoration: none;
+    margin-bottom: 0;
+  }
+  .back-btn:hover {
+    background: #2a3a4a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+
+  .page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 20px 70px;
+  }
+
+  .article-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #F5C842, #C9960A);
+    color: #0D1B2A;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 0.3rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .article-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 800;
+    color: #F5C842;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .article-meta {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .header-line {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #F5C842, transparent);
+    margin: 0 0 28px;
+  }
+
+  .grammar-card {
+    background: #1a2332;
+    border: 1px solid rgba(245,200,66,0.15);
+    border-radius: 28px;
+    padding: 28px 32px 36px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(2px);
+    transition: all 0.2s ease;
+  }
+
+  .grammar-card h2 {
+    color: #F5C842;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    border-left: 4px solid #F5C842;
+    padding-left: 18px;
+  }
+
+  .grammar-card h3 {
+    color: #F5C842;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 24px 0 16px 0;
+  }
+
+  .grammar-card h4 {
+    color: #F5C842;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 20px 0 12px 0;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+    border-left: 3px solid #F5C842;
+    padding-left: 20px;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  /* tablo stilleri */
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0D1B2A;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .custom-table th {
+    background: rgba(245,200,66,0.18);
+    padding: 12px 16px;
+    text-align: left;
+    color: #F5C842;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(245,200,66,0.3);
+  }
+
+  .custom-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(245,200,66,0.1);
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+    vertical-align: top;
+  }
+
+  .custom-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .highlight-cell {
+    font-weight: 700;
+    color: #F5C842;
+  }
+
+  .example-list {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 18px 24px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+  }
+
+  .example-list p {
+    margin: 8px 0;
+    font-family: 'Segoe UI', monospace;
+    font-size: 1rem;
+  }
+
+  .example-list strong {
+    color: #F5C842;
+  }
+
+  .warning-note {
+    background: #0D1B2A;
+    padding: 14px 20px;
+    border-radius: 16px;
+    margin: 16px 0;
+    border-left: 4px solid #F5C842;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .warning-note strong {
+    color: #F5C842;
+  }
+
+  .meaning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .meaning-card {
+    background: #0f1724;
+    border-radius: 20px;
+    padding: 18px 22px;
+    border: 1px solid rgba(245,200,66,0.2);
+  }
+
+  .meaning-card h4 {
+    color: #F5C842;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+  }
+
+  .meaning-card p {
+    margin: 8px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .meaning-card code {
+    color: #F5C842;
+    background: rgba(245,200,66,0.1);
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-family: monospace;
+  }
+
+  footer {
+    text-align: center;
+    padding: 0 1rem 2.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+  }
+  footer span {
+    color: #F5C842;
+  }
+
+  @media (max-width: 720px) {
+    .grammar-card {
+      padding: 20px;
+    }
+    .custom-table th, .custom-table td {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+    }
+    .meaning-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<div class="page-wrapper">
+  <div class="article-badge">✦ DİL BİLGİSİ ✦</div>
+  <h1 class="article-title">Birleşik Zamanlar</h1>
+  <div class="article-meta">B1 / B2 Seviyesi &nbsp;·&nbsp; Fiil Çekimi</div>
+  <div class="header-line"></div>
+
+  <!-- ==================== 1. HİKÂYE BİRLEŞİK ZAMAN ==================== -->
+  <div class="grammar-card">
+    <h2>1.1. Hikâye Birleşik Zamanlı Fiiller</h2>
+    <div class="intro-text">
+      Basit zamanlı fiillere <strong>"idi"</strong> getirilerek yapılır. Ekin başındaki -i sesi düşürülerek <strong>-dı / -di / -du / -dü / -tı / -ti / -tu / -tü</strong> şekilleriyle kullanımı çok yaygındır.
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr><th>FİİL</th><th>HABER / DİLEK KİPİ</th><th>HİKAYE BİRLEŞİK ZAMAN EKİ</th><th>KİŞİ EKLERİ</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="highlight-cell">yaz</td><td>ıyor</td><td>du</td><td>-m, -n, —, -k, -nuz, -lar</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Örnekler</h3>
+    <table class="custom-table">
+      <thead><tr><th>BİRLEŞİK ZAMANLI FİİL</th><th>TÜRÜ</th><th>ÖRNEK CÜMLE</th></tr></thead>
+      <tbody>
+        <tr><td>geldiydim</td><td>görülen geçmiş zamanın hikâyesi <span style="color:#aaa;">(çok fazla kullanılmaz)</span></td><td>Ayşe de pazardan <strong>aldıydı</strong>.</td></tr>
+        <tr><td>gelmiştim</td><td>duyulan geçmiş zamanın hikâyesi</td><td>Sınıfta <strong>toplanmıştık</strong>.</td></tr>
+        <tr><td>geliyordum</td><td>şimdiki zamanın hikâyesi</td><td>Yazlıktan <strong>dönüyordu</strong>.</td></tr>
+        <tr><td>gelecektim</td><td>gelecek zamanın hikâyesi</td><td>Gelecek ay tatile <strong>gidecektik</strong>.</td></tr>
+        <tr><td>gelirdim</td><td>geniş zamanın hikâyesi</td><td>Ona her zaman mektup <strong>yazardım</strong>.</td></tr>
+        <tr><td>gelmeliydim</td><td>gereklilik kipinin hikâyesi</td><td>Daha erken <strong>kalkmalıydın</strong>.</td></tr>
+        <tr><td>geleydim</td><td>istek kipinin hikâyesi</td><td>Ben de sizinle <strong>geleydim</strong>.</td></tr>
+        <tr><td>geseydim</td><td>şart kipinin hikâyesi</td><td>Ödevini zamanında <strong>bitirseydi</strong>, kabul ederdim.</td></tr>
+      </tbody>
+    </table>
+    <div class="warning-note">
+      <strong>NOT:</strong> Emir kipinin hikâye birleşik zamanı <strong>yoktur</strong>.
+    </div>
+  </div>
+
+  <!-- ==================== 2. RİVAYET BİRLEŞİK ZAMAN ==================== -->
+  <div class="grammar-card">
+    <h2>1.2. Rivayet Birleşik Zamanlı Fiiller</h2>
+    <div class="intro-text">
+      Basit zamanlı fiillere <strong>"imiş"</strong> getirilerek yapılır. Ekin başındaki -i sesi düşürülerek <strong>-mış / -miş / -muş / -müş</strong> şeklinde kullanımı çok yaygındır.
+    </div>
+
+    <table class="custom-table">
+      <thead><tr><th>FİİL</th><th>HABER / DİLEK KİPİ</th><th>RİVAYET BİRLEŞİK ZAMAN EKİ</th><th>KİŞİ EKLERİ</th></tr></thead>
+      <tbody><tr><td class="highlight-cell">bil</td><td>iyor</td><td>muş</td><td>-um, -sun, —, -uz, -sunuz, -lar</td></tr></tbody>
+    </table>
+
+    <h3>Örnekler</h3>
+    <table class="custom-table">
+      <thead><tr><th>BİRLEŞİK ZAMANLI FİİL</th><th>TÜRÜ</th><th>ÖRNEK CÜMLE</th></tr></thead>
+      <tbody>
+        <tr><td>görmüşmüş</td><td>duyulan geçmiş zamanın rivayeti <span style="color:#aaa;">(çok fazla kullanılmaz)</span></td><td>Güya onu pazarda <strong>görmüşmüş</strong>.</td></tr>
+        <tr><td>görüyormuş</td><td>şimdiki zamanın rivayeti</td><td>Meğersem onu çok <strong>seviyormuşum</strong>.</td></tr>
+        <tr><td>görecekmiş</td><td>gelecek zamanın rivayeti</td><td>Bunların hepsini <strong>okuyacakmışım</strong>.</td></tr>
+        <tr><td>görürmüş</td><td>geniş zamanın rivayeti</td><td>Her zaman vaktinde <strong>gelirmiş</strong>.</td></tr>
+        <tr><td>görmeliymiş</td><td>gereklilik kipinin rivayeti</td><td>Ödevleri cumaya kadar <strong>bitirmeliymiş</strong>.</td></tr>
+        <tr><td>göreymiş</td><td>istek kipinin rivayeti</td><td>Daha önce <strong>söyleyeymiş</strong>.</td></tr>
+        <tr><td>görseymiş</td><td>şart kipinin rivayeti</td><td>Erkenden yola <strong>çıksaymış</strong>, geç kalmazmış.</td></tr>
+      </tbody>
+    </table>
+    <div class="warning-note">
+      <strong>NOT:</strong> Görülen geçmiş zaman kipi ile emir kipinin rivayet birleşik zamanı <strong>yoktur</strong>.
+    </div>
+  </div>
+
+  <!-- ==================== 3. ŞART BİRLEŞİK ZAMAN ==================== -->
+  <div class="grammar-card">
+    <h2>1.3. Şart Birleşik Zamanlı Fiiller</h2>
+    <div class="intro-text">
+      Basit zamanlı fiillere <strong>"ise"</strong> getirilerek yapılır. Ekin başındaki i sesinin düşürülerek <strong>-sa / -se</strong> şeklinde kullanımı çok yaygındır.<br>
+      Bir işin gerçekleşmesinin bir şarta bağlı olduğu durumlarda kullanılır.
+    </div>
+
+    <table class="custom-table">
+      <thead><tr><th>FİİL</th><th>HABER / DİLEK KİPİ</th><th>ŞART KİPİ EKİ</th><th>KİŞİ EKLERİ</th></tr></thead>
+      <tbody><tr><td class="highlight-cell">duy</td><td>uyor</td><td>sa</td><td>-m, -n, —, -k, -nız, -lar</td></tr></tbody>
+    </table>
+
+    <h3>Örnekler</h3>
+    <table class="custom-table">
+      <thead><tr><th>BİRLEŞİK ZAMANLI FİİL</th><th>TÜRÜ</th><th>ÖRNEK CÜMLE</th></tr></thead>
+      <tbody>
+        <tr><td>koştuysan</td><td>görülen geçmiş zamanın şartı</td><td><strong>Çalıştıysan</strong> mutlaka kazanırsın.</td></tr>
+        <tr><td>koşmuşsan</td><td>duyulan geçmiş zamanın şartı</td><td>Ankara'ya <strong>varmışsa</strong> bizi arasın.</td></tr>
+        <tr><td>koşuyorsan</td><td>şimdiki zamanın şartı</td><td>Eğer ders <strong>çalışıyorsan</strong> biz rahatsız etmeyelim.</td></tr>
+        <tr><td>koşacaksan</td><td>gelecek zamanın şartı</td><td>Dışarıya <strong>çıkacaksan</strong> bana haber ver.</td></tr>
+        <tr><td>koşarsan</td><td>geniş zamanın şartı</td><td>Okula <strong>gidersen</strong> mutlaka müdürün yanına uğra.</td></tr>
+        <tr><td>koşmalıysan</td><td>gereklilik kipinin şartı</td><td>Proje teslimi için erken <strong>bitirmeliysen</strong> acele et.</td></tr>
+      </tbody>
+    </table>
+    <div class="warning-note">
+      <strong>NOT:</strong> İstek, şart ve emir kipinin şart birleşik zamanı <strong>yoktur</strong>.
+    </div>
+  </div>
+
+  <!-- ==================== 2. BİRLEŞİK ZAMANLARIN CÜMLEYE KATTIĞI ANLAMLAR ==================== -->
+  <div class="grammar-card">
+    <h2>2. Birleşik Zamanlı Fiillerin Cümleye Kattığı Anlamlar</h2>
+    <div class="intro-text">
+      Birleşik zamanlı fiiller, eklendikleri fiile zaman anlamının yanı sıra "küçümseme, terk edilmiş alışkanlık, kesinlik, ihtimal, başkasından duyma, umursamama, gerçekleşmemiş niyet" gibi anlamlar da kazandırır.
+    </div>
+
+    <div class="meaning-grid">
+      <!-- 2.1 -->
+      <div class="meaning-card">
+        <h4>📌 2.1. Küçümseme / İnanmama Anlamı</h4>
+        <p><code>-mış + mış</code> birleşik yapısı cümleye küçümseme, inanmama, alay, kinaye anlamı katar.</p>
+        <div class="example-list" style="margin-top: 10px; padding: 12px;">
+          <p><strong>»</strong> Çok kitap oku<strong>muşmuş</strong>.</p>
+          <p><strong>»</strong> Her şeyi tek başına hallet<strong>mişmiş</strong>.</p>
+        </div>
+      </div>
+
+      <!-- 2.2 -->
+      <div class="meaning-card">
+        <h4>📌 2.2. Terk Edilmiş Alışkanlık Anlamı</h4>
+        <p><code>-r + di</code> birleşik yapısı cümleye terk edilmiş alışkanlık anlamı katar.</p>
+        <div class="example-list" style="margin-top: 10px; padding: 12px;">
+          <p><strong>»</strong> Eskiden sabahları erken kalk<strong>ardım</strong>.</p>
+          <p><strong>»</strong> Üniversitedeyken her akşam yürüyüş yap<strong>ardık</strong>.</p>
+        </div>
+      </div>
+
+      <!-- 2.3 -->
+      <div class="meaning-card">
+        <h4>📌 2.3. Başkasından Duyma Anlamı</h4>
+        <p><code>-r + miş</code> , <code>-yor + muş</code> birleşik yapıları cümleye başkasından duyma, başkasından öğrenme anlamı katar.</p>
+        <div class="example-list" style="margin-top: 10px; padding: 12px;">
+          <p><strong>»</strong> Buranın aşçısı çok güzel yemek yap<strong>ıyormuş</strong>.</p>
+          <p><strong>»</strong> Antalya'dayken her gün denize gir<strong>ermiş</strong>.</p>
+        </div>
+      </div>
+
+      <!-- 2.4 -->
+      <div class="meaning-card">
+        <h4>📌 2.4. Gerçekleşmemiş Beklenti Anlamı</h4>
+        <p><code>-ecek + ti</code> birleşik yapısı cümleye gerçekleşmemiş beklenti, gerçekleşmemiş niyet anlamı katar.</p>
+        <div class="example-list" style="margin-top: 10px; padding: 12px;">
+          <p><strong>»</strong> Bu yıl yurt dışına gid<strong>ecektim</strong> ama planlar değişti.</p>
+          <p><strong>»</strong> Dün seni ara<strong>yacaktım</strong> fakat çok yoğundum.</p>
+        </div>
+      </div>
+
+      <!-- 2.5 -->
+      <div class="meaning-card">
+        <h4>📌 2.5. Kesinlik Anlamı</h4>
+        <p><code>-miş + tir</code> birleşik yapısı bazı durumlarda cümleye kesinlik anlamı katar.</p>
+        <div class="example-list" style="margin-top: 10px; padding: 12px;">
+          <p><strong>»</strong> Süreniz bit<strong>miştir</strong>.</p>
+          <p><strong>»</strong> Bu eser, büyük bir emekle hazırlan<strong>mıştır</strong>.</p>
+        </div>
+      </div>
+
+      <!-- 2.6 -->
+      <div class="meaning-card">
+        <h4>📌 2.6. Olasılık / İhtimal Anlamı</h4>
+        <p><code>-miş + tir</code> birleşik yapısı bazı durumlarda cümleye ihtimal, olasılık anlamı katar.</p>
+        <div class="example-list" style="margin-top: 10px; padding: 12px;">
+          <p><strong>»</strong> Belki de anahtarların evde kal<strong>mıştır</strong>.</p>
+          <p><strong>»</strong> Bugüne kadar gerçeği çoktan öğren<strong>miştir</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-note" style="margin-top: 24px;">
+      💡 <strong>Hatırlatma:</strong> Aynı ek farklı bağlamlarda farklı anlamlar kazanabilir. Özellikle <code>-miş + tir</code> yapısı, cümlenin anlamına göre <strong>kesinlik</strong> veya <strong>olasılık</strong> bildirebilir. Bağlamı dikkate almak önemlidir.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+</body>
+</html>
