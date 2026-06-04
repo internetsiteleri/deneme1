@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paragrafa Başlık Bulma 1 – Dünya Uzay Haftası 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05060f;
+    --surface: #0d0f1e;
+    --card: #111427;
+    --border: #1e2240;
+    --accent: #4f8ef7;
+    --accent2: #c084fc;
+    --gold: #f5c842;
+    --text: #e2e8f8;
+    --muted: #6b7699;
+    --correct: #22d3a0;
+    --wrong: #f87171;
+    --correct-bg: rgba(34,211,160,0.08);
+    --wrong-bg: rgba(248,113,113,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .header .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.8;
+  }
+
+  .header h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    background: linear-gradient(135deg, var(--text) 30%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  /* Instructions */
+  .instructions {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 36px;
+    font-size: 15.5px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Headings bank */
+  .headings-bank {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .bank-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .headings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 10px;
+  }
+
+  .heading-chip {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .chip-letter {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 18px;
+    padding-top: 1px;
+  }
+
+  /* Exercise section */
+  .exercise-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .paragraph-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+
+  .paragraph-block:hover {
+    border-color: #2a3060;
+  }
+
+  .paragraph-block.correct {
+    border-color: var(--correct);
+    background: linear-gradient(135deg, var(--card), var(--correct-bg));
+  }
+
+  .paragraph-block.wrong {
+    border-color: var(--wrong);
+    background: linear-gradient(135deg, var(--card), var(--wrong-bg));
+  }
+
+  .para-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .para-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .answer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .answer-row label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    flex: 1;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7699' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .feedback-icon {
+    font-size: 18px;
+    width: 26px;
+    text-align: center;
+    display: none;
+  }
+
+  .paragraph-block.correct .feedback-icon::after { content: '✓'; color: var(--correct); display: block; }
+  .paragraph-block.wrong .feedback-icon::after { content: '✗'; color: var(--wrong); display: block; }
+  .paragraph-block.correct .feedback-icon,
+  .paragraph-block.wrong .feedback-icon { display: block; }
+
+  .para-text {
+    color: #cad2e8;
+    font-size: 17px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .correct-answer-note {
+    display: none;
+    margin-top: 12px;
+    padding: 8px 14px;
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--wrong);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .paragraph-block.wrong .correct-answer-note { display: block; }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-check {
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    color: white;
+  }
+
+  .btn-check:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79,142,247,0.3);
+  }
+
+  .btn-answers {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+
+  .btn-answers:hover {
+    background: rgba(245,200,66,0.08);
+    transform: translateY(-2px);
+  }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-reset:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+
+  /* Score */
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 32px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .score-banner .score-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--correct), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .score-banner .score-label {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Answers revealed */
+  .answer-key {
+    display: none;
+    margin-top: 32px;
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .answer-key.visible { display: block; }
+
+  .answer-key-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .answer-key-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+  }
+
+  .answer-key-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 8px 12px;
+    background: var(--surface);
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .answer-key-item .k-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  .answer-key-item .k-letter {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 18px;
+    padding-top: 2px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 28px 16px 60px; }
+    .paragraph-block { padding: 20px 18px; }
+    .headings-bank { padding: 18px 16px; }
+    .headings-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<!-- GERİ BUTONU -->
+<div style="padding:18px 20px 0; max-width:1200px; margin:0 auto;">
+  <button onclick="history.back()" style="display:inline-flex;align-items:center;gap:8px;background:#1a2332;border:2px solid #F5C842;border-radius:40px;padding:9px 20px;color:#F5C842;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .22s,transform .18s,box-shadow .22s;" onmouseover="this.style.background='#2a3a4a';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1a2332';this.style.transform='none'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Geri
+  </button>
+</div>
+  <div class="header">
+    <div class="label">Okuma Egzersizi · 3. Bölüm</div>
+    <h1>Dünya Uzay Haftası 2025</h1>
+    <p class="subtitle">Paragrafa Başlık Bulma · Alıştırma 1</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="instructions">
+    Aşağıdaki başlıkları (A–H) ve paragrafları okuyunuz. Her paragraf için uygun bir başlık bulunuz. Her başlık yalnız bir defa kullanılabilir.
+  </div>
+
+  <!-- Headings Bank -->
+  <div class="headings-bank">
+    <div class="bank-title">Başlıklar</div>
+    <div class="headings-grid">
+      <div class="heading-chip"><span class="chip-letter">A)</span> Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+      <div class="heading-chip"><span class="chip-letter">B)</span> Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+      <div class="heading-chip"><span class="chip-letter">C)</span> Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+      <div class="heading-chip"><span class="chip-letter">D)</span> Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+      <div class="heading-chip"><span class="chip-letter">E)</span> Sunulan Yeni Teknolojik Olanaklar</div>
+      <div class="heading-chip"><span class="chip-letter">F)</span> Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+      <div class="heading-chip"><span class="chip-letter">G)</span> Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+      <div class="heading-chip"><span class="chip-letter">H)</span> Yenilikçi Uzay Stratejileri</div>
+    </div>
+  </div>
+
+  <!-- Paragraphs -->
+  <div class="exercise-label">Paragraflar</div>
+
+  <div class="paragraph-block" id="block-1">
+    <div class="para-header">
+      <span class="para-number">I. PARAGRAF</span>
+      <div class="answer-row">
+        <label>Başlık →</label>
+        <select id="sel-1" onchange="clearResult(1)">
+          <option value="">— seçiniz —</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="icon-1"></span>
+    </div>
+    <p class="para-text">Dünya Uzay Haftası 2025, uzay araştırmalarının en büyük kültürel ve bilimsel etkinliklerinden biri olarak kabul ediliyor. Bu hafta, dünya genelindeki uzay ajanslarının bir araya geldiği ve yenilikçi projeleri tanıttığı bir platform olarak öne çıkıyor. Ancak bu etkinlik, sadece teknolojik gelişmeleri sergilemekle kalmıyor; aynı zamanda çevresel sürdürülebilirlik ve dünya kaynaklarının korunması gibi konulara da odaklanıyor. Etkinlikte kullanılan malzemelerin tamamı geri dönüştürülebilir olacak şekilde tasarlanırken, enerji verimliliği de göz önünde bulunduruldu. Dünya Uzay Haftası 2025, gelecekteki benzer organizasyonlara örnek teşkil edecek bir model olarak görülüyor.</p>
+    <div class="correct-answer-note" id="note-1"></div>
+  </div>
+
+  <div class="paragraph-block" id="block-2">
+    <div class="para-header">
+      <span class="para-number">II. PARAGRAF</span>
+      <div class="answer-row">
+        <label>Başlık →</label>
+        <select id="sel-2" onchange="clearResult(2)">
+          <option value="">— seçiniz —</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="icon-2"></span>
+    </div>
+    <p class="para-text">Dünya Uzay Haftası 2025, genç nesli ilgilendiren yeni keşif alanlarını ön plana çıkararak onların ilgisini çekmeyi hedefliyor. Özellikle asteroit madenciliği, Mars kolonizasyonu ve yapay zeka destekli uzay araçları gibi konular, bu yılki etkinliklerde geniş yer alacak. Bu yenilikler, uzay araştırmalarının geleceği hakkında merak uyandırırken aynı zamanda gençlerin bilime olan ilgisini artırıyor. Dünya Uzay Haftası 2025, bu anlamda geleneksel uzay çalışmaları ile birlikte genç neslin hayal gücünü harekete geçirecek konuları da ele alıyor.</p>
+    <div class="correct-answer-note" id="note-2"></div>
+  </div>
+
+  <div class="paragraph-block" id="block-3">
+    <div class="para-header">
+      <span class="para-number">III. PARAGRAF</span>
+      <div class="answer-row">
+        <label>Başlık →</label>
+        <select id="sel-3" onchange="clearResult(3)">
+          <option value="">— seçiniz —</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="icon-3"></span>
+    </div>
+    <p class="para-text">Türkiye, Dünya Uzay Haftası 2025'te önemli bir rol oynamayı hedefliyor. Özellikle uydu teknolojileri, roket geliştirme ve uzay istasyonları gibi alanlarda başarı gösteren Türk bilim insanları, bu etkinlikte ülkenin adını duyurmayı planlıyor. Türkiye Uzay Ajansı (TUA), son yıllarda geliştirdiği mini uydular ve roket prototipleriyle dikkat çekiyor. Ayrıca, Türkiye'nin ilk yerli uzay aracı projesi olan "Türk Uzay Aracı"nın tanıtımı da bu haftada yapılacak. Türkiye, uzay teknolojilerine yaptığı yatırımlarla uluslararası arenada varlığını güçlendirmeyi amaçlıyor.</p>
+    <div class="correct-answer-note" id="note-3"></div>
+  </div>
+
+  <div class="paragraph-block" id="block-4">
+    <div class="para-header">
+      <span class="para-number">IV. PARAGRAF</span>
+      <div class="answer-row">
+        <label>Başlık →</label>
+        <select id="sel-4" onchange="clearResult(4)">
+          <option value="">— seçiniz —</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="icon-4"></span>
+    </div>
+    <p class="para-text">Dünya Uzay Haftası 2025 katılımcıları için özel olarak tasarlanmış bir "Uzay Kampüsü" oluşturuldu. Bu kampüs, bilim insanlarının hem fiziksel hem de mental olarak rahat etmeleri için özel olarak inşa edildi. Kullanılan tüm malzemeler geri dönüştürülebilir olup, enerji verimliliği göz önünde bulunduruldu. Katılımcılar, burada sosyal aktivitelere katılabilir veya uzay teknolojileri üzerine atölyelerde bulunabilir. Ayrıca, kampüsün bulunduğu bölgedeki doğal güzellikler, katılımcılara eşsiz bir deneyim sunuyor. Bu sayede, bilim insanları sadece akademik değil, aynı zamanda kültürel açıdan da zengin bir hafta geçiriyor.</p>
+    <div class="correct-answer-note" id="note-4"></div>
+  </div>
+
+  <div class="paragraph-block" id="block-5">
+    <div class="para-header">
+      <span class="para-number">V. PARAGRAF</span>
+      <div class="answer-row">
+        <label>Başlık →</label>
+        <select id="sel-5" onchange="clearResult(5)">
+          <option value="">— seçiniz —</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="icon-5"></span>
+    </div>
+    <p class="para-text">Dünya Uzay Haftası, sadece bir bilimsel etkinlik değil, aynı zamanda küresel iş birliği ve barışın sembolüdür. Bu hafta boyunca dünya genelinden bilim insanları ve uzay meraklıları bir araya gelerek ortak projeler üzerinde çalışıyor. Farklı ülkelerden gelen bilim insanları, uzay araştırmaları aracılığıyla dayanışma ve dostluk ilişkileri geliştiriyor. Bu etkinlik, uzay araştırmalarının evrensel dilini kullanarak küresel iş birliğini güçlendiriyor. Dünya Uzay Haftası 2025, bu anlamda bilim ve diplomasiyi bir araya getiren bir platform olarak görülecek.</p>
+    <div class="correct-answer-note" id="note-5"></div>
+  </div>
+
+  <div class="paragraph-block" id="block-6">
+    <div class="para-header">
+      <span class="para-number">VI. PARAGRAF</span>
+      <div class="answer-row">
+        <label>Başlık →</label>
+        <select id="sel-6" onchange="clearResult(6)">
+          <option value="">— seçiniz —</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="icon-6"></span>
+    </div>
+    <p class="para-text">Dünya Uzay Haftası 2025, Türkiye'nin uzay araştırmalarındaki başarısını sergilemek için mükemmel bir fırsat olacak. Özellikle genç bilim insanlarının dikkat çekici projeleri, ülkenin uzay teknolojilerindeki büyümesini simgeliyor. Uydu teknolojilerindeki yenilikçi çalışmalar, roket geliştirme projeleri ve uzay istasyonu planları gibi alanlarda Türkiye, önemli adımlar atıyor. Türkiye'nin bu başarısı, gelecek nesillere ilham verecek nitelikte ve uzay araştırmaları tarihinde kalıcı bir iz bırakacak.</p>
+    <div class="correct-answer-note" id="note-6"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-check" onclick="checkAnswers()">KONTROL ET</button>
+    <button class="btn-answers" onclick="toggleAnswers()">CEVAPLAR</button>
+    <button class="btn-reset" onclick="resetAll()">SIFIRLA</button>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner" id="score-banner">
+    <div class="score-num" id="score-num">0/6</div>
+    <div class="score-label">doğru cevap</div>
+  </div>
+
+  <!-- Answer Key -->
+  <div class="answer-key" id="answer-key">
+    <div class="answer-key-title">Cevap Anahtarı</div>
+    <div class="answer-key-grid">
+      <div class="answer-key-item"><span class="k-num">S1.</span><span class="k-letter">B)</span> Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+      <div class="answer-key-item"><span class="k-num">S2.</span><span class="k-letter">C)</span> Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+      <div class="answer-key-item"><span class="k-num">S3.</span><span class="k-letter">G)</span> Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+      <div class="answer-key-item"><span class="k-num">S4.</span><span class="k-letter">E)</span> Sunulan Yeni Teknolojik Olanaklar</div>
+      <div class="answer-key-item"><span class="k-num">S5.</span><span class="k-letter">F)</span> Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+      <div class="answer-key-item"><span class="k-num">S6.</span><span class="k-letter">D)</span> Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+    </div>
+  </div>
+
+  <div class="footer">HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM</div>
+</div>
+
+<script>
+  const ANSWERS = { 1:'B', 2:'C', 3:'G', 4:'E', 5:'F', 6:'D' };
+  const HEADINGS = {
+    A: 'Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları',
+    B: 'Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi',
+    C: 'Gelecek Nesillere İlham Veren Uzay Keşifleri',
+    D: 'Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü',
+    E: 'Sunulan Yeni Teknolojik Olanaklar',
+    F: 'Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi',
+    G: 'Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri',
+    H: 'Yenilikçi Uzay Stratejileri'
+  };
+
+  function clearResult(n) {
+    const block = document.getElementById('block-' + n);
+    block.classList.remove('correct', 'wrong');
+    document.getElementById('score-banner').style.display = 'none';
+  }
+
+  function checkAnswers() {
+    let score = 0;
+    for (let i = 1; i <= 6; i++) {
+      const sel = document.getElementById('sel-' + i);
+      const block = document.getElementById('block-' + i);
+      const note = document.getElementById('note-' + i);
+      const val = sel.value;
+      block.classList.remove('correct', 'wrong');
+      if (!val) continue;
+      if (val === ANSWERS[i]) {
+        block.classList.add('correct');
+        score++;
+        note.textContent = '';
+      } else {
+        block.classList.add('wrong');
+        note.textContent = 'Doğru cevap: ' + ANSWERS[i] + ') ' + HEADINGS[ANSWERS[i]];
+      }
+    }
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/6';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function toggleAnswers() {
+    const key = document.getElementById('answer-key');
+    key.classList.toggle('visible');
+    if (key.classList.contains('visible')) {
+      key.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function resetAll() {
+    for (let i = 1; i <= 6; i++) {
+      document.getElementById('sel-' + i).value = '';
+      const block = document.getElementById('block-' + i);
+      block.classList.remove('correct', 'wrong');
+      document.getElementById('note-' + i).textContent = '';
+    }
+    document.getElementById('score-banner').style.display = 'none';
+    document.getElementById('answer-key').classList.remove('visible');
+  }
+</script>
+</body>
+</html>

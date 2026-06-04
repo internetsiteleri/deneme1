@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uygun Durumu Bulma – Okuma Alıştırması</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05060f;
+    --surface: #0d0f1e;
+    --card: #111427;
+    --border: #1e2240;
+    --accent: #4f8ef7;
+    --accent2: #c084fc;
+    --gold: #f5c842;
+    --text: #e2e8f8;
+    --muted: #6b7699;
+    --correct: #22d3a0;
+    --wrong: #f87171;
+    --correct-bg: rgba(34,211,160,0.08);
+    --wrong-bg: rgba(248,113,113,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 75% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 65%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 25%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 45%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .header .label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.8;
+  }
+
+  .header h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(28px, 5vw, 46px);
+    font-weight: 700;
+    line-height: 1.15;
+    background: linear-gradient(135deg, var(--text) 30%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    margin: 20px auto 0;
+    border-radius: 2px;
+  }
+
+  /* Instructions */
+  .instructions {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 36px;
+    font-size: 15.5px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Situations bank */
+  .situations-bank {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .bank-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent2);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .situations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 10px;
+  }
+
+  .sit-chip {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .chip-letter {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 18px;
+    padding-top: 1px;
+  }
+
+  /* Exercise section */
+  .exercise-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .text-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+
+  .text-card:hover { border-color: #2a3060; }
+  .text-card.correct { border-color: var(--correct); background: linear-gradient(135deg, var(--card), var(--correct-bg)); }
+  .text-card.wrong   { border-color: var(--wrong);   background: linear-gradient(135deg, var(--card), var(--wrong-bg)); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+
+  .text-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.2);
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .answer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .answer-row label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    flex: 1;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7699' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  select:focus { outline: none; border-color: var(--accent); }
+
+  .feedback-icon {
+    font-size: 18px;
+    width: 26px;
+    text-align: center;
+    display: none;
+  }
+
+  .text-card.correct .feedback-icon::after { content: '✓'; color: var(--correct); display: block; }
+  .text-card.wrong   .feedback-icon::after { content: '✗'; color: var(--wrong);   display: block; }
+  .text-card.correct .feedback-icon,
+  .text-card.wrong   .feedback-icon { display: block; }
+
+  .card-text {
+    color: #cad2e8;
+    font-size: 17px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .wrong-note {
+    display: none;
+    margin-top: 12px;
+    padding: 8px 14px;
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 6px;
+    font-size: 14px;
+    color: var(--wrong);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .text-card.wrong .wrong-note { display: block; }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    gap: 14px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-check {
+    background: linear-gradient(135deg, var(--accent), #7c3aed);
+    color: white;
+  }
+
+  .btn-check:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79,142,247,0.3);
+  }
+
+  .btn-answers {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+  }
+
+  .btn-answers:hover {
+    background: rgba(245,200,66,0.08);
+    transform: translateY(-2px);
+  }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-reset:hover {
+    color: var(--text);
+    border-color: var(--muted);
+  }
+
+  /* Score */
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 32px;
+    padding: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .score-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--correct), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .score-label {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Answer key */
+  .answer-key {
+    display: none;
+    margin-top: 32px;
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 24px 28px;
+  }
+
+  .answer-key.visible { display: block; }
+
+  .answer-key-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .answer-key-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .ak-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--surface);
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .ak-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 60px;
+  }
+
+  .ak-letter {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .ak-blank {
+    margin-top: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .ak-blank span { color: var(--gold); }
+
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    opacity: 0.5;
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 28px 16px 60px; }
+    .text-card { padding: 20px 18px; }
+    .situations-bank { padding: 18px 16px; }
+    .situations-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<!-- GERİ BUTONU -->
+<div style="padding:18px 20px 0; max-width:1200px; margin:0 auto;">
+  <button onclick="history.back()" style="display:inline-flex;align-items:center;gap:8px;background:#1a2332;border:2px solid #F5C842;border-radius:40px;padding:9px 20px;color:#F5C842;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:background .22s,transform .18s,box-shadow .22s;" onmouseover="this.style.background='#2a3a4a';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#1a2332';this.style.transform='none'">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    Geri
+  </button>
+</div>
+  <!-- Header -->
+  <div class="header">
+    <div class="label">Okuma Alıştırması</div>
+    <h1>Uygun Durumu Bulma</h1>
+    <p class="subtitle">Her metin için en uygun durumu (A–J) seçiniz · Alıştırma 1</p>
+    <div class="divider"></div>
+  </div>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    Aşağıda verilen durumları (A–J) ve bilgi metinlerini (1–8) okuyunuz. Her metin için en uygun durumu seçiniz. Her seçenek yalnızca bir kez kullanılabilir. İki seçenek boşta kalacaktır.
+  </div>
+
+  <!-- Situations bank -->
+  <div class="situations-bank">
+    <div class="bank-title">Durumlar</div>
+    <div class="situations-grid">
+      <div class="sit-chip"><span class="chip-letter">A)</span> Stres atmak ve doğayla iç içe zaman geçirmek istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">B)</span> Müzik enstrümanı çalmayı öğrenmek istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">C)</span> Yeni bir spor dalı denemek ve fiziksel aktivite yapmak istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">D)</span> Çocuklara eğitim desteği sağlayan bir projede gönüllü olmak istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">E)</span> Teknoloji ve yazılım dünyasına adım atmak istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">F)</span> Sanat tarihi hakkında derinlemesine bilgi edinmek istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">G)</span> Yemek yapma becerilerinizi geliştirmek ve yeni tarifler öğrenmek istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">H)</span> Uzaktan çalışma becerilerinizi geliştirmek istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">I)</span> Hayvanlarla vakit geçirmek ve onların bakımına yardımcı olmak istiyorsunuz.</div>
+      <div class="sit-chip"><span class="chip-letter">J)</span> Finansal okuryazarlık ve bütçe yönetimi konularında bilgi edinmek istiyorsunuz.</div>
+    </div>
+  </div>
+
+  <!-- Exercise -->
+  <div class="exercise-label">Metinler</div>
+
+  <!-- Metin 1 -->
+  <div class="text-card" id="card-1">
+    <div class="card-header">
+      <span class="text-num">METİN 1</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-1" onchange="clearCard(1)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-1"></span>
+    </div>
+    <p class="card-text">Bu atölyede, gitar, piyano ve bateri gibi enstrümanları temel düzeyde öğrenebilir, haftalık grup dersleriyle pratik yapabilirsiniz. Eğitmenler size özel ipuçları vererek süreci kolaylaştırır.</p>
+    <div class="wrong-note" id="wn-1"></div>
+  </div>
+
+  <!-- Metin 2 -->
+  <div class="text-card" id="card-2">
+    <div class="card-header">
+      <span class="text-num">METİN 2</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-2" onchange="clearCard(2)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-2"></span>
+    </div>
+    <p class="card-text">Ormanlık alanda düzenlenen bu etkinlikte, doğa yürüyüşleri, yoga seansları ve şelale ziyaretleriyle stresinizi atabilirsiniz. Katılımcılar arasında huzurlu bir bağ kurulması da teşvik edilir.</p>
+    <div class="wrong-note" id="wn-2"></div>
+  </div>
+
+  <!-- Metin 3 -->
+  <div class="text-card" id="card-3">
+    <div class="card-header">
+      <span class="text-num">METİN 3</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-3" onchange="clearCard(3)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-3"></span>
+    </div>
+    <p class="card-text">Çocukların eğitimine destek olmak isteyen gönüllüler için hazırlanan bu programda, hafta sonları ders anlatabilir veya etüt saatlerinde rehberlik yapabilirsiniz. Eğitim materyalleri size sağlanacaktır.</p>
+    <div class="wrong-note" id="wn-3"></div>
+  </div>
+
+  <!-- Metin 4 -->
+  <div class="text-card" id="card-4">
+    <div class="card-header">
+      <span class="text-num">METİN 4</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-4" onchange="clearCard(4)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-4"></span>
+    </div>
+    <p class="card-text">Yemek yapmayı sevenler için düzenlenen bu kurs, dünya mutfağından örneklerle zenginleştirilmiş dersler sunar. Malzemelerin doğru kullanımı ve sunum teknikleri de öğretilir.</p>
+    <div class="wrong-note" id="wn-4"></div>
+  </div>
+
+  <!-- Metin 5 -->
+  <div class="text-card" id="card-5">
+    <div class="card-header">
+      <span class="text-num">METİN 5</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-5" onchange="clearCard(5)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-5"></span>
+    </div>
+    <p class="card-text">Bu online platform, yazılım dilleri, web tasarımı ve veri analizi gibi konularda başlangıç seviyesinden ileri seviyeye kadar eğitimler içerir. Proje bazlı çalışmalarla deneyim kazanabilirsiniz.</p>
+    <div class="wrong-note" id="wn-5"></div>
+  </div>
+
+  <!-- Metin 6 -->
+  <div class="text-card" id="card-6">
+    <div class="card-header">
+      <span class="text-num">METİN 6</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-6" onchange="clearCard(6)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-6"></span>
+    </div>
+    <p class="card-text">Sanat tarihinin önemli dönemlerini ve eserlerini interaktif sunumlarla öğrenebileceğiniz bu turda, müzeler ve sanat galerileri rehber eşliğinde gezilir.</p>
+    <div class="wrong-note" id="wn-6"></div>
+  </div>
+
+  <!-- Metin 7 -->
+  <div class="text-card" id="card-7">
+    <div class="card-header">
+      <span class="text-num">METİN 7</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-7" onchange="clearCard(7)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-7"></span>
+    </div>
+    <p class="card-text">Bu program, evden çalışanlar için zaman yönetimi, dijital iletişim ve motivasyon teknikleri gibi konularda ipuçları sunar. Uzmanlar tarafından verilen seminerlerle becerilerinizi geliştirebilirsiniz.</p>
+    <div class="wrong-note" id="wn-7"></div>
+  </div>
+
+  <!-- Metin 8 -->
+  <div class="text-card" id="card-8">
+    <div class="card-header">
+      <span class="text-num">METİN 8</span>
+      <div class="answer-row">
+        <label>Durum →</label>
+        <select id="sel-8" onchange="clearCard(8)">
+          <option value="">— seçiniz —</option>
+          <option>A</option><option>B</option><option>C</option><option>D</option>
+          <option>E</option><option>F</option><option>G</option><option>H</option>
+          <option>I</option><option>J</option>
+        </select>
+      </div>
+      <span class="feedback-icon" id="fi-8"></span>
+    </div>
+    <p class="card-text">Hayvan barınağında gönüllü olarak çalışmak isteyenler için düzenlenen bu etkinlikte, hayvanların beslenmesi, temizliği ve sosyalleştirilmesi gibi görevlerde yer alabilirsiniz.</p>
+    <div class="wrong-note" id="wn-8"></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-check" onclick="checkAll()">KONTROL ET</button>
+    <button class="btn-answers" onclick="toggleKey()">CEVAPLAR</button>
+    <button class="btn-reset" onclick="resetAll()">SIFIRLA</button>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner" id="score-banner">
+    <div class="score-num" id="score-num">0/8</div>
+    <div class="score-label">doğru cevap</div>
+  </div>
+
+  <!-- Answer Key -->
+  <div class="answer-key" id="answer-key">
+    <div class="answer-key-title">Cevap Anahtarı</div>
+    <div class="answer-key-grid">
+      <div class="ak-item"><span class="ak-num">Metin 1</span><span class="ak-letter">→ B</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 2</span><span class="ak-letter">→ A</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 3</span><span class="ak-letter">→ D</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 4</span><span class="ak-letter">→ G</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 5</span><span class="ak-letter">→ E</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 6</span><span class="ak-letter">→ F</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 7</span><span class="ak-letter">→ H</span></div>
+      <div class="ak-item"><span class="ak-num">Metin 8</span><span class="ak-letter">→ I</span></div>
+    </div>
+    <div class="ak-blank">Boşta Kalan Seçenekler: <span>C</span> &nbsp;·&nbsp; <span>J</span></div>
+  </div>
+
+  <div class="footer">HAMZA HOCA İLE TÜRKÇE ÖĞRENİYORUM</div>
+</div>
+
+<script>
+  const ANSWERS = { 1:'B', 2:'A', 3:'D', 4:'G', 5:'E', 6:'F', 7:'H', 8:'I' };
+
+  function clearCard(n) {
+    document.getElementById('card-' + n).classList.remove('correct', 'wrong');
+    document.getElementById('score-banner').style.display = 'none';
+  }
+
+  function checkAll() {
+    let score = 0;
+    for (let i = 1; i <= 8; i++) {
+      const val = document.getElementById('sel-' + i).value;
+      const card = document.getElementById('card-' + i);
+      const wn = document.getElementById('wn-' + i);
+      card.classList.remove('correct', 'wrong');
+      wn.textContent = '';
+      if (!val) continue;
+      if (val === ANSWERS[i]) {
+        card.classList.add('correct');
+        score++;
+      } else {
+        card.classList.add('wrong');
+        wn.textContent = 'Doğru cevap: ' + ANSWERS[i];
+      }
+    }
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/8';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function toggleKey() {
+    const key = document.getElementById('answer-key');
+    key.classList.toggle('visible');
+    if (key.classList.contains('visible')) key.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetAll() {
+    for (let i = 1; i <= 8; i++) {
+      document.getElementById('sel-' + i).value = '';
+      document.getElementById('card-' + i).classList.remove('correct', 'wrong');
+      document.getElementById('wn-' + i).textContent = '';
+    }
+    document.getElementById('score-banner').style.display = 'none';
+    document.getElementById('answer-key').classList.remove('visible');
+  }
+</script>
+</body>
+</html>

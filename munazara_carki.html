@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Münazara Çarkı – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ===== HOME BTN ===== */
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+  border: none;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+/* ===== HEADER ===== */
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ===== TELEGRAM ===== */
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1rem;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+.section-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: .85rem; color: #F5C842;
+  letter-spacing: 2px; text-transform: uppercase;
+  margin: .5rem 0 1rem; opacity: .75;
+}
+
+/* ===== ÇARK APP ===== */
+#app {
+  padding: 1.5rem 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+#pointer {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-right: 34px solid #FF6B6B;
+  filter: drop-shadow(0 0 6px rgba(255,107,107,0.7));
+}
+
+#spin-btn {
+  padding: 13px 40px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #F5C842, #e0a800);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  color: #1a1a2e;
+  transition: transform 0.15s, box-shadow 0.15s;
+  min-width: 200px;
+  box-shadow: 0 4px 20px rgba(245,200,66,0.5);
+  letter-spacing: 0.3px;
+}
+#spin-btn:hover { transform: scale(1.04); box-shadow: 0 6px 28px rgba(245,200,66,0.7); }
+#spin-btn:active { transform: scale(0.97); }
+#spin-btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+#overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+#overlay.show { display: flex; }
+
+#modal {
+  background: #16213e;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 2.5rem 2rem;
+  max-width: 500px; width: 100%;
+  text-align: center;
+  animation: popIn 0.3s ease;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+}
+@keyframes popIn { from { transform: scale(0.82); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+#modal-q {
+  font-size: 20px;
+  font-weight: 600;
+  color: #f0f0f0;
+  line-height: 1.55;
+  margin-bottom: 2rem;
+}
+
+#modal-btn {
+  padding: 12px 36px;
+  font-size: 15px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #FF6B6B, #FF9F43);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(255,107,107,0.45);
+}
+#modal-btn:hover { transform: scale(1.04); }
+
+#count-info {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.3px;
+}
+
+#done-msg {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FECA57;
+  padding: 2rem;
+  text-align: center;
+}
+
+#title-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ===== INFO PANEL ===== */
+#info-panel {
+  width: 300px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+#info-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #F5C842, #e0a800);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  padding: 9px 16px;
+  cursor: pointer;
+  color: #1a1a2e;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(245,200,66,0.4);
+  transition: box-shadow 0.2s, transform 0.15s;
+  width: 100%;
+  text-align: left;
+  outline: none;
+}
+#info-toggle:hover { box-shadow: 0 6px 28px rgba(245,200,66,0.6); transform: translateY(-1px); }
+#info-toggle .arrow { margin-left: auto; transition: transform 0.25s; font-size: 11px; opacity: 0.7; }
+#info-toggle.open .arrow { transform: rotate(180deg); }
+
+#info-body {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 200;
+  width: 300px;
+  background: rgba(22,33,62,0.97);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  animation: slideDown 0.22s ease;
+}
+#info-body.open { display: block; }
+@keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+.info-section { margin-bottom: 14px; }
+.info-section:last-child { margin-bottom: 0; }
+
+.info-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FECA57;
+  background: rgba(254,202,87,0.12);
+  border: 1px solid rgba(254,202,87,0.3);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+}
+.info-level-badge {
+  color: #48DBFB;
+  background: rgba(72,219,251,0.12);
+  border-color: rgba(72,219,251,0.3);
+}
+
+.info-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+.info-steps li { display: flex; gap: 8px; font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.5; }
+.step-num {
+  min-width: 20px; height: 20px; border-radius: 50%;
+  background: #F5C842; color: #1a1a2e;
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+
+.info-goals { display: flex; flex-direction: column; gap: 5px; }
+.info-goal { display: flex; align-items: flex-start; gap: 7px; font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.45; }
+.goal-dot { width: 6px; height: 6px; border-radius: 50%; background: #1DD1A1; flex-shrink: 0; margin-top: 5px; }
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+</style>
+</head>
+<body>
+
+<!-- ===== GERİ BUTONU ===== -->
+<div class="home-btn-wrap">
+  <div id="info-panel">
+    <button id="info-toggle" onclick="toggleInfo(this)">
+      <span>ℹ️</span>
+      <span>Uygulama Bilgisi</span>
+      <span class="arrow">▼</span>
+    </button>
+    <div id="info-body">
+      <div class="info-section">
+        <div class="info-badge info-level-badge">Seviye</div>
+        <div style="font-size:15px;font-weight:700;color:#48DBFB;">B2 &amp; C1</div>
+      </div>
+      <div class="info-section">
+        <div class="info-badge">Uygulama Şekli</div>
+        <ul class="info-steps">
+          <li><span class="step-num">1</span><span>İki öğrenci seçilir veya iki grup oluşturulur.</span></li>
+          <li><span class="step-num">2</span><span>Çark çevrilir ve çıkan konuya göre taraflar fikirlerini seçer.</span></li>
+          <li><span class="step-num">3</span><span>Öğrencilerin hazırlanmaları için birkaç dakika verilir.</span></li>
+          <li><span class="step-num">4</span><span>Sırayla her grup kendi fikrini savunur.</span></li>
+        </ul>
+      </div>
+      <div class="info-section">
+        <div class="info-badge">Amaç</div>
+        <div class="info-goals">
+          <div class="info-goal"><span class="goal-dot"></span><span>Kendi fikirlerini ifade edebilmek</span></div>
+          <div class="info-goal"><span class="goal-dot"></span><span>Rakip öğrencinin/grubun fikrini çürütebilmek</span></div>
+          <div class="info-goal"><span class="goal-dot"></span><span>Karşıt fikirlere karşı kendi fikrini savunabilmek</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="header-badge">✦ B2 &amp; C1 Münazara ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Münazara Konuları • Bahs Mavzulari</p>
+</header>
+
+<!-- ===== TELEGRAM ===== -->
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<div class="section-title">Münazara Çarkı</div>
+
+<!-- ===== ÇARK UYGULAMASI ===== -->
+<div id="app">
+
+  <div id="title-label">Münazara Konuları</div>
+  <div style="position:relative;width:420px;height:420px;">
+    <canvas id="wheel-canvas" width="420" height="420" style="display:block;border-radius:50%;box-shadow:0 0 40px rgba(123,47,190,0.4);"></canvas>
+    <div id="pointer"></div>
+  </div>
+  <div id="count-info"></div>
+  <button id="spin-btn">🎡 Çarkı Çevir</button>
+  <div id="done-msg" style="display:none">🎉 Tüm konular tamamlandı!</div>
+</div>
+
+<!-- Modal -->
+<div id="overlay">
+  <div id="modal">
+    <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;margin-bottom:1rem;">Münazara Konusu</div>
+    <div id="modal-q"></div>
+    <button id="modal-btn">Devam Et →</button>
+  </div>
+</div>
+
+<footer>
+  <p>Hamza Hoca ile Türkçe Öğreniyorum &nbsp;|&nbsp; <span>@TurkcheOzbekche</span></p>
+</footer>
+
+<script>
+function toggleInfo(btn) {
+  btn.classList.toggle('open');
+  document.getElementById('info-body').classList.toggle('open');
+}
+
+const QUESTIONS = [
+  "Yapay zeka öğretmenlerin yerini almalı mı, yoksa sadece bir yardımcı araç olarak mı kalmalı?",
+  "Online eğitim mi, yoksa geleneksel sınıf eğitimi mi daha verimli?",
+  "Okullarda not sistemi (0-100 arası puanlama) kaldırılmalı mı?",
+  "Şehir hayatı mı insanı daha mutlu eder, yoksa köy hayatı mı?",
+  "Sosyal medya insanları sosyalleştiriyor mu, yoksa yalnızlaştırıyor mu?",
+  "Para mutluluk getirir mi?",
+  "Haftalık çalışma süresi 4 güne indirilmeli mi?",
+  "Evden çalışma mı daha verimli, yoksa ofise gitmek mi?",
+  "Gelecekte robotların çalışması sonucu insanların çalışmasına gerek kalmaması iyi mi, kötü mü?",
+  "Hayvanat bahçeleri eğitim ve koruma için gerekli midir, yoksa tamamen kapatılmalı mıdır?",
+  "Çevre kirliliğini önlemek için bireysel çabalar mı daha etkili, yoksa devletlerin sert yasaları mı?",
+  "Uzay araştırmalarına harcanan dev bütçeler gerekli midir, yoksa bu para dünyadaki sorunlar için mi kullanılmalıdır?",
+  "Sabah erken uyanmak mı daha verimlidir, yoksa gece çalışmak mı?",
+  "Basılı kitap okumak mı daha keyifli, yoksa e-kitap kullanmak mı?",
+  "Hediye alırken hazır bir şey satın almak mı daha değerlidir, yoksa el emeği bir hediye mi?",
+  "Alışverişi internetten yapmak mı daha mantıklı, yoksa mağazaya gidip görerek almak mı?"
+];
+
+const COLORS = [
+  '#FF6B6B','#FF9F43','#FECA57','#48DBFB','#1DD1A1',
+  '#FF6348','#7BED9F','#70A1FF','#FF4757','#2ED573',
+  '#FFA502','#FF6B81','#54A0FF','#A29BFE','#00D2D3','#FD79A8'
+];
+
+let remaining = [...QUESTIONS];
+let currentAngle = 0;
+let isSpinning = false;
+let selectedIdx = -1;
+let lastTickSegment = -1;
+
+const canvas = document.getElementById('wheel-canvas');
+const ctx = canvas.getContext('2d');
+const spinBtn = document.getElementById('spin-btn');
+const overlay = document.getElementById('overlay');
+const modalQ = document.getElementById('modal-q');
+const modalBtn = document.getElementById('modal-btn');
+const countInfo = document.getElementById('count-info');
+const doneMsg = document.getElementById('done-msg');
+
+function drawWheel(angle) {
+  const cx = 210, cy = 210, r = 200;
+  const n = remaining.length;
+  ctx.clearRect(0, 0, 420, 420);
+  if (n === 0) return;
+  const sliceAngle = (2 * Math.PI) / n;
+
+  for (let i = 0; i < n; i++) {
+    const start = angle + i * sliceAngle;
+    const end = start + sliceAngle;
+    const mid = start + sliceAngle / 2;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    ctx.fillStyle = COLORS[i % COLORS.length];
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(20,20,40,0.6)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(mid);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = 'rgba(0,0,0,0.6)';
+    ctx.shadowBlur = 4;
+    const maxChars = n <= 4 ? 28 : n <= 8 ? 22 : 18;
+    const maxLines = n <= 4 ? 4 : n <= 8 ? 3 : 2;
+    const fontSize = n <= 4 ? 13 : n <= 8 ? 11 : 10;
+    const lineH = fontSize + 3;
+    ctx.font = `700 ${fontSize}px sans-serif`;
+    const label = wrapLabel(remaining[i], maxChars, maxLines);
+    const totalH = label.length * lineH;
+    label.forEach((line, li) => {
+      ctx.fillText(line, r - 12, -totalH/2 + li * lineH + lineH * 0.75);
+    });
+    ctx.restore();
+  }
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, 28, 0, 2 * Math.PI);
+  ctx.fillStyle = '#1a1a2e';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+function wrapLabel(text, maxChars, maxLines) {
+  const words = text.split(' ');
+  const lines = [];
+  let cur = '';
+  for (const w of words) {
+    const test = cur ? cur + ' ' + w : w;
+    if (test.length > maxChars && cur) {
+      lines.push(cur);
+      cur = w;
+      if (lines.length >= maxLines - 1) { cur = cur + '…'; break; }
+    } else cur = test;
+  }
+  if (cur && lines.length < maxLines) lines.push(cur);
+  return lines;
+}
+
+function getSegmentAtPointer(angle) {
+  const n = remaining.length;
+  if (n === 0) return -1;
+  const sliceAngle = (2 * Math.PI) / n;
+  let rel = ((0 - angle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  return Math.floor(rel / sliceAngle) % n;
+}
+
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function playTick() {
+  try {
+    if (!audioCtx) audioCtx = new AudioCtx();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type = 'triangle';
+    osc.frequency.value = 900;
+    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.06);
+  } catch(e) {}
+}
+
+function updateCount() {
+  countInfo.textContent = remaining.length > 0 ? `${remaining.length} konu kaldı` : '';
+}
+
+function spin() {
+  if (isSpinning || remaining.length === 0) return;
+  isSpinning = true;
+  spinBtn.disabled = true;
+  lastTickSegment = -1;
+
+  const extraSpins = (5 + Math.floor(Math.random() * 5)) * 2 * Math.PI;
+  const targetOffset = Math.random() * 2 * Math.PI;
+  const totalRotation = extraSpins + targetOffset;
+  const duration = 4000 + Math.random() * 1500;
+  const startAngle = currentAngle;
+  const startTime = performance.now();
+
+  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
+
+  function frame(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    currentAngle = startAngle + totalRotation * easeOut(t);
+    drawWheel(currentAngle);
+    const seg = getSegmentAtPointer(currentAngle);
+    if (seg !== lastTickSegment) { playTick(); lastTickSegment = seg; }
+    if (t < 1) { requestAnimationFrame(frame); }
+    else {
+      currentAngle = startAngle + totalRotation;
+      drawWheel(currentAngle);
+      selectedIdx = getSegmentAtPointer(currentAngle);
+      isSpinning = false;
+      setTimeout(showQuestion, 350);
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+function showQuestion() {
+  if (selectedIdx < 0 || selectedIdx >= remaining.length) return;
+  modalQ.textContent = remaining[selectedIdx];
+  overlay.classList.add('show');
+}
+
+modalBtn.addEventListener('click', () => {
+  overlay.classList.remove('show');
+  remaining.splice(selectedIdx, 1);
+  selectedIdx = -1;
+  updateCount();
+  drawWheel(currentAngle);
+  if (remaining.length === 0) {
+    spinBtn.style.display = 'none';
+    doneMsg.style.display = 'block';
+  } else {
+    spinBtn.disabled = false;
+  }
+});
+
+spinBtn.addEventListener('click', spin);
+drawWheel(currentAngle);
+updateCount();
+</script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türkçe Okuma Testi 6 – Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209; --paper: #faf7f0; --cream: #f2ead8;
+    --accent: #c0392b; --gold: #b8860b; --muted: #7a6a55;
+    --success: #2e7d52; --error: #c0392b; --border: #d4c5a9;
+    --shadow: rgba(26,18,9,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper); color: var(--ink);
+    line-height: 1.7; min-height: 100vh;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 1.3rem; background: transparent;
+    border: 2px solid #F5C842; border-radius: 30px;
+    color: #F5C842; font-family: 'Segoe UI', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.06em; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+    position: absolute; top: 1.2rem; left: 1.5rem; z-index: 10;
+  }
+  .back-btn:hover { background: #F5C842; color: #1a2332; }
+  @media (max-width: 600px) {
+    .back-btn { position: static; margin: 0 auto 1rem; display: flex; justify-content: center; width: fit-content; }
+  }
+  /* ---- sayaç: sayfaya gömülü, sabit değil, küçük boy ---- */
+  .timer-corner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(26,18,9,0.85);
+    backdrop-filter: blur(6px);
+    border-radius: 32px;
+    padding: 0.2rem 0.7rem 0.2rem 1rem;
+    font-family: 'Segoe UI', 'Source Serif 4', monospace;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid rgba(212,160,23,0.5);
+    transition: all 0.2s ease;
+    width: fit-content;
+    margin-bottom: 0.8rem;
+    /* normal akışta, sayfayla beraber kayar */
+  }
+  .timer-display {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: #0a0c14;
+    padding: 0.1rem 0.5rem;
+    border-radius: 28px;
+    color: #a5f0b3;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.1s ease;
+    min-width: 88px;
+    text-align: center;
+  }
+  .timer-display.warning {
+    color: #ff7777;
+    text-shadow: 0 0 1px #ff4444;
+  }
+  .timer-btn {
+    background: #2c2e3a;
+    border: none;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 28px;
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .timer-btn:hover {
+    background: #D4A017;
+    color: #1a1209;
+    transform: scale(0.96);
+  }
+  /* header içine sayaç konumlandırması için küçük düzen */
+  .header-top-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+  }
+  @media (max-width: 600px) {
+    .timer-corner {
+      padding: 0.15rem 0.6rem;
+      gap: 0.5rem;
+    }
+    .timer-display {
+      font-size: 0.75rem;
+      min-width: 78px;
+    }
+    .timer-btn {
+      font-size: 0.55rem;
+      padding: 0.15rem 0.55rem;
+    }
+  }
+  /* orijinal stiller aynen devam */
+  header {
+    background: #1a2332; color: var(--paper);
+    padding: 2rem 2rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block; border: 2px solid #D4A017;
+    border-radius: 30px; padding: 0.35rem 1.2rem;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #1a2332; background: #D4A017; margin-bottom: 1rem;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;
+    line-height: 1.15; color: #D4A017;
+    text-shadow: 0 1px 12px rgba(212,160,23,0.2);
+    letter-spacing: 0.04em; margin-bottom: 0.8rem;
+    -webkit-text-stroke: 0.5px #D4A017;
+  }
+  .header-stars { color: #D4A017; font-size: 1.2rem; letter-spacing: 0.2em; margin-bottom: 0.4rem; display: block; }
+  .header-divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, #D4A017, transparent);
+    margin: 0.4rem auto 1.5rem;
+  }
+  .header-cta-text {
+    font-size: 0.82rem; color: #e8dfc8;
+    margin-bottom: 0.8rem; font-style: normal;
+    letter-spacing: 0.01em; font-weight: 600;
+  }
+  .tg-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.65rem 1.8rem; background: #D4A017;
+    color: #1a2332; text-decoration: none;
+    border-radius: 8px; font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem; font-weight: 700;
+    letter-spacing: 0.03em; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+    position: relative; z-index: 2;
+  }
+  .tg-btn:hover { background: #c49010; transform: translateY(-2px); }
+  .tg-btn svg { flex-shrink: 0; fill: #229ED9; width: 18px; height: 18px; }
+  .progress-wrap {
+    background: #1a2332; padding: 0 2rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .segments-bar { flex: 1; display: flex; gap: 2px; }
+  .seg {
+    flex: 1; height: 8px; border-radius: 2px;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s ease;
+  }
+  .seg.filled { background: var(--success); }
+  .progress-text {
+    color: #b8a890; font-size: 0.78rem;
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .section-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 2px; margin-bottom: 2.5rem;
+    box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+  }
+  .section-header {
+    background: var(--ink); color: var(--paper);
+    padding: 1rem 1.5rem; display: flex;
+    align-items: center; gap: 1rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--gold); line-height: 1; min-width: 2rem;
+  }
+  .section-title {
+    font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.18em; font-weight: 600; color: var(--cream);
+  }
+  .section-body { padding: 1.5rem; }
+  .reading-text {
+    background: var(--cream); border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;
+    font-size: 0.92rem; line-height: 1.85;
+    color: #2a1f10; border-radius: 0 2px 2px 0;
+  }
+  .reading-text p { margin-bottom: 0.8rem; }
+  .reading-text p:last-child { margin-bottom: 0; }
+  .instructions {
+    font-size: 0.82rem; color: var(--muted);
+    font-style: italic; margin-bottom: 1.2rem;
+    padding: 0.7rem 1rem; border: 1px dashed var(--border);
+    border-radius: 2px;
+  }
+  .options-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .options-grid {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.4rem; padding: 0.8rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .option-pill {
+    padding: 0.3rem 0.8rem; background: white;
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.82rem; font-family: 'Source Serif 4', serif;
+  }
+  .option-pill strong { color: var(--accent); }
+  .question {
+    margin-bottom: 1.4rem; padding-bottom: 1.4rem;
+    border-bottom: 1px solid #ede5d4;
+  }
+  .question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--muted); margin-bottom: 0.4rem;
+  }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.8rem; font-weight: 400; }
+  .q-text .blank {
+    display: inline-block; min-width: 120px;
+    border-bottom: 2px solid var(--gold);
+    text-align: center; padding: 0 4px;
+    font-weight: 600; color: var(--accent);
+  }
+  select {
+    appearance: none; -webkit-appearance: none;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6a55' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1.5px solid var(--border); border-radius: 2px;
+    padding: 0.45rem 2rem 0.45rem 0.7rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    color: var(--ink); cursor: pointer; min-width: 160px;
+    transition: border-color 0.2s;
+  }
+  select:focus { outline: none; border-color: var(--gold); }
+  select.correct { border-color: var(--success); background-color: #f0faf5; }
+  select.wrong { border-color: var(--error); background-color: #fff5f5; }
+  .choices { display: flex; flex-direction: column; gap: 0.5rem; }
+  .choice-label {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.55rem 0.8rem; border: 1.5px solid var(--border);
+    border-radius: 2px; cursor: pointer; font-size: 0.88rem;
+    transition: all 0.15s; background: white;
+  }
+  .choice-label:hover { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label input[type=radio] { display: none; }
+  .choice-key {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    color: var(--muted); min-width: 1.1rem; margin-top: 0.05rem;
+  }
+  .choice-label.selected { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label.correct { border-color: var(--success); background: #f0faf5; }
+  .choice-label.correct .choice-key { color: var(--success); }
+  .choice-label.wrong { border-color: var(--error); background: #fff5f5; }
+  .choice-label.wrong .choice-key { color: var(--error); }
+  .choice-label.show-answer { border-color: var(--success); background: #f0faf5; }
+  .choice-label.show-answer .choice-key { color: var(--success); }
+  .match-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.8rem; padding: 0.7rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .match-num {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 1rem; color: var(--accent);
+    min-width: 1.5rem; padding-top: 0.25rem;
+  }
+  .match-text { flex: 1; font-size: 0.87rem; line-height: 1.5; }
+  .match-select { min-width: 140px; }
+  .submit-wrap {
+    text-align: center; margin-top: 2rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .btn-submit {
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 0.9rem 3rem; font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer; border-radius: 2px; transition: all 0.2s;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-reset {
+    background: transparent; color: var(--muted);
+    border: 1.5px solid var(--border); padding: 0.9rem 2rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    cursor: pointer; border-radius: 2px; margin-left: 0.8rem;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--ink); }
+  #results {
+    display: none; background: var(--ink); color: var(--paper);
+    border-radius: 2px; padding: 2rem; margin-bottom: 2.5rem;
+    text-align: center; box-shadow: 0 4px 24px var(--shadow);
+    animation: fadeUp 0.5s ease;
+  }
+  #results h2 {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    font-weight: 900; color: var(--gold);
+  }
+  #results .score-label {
+    font-size: 0.8rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #b8a890; margin-bottom: 0.3rem;
+  }
+  #results .score-detail {
+    font-size: 0.9rem; color: #b8a890;
+    margin-top: 0.5rem; font-style: italic;
+  }
+  #results .feedback {
+    margin-top: 1rem; font-size: 1rem; color: var(--cream);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-feedback {
+    display: none; font-size: 0.78rem; margin-top: 0.4rem;
+    padding: 0.3rem 0.6rem; border-radius: 2px; font-style: italic;
+  }
+  .q-feedback.correct { display: block; color: var(--success); background: #f0faf5; }
+  .q-feedback.wrong { display: block; color: var(--error); background: #fff5f5; }
+  @media (max-width: 600px) {
+    .match-row { flex-direction: column; }
+    .match-select, select { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.history.back()">← Geri</button>
+  <!-- sayaç artık header içinde, sağ üstte değil, gömülü ve sayfayla kayıyor -->
+  <div class="header-top-row">
+    <div class="timer-corner" id="timerCorner">
+      <div class="timer-display" id="timerDisplay">00:00:00</div>
+      <button class="timer-btn" id="timerStartStopBtn">▶ Başlat</button>
+    </div>
+  </div>
+  <div class="header-badge">✦ Okuma Testi 6 ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <span class="header-stars">★★★★★</span>
+  <div class="header-divider"></div>
+  <div class="header-cta-text">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</div>
+  <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.28 13.6l-2.965-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.959z"/></svg>
+    Kanala Katıl
+  </a>
+</header>
+
+<div class="progress-wrap">
+  <div class="segments-bar" id="segmentsBar"></div>
+  <div class="progress-text" id="progressText">0 / 35</div>
+</div>
+
+<main>
+
+<div id="results">
+  <div class="score-label">Doğru Cevap Sayısı</div>
+  <h2 id="scoreDisplay">–</h2>
+  <div class="score-detail" id="scoreDetail"></div>
+  <div class="feedback" id="feedbackMsg"></div>
+</div>
+
+<!-- BÖLÜM 1: BOŞLUK DOLDURMA -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Okuma Metni — Boşluk Doldurma</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Toplu Taşıma ve Şehir Hayatı · Sorular 1–6</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>Toplu taşıma sistemleri, modern şehirlerin <strong>(1) ______</strong> işleyişinde kritik bir rol oynamaktadır. Metrolar, tramvaylar, otobüsler ve feribotlar, milyonlarca insanın günlük hareketliliğini <strong>(2) ______</strong> en verimli araçlardır. Özellikle büyük kentlerde özel araç kullanımının yol açtığı trafik yoğunluğu, hava kirliliği ve park sorunu, toplu taşımayı <strong>(3) ______</strong> bir çözüm haline getirmektedir.</p>
+      <p>Son yıllarda toplu taşıma sistemlerinde dijital dönüşüm hız kazanmıştır. Akıllı kart uygulamaları, mobil biletleme, araçların anlık konumunu gösteren uygulamalar ve entegre ulaşım ağları, yolcuların <strong>(4) ______</strong> artırmaktadır. Ayrıca elektrikli otobüsler ve raylı sistemlerin yaygınlaştırılması, karbon salımının <strong>(5) ______</strong> önemli katkı sağlamaktadır.</p>
+      <p>Uzmanlar, toplu taşımanın cazibesini artırmak için konfor, güvenlik ve erişilebilirlik <strong>(6) ______</strong> iyileştirilmesi gerektiğini vurgulamaktadır. Sefer sıklığının artırılması, araçların temiz ve bakımlı tutulması, engelli bireyler için uygun düzenlemelerin yapılması, toplu taşımayı tercih edenlerin sayısını artıracak faktörler arasında yer almaktadır.</p>
+    </div>
+    <div class="instructions">Her sözcük yalnızca bir defa kullanılabilir. Seçmemeniz gereken <strong>iki</strong> seçenek bulunmaktadır.</div>
+    <div class="options-label">Kelime Listesi</div>
+    <div class="options-grid">
+      <div class="option-pill"><strong>A)</strong> konforunu</div>
+      <div class="option-pill"><strong>B)</strong> azaltılmasına</div>
+      <div class="option-pill"><strong>C)</strong> sürdürülebilir</div>
+      <div class="option-pill"><strong>D)</strong> sağlayan</div>
+      <div class="option-pill"><strong>E)</strong> vazgeçilmez</div>
+      <div class="option-pill"><strong>F)</strong> standartlarının</div>
+      <div class="option-pill"><strong>G)</strong> oluşturan</div>
+      <div class="option-pill"><strong>H)</strong> işleyişinde</div>
+    </div>
+    <div class="question" id="qw1"><div class="q-label">Soru 1</div><div class="q-text">Toplu taşıma sistemleri, modern şehirlerin <span class="blank">______</span> kritik bir rol oynamaktadır.</div><select id="q1" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) konforunu</option><option value="B">B) azaltılmasına</option><option value="C">C) sürdürülebilir</option><option value="D">D) sağlayan</option><option value="E">E) vazgeçilmez</option><option value="F">F) standartlarının</option><option value="G">G) oluşturan</option><option value="H">H) işleyişinde</option></select><div class="q-feedback" id="fb1"></div></div>
+    <div class="question" id="qw2"><div class="q-label">Soru 2</div><div class="q-text">Metrolar, tramvaylar, otobüsler ve feribotlar, milyonlarca insanın günlük hareketliliğini <span class="blank">______</span> en verimli araçlardır.</div><select id="q2" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) konforunu</option><option value="B">B) azaltılmasına</option><option value="C">C) sürdürülebilir</option><option value="D">D) sağlayan</option><option value="E">E) vazgeçilmez</option><option value="F">F) standartlarının</option><option value="G">G) oluşturan</option><option value="H">H) işleyişinde</option></select><div class="q-feedback" id="fb2"></div></div>
+    <div class="question" id="qw3"><div class="q-label">Soru 3</div><div class="q-text">Trafik yoğunluğu, hava kirliliği ve park sorunu, toplu taşımayı <span class="blank">______</span> bir çözüm haline getirmektedir.</div><select id="q3" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) konforunu</option><option value="B">B) azaltılmasına</option><option value="C">C) sürdürülebilir</option><option value="D">D) sağlayan</option><option value="E">E) vazgeçilmez</option><option value="F">F) standartlarının</option><option value="G">G) oluşturan</option><option value="H">H) işleyişinde</option></select><div class="q-feedback" id="fb3"></div></div>
+    <div class="question" id="qw4"><div class="q-label">Soru 4</div><div class="q-text">Akıllı kart uygulamaları ve entegre ulaşım ağları, yolcuların <span class="blank">______</span> artırmaktadır.</div><select id="q4" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) konforunu</option><option value="B">B) azaltılmasına</option><option value="C">C) sürdürülebilir</option><option value="D">D) sağlayan</option><option value="E">E) vazgeçilmez</option><option value="F">F) standartlarının</option><option value="G">G) oluşturan</option><option value="H">H) işleyişinde</option></select><div class="q-feedback" id="fb4"></div></div>
+    <div class="question" id="qw5"><div class="q-label">Soru 5</div><div class="q-text">Elektrikli otobüsler ve raylı sistemlerin yaygınlaştırılması, karbon salımının <span class="blank">______</span> önemli katkı sağlamaktadır.</div><select id="q5" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) konforunu</option><option value="B">B) azaltılmasına</option><option value="C">C) sürdürülebilir</option><option value="D">D) sağlayan</option><option value="E">E) vazgeçilmez</option><option value="F">F) standartlarının</option><option value="G">G) oluşturan</option><option value="H">H) işleyişinde</option></select><div class="q-feedback" id="fb5"></div></div>
+    <div class="question" id="qw6"><div class="q-label">Soru 6</div><div class="q-text">Uzmanlar, konfor, güvenlik ve erişilebilirlik <span class="blank">______</span> iyileştirilmesi gerektiğini vurgulamaktadır.</div><select id="q6" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) konforunu</option><option value="B">B) azaltılmasına</option><option value="C">C) sürdürülebilir</option><option value="D">D) sağlayan</option><option value="E">E) vazgeçilmez</option><option value="F">F) standartlarının</option><option value="G">G) oluşturan</option><option value="H">H) işleyişinde</option></select><div class="q-feedback" id="fb6"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 2: İLAN-DURUM EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Okuma Metni — İlan-Durum Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Teknoloji ve Dijital Hizmetler · Sorular 7–14</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Aşağıdaki durumları (A-J) ve ilanları (7-14) eşleştiriniz. Her ilan yalnız bir durumla eşleşecektir. <strong>İki</strong> durum seçilmeyecektir.</div>
+    <div class="options-label">Durumlar (A–J)</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Küçük işletmenizin ürünlerini çevrimiçi satışa açmak için bir e-ticaret sitesi kurmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>B)</strong> Kişisel blogunuzun ziyaretçi sayısını artırmak için arama motorlarında üst sıralara çıkmanın yollarını arıyorsunuz.</div>
+      <div class="option-pill"><strong>C)</strong> Bilgisayarınıza zarar vermeden virüsleri temizleyecek ve sisteminizi koruyacak bir yazılım arıyorsunuz.</div>
+      <div class="option-pill"><strong>D)</strong> Çektiğiniz fotoğrafları düzenlemek, kusurları gidermek ve renk ayarlarını yapmak için bir program arıyorsunuz.</div>
+      <div class="option-pill"><strong>E)</strong> Düğün gününüzde çekilen videoları profesyonelce kurgulayıp müzik eklenmiş bir film haline getirecek birini arıyorsunuz.</div>
+      <div class="option-pill"><strong>F)</strong> Şirketinizin müşteri ilişkileri süreçlerini dijital ortamda yönetecek bir yazılım sistemi arıyorsunuz.</div>
+      <div class="option-pill"><strong>G)</strong> Web sitenizin kodlama altyapısını güçlendirmek ve daha hızlı çalışmasını sağlamak için bir yazılım uzmanı arıyorsunuz.</div>
+      <div class="option-pill"><strong>H)</strong> Sosyal medya hesaplarınızı yönetecek, içerik üretecek ve takipçi etkileşimini artıracak bir uzman arıyorsunuz.</div>
+      <div class="option-pill"><strong>I)</strong> Oyun oynamaktan hoşlanan çocuğunuzun, bilgisayar bilimlerine ilgisini geliştirecek bir yazılım kursu arıyorsunuz.</div>
+      <div class="option-pill"><strong>J)</strong> Verilerinizin yedeklenmesi ve siber saldırılara karşı korunması için bir bulut depolama hizmeti arıyorsunuz.</div>
+    </div>
+    <div id="matchingQuestions">
+      <div class="match-row" id="qw7"><div class="match-num">7</div><div class="match-text"><strong>SEO ve Dijital Pazarlama Danışmanlığı:</strong> Web sitenizin veya blogunuzun arama motorlarında üst sıralarda görünmesi için anahtar kelime analizi, backlink stratejileri ve içerik optimizasyonu hizmeti. Organik trafiğinizi artırın.</div><select id="q7" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb7"></div></div>
+      <div class="match-row" id="qw8"><div class="match-num">8</div><div class="match-text"><strong>Siber Güvenlik ve Antivirüs Çözümleri:</strong> Bilgisayar ve mobil cihazlarınızı kötü amaçlı yazılımlardan koruyan, düzenli tarama yapan ve gerçek zamanlı güvenlik sağlayan yazılım paketleri. Veri güvenliğiniz için en kapsamlı çözümler.</div><select id="q8" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb8"></div></div>
+      <div class="match-row" id="qw9"><div class="match-num">9</div><div class="match-text"><strong>E-Ticaret ve Sanal Mağaza Kurulumu:</strong> Sıfırdan e-ticaret sitesi kurulumu, altyapı entegrasyonu, ödeme sistemleri ve ürün yönetim panelleri. İşletmenizi dijital dünyaya taşıyın, online satışa başlayın.</div><select id="q9" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb9"></div></div>
+      <div class="match-row" id="qw10"><div class="match-num">10</div><div class="match-text"><strong>Sosyal Medya Yönetimi ve Danışmanlık:</strong> Instagram, Facebook, Twitter ve LinkedIn hesaplarınızın stratejik yönetimi, içerik üretimi, reklam yönetimi ve takipçi etkileşimi. Kurumsal kimliğinize uygun sosyal medya çözümleri.</div><select id="q10" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb10"></div></div>
+      <div class="match-row" id="qw11"><div class="match-num">11</div><div class="match-text"><strong>Video Prodüksiyon ve Montaj Hizmeti:</strong> Düğün, nişan, doğum günü, kurumsal etkinlik ve tanıtım filmlerinizin profesyonel kurgusu, renk düzenlemesi, seslendirme ve müzik ekleme işlemleri. Yaratıcı stüdyo ekibiyle kaliteli prodüksiyon.</div><select id="q11" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb11"></div></div>
+      <div class="match-row" id="qw12"><div class="match-num">12</div><div class="match-text"><strong>Kodlama ve Robotik Atölyesi:</strong> 8-15 yaş arası çocuklar için Scratch, Python, Arduino ve robotik kodlama eğitimleri. Eğlenceli projelerle çocukların algoritmik düşünme becerilerini geliştirin.</div><select id="q12" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb12"></div></div>
+      <div class="match-row" id="qw13"><div class="match-num">13</div><div class="match-text"><strong>Kurumsal Yazılım ve CRM Sistemleri:</strong> Müşteri ilişkileri yönetimi, satış takibi, stok yönetimi ve raporlama sistemlerinin işletmenize özel olarak geliştirilmesi. Verimliliğinizi artıracak dijital çözümler.</div><select id="q13" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb13"></div></div>
+      <div class="match-row" id="qw14"><div class="match-num">14</div><div class="match-text"><strong>Fotoğraf Düzenleme ve Rötuş Hizmeti:</strong> Portre, ürün, mimari ve düğün fotoğraflarınızda kusur giderme, renk düzeltme, arka plan temizleme ve profesyonel rötuş işlemleri. Görsellerinizi sanatsal dokunuşlarla buluşturun.</div><select id="q14" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb14"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BÖLÜM 3: PARAGRAF-BAŞLIK EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Okuma Metni — Paragraf-Başlık Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Müzik ve Toplum · Sorular 15–20</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Her paragraf için uygun başlığı seçiniz (A–H). Her başlık yalnız bir defa kullanılabilir.</div>
+    <div class="options-label">Başlıklar</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Müzik Eğitiminin Bilişsel Gelişime Katkıları</div>
+      <div class="option-pill"><strong>B)</strong> Dijital Platformların Müzik Endüstrisine Etkisi</div>
+      <div class="option-pill"><strong>C)</strong> Kültürel Kimliğin Korunmasında Müziğin Rolü</div>
+      <div class="option-pill"><strong>D)</strong> Farklı Kültürlerin Müzikte Buluşması</div>
+      <div class="option-pill"><strong>E)</strong> Müzik Terapisinin İyileştirici Gücü</div>
+      <div class="option-pill"><strong>F)</strong> Gençlerin Müzik Tercihlerini Belirleyen Faktörler</div>
+      <div class="option-pill"><strong>G)</strong> Müzik Festivallerinin Sosyal ve Ekonomik Etkileri</div>
+      <div class="option-pill"><strong>H)</strong> Geleneksel Müziklerin Günümüze Aktarım Sorunları</div>
+    </div>
+    <div class="match-row" id="qw15"><div class="match-num">I</div><div class="match-text">Müzik, insanlık tarihi boyunca yalnızca bir eğlence aracı olmamış, aynı zamanda duyguların ifade edilmesinde, toplumsal olayların aktarılmasında ve kültürel değerlerin kuşaktan kuşağa iletilmesinde önemli bir rol oynamıştır. Türk halk müziği, âşıklık geleneği ve tasavvuf müziği gibi türler, Anadolu'nun binlerce yıllık birikimini günümüze taşıyan kültürel hazinelerdir. Ancak globalleşen dünyada popüler müzik kültürünün etkisiyle bu geleneksel türlerin icra edilme sıklığı azalmakta, genç kuşakların bu müziklerle tanışma fırsatı giderek daralmaktadır.</div><select id="q15" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb15"></div></div>
+    <div class="match-row" id="qw16"><div class="match-num">II</div><div class="match-text">Son yıllarda müzik dinleme alışkanlıklarında köklü bir değişim yaşanmaktadır. Spotify, Apple Music ve YouTube Music gibi dijital platformlar, dinleyicilere milyonlarca şarkıya anında erişim imkânı sunmaktadır. Bu durum, müzik endüstrisinin işleyişini dönüştürürken, sanatçıların gelir modellerini de yeniden şekillendirmektedir. Fiziksel albüm satışlarının yerini dinlenme sayılarına dayalı gelir modelleri almakta, bu da özellikle bağımsız sanatçılar için yeni fırsatlar ve zorluklar yaratmaktadır.</div><select id="q16" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb16"></div></div>
+    <div class="match-row" id="qw17"><div class="match-num">III</div><div class="match-text">Müzik festivalleri, son yirmi yılda dünyanın dört bir yanında milyonlarca insanı bir araya getiren dev organizasyonlara dönüşmüştür. Bu festivaller, yalnızca müzikseverlere unutulmaz deneyimler sunmakla kalmamakta, aynı zamanda düzenlendikleri şehirlerin turizm gelirlerine, yerel esnafın kazancına ve kentin uluslararası tanıtımına büyük katkı sağlamaktadır. Coachella, Glastonbury ve Sziget gibi dünyaca ünlü festivaller, düzenlendikleri dönemde şehirlerin ekonomik canlılığını önemli ölçüde artırmaktadır.</div><select id="q17" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb17"></div></div>
+    <div class="match-row" id="qw18"><div class="match-num">IV</div><div class="match-text">Müzik terapisi, ruh sağlığı alanında giderek daha fazla kabul gören bir tedavi yöntemi haline gelmektedir. Uzman terapistler eşliğinde uygulanan müzik terapi seansları, otizm spektrum bozukluğu, depresyon, anksiyete, travma sonrası stres bozukluğu ve Alzheimer gibi rahatsızlıklarda destekleyici tedavi olarak kullanılmaktadır. Ritim, melodi ve armoninin birleşimi, bireylerin duygularını ifade etmesine, stres seviyesini düşürmesine ve sosyal bağlarını güçlendirmesine yardımcı olmaktadır.</div><select id="q18" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb18"></div></div>
+    <div class="match-row" id="qw19"><div class="match-num">V</div><div class="match-text">Araştırmalar, erken yaşta müzik eğitimi alan çocukların dil gelişimi, matematik becerileri ve uzamsal zekâ gibi alanlarda akranlarına göre daha başarılı olduğunu göstermektedir. Enstrüman çalmak, beynin her iki yarım küresini eş zamanlı çalıştırarak nöral bağlantıların güçlenmesini sağlamaktadır. Ayrıca müzik eğitimi, disiplinli çalışma alışkanlığı, sabır, odaklanma ve takım çalışması gibi becerilerin gelişmesine de katkıda bulunmaktadır. Bu nedenle uzmanlar, müzik eğitiminin okul müfredatında daha fazla yer alması gerektiğini vurgulamaktadır.</div><select id="q19" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb19"></div></div>
+    <div class="match-row" id="qw20"><div class="match-num">VI</div><div class="match-text">Dünyanın farklı coğrafyalarında ortaya çıkan müzik türleri, küreselleşmeyle birlikte sınırları aşarak birbirleriyle etkileşime girmektedir. Afrika ritimlerinin Latin müziğiyle buluşmasıyla salsa, Amerika'da blues ve gospelin birleşimiyle caz, Anadolu ezgilerinin Batı enstrümanlarıyla harmanlanmasıyla Anadolu rock ortaya çıkmıştır. Bu kültürel etkileşimler, müziğin evrensel dilini daha da zenginleştirmekte, farklı kültürlerden insanların ortak bir duyguda buluşmasına olanak tanımaktadır.</div><select id="q20" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb20"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 4: ÇOKTAN SEÇMELİ + D/Y/V -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli &amp; Doğru/Yanlış/Verilmemiş</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Su Kaynakları ve Sürdürülebilirlik · Sorular 21–29</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>Su, yaşamın temel kaynağı olmasının yanı sıra, ekonomik kalkınma, gıda güvenliği ve ekosistemlerin sürdürülebilirliği açısından da stratejik bir öneme sahiptir. Dünya nüfusunun hızla artması, iklim değişikliğinin etkileri ve bilinçsiz tüketim alışkanlıkları, küresel su kaynakları üzerinde ciddi bir baskı oluşturmaktadır. Birleşmiş Milletler verilerine göre, dünya nüfusunun üçte birinden fazlası temiz suya erişim sorunu yaşamakta, bu sayının 2030 yılına kadar 5 milyara ulaşması beklenmektedir. Türkiye, su stresi yaşayan ülkeler arasında yer almakta olup, kişi başına düşen yıllık su miktarı 1.500 metreküp seviyesine gerilemiştir.</p>
+      <p>Tarım sektörü, küresel su tüketiminin yaklaşık yüzde 70'ini oluşturmaktadır. Bu oran, su kaynaklarının en verimli şekilde kullanılması gereken alanın tarım olduğunu göstermektedir. Geleneksel sulama yöntemleri yerine damla sulama ve yağmurlama gibi modern tekniklerin kullanılması, su tüketimini yüzde 50'ye varan oranlarda azaltabilmektedir. Ayrıca kuraklığa dayanıklı tohumların geliştirilmesi ve tarımsal planlamanın su havzalarına göre yapılması, su kaynaklarının korunmasında etkili stratejiler arasında yer almaktadır.</p>
+      <p>Türkiye'de su kaynaklarının korunması ve verimli kullanılması amacıyla Tarım ve Orman Bakanlığı tarafından çeşitli projeler yürütülmektedir. Havza bazlı su yönetimi planları, su kayıp ve kaçaklarının azaltılmasına yönelik altyapı çalışmaları ve atık suların geri kazanımı projeleri bu kapsamda hayata geçirilmektedir. Ayrıca belediyeler, vatandaşlara su tasarrufu konusunda farkındalık eğitimleri vermekte, suyu verimli kullanan cihazların kullanımını teşvik etmektedir. İstanbul, İzmir ve Ankara gibi büyük şehirlerde su kayıp oranları son on yılda önemli ölçüde düşürülmüştür.</p>
+      <p>Su kaynaklarının sürdürülebilir yönetiminde bireylere de önemli görevler düşmektedir. Günlük yaşamda yapılacak basit değişikliklerle büyük tasarruflar elde etmek mümkündür. Diş fırçalarken musluğu kapatmak, duş süresini kısaltmak, çamaşır ve bulaşık makinelerini tam doldurmadan çalıştırmamak, sızıntıları gidermek gibi alışkanlıklar, her bireyin su tasarrufuna katkı sağlamasının yollarıdır. Uzmanlar, su tasarrufu bilincinin çocuklara erken yaşta kazandırılmasının, gelecek nesillerin su güvenliği açısından kritik önem taşıdığını vurgulamaktadır.</p>
+      <p>İklim değişikliği, su kaynakları üzerindeki en büyük tehditlerden biri olarak öne çıkmaktadır. Artan sıcaklıklar, değişen yağış rejimleri ve kuraklık dönemlerinin uzaması, su arzında dengesizliklere yol açmaktadır. Akdeniz havzasında yer alan Türkiye, iklim değişikliğinden en fazla etkilenecek bölgeler arasında gösterilmektedir. Uzmanlar, su yönetimi politikalarının iklim değişikliği senaryolarına göre yeniden düzenlenmesi, yağmur suyu hasadı gibi alternatif su kaynaklarının geliştirilmesi ve suyun bir lüks değil yaşamsal bir ihtiyaç olduğu bilincinin toplumun tüm kesimlerine yaygınlaştırılması gerektiğini belirtmektedir.</p>
+    </div>
+    <div class="question" id="qw21"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 21 — Metnin bütününe göre aşağıdaki yargılardan hangisine varılamaz?</div><div class="choices" id="choices21"><label class="choice-label" onclick="selectChoice(this,'q21','A')"><input type="radio" name="q21" value="A"><span class="choice-key">A</span><span>Tarım sektörü, küresel su tüketiminin büyük bir bölümünü oluşturmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','B')"><input type="radio" name="q21" value="B"><span class="choice-key">B</span><span>Türkiye, su stresi yaşayan ülkeler arasında yer almaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','C')"><input type="radio" name="q21" value="C"><span class="choice-key">C</span><span>Su kaynaklarının korunmasında yalnızca devlet kurumları sorumluluk taşımaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','D')"><input type="radio" name="q21" value="D"><span class="choice-key">D</span><span>Damla sulama gibi modern teknikler, su tüketimini önemli ölçüde azaltabilmektedir.</span></label></div><div class="q-feedback" id="fb21"></div></div>
+    <div class="question" id="qw22"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 22 — Metinde geçen "havza bazlı su yönetimi planları" ile ne anlatılmaktadır?</div><div class="choices" id="choices22"><label class="choice-label" onclick="selectChoice(this,'q22','A')"><input type="radio" name="q22" value="A"><span class="choice-key">A</span><span>Su kaynaklarının belirli bir su toplama havzası bütünlüğü içinde planlanması ve yönetilmesi</span></label><label class="choice-label" onclick="selectChoice(this,'q22','B')"><input type="radio" name="q22" value="B"><span class="choice-key">B</span><span>Suyun yalnızca tarımsal alanlarda kullanılması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','C')"><input type="radio" name="q22" value="C"><span class="choice-key">C</span><span>Su kaynaklarının özel sektör tarafından işletilmesi</span></label><label class="choice-label" onclick="selectChoice(this,'q22','D')"><input type="radio" name="q22" value="D"><span class="choice-key">D</span><span>Suyun uluslararası kurallar çerçevesinde yönetilmesi</span></label></div><div class="q-feedback" id="fb22"></div></div>
+    <div class="question" id="qw23"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 23 — Aşağıdakilerden hangisinde su kaynaklarına dair verilen bilgiler yanlıştır?</div><div class="choices" id="choices23"><label class="choice-label" onclick="selectChoice(this,'q23','A')"><input type="radio" name="q23" value="A"><span class="choice-key">A</span><span>Dünya nüfusunun üçte birinden fazlası temiz suya erişim sorunu yaşamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','B')"><input type="radio" name="q23" value="B"><span class="choice-key">B</span><span>Bireylerin günlük yaşamda yapacağı basit değişiklikler su tasarrufuna katkı sağlamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','C')"><input type="radio" name="q23" value="C"><span class="choice-key">C</span><span>İklim değişikliği, su kaynakları üzerinde herhangi bir olumsuz etki yaratmamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','D')"><input type="radio" name="q23" value="D"><span class="choice-key">D</span><span>İstanbul, İzmir ve Ankara gibi büyük şehirlerde su kayıp oranları son on yılda düşürülmüştür.</span></label></div><div class="q-feedback" id="fb23"></div></div>
+    <div class="question" id="qw24"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 24 — Metne göre, aşağıdaki bilgilerden hangisi doğrudur?</div><div class="choices" id="choices24"><label class="choice-label" onclick="selectChoice(this,'q24','A')"><input type="radio" name="q24" value="A"><span class="choice-key">A</span><span>Türkiye'de kişi başına düşen yıllık su miktarı 5.000 metreküpün üzerindedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','B')"><input type="radio" name="q24" value="B"><span class="choice-key">B</span><span>Tarımda geleneksel sulama yöntemleri, modern yöntemlere göre daha az su tüketmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','C')"><input type="radio" name="q24" value="C"><span class="choice-key">C</span><span>Su tasarrufu bilincinin çocuklara kazandırılması, gelecek nesillerin su güvenliği açısından önemlidir.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','D')"><input type="radio" name="q24" value="D"><span class="choice-key">D</span><span>Türkiye, iklim değişikliğinden etkilenmeyecek ülkeler arasında yer almaktadır.</span></label></div><div class="q-feedback" id="fb24"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümleler metne göre <strong>DOĞRU (A)</strong>, <strong>YANLIŞ (B)</strong> ya da <strong>VERİLMEMİŞ (C)</strong> olabilir.</div>
+    <div class="question" id="qw25"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 25</div><div class="q-text" style="font-weight:700;color:var(--ink);">Dünya nüfusunun temiz suya erişim sorunu yaşayan kesimi, 2030 yılına kadar 5 milyara ulaşacağı öngörülmektedir.</div><div class="choices" id="choices25"><label class="choice-label" onclick="selectChoice(this,'q25','A')"><input type="radio" name="q25" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q25','B')"><input type="radio" name="q25" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q25','C')"><input type="radio" name="q25" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb25"></div></div>
+    <div class="question" id="qw26"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 26</div><div class="q-text" style="font-weight:700;color:var(--ink);">Türkiye'de su kaynaklarının korunması amacıyla yürütülen projeler yalnızca Tarım ve Orman Bakanlığı tarafından gerçekleştirilmektedir.</div><div class="choices" id="choices26"><label class="choice-label" onclick="selectChoice(this,'q26','A')"><input type="radio" name="q26" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q26','B')"><input type="radio" name="q26" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q26','C')"><input type="radio" name="q26" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb26"></div></div>
+    <div class="question" id="qw27"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 27</div><div class="q-text" style="font-weight:700;color:var(--ink);">Damla sulama yöntemi, geleneksel sulama yöntemlerine göre su tüketimini yüzde 90 oranında azaltmaktadır.</div><div class="choices" id="choices27"><label class="choice-label" onclick="selectChoice(this,'q27','A')"><input type="radio" name="q27" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q27','B')"><input type="radio" name="q27" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q27','C')"><input type="radio" name="q27" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb27"></div></div>
+    <div class="question" id="qw28"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 28</div><div class="q-text" style="font-weight:700;color:var(--ink);">Akdeniz havzasında yer alan Türkiye, iklim değişikliğinden en fazla etkilenecek bölgeler arasında gösterilmektedir.</div><div class="choices" id="choices28"><label class="choice-label" onclick="selectChoice(this,'q28','A')"><input type="radio" name="q28" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q28','B')"><input type="radio" name="q28" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q28','C')"><input type="radio" name="q28" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb28"></div></div>
+    <div class="question" id="qw29"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 29</div><div class="q-text" style="font-weight:700;color:var(--ink);">Su kaynaklarının sürdürülebilir yönetiminde belediyelerin verdiği farkındalık eğitimleri etkili olmaktadır.</div><div class="choices" id="choices29"><label class="choice-label" onclick="selectChoice(this,'q29','A')"><input type="radio" name="q29" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q29','B')"><input type="radio" name="q29" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q29','C')"><input type="radio" name="q29" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb29"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 5: ÇOKTAN SEÇMELİ + PARAGRAF EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli &amp; Paragraf Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Turizm ve Çevre · Sorular 30–35</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p><strong>A)</strong> Turizm, dünya ekonomisinin en hızlı büyüyen sektörlerinden biri olup, birçok ülke için önemli bir gelir kaynağıdır. Ancak kontrolsüz turizm faaliyetleri, doğal kaynakların aşırı kullanımına, çevre kirliliğine ve yerel ekosistemlerin bozulmasına yol açabilmektedir. Kıyı bölgelerinde aşırı yapılaşma, su kaynaklarının tükenmesi, plajlarda atık birikimi ve tarihi dokuların tahribatı, kitlesel turizmin olumsuz etkileri arasında sayılmaktadır. Bu sorunlar, turizm sektörünün sürdürülebilir bir anlayışla yeniden yapılandırılması gerektiğini ortaya koymaktadır.</p>
+      <p><strong>B)</strong> Sürdürülebilir turizm, ekonomik faydayı korurken çevresel ve kültürel değerleri de gelecek nesillere aktarmayı hedefleyen bir yaklaşımdır. Bu anlayışın temelinde, yerel halkın katılımı, doğal kaynakların korunması ve turizm gelirlerinin adil dağılımı yer almaktadır. Eko-turizm, kırsal turizm ve yayla turizmi gibi alternatif turizm türleri, kitlesel turizmin olumsuz etkilerini azaltan sürdürülebilir modeller olarak öne çıkmaktadır. Bu modeller, turistlerin doğayla iç içe, yerel kültürü deneyimleyebileceği ve çevreye duyarlı bir tatil yapmasına olanak tanımaktadır.</p>
+      <p><strong>C)</strong> Türkiye, sahip olduğu doğal güzellikler, tarihi zenginlikler ve kültürel mirasla dünyanın önemli turizm destinasyonları arasında yer almaktadır. Antalya, Muğla ve İzmir gibi kıyı kentleri, deniz-kum-güneş turizminin merkezi konumundayken, Kapadokya, Şanlıurfa ve Trabzon gibi bölgeler kültür ve doğa turizminde öne çıkmaktadır. Son yıllarda Türkiye'de sürdürülebilir turizm uygulamalarına yönelik çalışmalar hız kazanmış, turizm işletmelerine çevreye duyarlı işletme sertifikaları verilmeye başlanmıştır. Ayrıca mavi bayrak uygulamasıyla temiz plajlar ödüllendirilmekte, bu sayede çevre bilincinin yaygınlaşması hedeflenmektedir.</p>
+      <p><strong>D)</strong> Turizm sektöründe çevre dostu uygulamaların yaygınlaştırılması, hem işletmelerin maliyetlerini düşürmekte hem de marka değerlerini artırmaktadır. Otellerde güneş enerjisi sistemlerinin kurulması, su tasarrufu sağlayan armatürlerin kullanılması, atıkların ayrıştırılması ve yerel ürünlerin tercih edilmesi, sürdürülebilir turizm işletmeciliğinin örnek uygulamaları arasındadır. Ayrıca turizm işletmeleri, çalışanlarına çevre bilinci eğitimleri vermekte, misafirlerine de su ve enerji tasarrufu konusunda bilgilendirme yaparak farkındalık oluşturmaktadır.</p>
+      <p><strong>E)</strong> Turizm faaliyetlerinin çevre üzerindeki olumsuz etkilerini azaltmada yerel halkın bilinçlendirilmesi ve sürece dâhil edilmesi büyük önem taşımaktadır. Yerel yönetimler, sivil toplum kuruluşları ve turizm işletmeleri iş birliğiyle yürütülen projeler, çevre koruma bilincinin toplumun tüm kesimlerine yayılmasını sağlamaktadır. Özellikle kıyı temizliği kampanyaları, orman yangınlarına karşı alınan önlemler ve tarihi dokunun korunmasına yönelik çalışmalar, turizm bölgelerinde çevre duyarlılığını artıran faaliyetler arasında yer almaktadır. Bu tür girişimler, turizm gelirlerinin sürdürülebilirliğine de doğrudan katkı sağlamaktadır.</p>
+    </div>
+    <div class="question" id="qw30"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 30 — Aşağıdaki cümlelerden hangisi metinden çıkarılamaz?</div><div class="choices" id="choices30"><label class="choice-label" onclick="selectChoice(this,'q30','A')"><input type="radio" name="q30" value="A"><span class="choice-key">A</span><span>Kontrolsüz turizm faaliyetleri, doğal kaynakların aşırı kullanımına yol açabilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','B')"><input type="radio" name="q30" value="B"><span class="choice-key">B</span><span>Türkiye'de turizm işletmelerine çevreye duyarlı işletme sertifikaları verilmeye başlanmıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','C')"><input type="radio" name="q30" value="C"><span class="choice-key">C</span><span>Sürdürülebilir turizm anlayışında turizm gelirlerinin adil dağılımı hedeflenmemektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','D')"><input type="radio" name="q30" value="D"><span class="choice-key">D</span><span>Eko-turizm ve kırsal turizm, kitlesel turizmin olumsuz etkilerini azaltan modellerdir.</span></label></div><div class="q-feedback" id="fb30"></div></div>
+    <div class="question" id="qw31"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 31 — Metinde aşağıdaki cümlelerden hangisine değinilmemiştir?</div><div class="choices" id="choices31"><label class="choice-label" onclick="selectChoice(this,'q31','A')"><input type="radio" name="q31" value="A"><span class="choice-key">A</span><span>Otellerde güneş enerjisi sistemlerinin kurulması, sürdürülebilir turizm uygulamaları arasındadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','B')"><input type="radio" name="q31" value="B"><span class="choice-key">B</span><span>Sürdürülebilir turizm uygulamaları yalnızca gelişmiş ülkelerde görülmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','C')"><input type="radio" name="q31" value="C"><span class="choice-key">C</span><span>Kapadokya ve Şanlıurfa gibi bölgeler, kültür ve doğa turizminde öne çıkmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','D')"><input type="radio" name="q31" value="D"><span class="choice-key">D</span><span>Mavi bayrak uygulaması ile temiz plajlar ödüllendirilmektedir.</span></label></div><div class="q-feedback" id="fb31"></div></div>
+    <div class="question" id="qw32"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 32 — Metinden aşağıdaki yargılardan hangisine ulaşılamaz?</div><div class="choices" id="choices32"><label class="choice-label" onclick="selectChoice(this,'q32','A')"><input type="radio" name="q32" value="A"><span class="choice-key">A</span><span>Turizm sektörü, dünya ekonomisinin hızlı büyüyen sektörleri arasında yer almaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','B')"><input type="radio" name="q32" value="B"><span class="choice-key">B</span><span>Sürdürülebilir turizm anlayışının temelinde yerel halkın katılımı bulunmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','C')"><input type="radio" name="q32" value="C"><span class="choice-key">C</span><span>Türkiye'de turizm işletmelerinde çevre dostu uygulamalar yaygınlık kazanmamıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','D')"><input type="radio" name="q32" value="D"><span class="choice-key">D</span><span>Yerel yönetimler ve sivil toplum kuruluşları, çevre koruma projelerinde iş birliği yapmaktadır.</span></label></div><div class="q-feedback" id="fb32"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümlelerin hangi paragraflara (A-E) ait olduğunu bulunuz. Seçilmemesi gereken <strong>İKİ</strong> paragraf bulunmaktadır.</div>
+    <div class="question" id="qw33"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 33</div><div class="q-text" style="font-weight:700;color:var(--ink);">Sürdürülebilir turizm anlayışının temel ilkeleri ve alternatif turizm türleri, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices33"><label class="choice-label" onclick="selectChoice(this,'q33','A')"><input type="radio" name="q33" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q33','B')"><input type="radio" name="q33" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q33','C')"><input type="radio" name="q33" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q33','D')"><input type="radio" name="q33" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q33','E')"><input type="radio" name="q33" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb33"></div></div>
+    <div class="question" id="qw34"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 34</div><div class="q-text" style="font-weight:700;color:var(--ink);">Turizm işletmelerinde uygulanan çevre dostu uygulamalar ve bunların sağladığı avantajlar, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices34"><label class="choice-label" onclick="selectChoice(this,'q34','A')"><input type="radio" name="q34" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q34','B')"><input type="radio" name="q34" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q34','C')"><input type="radio" name="q34" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q34','D')"><input type="radio" name="q34" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q34','E')"><input type="radio" name="q34" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb34"></div></div>
+    <div class="question" id="qw35"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 35</div><div class="q-text" style="font-weight:700;color:var(--ink);">Türkiye'nin turizm potansiyeli ve sürdürülebilir turizm alanında yapılan çalışmalar, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices35"><label class="choice-label" onclick="selectChoice(this,'q35','A')"><input type="radio" name="q35" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q35','B')"><input type="radio" name="q35" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q35','C')"><input type="radio" name="q35" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q35','D')"><input type="radio" name="q35" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q35','E')"><input type="radio" name="q35" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb35"></div></div>
+  </div>
+</div>
+
+<div class="submit-wrap">
+  <button class="btn-submit" id="btnFinish" onclick="submitTest()">Testi Bitir</button>
+  <button class="btn-reset" onclick="resetTest()">Sıfırla</button>
+</div>
+
+</main>
+
+<script>
+// ---------- Sayaç (sayfaya gömülü, sabit değil, 2 kat küçük) ----------
+let timerInterval = null;
+let secondsElapsed = 0;
+let isRunning = false;
+const timerDisplay = document.getElementById('timerDisplay');
+const startStopBtn = document.getElementById('timerStartStopBtn');
+const ONE_HOUR_SEC = 3600;
+
+function formatTime(sec) {
+  const hrs = Math.floor(sec / 3600);
+  const mins = Math.floor((sec % 3600) / 60);
+  const secs = sec % 60;
+  return `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+}
+
+function updateTimerUI() {
+  timerDisplay.textContent = formatTime(secondsElapsed);
+  if (secondsElapsed >= ONE_HOUR_SEC) {
+    timerDisplay.classList.add('warning');
+  } else {
+    timerDisplay.classList.remove('warning');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  isRunning = true;
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    updateTimerUI();
+  }, 1000);
+  startStopBtn.textContent = '⏸ Durdur';
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  isRunning = false;
+  startStopBtn.textContent = '▶ Başlat';
+}
+
+// Başlat / Durdur butonu
+startStopBtn.addEventListener('click', () => {
+  if (isRunning) {
+    stopTimer();
+  } else {
+    startTimer();
+  }
+});
+
+// sayfa yenilendiğinde zamanlayıcıyı temizle (zorunlu değil)
+window.addEventListener('beforeunload', () => {
+  if (timerInterval) clearInterval(timerInterval);
+});
+
+// ----- Orijinal test scripti (hiç değişmedi) -----
+const answers = {
+  q1:'H', q2:'D', q3:'C', q4:'A', q5:'B', q6:'F',
+  q7:'B', q8:'C', q9:'A', q10:'H', q11:'E', q12:'I', q13:'F', q14:'D',
+  q15:'H', q16:'B', q17:'G', q18:'E', q19:'A', q20:'D',
+  q21:'C', q22:'A', q23:'C', q24:'C',
+  q25:'A', q26:'B', q27:'C', q28:'A', q29:'A',
+  q30:'C', q31:'B', q32:'C',
+  q33:'B', q34:'D', q35:'C'
+};
+
+const totalQ = 35;
+const userAnswers = {};
+
+function selectChoice(label, name, val) {
+  const group = label.closest('.choices');
+  group.querySelectorAll('.choice-label').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+  userAnswers[name] = val;
+  updateProgress();
+}
+
+function buildSegments() {
+  const bar = document.getElementById('segmentsBar');
+  bar.innerHTML = '';
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.id = 'seg' + i;
+    bar.appendChild(seg);
+  }
+}
+
+function updateProgress() {
+  let filled = 0;
+  Object.keys(answers).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) {
+      if (el.tagName === 'SELECT' && el.value !== '') filled++;
+    } else if (userAnswers[k]) {
+      filled++;
+    }
+  });
+  document.getElementById('progressText').textContent = filled + ' / ' + totalQ;
+}
+
+function fillSegments(correctCount) {
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.getElementById('seg' + i);
+    if (seg) seg.classList.toggle('filled', i < correctCount);
+  }
+  document.getElementById('progressText').textContent = correctCount + ' / ' + totalQ + ' doğru';
+}
+
+function submitTest() {
+  let correct = 0;
+  Object.keys(answers).forEach(k => {
+    const correct_ans = answers[k];
+    let user_ans = '';
+    const el = document.getElementById(k);
+    if (el && el.tagName === 'SELECT') {
+      user_ans = el.value;
+    } else {
+      user_ans = userAnswers[k] || '';
+    }
+    const fb = document.getElementById('fb' + k.replace('q',''));
+    const isCorrect = user_ans === correct_ans;
+    if (isCorrect) {
+      correct++;
+      if (fb) { fb.className='q-feedback correct'; fb.textContent='✓ Doğru'; }
+    } else {
+      if (fb) {
+        fb.className='q-feedback wrong';
+        fb.textContent = user_ans ? `✗ Yanlış — Doğru cevap: ${correct_ans}` : `✗ Boş bırakıldı — Doğru cevap: ${correct_ans}`;
+      }
+    }
+    if (el && el.tagName === 'SELECT') {
+      el.className = 'match-select ' + (isCorrect ? 'correct' : 'wrong');
+    }
+    const choicesDiv = document.getElementById('choices' + k.replace('q',''));
+    if (choicesDiv) {
+      choicesDiv.querySelectorAll('.choice-label').forEach(lbl => {
+        const v = lbl.querySelector('input').value;
+        lbl.classList.remove('selected','correct','wrong','show-answer');
+        if (v === user_ans && !isCorrect) lbl.classList.add('wrong');
+        if (v === correct_ans) lbl.classList.add(isCorrect ? 'correct' : 'show-answer');
+      });
+    }
+  });
+  document.getElementById('scoreDisplay').textContent = correct + ' / ' + totalQ;
+  document.getElementById('scoreDetail').textContent = '35 sorudan ' + correct + ' doğru cevap';
+  let msg = '';
+  if (correct >= 30) msg = '🏆 Mükemmel! Çok iyi bir sonuç elde ettiniz.';
+  else if (correct >= 24) msg = '👍 İyi iş çıkardınız! Biraz daha çalışmayla mükemmel olacaksınız.';
+  else if (correct >= 18) msg = '📚 Orta seviye. Hatalı soruları gözden geçirmenizi öneririz.';
+  else msg = '💪 Daha fazla pratik yapmanız gerekiyor. Pes etmeyin!';
+  document.getElementById('feedbackMsg').textContent = msg;
+  fillSegments(correct);
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetTest() { location.reload(); }
+buildSegments();
+</script>
+
+</body>
+</html>

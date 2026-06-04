@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okuma – Dünya Uzay Haftası 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+    --shadow: 0 2px 16px rgba(80,50,20,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 52px 28px 80px;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(22px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .subheading {
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .rule {
+    width: 48px;
+    height: 3px;
+    background: var(--accent);
+    margin: 18px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ── Reading ── */
+  .reading-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+  }
+
+  .reading-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .reading-subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .reading-text p {
+    margin-bottom: 16px;
+    color: #2e2820;
+    font-size: 16px;
+    line-height: 1.85;
+  }
+
+  .reading-text p:last-child { margin-bottom: 0; }
+
+  .p-label {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 6px;
+  }
+
+  /* ── Instructions box ── */
+  .instructions {
+    background: var(--accent-light);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ── Headings reference card ── */
+  .headings-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 30px;
+    margin-bottom: 32px;
+    box-shadow: var(--shadow);
+  }
+
+  .headings-card-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .headings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .heading-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 9px 12px;
+    background: var(--bg);
+    border-radius: 7px;
+    font-size: 14.5px;
+    line-height: 1.4;
+  }
+
+  .heading-letter {
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ── Questions ── */
+  .questions-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .question-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 12px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.3s, background 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .question-row.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+  }
+
+  .question-row.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+  }
+
+  .q-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--ink);
+    min-width: 120px;
+  }
+
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 2px 9px;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+
+  .q-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    flex-wrap: wrap;
+  }
+
+  /* ── Custom dropdown ── */
+  .dropdown-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 240px;
+  }
+
+  .dropdown-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 16px;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14.5px;
+    color: var(--muted);
+    transition: all 0.15s;
+    user-select: none;
+    text-align: left;
+  }
+
+  .dropdown-btn.has-value {
+    color: var(--ink);
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .dropdown-btn.state-correct {
+    color: var(--correct);
+    border-color: var(--correct);
+    background: var(--correct-bg);
+    cursor: default;
+  }
+
+  .dropdown-btn.state-wrong {
+    color: var(--wrong);
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+    cursor: default;
+  }
+
+  .dropdown-btn:hover:not(.locked) {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .dropdown-arrow {
+    flex-shrink: 0;
+    font-size: 11px;
+    transition: transform 0.2s;
+    color: var(--muted);
+  }
+
+  .dropdown-btn.open .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(80,50,20,0.14);
+    z-index: 100;
+    overflow: hidden;
+    animation: fadeDown 0.15s ease;
+  }
+
+  .dropdown-menu.open { display: block; }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .dropdown-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink);
+    transition: background 0.1s;
+    border-bottom: 1px solid var(--bg);
+    line-height: 1.4;
+  }
+
+  .dropdown-option:last-child { border-bottom: none; }
+
+  .dropdown-option:hover {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .dropdown-option.selected-opt {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  .opt-let {
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 18px;
+    flex-shrink: 0;
+  }
+
+  .dropdown-option.selected-opt .opt-let { color: var(--accent); }
+
+  /* ── Feedback badge ── */
+  .feedback-badge {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    display: none;
+    white-space: nowrap;
+  }
+
+  .question-row.correct .feedback-badge {
+    display: inline-block;
+    background: rgba(45,122,80,0.12);
+    color: var(--correct);
+  }
+
+  .question-row.wrong .feedback-badge {
+    display: inline-block;
+    background: rgba(185,58,58,0.1);
+    color: var(--wrong);
+  }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-check {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-check:hover {
+    background: #6b3510;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(139,69,19,0.25);
+  }
+
+  .btn-reset {
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-reset:hover {
+    color: var(--ink);
+    border-color: var(--muted);
+  }
+
+  /* ── Score ── */
+  .score-banner {
+    display: none;
+    text-align: center;
+    margin-top: 28px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .score-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 56px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 28px 16px 60px; }
+    .reading-section { padding: 22px 18px; }
+    .headings-card { padding: 18px 16px; }
+    .headings-grid { grid-template-columns: 1fr; }
+    .question-row { padding: 16px 16px; }
+    .q-label { min-width: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Okuma · 3. Bölüm</div>
+    <h1>Dünya Uzay Haftası 2025</h1>
+    <p class="subheading">Paragraf – Başlık Eşleştirme</p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    Aşağıdaki başlıkları (A–H) ve paragrafları okuyunuz. Her paragraf için uygun bir başlık bulunuz. Her başlık yalnız bir defa kullanılabilir.
+  </div>
+
+  <!-- Reading Text -->
+  <div class="reading-section">
+    <div class="reading-title">DÜNYA UZAY HAFTASI 2025</div>
+    <div class="reading-text">
+      <p><span class="p-label">I.</span>Dünya Uzay Haftası 2025, uzay araştırmalarının en büyük kültürel ve bilimsel etkinliklerinden biri olarak kabul ediliyor. Bu hafta, dünya genelindeki uzay ajanslarının bir araya geldiği ve yenilikçi projeleri tanıttığı bir platform olarak öne çıkıyor. Ancak bu etkinlik, sadece teknolojik gelişmeleri sergilemekle kalmıyor; aynı zamanda çevresel sürdürülebilirlik ve dünya kaynaklarının korunması gibi konulara da odaklanıyor. Etkinlikte kullanılan malzemelerin tamamı geri dönüştürülebilir olacak şekilde tasarlanırken, enerji verimliliği de göz önünde bulunduruldu. Dünya Uzay Haftası 2025, gelecekteki benzer organizasyonlara örnek teşkil edecek bir model olarak görülüyor.</p>
+
+      <p><span class="p-label">II.</span>Dünya Uzay Haftası 2025, genç nesli ilgilendiren yeni keşif alanlarını ön plana çıkararak onların ilgisini çekmeyi hedefliyor. Özellikle asteroit madenciliği, Mars kolonizasyonu ve yapay zeka destekli uzay araçları gibi konular, bu yılki etkinliklerde geniş yer alacak. Bu yenilikler, uzay araştırmalarının geleceği hakkında merak uyandırırken aynı zamanda gençlerin bilime olan ilgisini artırıyor. Dünya Uzay Haftası 2025, bu anlamda geleneksel uzay çalışmaları ile birlikte genç neslin hayal gücünü harekete geçirecek konuları da ele alıyor.</p>
+
+      <p><span class="p-label">III.</span>Türkiye, Dünya Uzay Haftası 2025'te önemli bir rol oynamayı hedefliyor. Özellikle uydu teknolojileri, roket geliştirme ve uzay istasyonları gibi alanlarda başarı gösteren Türk bilim insanları, bu etkinlikte ülkenin adını duyurmayı planlıyor. Türkiye Uzay Ajansı (TUA), son yıllarda geliştirdiği mini uydular ve roket prototipleriyle dikkat çekiyor. Ayrıca, Türkiye'nin ilk yerli uzay aracı projesi olan "Türk Uzay Aracı"nın tanıtımı da bu haftada yapılacak. Türkiye, uzay teknolojilerine yaptığı yatırımlarla uluslararası arenada varlığını güçlendirmeyi amaçlıyor.</p>
+
+      <p><span class="p-label">IV.</span>Dünya Uzay Haftası 2025 katılımcıları için özel olarak tasarlanmış bir "Uzay Kampüsü" oluşturuldu. Bu kampüs, bilim insanlarının hem fiziksel hem de mental olarak rahat etmeleri için özel olarak inşa edildi. Kullanılan tüm malzemeler geri dönüştürülebilir olup, enerji verimliliği göz önünde bulunduruldu. Katılımcılar, burada sosyal aktivitelere katılabilir veya uzay teknolojileri üzerine atölyelerde bulunabilir. Ayrıca, kampüsün bulunduğu bölgedeki doğal güzellikler, katılımcılara eşsiz bir deneyim sunuyor. Bu sayede, bilim insanları sadece akademik değil, aynı zamanda kültürel açıdan da zengin bir hafta geçiriyor.</p>
+
+      <p><span class="p-label">V.</span>Dünya Uzay Haftası, sadece bir bilimsel etkinlik değil, aynı zamanda küresel iş birliği ve barışın sembolüdür. Bu hafta boyunca dünya genelinden bilim insanları ve uzay meraklıları bir araya gelerek ortak projeler üzerinde çalışıyor. Farklı ülkelerden gelen bilim insanları, uzay araştırmaları aracılığıyla dayanışma ve dostluk ilişkileri geliştiriyor. Bu etkinlik, uzay araştırmalarının evrensel dilini kullanarak küresel iş birliğini güçlendiriyor. Dünya Uzay Haftası 2025, bu anlamda bilim ve diplomasiyi bir araya getiren bir platform olarak görülecek.</p>
+
+      <p><span class="p-label">VI.</span>Dünya Uzay Haftası 2025, Türkiye'nin uzay araştırmalarındaki başarısını sergilemek için mükemmel bir fırsat olacak. Özellikle genç bilim insanlarının dikkat çekici projeleri, ülkenin uzay teknolojilerindeki büyümesini simgeliyor. Uydu teknolojilerindeki yenilikçi çalışmalar, roket geliştirme projeleri ve uzay istasyonu planları gibi alanlarda Türkiye, önemli adımlar atıyor. Türkiye'nin bu başarısı, gelecek nesillere ilham verecek nitelikte ve uzay araştırmaları tarihinde kalıcı bir iz bırakacak.</p>
+    </div>
+  </div>
+
+  <!-- Headings Reference -->
+  <div class="headings-card">
+    <div class="headings-card-title">Başlıklar</div>
+    <div class="headings-grid">
+      <div class="heading-item"><span class="heading-letter">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+      <div class="heading-item"><span class="heading-letter">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+      <div class="heading-item"><span class="heading-letter">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+      <div class="heading-item"><span class="heading-letter">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+      <div class="heading-item"><span class="heading-letter">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+      <div class="heading-item"><span class="heading-letter">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+      <div class="heading-item"><span class="heading-letter">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+      <div class="heading-item"><span class="heading-letter">H)</span>Yenilikçi Uzay Stratejileri</div>
+    </div>
+  </div>
+
+  <!-- Questions -->
+  <div class="questions-label">Eşleştirme</div>
+
+  <!-- S1 -->
+  <div class="question-row" id="qrow-1">
+    <div class="q-label"><span class="q-num">S1</span>I. paragraf</div>
+    <div class="q-right">
+      <div class="dropdown-wrap" id="dw-1">
+        <div class="dropdown-btn" id="dbtn-1" onclick="toggleDropdown(1)">
+          <span id="dval-1">Bir başlık seçin…</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu" id="dmenu-1">
+          <div class="dropdown-option" onclick="pickOption(1,'A','Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları')"><span class="opt-let">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+          <div class="dropdown-option" onclick="pickOption(1,'B','Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi')"><span class="opt-let">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(1,'C','Gelecek Nesillere İlham Veren Uzay Keşifleri')"><span class="opt-let">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+          <div class="dropdown-option" onclick="pickOption(1,'D','Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü')"><span class="opt-let">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+          <div class="dropdown-option" onclick="pickOption(1,'E','Sunulan Yeni Teknolojik Olanaklar')"><span class="opt-let">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+          <div class="dropdown-option" onclick="pickOption(1,'F','Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi')"><span class="opt-let">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(1,'G','Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri')"><span class="opt-let">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+          <div class="dropdown-option" onclick="pickOption(1,'H','Yenilikçi Uzay Stratejileri')"><span class="opt-let">H)</span>Yenilikçi Uzay Stratejileri</div>
+        </div>
+      </div>
+      <span class="feedback-badge" id="fb-1"></span>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="question-row" id="qrow-2">
+    <div class="q-label"><span class="q-num">S2</span>II. paragraf</div>
+    <div class="q-right">
+      <div class="dropdown-wrap" id="dw-2">
+        <div class="dropdown-btn" id="dbtn-2" onclick="toggleDropdown(2)">
+          <span id="dval-2">Bir başlık seçin…</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu" id="dmenu-2">
+          <div class="dropdown-option" onclick="pickOption(2,'A','Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları')"><span class="opt-let">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+          <div class="dropdown-option" onclick="pickOption(2,'B','Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi')"><span class="opt-let">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(2,'C','Gelecek Nesillere İlham Veren Uzay Keşifleri')"><span class="opt-let">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+          <div class="dropdown-option" onclick="pickOption(2,'D','Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü')"><span class="opt-let">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+          <div class="dropdown-option" onclick="pickOption(2,'E','Sunulan Yeni Teknolojik Olanaklar')"><span class="opt-let">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+          <div class="dropdown-option" onclick="pickOption(2,'F','Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi')"><span class="opt-let">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(2,'G','Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri')"><span class="opt-let">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+          <div class="dropdown-option" onclick="pickOption(2,'H','Yenilikçi Uzay Stratejileri')"><span class="opt-let">H)</span>Yenilikçi Uzay Stratejileri</div>
+        </div>
+      </div>
+      <span class="feedback-badge" id="fb-2"></span>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="question-row" id="qrow-3">
+    <div class="q-label"><span class="q-num">S3</span>III. paragraf</div>
+    <div class="q-right">
+      <div class="dropdown-wrap" id="dw-3">
+        <div class="dropdown-btn" id="dbtn-3" onclick="toggleDropdown(3)">
+          <span id="dval-3">Bir başlık seçin…</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu" id="dmenu-3">
+          <div class="dropdown-option" onclick="pickOption(3,'A','Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları')"><span class="opt-let">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+          <div class="dropdown-option" onclick="pickOption(3,'B','Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi')"><span class="opt-let">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(3,'C','Gelecek Nesillere İlham Veren Uzay Keşifleri')"><span class="opt-let">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+          <div class="dropdown-option" onclick="pickOption(3,'D','Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü')"><span class="opt-let">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+          <div class="dropdown-option" onclick="pickOption(3,'E','Sunulan Yeni Teknolojik Olanaklar')"><span class="opt-let">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+          <div class="dropdown-option" onclick="pickOption(3,'F','Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi')"><span class="opt-let">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(3,'G','Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri')"><span class="opt-let">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+          <div class="dropdown-option" onclick="pickOption(3,'H','Yenilikçi Uzay Stratejileri')"><span class="opt-let">H)</span>Yenilikçi Uzay Stratejileri</div>
+        </div>
+      </div>
+      <span class="feedback-badge" id="fb-3"></span>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="question-row" id="qrow-4">
+    <div class="q-label"><span class="q-num">S4</span>IV. paragraf</div>
+    <div class="q-right">
+      <div class="dropdown-wrap" id="dw-4">
+        <div class="dropdown-btn" id="dbtn-4" onclick="toggleDropdown(4)">
+          <span id="dval-4">Bir başlık seçin…</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu" id="dmenu-4">
+          <div class="dropdown-option" onclick="pickOption(4,'A','Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları')"><span class="opt-let">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+          <div class="dropdown-option" onclick="pickOption(4,'B','Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi')"><span class="opt-let">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(4,'C','Gelecek Nesillere İlham Veren Uzay Keşifleri')"><span class="opt-let">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+          <div class="dropdown-option" onclick="pickOption(4,'D','Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü')"><span class="opt-let">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+          <div class="dropdown-option" onclick="pickOption(4,'E','Sunulan Yeni Teknolojik Olanaklar')"><span class="opt-let">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+          <div class="dropdown-option" onclick="pickOption(4,'F','Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi')"><span class="opt-let">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(4,'G','Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri')"><span class="opt-let">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+          <div class="dropdown-option" onclick="pickOption(4,'H','Yenilikçi Uzay Stratejileri')"><span class="opt-let">H)</span>Yenilikçi Uzay Stratejileri</div>
+        </div>
+      </div>
+      <span class="feedback-badge" id="fb-4"></span>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="question-row" id="qrow-5">
+    <div class="q-label"><span class="q-num">S5</span>V. paragraf</div>
+    <div class="q-right">
+      <div class="dropdown-wrap" id="dw-5">
+        <div class="dropdown-btn" id="dbtn-5" onclick="toggleDropdown(5)">
+          <span id="dval-5">Bir başlık seçin…</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu" id="dmenu-5">
+          <div class="dropdown-option" onclick="pickOption(5,'A','Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları')"><span class="opt-let">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+          <div class="dropdown-option" onclick="pickOption(5,'B','Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi')"><span class="opt-let">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(5,'C','Gelecek Nesillere İlham Veren Uzay Keşifleri')"><span class="opt-let">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+          <div class="dropdown-option" onclick="pickOption(5,'D','Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü')"><span class="opt-let">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+          <div class="dropdown-option" onclick="pickOption(5,'E','Sunulan Yeni Teknolojik Olanaklar')"><span class="opt-let">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+          <div class="dropdown-option" onclick="pickOption(5,'F','Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi')"><span class="opt-let">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(5,'G','Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri')"><span class="opt-let">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+          <div class="dropdown-option" onclick="pickOption(5,'H','Yenilikçi Uzay Stratejileri')"><span class="opt-let">H)</span>Yenilikçi Uzay Stratejileri</div>
+        </div>
+      </div>
+      <span class="feedback-badge" id="fb-5"></span>
+    </div>
+  </div>
+
+  <!-- S6 -->
+  <div class="question-row" id="qrow-6">
+    <div class="q-label"><span class="q-num">S6</span>VI. paragraf</div>
+    <div class="q-right">
+      <div class="dropdown-wrap" id="dw-6">
+        <div class="dropdown-btn" id="dbtn-6" onclick="toggleDropdown(6)">
+          <span id="dval-6">Bir başlık seçin…</span>
+          <span class="dropdown-arrow">▼</span>
+        </div>
+        <div class="dropdown-menu" id="dmenu-6">
+          <div class="dropdown-option" onclick="pickOption(6,'A','Türkiye\'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları')"><span class="opt-let">A)</span>Türkiye'nin Uzay Teknolojilerindeki Yenilikçi Yaklaşımları</div>
+          <div class="dropdown-option" onclick="pickOption(6,'B','Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi')"><span class="opt-let">B)</span>Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(6,'C','Gelecek Nesillere İlham Veren Uzay Keşifleri')"><span class="opt-let">C)</span>Gelecek Nesillere İlham Veren Uzay Keşifleri</div>
+          <div class="dropdown-option" onclick="pickOption(6,'D','Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü')"><span class="opt-let">D)</span>Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü</div>
+          <div class="dropdown-option" onclick="pickOption(6,'E','Sunulan Yeni Teknolojik Olanaklar')"><span class="opt-let">E)</span>Sunulan Yeni Teknolojik Olanaklar</div>
+          <div class="dropdown-option" onclick="pickOption(6,'F','Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi')"><span class="opt-let">F)</span>Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi</div>
+          <div class="dropdown-option" onclick="pickOption(6,'G','Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri')"><span class="opt-let">G)</span>Türkiye'nin Dünya Uzay Haftası 2025 Hedefleri</div>
+          <div class="dropdown-option" onclick="pickOption(6,'H','Yenilikçi Uzay Stratejileri')"><span class="opt-let">H)</span>Yenilikçi Uzay Stratejileri</div>
+        </div>
+      </div>
+      <span class="feedback-badge" id="fb-6"></span>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn-check" onclick="checkAll()">KONTROL ET</button>
+    <button class="btn-reset" onclick="resetAll()">SIFIRLA</button>
+  </div>
+
+  <!-- Score -->
+  <div class="score-banner" id="score-banner">
+    <div class="score-big" id="score-num">0/6</div>
+    <div class="score-sub">doğru cevap</div>
+  </div>
+
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum</div>
+</div>
+
+<script>
+  const ANSWERS = { 1:'B', 2:'C', 3:'G', 4:'E', 5:'F', 6:'D' };
+  const ANSWER_LABELS = {
+    1: 'B) Uzay Haftası Etkinliklerinin Çevresel Farkındalık Üzerindeki Etkisi',
+    2: 'C) Gelecek Nesillere İlham Veren Uzay Keşifleri',
+    3: 'G) Türkiye\'nin Dünya Uzay Haftası 2025 Hedefleri',
+    4: 'E) Sunulan Yeni Teknolojik Olanaklar',
+    5: 'F) Uzay Araştırmalarının Küresel İş Birliği Üzerindeki Etkisi',
+    6: 'D) Genç Bilim İnsanlarının Uzay Çalışmalarındaki Rolü'
+  };
+  const selected = {};
+  const locked   = {};
+  const TOTAL    = 6;
+
+  function toggleDropdown(q) {
+    if (locked[q]) return;
+    const btn  = document.getElementById('dbtn-' + q);
+    const menu = document.getElementById('dmenu-' + q);
+    const isOpen = menu.classList.contains('open');
+    closeAll();
+    if (!isOpen) {
+      menu.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+
+  function closeAll() {
+    for (let q = 1; q <= TOTAL; q++) {
+      document.getElementById('dmenu-' + q).classList.remove('open');
+      document.getElementById('dbtn-' + q).classList.remove('open');
+    }
+  }
+
+  function pickOption(q, letter, label) {
+    selected[q] = letter;
+    document.getElementById('dval-' + q).textContent = letter + ') ' + label;
+    const btn = document.getElementById('dbtn-' + q);
+    btn.classList.add('has-value');
+    btn.classList.remove('open');
+    document.getElementById('dmenu-' + q).classList.remove('open');
+
+    const opts = document.querySelectorAll('#dmenu-' + q + ' .dropdown-option');
+    opts.forEach(o => o.classList.remove('selected-opt'));
+    const idx = ['A','B','C','D','E','F','G','H'].indexOf(letter);
+    if (opts[idx]) opts[idx].classList.add('selected-opt');
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.dropdown-wrap')) closeAll();
+  });
+
+  function checkAll() {
+    let score = 0;
+    for (let q = 1; q <= TOTAL; q++) {
+      const ans  = selected[q];
+      if (!ans) continue;
+      locked[q] = true;
+
+      const btn = document.getElementById('dbtn-' + q);
+      const row = document.getElementById('qrow-' + q);
+      const fb  = document.getElementById('fb-' + q);
+      btn.onclick = null;
+
+      if (ans === ANSWERS[q]) {
+        row.classList.add('correct');
+        btn.classList.add('state-correct');
+        btn.classList.remove('has-value');
+        fb.textContent = '✓ Doğru';
+        score++;
+      } else {
+        row.classList.add('wrong');
+        btn.classList.add('state-wrong');
+        btn.classList.remove('has-value');
+        fb.textContent = '✗ Doğru: ' + ANSWERS[q];
+      }
+    }
+
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/' + TOTAL;
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetAll() {
+    for (let q = 1; q <= TOTAL; q++) {
+      delete selected[q];
+      delete locked[q];
+
+      const row = document.getElementById('qrow-' + q);
+      row.classList.remove('correct', 'wrong');
+
+      const btn = document.getElementById('dbtn-' + q);
+      btn.className = 'dropdown-btn';
+      btn.onclick = () => toggleDropdown(q);
+
+      document.getElementById('dval-' + q).textContent = 'Bir başlık seçin…';
+      document.getElementById('fb-' + q).textContent = '';
+
+      document.getElementById('dmenu-' + q).classList.remove('open');
+      document.querySelectorAll('#dmenu-' + q + ' .dropdown-option')
+        .forEach(o => o.classList.remove('selected-opt'));
+    }
+    document.getElementById('score-banner').style.display = 'none';
+  }
+</script>
+</body>
+</html>

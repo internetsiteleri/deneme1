@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okuma Alıştırması – FOMO</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #fff;
+    --ink: #1a1612;
+    --muted: #7a6e62;
+    --border: #e4ddd3;
+    --accent: #8b4513;
+    --accent-light: #f5ede4;
+    --gold: #c8963e;
+    --correct: #2d7a50;
+    --correct-bg: #edf7f1;
+    --wrong: #b93a3a;
+    --wrong-bg: #fdf0f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 17px; line-height: 1.75; }
+  .page { max-width: 980px; margin: 0 auto; padding: 52px 28px 80px; position: relative; }
+
+  /* GERİ BUTONU - sol üst köşe, sabit değil, sayfa ile kayar */
+  .back-button {
+    position: absolute;
+    top: 28px;
+    left: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 8px 18px 8px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 100;
+    backdrop-filter: blur(0px);
+    letter-spacing: 0.3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+  .back-button:hover {
+    background: var(--accent-light);
+    border-color: var(--accent);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    transform: translateX(-2px);
+  }
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent);
+    stroke-width: 2;
+    fill: none;
+    transition: transform 0.2s;
+  }
+  .back-button:hover svg {
+    transform: translateX(-2px);
+  }
+  .back-button span {
+    line-height: 1;
+  }
+
+  .header { text-align: center; margin-bottom: 44px; }
+  .eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px; }
+  h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(22px, 4vw, 40px); font-weight: 700; line-height: 1.15; color: var(--ink); margin-bottom: 8px; }
+  .subheading { font-size: 14px; color: var(--muted); font-style: italic; }
+  .rule { width: 48px; height: 3px; background: var(--accent); margin: 18px auto 0; border-radius: 2px; }
+  .instructions { background: var(--accent-light); border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; padding: 13px 20px; margin-bottom: 28px; font-size: 14.5px; color: var(--ink); line-height: 1.6; }
+  .word-bank-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 28px; margin-bottom: 32px; }
+  .word-bank-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 14px; }
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+  .word-item { display: flex; gap: 8px; align-items: center; padding: 8px 12px; background: var(--bg); border-radius: 7px; font-size: 14px; }
+  .word-letter { font-weight: 700; color: var(--accent); min-width: 32px; }
+  .reading-section { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 36px 40px; margin-bottom: 36px; }
+  .reading-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--accent); text-align: center; margin-bottom: 6px; }
+  .reading-subtitle { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 28px; font-style: italic; }
+  
+  .paragraph-card { margin-bottom: 28px; border-bottom: 1px dashed var(--border); padding-bottom: 24px; }
+  .paragraph-label { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--accent); margin-bottom: 8px; display: inline-block; background: var(--accent-light); padding: 2px 14px; border-radius: 24px; }
+  .paragraph-text { color: #2e2820; font-size: 16px; line-height: 2; margin-bottom: 14px; position: relative; }
+  
+  .isel { display: inline-block; position: relative; vertical-align: middle; margin-left: 12px; }
+  .isel-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 2px 12px 2px 14px;
+    background: var(--accent-light); border: 1.5px solid var(--accent);
+    border-radius: 30px; cursor: pointer;
+    font-size: 13px; font-family: 'DM Sans', sans-serif;
+    color: var(--accent); font-weight: 500; white-space: nowrap;
+    transition: background 0.15s; user-select: none; line-height: 1.6;
+  }
+  .isel-btn:hover { background: #eeddd0; }
+  .isel-btn .qbadge { font-size: 10px; font-weight: 700; background: var(--accent); color: #fff; padding: 1px 6px; border-radius: 20px; margin-right: 6px; }
+  .isel-btn .sval { color: var(--muted); font-weight: 400; font-style: italic; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .isel-btn .sval.chosen { color: var(--accent); font-weight: 500; font-style: normal; }
+  .isel-btn .arr { font-size: 9px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; margin-left: 4px; }
+  .isel-btn.active .arr { transform: rotate(180deg); }
+  .isel-btn.ok { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+  .isel-btn.bad { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+
+  /* Dropdown artık sabit değil, butonun yanında konumlanacak */
+  #floating-dd {
+    display: none;
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(80,50,20,0.16);
+    z-index: 9999;
+    overflow: hidden;
+    min-width: 260px;
+  }
+  #floating-dd.open { display: block; }
+  .dd-opt { display: flex; align-items: center; gap: 10px; padding: 10px 16px; font-size: 13.5px; cursor: pointer; transition: background 0.12s; font-family: 'DM Sans', sans-serif; color: var(--ink); }
+  .dd-opt:hover { background: var(--accent-light); }
+  .dd-opt.sel { background: var(--accent-light); font-weight: 500; }
+  .opt-l { font-weight: 700; color: var(--accent); min-width: 28px; }
+
+  .exp-block { display: none; margin-top: 32px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+  .exp-block.vis { display: block; }
+  .exp-row { display: flex; border-bottom: 1px solid var(--border); }
+  .exp-row:last-child { border-bottom: none; }
+  .exp-lbl { flex-shrink: 0; width: 52px; display: flex; align-items: flex-start; justify-content: center; padding: 16px 0; font-size: 13px; font-weight: 700; background: var(--bg); }
+  .exp-row.cr .exp-lbl { background: var(--correct-bg); color: var(--correct); }
+  .exp-row.wr .exp-lbl { background: var(--wrong-bg); color: var(--wrong); }
+  .exp-row.nm .exp-lbl { background: var(--accent-light); color: var(--accent); }
+  .exp-body { flex: 1; padding: 16px 20px; font-size: 14px; line-height: 1.68; color: var(--ink); background: var(--surface); }
+  .exp-body .ca { color: var(--correct); font-weight: 700; }
+  .exp-body .wa { color: var(--wrong); font-weight: 700; }
+  .exp-body .et { color: var(--muted); margin-top: 8px; font-size: 13px; border-left: 2px solid var(--gold); padding-left: 12px; }
+
+  .controls { display: flex; gap: 12px; margin-top: 28px; justify-content: center; }
+  .btn-check { background: var(--accent); color: #fff; border: none; border-radius: 40px; padding: 12px 32px; font-size: 14px; font-weight: 700; letter-spacing: 1px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity 0.2s; }
+  .btn-check:hover { opacity: 0.87; }
+  .btn-reset { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 40px; padding: 12px 24px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color 0.2s, color 0.2s; }
+  .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+  .score-banner { display: none; text-align: center; background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 28px; margin-top: 32px; }
+  .score-big { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .score-sub { font-size: 14px; color: var(--muted); margin-top: 6px; }
+  .footer { text-align: center; margin-top: 52px; font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+
+  @media (max-width: 640px) {
+    .back-button { padding: 6px 14px 6px 12px; top: 18px; left: 18px; font-size: 12px; }
+    .back-button svg { width: 14px; height: 14px; }
+    .page { padding: 42px 20px 70px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- GERİ BUTONU - sayfa ile kayar, sol üst köşe, bir önceki sayfaya gider -->
+  <button class="back-button" id="backNavBtn" aria-label="Geri">
+    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+    <span>Geri</span>
+  </button>
+
+  <div class="header">
+    <div class="eyebrow">Okuma Alıştırması · FOMO</div>
+    <h1>Medya Çağında Yaygınlaşan Bir Duygu: FOMO</h1>
+    <div class="subheading">Paragraf – Başlık Eşleştirme</div>
+    <div class="rule"></div>
+  </div>
+
+  <div class="instructions">
+    Aşağıdaki başlıkları (A–G) kullanarak her paragrafın üstündeki açılır menüden en uygun başlığı seçiniz. Her başlık <strong>yalnızca bir kez</strong> kullanılabilir ve <strong>kullanılmayan İKİ başlık</strong> bulunmaktadır. Kontrol et butonuna bastığınızda açıklamalı cevaplar görünecektir.
+  </div>
+
+  <div class="word-bank-card">
+    <div class="word-bank-title">BAŞLIK BANKASI</div>
+    <div class="word-grid">
+      <div class="word-item"><span class="word-letter">A)</span> FOMO ile Mücadele Yolları</div>
+      <div class="word-item"><span class="word-letter">B)</span> Sosyal Medyanın İnsanları Birleştirici Gücü</div>
+      <div class="word-item"><span class="word-letter">C)</span> Akademik Başarıya Olumsuz Etkileri</div>
+      <div class="word-item"><span class="word-letter">D)</span> Dijital Dünyada Popüler Olma İsteği</div>
+      <div class="word-item"><span class="word-letter">E)</span> FOMO Nedir?</div>
+      <div class="word-item"><span class="word-letter">F)</span> Sosyal Medyanın FOMO Üzerindeki Etkisi</div>
+      <div class="word-item"><span class="word-letter">G)</span> FOMO’nun İnsan Hayatına Etkileri</div>
+    </div>
+  </div>
+
+  <div class="reading-section">
+    <div class="reading-title">Paragraf – Başlık Eşleme</div>
+    <div class="reading-subtitle">Her paragrafın üstünden başlığı seçiniz</div>
+    
+    <div class="paragraph-card">
+      <div class="paragraph-label">📄 Paragraf 1</div>
+      <div class="paragraph-text">
+        Siz de bir şeyleri kaçırma korkusuyla sosyal medya hesaplarınızı sık sık kontrol ediyor musunuz? Yalnız değilsiniz. Bu duyguya FOMO deniyor. Türkçede “kaçırma korkusu” olarak bilinen FOMO, çevrenizdekiler keyifli bir şey yaparken sizin geride kalıyormuş gibi hissetmenizdir. “Fear of Missing Out” ifadesinin kısaltması olan bu kavram, başkalarının eğlendiği, fırsat yakaladığı ya da avantaj elde ettiği durumları kaçırma kaygısını anlatır. Günümüzde özellikle gençler arasında giderek yaygınlaşmaktadır.
+        <span class="isel"><span class="isel-btn" id="btn-1" data-q="1"><span class="qbadge">Başlık</span><span class="sval" id="val-1">seçin…</span><span class="arr">▼</span></span></span>
+      </div>
+    </div>
+
+    <div class="paragraph-card">
+      <div class="paragraph-label">📄 Paragraf 2</div>
+      <div class="paragraph-text">
+        Günün önemli bir kısmını sosyal medyada geçiriyoruz. Başkalarının “en iyi anlarını” görmek, doğal olarak insanlarda kıyaslama eğilimini artırıyor. Arkadaşlarımızın mutlu ve eğlenceli paylaşımlarını izledikçe kendimizi eksik ya da yetersiz hissedebiliyoruz. Bu durum sosyal medyayı sürekli kontrol etme isteğini artırıyor. Derste, trafikte ya da günlük yaşam sırasında bile elimizin telefona gitmesi bu nedenle ortaya çıkıyor. Yoğun sosyal medya kullanımı bir yandan ait hissetme duygusu oluştururken diğer yandan huzursuzluk ve yetersizlik hissi yaratabiliyor.
+        <span class="isel"><span class="isel-btn" id="btn-2" data-q="2"><span class="qbadge">Başlık</span><span class="sval" id="val-2">seçin…</span><span class="arr">▼</span></span></span>
+      </div>
+    </div>
+
+    <div class="paragraph-card">
+      <div class="paragraph-label">📄 Paragraf 3</div>
+      <div class="paragraph-text">
+        FOMO yalnızca sosyal medya alışkanlıklarını değil, ruh ve beden sağlığını da etkiliyor. Sürekli kıyaslama yapmak kaygı ve stres seviyesini artırırken öz güveni zedeleyebiliyor. Ayrıca uzun süre ekran başında kalmak hareketsiz yaşama neden oluyor ve uyku düzenini bozuyor. Sosyal ilişkiler de bu durumdan olumsuz etkileniyor. İnsanlar arkadaş gruplarından dışlanmamak için sürekli çevrim içi kalma baskısı hissedebiliyor. Bir araya gelindiğinde bile sosyal medyada vakit geçirmek, yüz yüze iletişimi azaltıyor ve ilişkileri yüzeyselleştiriyor.
+        <span class="isel"><span class="isel-btn" id="btn-3" data-q="3"><span class="qbadge">Başlık</span><span class="sval" id="val-3">seçin…</span><span class="arr">▼</span></span></span>
+      </div>
+    </div>
+
+    <div class="paragraph-card">
+      <div class="paragraph-label">📄 Paragraf 4</div>
+      <div class="paragraph-text">
+        Sosyal medyada sürekli bağlantıda kalma isteği, özellikle öğrencilerin dikkatini dağıtıyor. Ders çalışırken ya da ödev yaparken telefona sık sık bakmak öğrenme verimini düşürüyor. Aynı zamanda gece geç saatlere kadar ekran başında kalmak uyku süresini azaltıyor ve kişinin gün içinde yorgun hissetmesine neden oluyor. Bu durum yalnızca okul başarısını değil, günlük yaşam verimliliğini de olumsuz etkiliyor.
+        <span class="isel"><span class="isel-btn" id="btn-4" data-q="4"><span class="qbadge">Başlık</span><span class="sval" id="val-4">seçin…</span><span class="arr">▼</span></span></span>
+      </div>
+    </div>
+
+    <div class="paragraph-card">
+      <div class="paragraph-label">📄 Paragraf 5</div>
+      <div class="paragraph-text">
+        FOMO ile mücadele etmenin ilk adımı farkındalık geliştirmektir. Sosyal medyada gördüğümüz içeriklerin çoğunun gerçeği tam olarak yansıtmadığını unutmamak gerekir. Ayrıca sosyal medya kullanımına sınır koymak da etkili olabilir. Örneğin ekran süresini azaltmak, ders çalışırken telefonu uzağa koymak veya yatmadan önce ekran kullanımını bırakmak fayda sağlar. Bunun yanında kitap okumak, spor yapmak, müzikle uğraşmak ve arkadaşlarla telefonsuz vakit geçirmek sosyal medya dışında daha kaliteli bir yaşam kurmaya yardımcı olur.
+        <span class="isel"><span class="isel-btn" id="btn-5" data-q="5"><span class="qbadge">Başlık</span><span class="sval" id="val-5">seçin…</span><span class="arr">▼</span></span></span>
+      </div>
+    </div>
+
+    <div class="exp-block" id="exp-block">
+      <div class="exp-row" id="er-1"><div class="exp-lbl" id="el-1">P1</div><div class="exp-body" id="eb-1"></div></div>
+      <div class="exp-row" id="er-2"><div class="exp-lbl" id="el-2">P2</div><div class="exp-body" id="eb-2"></div></div>
+      <div class="exp-row" id="er-3"><div class="exp-lbl" id="el-3">P3</div><div class="exp-body" id="eb-3"></div></div>
+      <div class="exp-row" id="er-4"><div class="exp-lbl" id="el-4">P4</div><div class="exp-body" id="eb-4"></div></div>
+      <div class="exp-row" id="er-5"><div class="exp-lbl" id="el-5">P5</div><div class="exp-body" id="eb-5"></div></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-check" onclick="checkAll()">✓ KONTROL ET</button>
+    <button class="btn-reset" onclick="resetAll()">⟳ SIFIRLA</button>
+  </div>
+
+  <div class="score-banner" id="score-banner">
+    <div class="score-big" id="score-num">0/5</div>
+    <div class="score-sub">doğru başlık eşlemesi</div>
+  </div>
+  <div class="footer">Hamza Hoca ile Türkçe Öğreniyorum · FOMO Metni</div>
+</div>
+
+<div id="floating-dd"></div>
+
+<script>
+  const CORRECT = {1:'E', 2:'F', 3:'G', 4:'C', 5:'A'};
+  const TITLES = {
+    A:'FOMO ile Mücadele Yolları',
+    B:'Sosyal Medyanın İnsanları Birleştirici Gücü',
+    C:'Akademik Başarıya Olumsuz Etkileri',
+    D:'Dijital Dünyada Popüler Olma İsteği',
+    E:'FOMO Nedir?',
+    F:'Sosyal Medyanın FOMO Üzerindeki Etkisi',
+    G:'FOMO’nun İnsan Hayatına Etkileri'
+  };
+  
+  const EXPLANATIONS = {
+    1: 'Paragrafta FOMO kavramının tanımı yapılmış, “Fear of Missing Out” açıklanmış, kaçırma korkusunun ne olduğu anlatılmıştır. Bu nedenle en uygun başlık <strong>“FOMO Nedir?”</strong> (E) seçeneğidir.',
+    2: 'Paragraf, sosyal medyada geçirilen zamanın kıyaslamayı artırdığını, sürekli kontrol isteği yarattığını ve FOMO’yu tetiklediğini vurgular. “Sosyal medyanın FOMO üzerindeki etkisi” (F) ana temadır.',
+    3: 'Bu bölümde FOMO’nun ruh sağlığı (kaygı, özgüven), beden sağlığı (hareketsizlik, uyku) ve sosyal ilişkiler üzerindeki olumsuz etkileri sıralanmıştır. Doğru başlık <strong>“FOMO’nun İnsan Hayatına Etkileri”</strong> (G) seçeneğidir.',
+    4: 'Paragraf özellikle öğrencilerin ders çalışma verimi, dikkat dağınıklığı, uyku düzeni ve okul başarısı üzerindeki olumsuzluklara odaklanmıştır. “Akademik Başarıya Olumsuz Etkileri” (C) tam olarak eşleşir.',
+    5: 'Metnin son paragrafı farkındalık, ekran süresini azaltma, sosyal medyaya sınır koyma ve alternatif etkinlikler önermektedir. Bu çözüm odaklı yaklaşım <strong>“FOMO ile Mücadele Yolları”</strong> (A) başlığına aittir.'
+  };
+
+  let selected = {};
+  let locked = {};
+  let openQ = null;
+  let currentBtn = null;
+
+  const fdd = document.getElementById('floating-dd');
+  
+  function buildDropdown() {
+    fdd.innerHTML = '';
+    const letters = ['A','B','C','D','E','F','G'];
+    letters.forEach(l => {
+      const div = document.createElement('div');
+      div.className = 'dd-opt';
+      div.dataset.l = l;
+      div.innerHTML = `<span class="opt-l">${l})</span> ${TITLES[l]}`;
+      div.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (openQ !== null) {
+          pickOption(openQ, l, TITLES[l]);
+          closeDD();
+        }
+      });
+      fdd.appendChild(div);
+    });
+  }
+  buildDropdown();
+
+  document.querySelectorAll('.isel-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const q = parseInt(this.dataset.q);
+      if (locked[q]) return;
+      if (openQ === q) { closeDD(); return; }
+      openDD(q, this);
+    });
+  });
+
+  function openDD(q, btnEl) {
+    closeDD(); // önce varsa kapat
+    openQ = q;
+    currentBtn = btnEl;
+    
+    // seçili opsiyonu vurgula
+    fdd.querySelectorAll('.dd-opt').forEach(o => {
+      if (selected[q] && selected[q] === o.dataset.l) o.classList.add('sel');
+      else o.classList.remove('sel');
+    });
+    
+    fdd.classList.add('open');
+    positionDropdown(btnEl);
+    
+    document.getElementById('btn-' + q).classList.add('active');
+    
+    // scroll'da dropdown'ı yeniden konumlandır veya kapat (kapatmak daha temiz)
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+  }
+  
+  function positionDropdown(btnEl) {
+    const rect = btnEl.getBoundingClientRect();
+    const scrollTop = window.scrollY;
+    const scrollLeft = window.scrollX;
+    
+    // butonun sayfadaki mutlak konumu
+    const absoluteTop = rect.top + scrollTop;
+    const absoluteLeft = rect.left + scrollLeft;
+    
+    fdd.style.position = 'absolute';
+    fdd.style.top = (absoluteTop + rect.height + 6) + 'px';
+    fdd.style.left = absoluteLeft + 'px';
+    fdd.style.minWidth = '280px';
+    
+    // taşma kontrolü
+    const ddRect = fdd.getBoundingClientRect();
+    if (ddRect.right > window.innerWidth) {
+      fdd.style.left = (window.innerWidth - ddRect.width - 10) + 'px';
+    }
+    if (ddRect.bottom > window.innerHeight + window.scrollY) {
+      fdd.style.top = (absoluteTop - ddRect.height - 6) + 'px';
+    }
+  }
+  
+  function handleScroll() {
+    if (openQ !== null && currentBtn) {
+      positionDropdown(currentBtn);
+    }
+  }
+  
+  function closeDD() {
+    if (openQ !== null) {
+      const btn = document.getElementById('btn-' + openQ);
+      if (btn) btn.classList.remove('active');
+    }
+    fdd.classList.remove('open');
+    openQ = null;
+    currentBtn = null;
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('resize', handleScroll);
+  }
+
+  function pickOption(q, letter, fullTitle) {
+    selected[q] = letter;
+    const valSpan = document.getElementById('val-' + q);
+    valSpan.textContent = letter + ') ' + (fullTitle.length > 38 ? fullTitle.substring(0,36)+'…' : fullTitle);
+    valSpan.classList.add('chosen');
+  }
+
+  function checkAll() {
+    let score = 0;
+    for (let q = 1; q <= 5; q++) {
+      locked[q] = true;
+      const userChoice = selected[q];
+      const correctLetter = CORRECT[q];
+      const isRight = (userChoice === correctLetter);
+      if (isRight) score++;
+
+      const btn = document.getElementById('btn-' + q);
+      btn.classList.remove('active');
+      btn.classList.add(isRight ? 'ok' : 'bad');
+      btn.style.pointerEvents = 'none';
+
+      const row = document.getElementById('er-' + q);
+      const lbl = document.getElementById('el-' + q);
+      const body = document.getElementById('eb-' + q);
+      row.classList.add(isRight ? 'cr' : (userChoice ? 'wr' : 'nm'));
+      if (isRight) lbl.textContent = '✓';
+      else if (userChoice) lbl.textContent = '✗';
+      else lbl.textContent = '–';
+
+      const correctTitle = TITLES[correctLetter];
+      if (isRight) {
+        body.innerHTML = `<span class="ca">✔ Doğru: ${correctLetter}) ${correctTitle}</span><div class="et">${EXPLANATIONS[q]}</div>`;
+      } else if (userChoice) {
+        const wrongTitle = TITLES[userChoice] || '?';
+        body.innerHTML = `<span class="wa">✘ Yanlış: ${userChoice}) ${wrongTitle}</span> → <span class="ca">Doğru: ${correctLetter}) ${correctTitle}</span><div class="et">${EXPLANATIONS[q]}</div>`;
+      } else {
+        body.innerHTML = `<span style="color:var(--muted)">⨀ Boş bırakıldı.</span> <span class="ca">Doğru: ${correctLetter}) ${correctTitle}</span><div class="et">${EXPLANATIONS[q]}</div>`;
+      }
+    }
+    closeDD();
+    document.getElementById('exp-block').classList.add('vis');
+    const banner = document.getElementById('score-banner');
+    banner.style.display = 'block';
+    document.getElementById('score-num').textContent = score + '/5';
+    banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetAll() {
+    for (let q = 1; q <= 5; q++) {
+      delete selected[q];
+      delete locked[q];
+      const btn = document.getElementById('btn-' + q);
+      btn.className = 'isel-btn';
+      btn.style.pointerEvents = '';
+      const valSpan = document.getElementById('val-' + q);
+      valSpan.textContent = 'seçin…';
+      valSpan.classList.remove('chosen');
+      const row = document.getElementById('er-' + q);
+      row.classList.remove('cr', 'wr', 'nm');
+      document.getElementById('el-' + q).textContent = 'P'+q;
+      document.getElementById('eb-' + q).innerHTML = '';
+    }
+    closeDD();
+    document.getElementById('exp-block').classList.remove('vis');
+    document.getElementById('score-banner').style.display = 'none';
+  }
+
+  // Geri butonu: bir önceki sayfaya yönlendirir
+  const backBtn = document.getElementById('backNavBtn');
+  if (backBtn) {
+    backBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Geçmiş yoksa boş sayfaya yönlendir (minimal etki)
+        window.location.href = 'about:blank';
+      }
+    });
+  }
+</script>
+</body>
+</html>

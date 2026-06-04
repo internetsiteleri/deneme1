@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türkçe Okuma Testi 8 – Teknoloji, Eğitim ve Öğrenme | Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209; --paper: #faf7f0; --cream: #f2ead8;
+    --accent: #c0392b; --gold: #b8860b; --muted: #7a6a55;
+    --success: #2e7d52; --error: #c0392b; --border: #d4c5a9;
+    --shadow: rgba(26,18,9,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper); color: var(--ink);
+    line-height: 1.7; min-height: 100vh;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 1.3rem; background: transparent;
+    border: 2px solid #F5C842; border-radius: 30px;
+    color: #F5C842; font-family: 'Segoe UI', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.06em; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+    position: absolute; top: 1.2rem; left: 1.5rem; z-index: 10;
+  }
+  .back-btn:hover { background: #F5C842; color: #1a2332; }
+  @media (max-width: 600px) {
+    .back-btn { position: static; margin: 0 auto 1rem; display: flex; justify-content: center; width: fit-content; }
+  }
+  /* ---- sayaç: sayfaya gömülü, sabit değil, küçük boy ---- */
+  .timer-corner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(26,18,9,0.85);
+    backdrop-filter: blur(6px);
+    border-radius: 32px;
+    padding: 0.2rem 0.7rem 0.2rem 1rem;
+    font-family: 'Segoe UI', 'Source Serif 4', monospace;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid rgba(212,160,23,0.5);
+    transition: all 0.2s ease;
+    width: fit-content;
+    margin-bottom: 0.8rem;
+  }
+  .timer-display {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: #0a0c14;
+    padding: 0.1rem 0.5rem;
+    border-radius: 28px;
+    color: #a5f0b3;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.1s ease;
+    min-width: 88px;
+    text-align: center;
+  }
+  .timer-display.warning {
+    color: #ff7777;
+    text-shadow: 0 0 1px #ff4444;
+  }
+  .timer-btn {
+    background: #2c2e3a;
+    border: none;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 28px;
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .timer-btn:hover {
+    background: #D4A017;
+    color: #1a1209;
+    transform: scale(0.96);
+  }
+  .header-top-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+  }
+  @media (max-width: 600px) {
+    .timer-corner {
+      padding: 0.15rem 0.6rem;
+      gap: 0.5rem;
+    }
+    .timer-display {
+      font-size: 0.75rem;
+      min-width: 78px;
+    }
+    .timer-btn {
+      font-size: 0.55rem;
+      padding: 0.15rem 0.55rem;
+    }
+  }
+  header {
+    background: #1a2332; color: var(--paper);
+    padding: 3rem 2rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block; border: 2px solid #D4A017;
+    border-radius: 30px; padding: 0.35rem 1.2rem;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #1a2332; background: #D4A017; margin-bottom: 1.4rem;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;
+    line-height: 1.15; color: #D4A017;
+    text-shadow: 0 1px 12px rgba(212,160,23,0.2);
+    letter-spacing: 0.04em; margin-bottom: 1rem;
+    -webkit-text-stroke: 0.5px #D4A017;
+  }
+  .header-stars { color: #D4A017; font-size: 1.3rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; display: block; }
+  .header-divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, #D4A017, transparent);
+    margin: 0.5rem auto 2rem;
+  }
+  .header-cta-text {
+    font-size: 0.82rem; color: #e8dfc8;
+    margin-bottom: 0.8rem; font-style: normal;
+    letter-spacing: 0.01em; font-weight: 600;
+  }
+  .tg-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.75rem 2rem; background: #D4A017;
+    color: #1a2332; text-decoration: none;
+    border-radius: 8px; font-family: 'Source Serif 4', serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.03em; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+    position: relative; z-index: 2;
+  }
+  .tg-btn:hover { background: #c49010; transform: translateY(-2px); }
+  .tg-btn svg { flex-shrink: 0; fill: #229ED9; }
+  .progress-wrap {
+    background: #1a2332; padding: 0 2rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .segments-bar { flex: 1; display: flex; gap: 2px; }
+  .seg {
+    flex: 1; height: 8px; border-radius: 2px;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s ease;
+  }
+  .seg.filled { background: var(--success); }
+  .progress-text {
+    color: #b8a890; font-size: 0.78rem;
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .section-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 2px; margin-bottom: 2.5rem;
+    box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+  }
+  .section-header {
+    background: var(--ink); color: var(--paper);
+    padding: 1rem 1.5rem; display: flex;
+    align-items: center; gap: 1rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--gold); line-height: 1; min-width: 2rem;
+  }
+  .section-title {
+    font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.18em; font-weight: 600; color: var(--cream);
+  }
+  .section-body { padding: 1.5rem; }
+  .reading-text {
+    background: var(--cream); border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;
+    font-size: 0.92rem; line-height: 1.85;
+    color: #2a1f10; border-radius: 0 2px 2px 0;
+  }
+  .reading-text p { margin-bottom: 0.8rem; }
+  .reading-text p:last-child { margin-bottom: 0; }
+  .instructions {
+    font-size: 0.82rem; color: var(--muted);
+    font-style: italic; margin-bottom: 1.2rem;
+    padding: 0.7rem 1rem; border: 1px dashed var(--border);
+    border-radius: 2px;
+  }
+  .options-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .options-grid {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.4rem; padding: 0.8rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .option-pill {
+    padding: 0.3rem 0.8rem; background: white;
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.82rem; font-family: 'Source Serif 4', serif;
+  }
+  .option-pill strong { color: var(--accent); }
+  .question {
+    margin-bottom: 1.4rem; padding-bottom: 1.4rem;
+    border-bottom: 1px solid #ede5d4;
+  }
+  .question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--muted); margin-bottom: 0.4rem;
+  }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.8rem; font-weight: 400; }
+  .q-text .blank {
+    display: inline-block; min-width: 120px;
+    border-bottom: 2px solid var(--gold);
+    text-align: center; padding: 0 4px;
+    font-weight: 600; color: var(--accent);
+  }
+  select {
+    appearance: none; -webkit-appearance: none;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6a55' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1.5px solid var(--border); border-radius: 2px;
+    padding: 0.45rem 2rem 0.45rem 0.7rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    color: var(--ink); cursor: pointer; min-width: 160px;
+    transition: border-color 0.2s;
+  }
+  select:focus { outline: none; border-color: var(--gold); }
+  select.correct { border-color: var(--success); background-color: #f0faf5; }
+  select.wrong { border-color: var(--error); background-color: #fff5f5; }
+  .choices { display: flex; flex-direction: column; gap: 0.5rem; }
+  .choice-label {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.55rem 0.8rem; border: 1.5px solid var(--border);
+    border-radius: 2px; cursor: pointer; font-size: 0.88rem;
+    transition: all 0.15s; background: white;
+  }
+  .choice-label:hover { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label input[type=radio] { display: none; }
+  .choice-key {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    color: var(--muted); min-width: 1.1rem; margin-top: 0.05rem;
+  }
+  .choice-label.selected { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label.correct { border-color: var(--success); background: #f0faf5; }
+  .choice-label.correct .choice-key { color: var(--success); }
+  .choice-label.wrong { border-color: var(--error); background: #fff5f5; }
+  .choice-label.wrong .choice-key { color: var(--error); }
+  .choice-label.show-answer { border-color: var(--success); background: #f0faf5; }
+  .choice-label.show-answer .choice-key { color: var(--success); }
+  .match-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.8rem; padding: 0.7rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .match-num {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 1rem; color: var(--accent);
+    min-width: 1.5rem; padding-top: 0.25rem;
+  }
+  .match-text { flex: 1; font-size: 0.87rem; line-height: 1.5; }
+  .match-select { min-width: 140px; }
+  .submit-wrap {
+    text-align: center; margin-top: 2rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .btn-submit {
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 0.9rem 3rem; font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer; border-radius: 2px; transition: all 0.2s;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-reset {
+    background: transparent; color: var(--muted);
+    border: 1.5px solid var(--border); padding: 0.9rem 2rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    cursor: pointer; border-radius: 2px; margin-left: 0.8rem;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--ink); }
+  #results {
+    display: none; background: var(--ink); color: var(--paper);
+    border-radius: 2px; padding: 2rem; margin-bottom: 2.5rem;
+    text-align: center; box-shadow: 0 4px 24px var(--shadow);
+    animation: fadeUp 0.5s ease;
+  }
+  #results h2 {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    font-weight: 900; color: var(--gold);
+  }
+  #results .score-label {
+    font-size: 0.8rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #b8a890; margin-bottom: 0.3rem;
+  }
+  #results .score-detail {
+    font-size: 0.9rem; color: #b8a890;
+    margin-top: 0.5rem; font-style: italic;
+  }
+  #results .feedback {
+    margin-top: 1rem; font-size: 1rem; color: var(--cream);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-feedback {
+    display: none; font-size: 0.78rem; margin-top: 0.4rem;
+    padding: 0.3rem 0.6rem; border-radius: 2px; font-style: italic;
+  }
+  .q-feedback.correct { display: block; color: var(--success); background: #f0faf5; }
+  .q-feedback.wrong { display: block; color: var(--error); background: #fff5f5; }
+  @media (max-width: 600px) {
+    .match-row { flex-direction: column; }
+    .match-select, select { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.history.back()">← Geri</button>
+  <div class="header-top-row">
+    <div class="timer-corner" id="timerCorner">
+      <div class="timer-display" id="timerDisplay">00:00:00</div>
+      <button class="timer-btn" id="timerStartStopBtn">▶ Başlat</button>
+    </div>
+  </div>
+  <div class="header-badge">✦ Okuma Testi 8 ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <span class="header-stars">★★★★★</span>
+  <div class="header-divider"></div>
+  <div class="header-cta-text">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</div>
+  <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.28 13.6l-2.965-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.959z"/></svg>
+    Kanala Katıl
+  </a>
+</header>
+
+<div class="progress-wrap">
+  <div class="segments-bar" id="segmentsBar"></div>
+  <div class="progress-text" id="progressText">0 / 35</div>
+</div>
+
+<main>
+
+<div id="results">
+  <div class="score-label">Doğru Cevap Sayısı</div>
+  <h2 id="scoreDisplay">–</h2>
+  <div class="score-detail" id="scoreDetail"></div>
+  <div class="feedback" id="feedbackMsg"></div>
+</div>
+
+<!-- BÖLÜM 1: BOŞLUK DOLDURMA - Teknoloji ve İnsan İlişkisi -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Okuma Metni — Boşluk Doldurma</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Teknoloji ve İnsan İlişkisi · Sorular 1–6</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>Günümüzde teknoloji, insan hayatının ayrılmaz bir <strong>(1) ______</strong> hâline gelmiştir. İnsanlar artık iletişim kurarken, bilgiye ulaşırken ve hatta alışveriş yaparken dijital araçlara başvurmaktadır. Bu durum, hayatı kolaylaştırsa da bazı <strong>(2) ______</strong> sonuçları da beraberinde getirmektedir.</p>
+      <p>Özellikle sosyal medya kullanımı, bireyler arasında yüz yüze iletişimin azalmasına neden olmuştur. İnsanlar, gerçek ilişkiler yerine sanal ortamda kurdukları bağlantılara daha fazla önem vermeye başlamıştır. Bu da toplumda <strong>(3) ______</strong> ilişkilerin artmasına yol açmaktadır.</p>
+      <p>Bununla birlikte teknoloji, eğitim alanında önemli fırsatlar sunmaktadır. Öğrenciler, internet sayesinde farklı kaynaklara kolayca ulaşabilmekte ve kendi öğrenme süreçlerini <strong>(4) ______</strong> bir şekilde yönetebilmektedir.</p>
+      <p>Ancak teknolojinin bilinçsiz kullanımı, bireylerin dikkat sürelerini kısaltmakta ve odaklanma sorunlarına neden olmaktadır. Bu nedenle teknolojinin faydalarından yararlanırken onun olası <strong>(5) ______</strong> etkilerini de göz önünde bulundurmak gerekmektedir.</p>
+      <p>Sonuç olarak teknoloji, doğru kullanıldığında insan hayatını zenginleştiren bir araçtır; fakat aşırı kullanım, bireyin sosyal ve psikolojik açıdan <strong>(6) ______</strong> hâle gelmesine neden olabilir.</p>
+    </div>
+    <div class="instructions">Her sözcük yalnızca bir defa kullanılabilir. Seçmemeniz gereken <strong>iki</strong> seçenek bulunmaktadır.</div>
+    <div class="options-label">Kelime Listesi</div>
+    <div class="options-grid">
+      <div class="option-pill"><strong>A)</strong> olumsuz</div>
+      <div class="option-pill"><strong>B)</strong> parçası</div>
+      <div class="option-pill"><strong>C)</strong> yüzeysel</div>
+      <div class="option-pill"><strong>D)</strong> bağımlı</div>
+      <div class="option-pill"><strong>E)</strong> zarar</div>
+      <div class="option-pill"><strong>F)</strong> etkin</div>
+      <div class="option-pill"><strong>G)</strong> derin</div>
+      <div class="option-pill"><strong>H)</strong> istenmeyen</div>
+    </div>
+    <div class="question" id="qw1"><div class="q-label">Soru 1</div><div class="q-text">Günümüzde teknoloji, insan hayatının ayrılmaz bir <span class="blank">______</span> hâline gelmiştir.</div><select id="q1" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) olumsuz</option><option value="B">B) parçası</option><option value="C">C) yüzeysel</option><option value="D">D) bağımlı</option><option value="E">E) zarar</option><option value="F">F) etkin</option><option value="G">G) derin</option><option value="H">H) istenmeyen</option></select><div class="q-feedback" id="fb1"></div></div>
+    <div class="question" id="qw2"><div class="q-label">Soru 2</div><div class="q-text">Bu durum, hayatı kolaylaştırsa da bazı <span class="blank">______</span> sonuçları da beraberinde getirmektedir.</div><select id="q2" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) olumsuz</option><option value="B">B) parçası</option><option value="C">C) yüzeysel</option><option value="D">D) bağımlı</option><option value="E">E) zarar</option><option value="F">F) etkin</option><option value="G">G) derin</option><option value="H">H) istenmeyen</option></select><div class="q-feedback" id="fb2"></div></div>
+    <div class="question" id="qw3"><div class="q-label">Soru 3</div><div class="q-text">Bu da toplumda <span class="blank">______</span> ilişkilerin artmasına yol açmaktadır.</div><select id="q3" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) olumsuz</option><option value="B">B) parçası</option><option value="C">C) yüzeysel</option><option value="D">D) bağımlı</option><option value="E">E) zarar</option><option value="F">F) etkin</option><option value="G">G) derin</option><option value="H">H) istenmeyen</option></select><div class="q-feedback" id="fb3"></div></div>
+    <div class="question" id="qw4"><div class="q-label">Soru 4</div><div class="q-text">Öğrenciler, internet sayesinde farklı kaynaklara kolayca ulaşabilmekte ve kendi öğrenme süreçlerini <span class="blank">______</span> bir şekilde yönetebilmektedir.</div><select id="q4" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) olumsuz</option><option value="B">B) parçası</option><option value="C">C) yüzeysel</option><option value="D">D) bağımlı</option><option value="E">E) zarar</option><option value="F">F) etkin</option><option value="G">G) derin</option><option value="H">H) istenmeyen</option></select><div class="q-feedback" id="fb4"></div></div>
+    <div class="question" id="qw5"><div class="q-label">Soru 5</div><div class="q-text">Bu nedenle teknolojinin faydalarından yararlanırken onun olası <span class="blank">______</span> etkilerini de göz önünde bulundurmak gerekmektedir.</div><select id="q5" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) olumsuz</option><option value="B">B) parçası</option><option value="C">C) yüzeysel</option><option value="D">D) bağımlı</option><option value="E">E) zarar</option><option value="F">F) etkin</option><option value="G">G) derin</option><option value="H">H) istenmeyen</option></select><div class="q-feedback" id="fb5"></div></div>
+    <div class="question" id="qw6"><div class="q-label">Soru 6</div><div class="q-text">Fakat aşırı kullanım, bireyin sosyal ve psikolojik açıdan <span class="blank">______</span> hâle gelmesine neden olabilir.</div><select id="q6" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) olumsuz</option><option value="B">B) parçası</option><option value="C">C) yüzeysel</option><option value="D">D) bağımlı</option><option value="E">E) zarar</option><option value="F">F) etkin</option><option value="G">G) derin</option><option value="H">H) istenmeyen</option></select><div class="q-feedback" id="fb6"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 2: İLAN-DURUM EŞLEŞTİRME (Eğitim ve Kariyer) -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Okuma Metni — İlan-Durum Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Kariyer ve Kişisel Gelişim · Sorular 7–14</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Aşağıdaki durumları (A-J) ve ilanları (7-14) eşleştiriniz. Her ilan yalnız bir durumla eşleşecektir. <strong>İki</strong> durum seçilmeyecektir.</div>
+    <div class="options-label">Durumlar (A–J)</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Akademik yazılarınızda dil bilgisi hatalarını azaltmak ve metinlerinizi daha akıcı hâle getirmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>B)</strong> Topluluk önünde konuşma yaparken heyecanınızı kontrol etmek ve etkili sunum teknikleri öğrenmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>C)</strong> Yurt dışında eğitim almak için gerekli olan dil sınavına hazırlanıyorsunuz ve sistemli bir program arıyorsunuz.</div>
+      <div class="option-pill"><strong>D)</strong> İş hayatında zamanınızı daha verimli kullanmak ve planlama becerilerinizi geliştirmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>E)</strong> Kendi işinizi kurmak için girişimcilik konusunda rehberlik ve mentorluk almak istiyorsunuz.</div>
+      <div class="option-pill"><strong>F)</strong> Çalıştığınız kurumda ekip içi iletişimi güçlendirmek ve çalışanlar arası uyumu artırmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>G)</strong> Araştırma yaparken doğru kaynaklara ulaşmak ve bilimsel veri analizini öğrenmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>H)</strong> Yabancı dilde konuşurken kelime dağarcığınızı geliştirmek ve daha akıcı konuşmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>I)</strong> Dijital ortamda ders içerikleri hazırlamak ve uzaktan eğitim sistemlerini daha etkili kullanmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>J)</strong> İş görüşmelerinde kendinizi daha iyi ifade etmek ve profesyonel bir izlenim bırakmak istiyorsunuz.</div>
+    </div>
+    <div id="matchingQuestions">
+      <div class="match-row" id="qw7"><div class="match-num">7</div><div class="match-text"><strong>Akademik Yazım ve Editörlük Desteği:</strong> Makale, tez ve raporlarınız için dil bilgisi düzeltmeleri, anlatım bütünlüğü sağlama ve akademik üslup geliştirme hizmetleri sunulmaktadır.</div><select id="q7" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb7"></div></div>
+      <div class="match-row" id="qw8"><div class="match-num">8</div><div class="match-text"><strong>Etkili Sunum ve Hitabet Eğitimi:</strong> Sahne korkusunu yenmek, beden dilini doğru kullanmak ve dinleyici üzerinde güçlü bir etki bırakmak isteyenler için uygulamalı eğitim programı.</div><select id="q8" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb8"></div></div>
+      <div class="match-row" id="qw9"><div class="match-num">9</div><div class="match-text"><strong>Uluslararası Sınavlara Hazırlık Programı:</strong> IELTS, TOEFL gibi sınavlara yönelik stratejik çalışma planları, deneme sınavları ve bireysel geri bildirimlerle hedefinize ulaşın.</div><select id="q9" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb9"></div></div>
+      <div class="match-row" id="qw10"><div class="match-num">10</div><div class="match-text"><strong>Zaman Yönetimi ve Verimlilik Atölyesi:</strong> Günlük planlama, öncelik belirleme ve dikkat yönetimi üzerine uygulamalı eğitimlerle iş ve özel hayat dengenizi kurun.</div><select id="q10" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb10"></div></div>
+      <div class="match-row" id="qw11"><div class="match-num">11</div><div class="match-text"><strong>Girişimcilik ve İş Geliştirme Danışmanlığı:</strong> İş fikrinden pazara açılmaya kadar tüm süreçlerde mentorluk, strateji geliştirme ve yatırımcıya hazırlık desteği.</div><select id="q11" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb11"></div></div>
+      <div class="match-row" id="qw12"><div class="match-num">12</div><div class="match-text"><strong>Kurumsal İletişim ve Takım Çalışması Eğitimi:</strong> Çalışanlar arası etkileşimi artıran, çatışma çözme ve iş birliği becerilerini geliştiren profesyonel eğitim programları.</div><select id="q12" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb12"></div></div>
+      <div class="match-row" id="qw13"><div class="match-num">13</div><div class="match-text"><strong>Araştırma Yöntemleri ve Veri Analizi Eğitimi:</strong> Bilimsel araştırma teknikleri, veri toplama yöntemleri ve istatistiksel analiz konularında kapsamlı eğitimler.</div><select id="q13" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb13"></div></div>
+      <div class="match-row" id="qw14"><div class="match-num">14</div><div class="match-text"><strong>Dijital Eğitim Tasarımı ve E-Öğrenme Araçları:</strong> Online ders içerikleri hazırlama, uzaktan eğitim platformlarını etkin kullanma ve dijital materyal geliştirme üzerine eğitimler.</div><select id="q14" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb14"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BÖLÜM 3: PARAGRAF-BAŞLIK EŞLEŞTİRME (Eğitim Sistemleri ve Öğrenme) -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Okuma Metni — Paragraf-Başlık Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Eğitim Sistemleri ve Öğrenme · Sorular 15–20</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Her paragraf için uygun başlığı seçiniz (A–H). Her başlık yalnız bir defa kullanılabilir.</div>
+    <div class="options-label">Başlıklar</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Geleneksel Eğitimin Kuralcı ve Öğretmen Merkezli Yapısı</div>
+      <div class="option-pill"><strong>B)</strong> Dijital Öğrenmenin Sağladığı Zaman ve Mekân Bağımsızlığı</div>
+      <div class="option-pill"><strong>C)</strong> Öğrenci Odaklı Yaklaşımın Eğitimdeki Yükselişi</div>
+      <div class="option-pill"><strong>D)</strong> Ezbere Dayalı Sistemlerin Eleştirisi</div>
+      <div class="option-pill"><strong>E)</strong> Öğretmenin Rehberlik Rolünün Ön Plana Çıkması</div>
+      <div class="option-pill"><strong>F)</strong> Ölçme ve Değerlendirme Anlayışının Yeniden Şekillenmesi</div>
+      <div class="option-pill"><strong>G)</strong> Bireysel Öğrenme Farklılıklarının Önemi</div>
+      <div class="option-pill"><strong>H)</strong> Eğitimde Erişim ve Fırsat Sorunları</div>
+    </div>
+    <div class="match-row" id="qw15"><div class="match-num">I</div><div class="match-text">Geleneksel eğitim sistemi, uzun yıllar boyunca öğretmenin merkezde olduğu ve bilginin tek yönlü olarak aktarıldığı bir yapı üzerine kurulmuştur. Bu modelde öğretmen, bilgiyi sunan otorite olarak kabul edilirken öğrencilerden beklenen, verilen bilgiyi eksiksiz bir şekilde öğrenmeleri ve tekrar etmeleridir. Derslerin işlenişinde belirli kuralların dışına çıkılmaması, disiplinin korunması açısından önemli görülmüştür. Ancak bu yaklaşım, öğrencilerin eleştirel düşünme becerilerini geliştirmekte yetersiz kalmış, bireysel farklılıkların göz ardı edilmesine neden olmuştur. Buna rağmen bu sistem, belirli bir düzen ve standart sağladığı için uzun süre varlığını sürdürmüştür.</div><select id="q15" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb15"></div></div>
+    <div class="match-row" id="qw16"><div class="match-num">II</div><div class="match-text">Son yıllarda eğitim anlayışında köklü değişiklikler yaşanmış ve öğrencinin aktif rol aldığı yaklaşımlar ön plana çıkmıştır. Bu yeni modelde öğrenciler, bilgiyi pasif bir şekilde almak yerine, onu sorgulayan, analiz eden ve yeniden yapılandıran bireyler olarak kabul edilmektedir. Öğretmen ise bu süreçte yönlendirici bir rol üstlenir. Bu yaklaşım, öğrencilerin öğrenmeye karşı daha istekli olmalarını sağlarken aynı zamanda problem çözme ve eleştirel düşünme becerilerini de geliştirmektedir.</div><select id="q16" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb16"></div></div>
+    <div class="match-row" id="qw17"><div class="match-num">III</div><div class="match-text">Teknolojik gelişmeler, eğitim alanında da önemli dönüşümlere yol açmıştır. Özellikle dijital platformlar sayesinde öğrenciler, yalnızca sınıf ortamına bağlı kalmadan öğrenme fırsatı bulmaktadır. Online dersler, video içerikler ve etkileşimli uygulamalar aracılığıyla bireyler, istedikleri zaman ve istedikleri yerden eğitim alabilmektedir. Bu durum, çalışan bireyler ya da farklı şehirlerde yaşayan öğrenciler için büyük bir kolaylık sağlamaktadır. Ancak bu esneklik, aynı zamanda bireylerin kendi öğrenme disiplinlerini sağlamalarını da zorunlu hâle getirmektedir.</div><select id="q17" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb17"></div></div>
+    <div class="match-row" id="qw18"><div class="match-num">IV</div><div class="match-text">Eğitimde başarıyı ölçme yöntemleri de zamanla değişime uğramıştır. Geçmişte öğrencilerin bilgi düzeyi genellikle sınav sonuçlarıyla belirlenirken, günümüzde bu yaklaşımın tek başına yeterli olmadığı kabul edilmektedir. Artık proje çalışmaları, sunumlar, grup etkinlikleri ve süreç odaklı değerlendirmeler de öğrencinin başarısını belirlemede önemli rol oynamaktadır. Bu değişim, öğrencilerin yalnızca sonuçlara değil, öğrenme sürecine de odaklanmasını sağlamaktadır.</div><select id="q18" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb18"></div></div>
+    <div class="match-row" id="qw19"><div class="match-num">V</div><div class="match-text">Her bireyin öğrenme süreci, diğerlerinden farklı özellikler taşımaktadır. Bazı öğrenciler görsel materyallerle daha etkili öğrenirken, bazıları dinleyerek ya da uygulayarak daha başarılı olmaktadır. Bunun yanı sıra öğrenme hızları da kişiden kişiye değişiklik göstermektedir. Bu nedenle eğitim sistemlerinin, tüm öğrencilere aynı yöntemi uygulamak yerine farklı öğrenme stillerine uygun içerikler sunması gerekmektedir.</div><select id="q19" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb19"></div></div>
+    <div class="match-row" id="qw20"><div class="match-num">VI</div><div class="match-text">Geleneksel eğitimde öğretmen, bilginin tek kaynağı olarak görülürken, günümüzde bu anlayış önemli ölçüde değişmiştir. Artık öğretmenler, öğrencilerin bilgiye ulaşmasını sağlayan ve onları yönlendiren bir rehber konumundadır. Bu değişim, öğrencilerin daha bağımsız öğrenmelerine olanak tanırken öğretmenin rolünü de daha esnek hâle getirmiştir. Ancak bu dönüşüm, öğretmenlerin sürekli olarak kendilerini geliştirmelerini ve yeni yöntemlere uyum sağlamalarını da gerekli kılmaktadır.</div><select id="q20" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb20"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 4: ÇOKTAN SEÇMELİ + D/Y/V (Eğitim Sistemleri) -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli & Doğru/Yanlış/Verilmemiş</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Eğitim Sistemleri ve Öğrenme · Sorular 21–29</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>Eğitim sistemleri, toplumların gelişiminde belirleyici bir rol oynamaktadır. Geçmişten günümüze kadar farklı eğitim anlayışları ortaya çıkmış, bu anlayışlar toplumsal ihtiyaçlara göre şekillenmiştir. Geleneksel eğitim modeli, öğretmenin bilgiyi aktaran merkezî bir otorite olduğu ve öğrencilerin bu bilgiyi büyük ölçüde pasif şekilde aldığı bir yapıya dayanmaktadır. Bu sistemde disiplin, düzen ve standartlaşma ön planda tutulurken, öğrencilerin bireysel özellikleri çoğu zaman ikinci planda kalmıştır. Ancak bu yaklaşım, belirli bir bilgi aktarımını garanti altına aldığı için uzun yıllar boyunca yaygın olarak uygulanmıştır.</p>
+      <p>Günümüzde ise eğitim anlayışı önemli ölçüde değişmiş ve öğrenci merkezli yaklaşımlar ön plana çıkmıştır. Bu yeni sistemde öğrenciler, bilgiyi sadece alan değil, aynı zamanda üreten ve yorumlayan bireyler olarak kabul edilmektedir. Öğretmenler ise bilgi kaynağı olmaktan çok rehberlik eden bir rol üstlenmektedir. Bu dönüşüm, öğrencilerin eleştirel düşünme, problem çözme ve analiz yapma becerilerini geliştirmeyi amaçlamaktadır. Bununla birlikte, bu yaklaşımın her öğrenci için aynı derecede etkili olmadığı ve bazı öğrencilerin daha fazla yönlendirmeye ihtiyaç duyduğu da ifade edilmektedir.</p>
+      <p>Teknolojinin gelişmesiyle birlikte eğitim ortamları da çeşitlenmiştir. Özellikle online eğitim sistemleri, bireylere zaman ve mekân açısından büyük esneklik sağlamaktadır. Öğrenciler, internet aracılığıyla derslere katılabilmekte, farklı kaynaklara ulaşabilmekte ve kendi öğrenme hızlarına göre ilerleyebilmektedir. Ancak bu durum, öğrencilerin öz disiplin sahibi olmalarını zorunlu hâle getirmektedir. Aksi takdirde, öğrenme süreci verimsiz hâle gelebilmektedir. Ayrıca, teknolojik imkânlara erişimdeki eşitsizlikler, bazı öğrencilerin bu fırsatlardan yeterince yararlanamamasına neden olmaktadır.</p>
+      <p>Eğitimde ölçme ve değerlendirme anlayışı da önemli bir değişim geçirmiştir. Geleneksel sistemde başarı, çoğunlukla yazılı sınavlarla ölçülürken, günümüzde bu yaklaşımın yetersiz olduğu düşünülmektedir. Artık öğrencilerin sadece bilgi düzeyi değil, aynı zamanda bu bilgiyi nasıl kullandıkları da değerlendirilmektedir. Proje çalışmaları, sunumlar ve grup etkinlikleri gibi yöntemler, öğrencilerin çok yönlü gelişimini ölçmeyi hedeflemektedir. Bu sayede öğrencilerin sadece ezber yapmaları değil, öğrendiklerini uygulayabilmeleri de önem kazanmaktadır.</p>
+      <p>Bununla birlikte, her öğrencinin öğrenme biçimi ve hızı farklılık göstermektedir. Bazı öğrenciler görsel materyallerle daha kolay öğrenirken, bazıları işitsel ya da uygulamalı yöntemlerle daha başarılı olmaktadır. Bu nedenle eğitim sistemlerinin, tüm öğrencilere tek tip bir yaklaşım sunmak yerine, bireysel farklılıkları dikkate alacak şekilde düzenlenmesi gerekmektedir. Uzmanlar, bu tür esnek ve uyarlanabilir eğitim modellerinin, öğrencilerin potansiyellerini daha etkin bir şekilde ortaya koymalarına yardımcı olacağını belirtmektedir.</p>
+    </div>
+    <div class="question" id="qw21"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 21 — Metnin bütününe göre aşağıdaki yargılardan hangisine varılamaz?</div><div class="choices" id="choices21"><label class="choice-label" onclick="selectChoice(this,'q21','A')"><input type="radio" name="q21" value="A"><span class="choice-key">A</span><span>Geleneksel eğitim modeli uzun süre uygulanmış ve belirli avantajlar sağlamıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','B')"><input type="radio" name="q21" value="B"><span class="choice-key">B</span><span>Öğrenci merkezli yaklaşım, tüm öğrenciler için tamamen sorunsuz bir sistemdir.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','C')"><input type="radio" name="q21" value="C"><span class="choice-key">C</span><span>Online eğitim, öğrencilere esneklik sağlamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','D')"><input type="radio" name="q21" value="D"><span class="choice-key">D</span><span>Eğitimde ölçme yöntemleri zamanla değişime uğramıştır.</span></label></div><div class="q-feedback" id="fb21"></div></div>
+    <div class="question" id="qw22"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 22 — Metinde geçen "öğrenci merkezli yaklaşım" ile ne anlatılmaktadır?</div><div class="choices" id="choices22"><label class="choice-label" onclick="selectChoice(this,'q22','A')"><input type="radio" name="q22" value="A"><span class="choice-key">A</span><span>Öğrencilerin yalnızca öğretmenin anlattıklarını tekrar etmesi</span></label><label class="choice-label" onclick="selectChoice(this,'q22','B')"><input type="radio" name="q22" value="B"><span class="choice-key">B</span><span>Öğrencilerin öğrenme sürecinde aktif rol alması ve bilgiyi yorumlaması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','C')"><input type="radio" name="q22" value="C"><span class="choice-key">C</span><span>Eğitimin tamamen sınavlara dayalı olması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','D')"><input type="radio" name="q22" value="D"><span class="choice-key">D</span><span>Öğretmenin tek bilgi kaynağı olması</span></label></div><div class="q-feedback" id="fb22"></div></div>
+    <div class="question" id="qw23"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 23 — Aşağıdakilerden hangisinde verilen bilgi metinle çelişmektedir?</div><div class="choices" id="choices23"><label class="choice-label" onclick="selectChoice(this,'q23','A')"><input type="radio" name="q23" value="A"><span class="choice-key">A</span><span>Online eğitim, zaman ve mekân açısından esneklik sağlamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','B')"><input type="radio" name="q23" value="B"><span class="choice-key">B</span><span>Bazı öğrenciler, öğrenme sürecinde daha fazla yönlendirmeye ihtiyaç duyabilir.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','C')"><input type="radio" name="q23" value="C"><span class="choice-key">C</span><span>Tüm öğrenciler aynı öğrenme yöntemleriyle en iyi sonucu elde eder.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','D')"><input type="radio" name="q23" value="D"><span class="choice-key">D</span><span>Ölçme ve değerlendirme anlayışı zaman içinde değişmiştir.</span></label></div><div class="q-feedback" id="fb23"></div></div>
+    <div class="question" id="qw24"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 24 — Metne göre aşağıdaki bilgilerden hangisi doğrudur?</div><div class="choices" id="choices24"><label class="choice-label" onclick="selectChoice(this,'q24','A')"><input type="radio" name="q24" value="A"><span class="choice-key">A</span><span>Geleneksel eğitimde bireysel farklılıklar ön planda tutulmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','B')"><input type="radio" name="q24" value="B"><span class="choice-key">B</span><span>Online eğitim, öz disiplin gerektirmeyen bir sistemdir.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','C')"><input type="radio" name="q24" value="C"><span class="choice-key">C</span><span>Modern eğitimde yalnızca sınavlar kullanılmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','D')"><input type="radio" name="q24" value="D"><span class="choice-key">D</span><span>Eğitimde farklı öğrenme biçimlerinin dikkate alınması gerekmektedir.</span></label></div><div class="q-feedback" id="fb24"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümleler metne göre <strong>DOĞRU (A)</strong>, <strong>YANLIŞ (B)</strong> ya da <strong>VERİLMEMİŞ (C)</strong> olabilir.</div>
+    
+    <div class="question" id="qw25"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 25</div><div class="q-text" style="font-weight:700;color:var(--ink);">Geleneksel eğitim modelinde öğrenciler genellikle pasif bir rol üstlenmektedir.</div><div class="choices" id="choices25"><label class="choice-label" onclick="selectChoice(this,'q25','A')"><input type="radio" name="q25" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q25','B')"><input type="radio" name="q25" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q25','C')"><input type="radio" name="q25" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb25"></div></div>
+    <div class="question" id="qw26"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 26</div><div class="q-text" style="font-weight:700;color:var(--ink);">Öğrenci merkezli eğitim, her öğrenci için aynı derecede etkili kabul edilmektedir.</div><div class="choices" id="choices26"><label class="choice-label" onclick="selectChoice(this,'q26','A')"><input type="radio" name="q26" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q26','B')"><input type="radio" name="q26" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q26','C')"><input type="radio" name="q26" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb26"></div></div>
+    <div class="question" id="qw27"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 27</div><div class="q-text" style="font-weight:700;color:var(--ink);">Online eğitim, tüm öğrenciler için eşit fırsatlar sunmaktadır.</div><div class="choices" id="choices27"><label class="choice-label" onclick="selectChoice(this,'q27','A')"><input type="radio" name="q27" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q27','B')"><input type="radio" name="q27" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q27','C')"><input type="radio" name="q27" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb27"></div></div>
+    <div class="question" id="qw28"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 28</div><div class="q-text" style="font-weight:700;color:var(--ink);">Günümüzde ölçme ve değerlendirme sadece yazılı sınavlarla yapılmaktadır.</div><div class="choices" id="choices28"><label class="choice-label" onclick="selectChoice(this,'q28','A')"><input type="radio" name="q28" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q28','B')"><input type="radio" name="q28" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q28','C')"><input type="radio" name="q28" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb28"></div></div>
+    <div class="question" id="qw29"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 29</div><div class="q-text" style="font-weight:700;color:var(--ink);">Öğrencilerin farklı öğrenme stillerine sahip olduğu kabul edilmektedir.</div><div class="choices" id="choices29"><label class="choice-label" onclick="selectChoice(this,'q29','A')"><input type="radio" name="q29" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q29','B')"><input type="radio" name="q29" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q29','C')"><input type="radio" name="q29" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb29"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 5: ÇOKTAN SEÇMELİ + PARAGRAF EŞLEŞTİRME (Eğitim ve Teknoloji) -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli & Paragraf Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Eğitim ve Teknoloji · Sorular 30–35</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p><strong>A)</strong> Teknolojinin eğitim alanına entegrasyonu, öğrenme süreçlerinde önemli değişimlere yol açmıştır. Geleneksel sınıf ortamlarında kullanılan tek yönlü anlatım yöntemleri, yerini daha etkileşimli ve öğrenci katılımını artıran dijital araçlara bırakmaya başlamıştır. Akıllı tahtalar, çevrim içi platformlar ve dijital içerikler sayesinde öğrenciler, bilgiyi sadece dinleyen değil aynı zamanda deneyimleyen bireyler hâline gelmiştir. Ancak bu dönüşüm, her eğitim kurumunda aynı hızla gerçekleşmemekte ve altyapı eksiklikleri bazı bölgelerde bu süreci yavaşlatmaktadır.</p>
+      <p><strong>B)</strong> Online eğitim sistemleri, bireylere zaman ve mekân açısından önemli avantajlar sağlamaktadır. Öğrenciler, derslere istedikleri yerden katılabilmekte ve öğrenme süreçlerini kendi hızlarına göre düzenleyebilmektedir. Bununla birlikte, bu sistemin verimli olabilmesi için öğrencilerin öz disiplin sahibi olması gerekmektedir. Aksi takdirde, esneklik avantajı bir dezavantaja dönüşebilir. Ayrıca yüz yüze etkileşimin sınırlı olması, bazı öğrencilerin motivasyonunu olumsuz etkileyebilmektedir.</p>
+      <p><strong>C)</strong> Eğitimde teknolojinin yaygınlaşması, fırsat eşitliği tartışmalarını da beraberinde getirmiştir. Her öğrencinin teknolojik araçlara ve internet erişimine sahip olmaması, eğitimde eşitsizliklerin derinleşmesine neden olabilmektedir. Bu durum, özellikle kırsal bölgelerde yaşayan öğrenciler için daha belirgin bir sorun hâline gelmektedir. Uzmanlar, bu sorunun çözümü için devlet destekli projelerin artırılması ve teknolojik altyapının yaygınlaştırılması gerektiğini vurgulamaktadır.</p>
+      <p><strong>D)</strong> Öğretmenlerin rolü de teknolojinin eğitimde yaygınlaşmasıyla birlikte değişime uğramıştır. Artık öğretmenler yalnızca bilgi aktaran kişiler değil, aynı zamanda öğrencilerin öğrenme süreçlerini yönlendiren rehberler olarak görülmektedir. Bu durum, öğretmenlerin sürekli olarak kendilerini geliştirmelerini ve yeni teknolojilere uyum sağlamalarını zorunlu kılmaktadır. Aksi hâlde, teknolojik araçlar etkin bir şekilde kullanılamamakta ve eğitim süreci beklenen verimi sağlayamamaktadır.</p>
+      <p><strong>E)</strong> Eğitimde teknolojinin etkin kullanımı, ölçme ve değerlendirme süreçlerini de dönüştürmüştür. Geleneksel sınav yöntemlerinin yanı sıra, çevrim içi testler, proje tabanlı değerlendirmeler ve performans odaklı ölçme araçları kullanılmaya başlanmıştır. Bu yöntemler, öğrencilerin yalnızca bilgi düzeyini değil, aynı zamanda bu bilgiyi nasıl kullandıklarını da ortaya koymaktadır. Böylece daha kapsamlı ve çok boyutlu bir değerlendirme süreci oluşturulmaktadır.</p>
+    </div>
+    <div class="question" id="qw30"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 30 — Aşağıdaki cümlelerden hangisi metinden çıkarılamaz?</div><div class="choices" id="choices30"><label class="choice-label" onclick="selectChoice(this,'q30','A')"><input type="radio" name="q30" value="A"><span class="choice-key">A</span><span>Teknolojinin eğitimde kullanımı, öğrenme süreçlerini daha etkileşimli hâle getirmiştir.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','B')"><input type="radio" name="q30" value="B"><span class="choice-key">B</span><span>Online eğitim, öğrencilere belirli ölçüde esneklik sağlamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','C')"><input type="radio" name="q30" value="C"><span class="choice-key">C</span><span>Eğitimde teknoloji kullanımı tüm bölgelerde eşit düzeyde gelişmiştir.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','D')"><input type="radio" name="q30" value="D"><span class="choice-key">D</span><span>Öğretmenlerin rolü, teknolojinin etkisiyle değişmiştir.</span></label></div><div class="q-feedback" id="fb30"></div></div>
+    <div class="question" id="qw31"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 31 — Metinde aşağıdaki cümlelerden hangisine değinilmemiştir?</div><div class="choices" id="choices31"><label class="choice-label" onclick="selectChoice(this,'q31','A')"><input type="radio" name="q31" value="A"><span class="choice-key">A</span><span>Teknolojik araçlara erişimde eşitsizlikler bulunmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','B')"><input type="radio" name="q31" value="B"><span class="choice-key">B</span><span>Öğretmenlerin kendilerini geliştirmesi gerekmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','C')"><input type="radio" name="q31" value="C"><span class="choice-key">C</span><span>Online eğitim, yüz yüze eğitimin tamamen yerini almıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','D')"><input type="radio" name="q31" value="D"><span class="choice-key">D</span><span>Ölçme ve değerlendirme yöntemleri değişime uğramıştır.</span></label></div><div class="q-feedback" id="fb31"></div></div>
+    <div class="question" id="qw32"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 32 — Metinden aşağıdaki yargılardan hangisine ulaşılamaz?</div><div class="choices" id="choices32"><label class="choice-label" onclick="selectChoice(this,'q32','A')"><input type="radio" name="q32" value="A"><span class="choice-key">A</span><span>Eğitimde teknoloji kullanımı bazı bölgelerde altyapı eksikliği nedeniyle sınırlıdır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','B')"><input type="radio" name="q32" value="B"><span class="choice-key">B</span><span>Online eğitimde öz disiplin önemli bir faktördür.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','C')"><input type="radio" name="q32" value="C"><span class="choice-key">C</span><span>Teknoloji, eğitimde eşitsizlikleri tamamen ortadan kaldırmıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','D')"><input type="radio" name="q32" value="D"><span class="choice-key">D</span><span>Yeni değerlendirme yöntemleri, öğrencilerin farklı becerilerini ölçmektedir.</span></label></div><div class="q-feedback" id="fb32"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümlelerin hangi paragraflara (A-E) ait olduğunu bulunuz. Seçilmemesi gereken <strong>İKİ</strong> paragraf bulunmaktadır.</div>
+    
+    <div class="question" id="qw33"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 33</div><div class="q-text" style="font-weight:700;color:var(--ink);">Online eğitimin sağladığı avantajlar ve beraberinde getirdiği sınırlılıklar hangi paragrafta ele alınmaktadır?</div><div class="choices" id="choices33"><label class="choice-label" onclick="selectChoice(this,'q33','A')"><input type="radio" name="q33" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q33','B')"><input type="radio" name="q33" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q33','C')"><input type="radio" name="q33" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q33','D')"><input type="radio" name="q33" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q33','E')"><input type="radio" name="q33" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb33"></div></div>
+    <div class="question" id="qw34"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 34</div><div class="q-text" style="font-weight:700;color:var(--ink);">Eğitimde teknolojik araçlara erişimde yaşanan eşitsizlikler ve bu durumun sonuçları hangi paragrafta açıklanmaktadır?</div><div class="choices" id="choices34"><label class="choice-label" onclick="selectChoice(this,'q34','A')"><input type="radio" name="q34" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q34','B')"><input type="radio" name="q34" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q34','C')"><input type="radio" name="q34" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q34','D')"><input type="radio" name="q34" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q34','E')"><input type="radio" name="q34" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb34"></div></div>
+    <div class="question" id="qw35"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 35</div><div class="q-text" style="font-weight:700;color:var(--ink);">Ölçme ve değerlendirme süreçlerinde teknolojinin etkisi hangi paragrafta ele alınmaktadır?</div><div class="choices" id="choices35"><label class="choice-label" onclick="selectChoice(this,'q35','A')"><input type="radio" name="q35" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q35','B')"><input type="radio" name="q35" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q35','C')"><input type="radio" name="q35" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q35','D')"><input type="radio" name="q35" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q35','E')"><input type="radio" name="q35" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb35"></div></div>
+  </div>
+</div>
+
+<div class="submit-wrap">
+  <button class="btn-submit" id="btnFinish" onclick="submitTest()">Testi Bitir</button>
+  <button class="btn-reset" onclick="resetTest()">Sıfırla</button>
+</div>
+
+</main>
+
+<script>
+// ---------- Sayaç (sayfaya gömülü, sabit değil, küçük boy) ----------
+let timerInterval = null;
+let secondsElapsed = 0;
+let isRunning = false;
+const timerDisplay = document.getElementById('timerDisplay');
+const startStopBtn = document.getElementById('timerStartStopBtn');
+const ONE_HOUR_SEC = 3600;
+
+function formatTime(sec) {
+  const hrs = Math.floor(sec / 3600);
+  const mins = Math.floor((sec % 3600) / 60);
+  const secs = sec % 60;
+  return `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+}
+
+function updateTimerUI() {
+  timerDisplay.textContent = formatTime(secondsElapsed);
+  if (secondsElapsed >= ONE_HOUR_SEC) {
+    timerDisplay.classList.add('warning');
+  } else {
+    timerDisplay.classList.remove('warning');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  isRunning = true;
+  timerInterval = setInterval(() => {
+    secondsElapsed++;
+    updateTimerUI();
+  }, 1000);
+  startStopBtn.textContent = '⏸ Durdur';
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  isRunning = false;
+  startStopBtn.textContent = '▶ Başlat';
+}
+
+startStopBtn.addEventListener('click', () => {
+  if (isRunning) {
+    stopTimer();
+  } else {
+    startTimer();
+  }
+});
+
+window.addEventListener('beforeunload', () => {
+  if (timerInterval) clearInterval(timerInterval);
+});
+
+// ----- Orijinal test scripti (hiç değişmedi) -----
+const answers = {
+  // Bölüm 1
+  q1:'B', q2:'H', q3:'C', q4:'F', q5:'A', q6:'D',
+  // Bölüm 2
+  q7:'A', q8:'B', q9:'C', q10:'D', q11:'E', q12:'F', q13:'G', q14:'I',
+  // Bölüm 3
+  q15:'A', q16:'C', q17:'B', q18:'F', q19:'G', q20:'E',
+  // Bölüm 4
+  q21:'B', q22:'B', q23:'C', q24:'D',
+  q25:'A', q26:'B', q27:'B', q28:'B', q29:'A',
+  // Bölüm 5
+  q30:'C', q31:'C', q32:'C',
+  q33:'B', q34:'C', q35:'E'
+};
+
+const totalQ = 35;
+const userAnswers = {};
+
+function selectChoice(label, name, val) {
+  const group = label.closest('.choices');
+  group.querySelectorAll('.choice-label').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+  userAnswers[name] = val;
+  updateProgress();
+}
+
+function buildSegments() {
+  const bar = document.getElementById('segmentsBar');
+  bar.innerHTML = '';
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.id = 'seg' + i;
+    bar.appendChild(seg);
+  }
+}
+
+function updateProgress() {
+  let filled = 0;
+  Object.keys(answers).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) {
+      if (el.tagName === 'SELECT' && el.value !== '') filled++;
+    } else if (userAnswers[k]) {
+      filled++;
+    }
+  });
+  document.getElementById('progressText').textContent = filled + ' / ' + totalQ;
+}
+
+function fillSegments(correctCount) {
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.getElementById('seg' + i);
+    if (seg) seg.classList.toggle('filled', i < correctCount);
+  }
+  document.getElementById('progressText').textContent = correctCount + ' / ' + totalQ + ' doğru';
+}
+
+function submitTest() {
+  let correct = 0;
+  Object.keys(answers).forEach(k => {
+    const correct_ans = answers[k];
+    let user_ans = '';
+    const el = document.getElementById(k);
+    if (el && el.tagName === 'SELECT') {
+      user_ans = el.value;
+    } else {
+      user_ans = userAnswers[k] || '';
+    }
+    const fb = document.getElementById('fb' + k.replace('q',''));
+    const isCorrect = user_ans === correct_ans;
+    if (isCorrect) {
+      correct++;
+      if (fb) { fb.className='q-feedback correct'; fb.textContent='✓ Doğru'; }
+    } else {
+      if (fb) {
+        fb.className='q-feedback wrong';
+        fb.textContent = user_ans ? `✗ Yanlış — Doğru cevap: ${correct_ans}` : `✗ Boş bırakıldı — Doğru cevap: ${correct_ans}`;
+      }
+    }
+    if (el && el.tagName === 'SELECT') {
+      el.className = 'match-select ' + (isCorrect ? 'correct' : 'wrong');
+    }
+    const choicesDiv = document.getElementById('choices' + k.replace('q',''));
+    if (choicesDiv) {
+      choicesDiv.querySelectorAll('.choice-label').forEach(lbl => {
+        const v = lbl.querySelector('input').value;
+        lbl.classList.remove('selected','correct','wrong','show-answer');
+        if (v === user_ans && !isCorrect) lbl.classList.add('wrong');
+        if (v === correct_ans) lbl.classList.add(isCorrect ? 'correct' : 'show-answer');
+      });
+    }
+  });
+  document.getElementById('scoreDisplay').textContent = correct + ' / ' + totalQ;
+  document.getElementById('scoreDetail').textContent = '35 sorudan ' + correct + ' doğru cevap';
+  let msg = '';
+  if (correct >= 30) msg = '🏆 Mükemmel! Çok iyi bir sonuç elde ettiniz.';
+  else if (correct >= 24) msg = '👍 İyi iş çıkardınız! Biraz daha çalışmayla mükemmel olacaksınız.';
+  else if (correct >= 18) msg = '📚 Orta seviye. Hatalı soruları gözden geçirmenizi öneririz.';
+  else msg = '💪 Daha fazla pratik yapmanız gerekiyor. Pes etmeyin!';
+  document.getElementById('feedbackMsg').textContent = msg;
+  fillSegments(correct);
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetTest() { location.reload(); }
+buildSegments();
+</script>
+
+</body>
+</html>

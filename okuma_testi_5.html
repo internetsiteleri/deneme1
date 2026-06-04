@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+  <script>
+  if (!sessionStorage.getItem('hamzaUser')) {
+    alert('Bu sayfa sadece üyeler içindir. Lütfen giriş yapın.');
+    window.location.replace('index.html');
+  }
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Türkçe Okuma Testi 5 – Hamza Hoca</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209; --paper: #faf7f0; --cream: #f2ead8;
+    --accent: #c0392b; --gold: #b8860b; --muted: #7a6a55;
+    --success: #2e7d52; --error: #c0392b; --border: #d4c5a9;
+    --shadow: rgba(26,18,9,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper); color: var(--ink);
+    line-height: 1.7; min-height: 100vh;
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 1.3rem; background: transparent;
+    border: 2px solid #F5C842; border-radius: 30px;
+    color: #F5C842; font-family: 'Segoe UI', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.06em; cursor: pointer;
+    text-decoration: none; transition: all 0.2s;
+    position: absolute; top: 1.2rem; left: 1.5rem; z-index: 10;
+  }
+  .back-btn:hover { background: #F5C842; color: #1a2332; }
+  @media (max-width: 600px) {
+    .back-btn { position: static; margin: 0 auto 1rem; display: flex; justify-content: center; width: fit-content; }
+  }
+  header {
+    background: #1a2332; color: var(--paper);
+    padding: 3rem 2rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  header::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block; border: 2px solid #D4A017;
+    border-radius: 30px; padding: 0.35rem 1.2rem;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #1a2332; background: #D4A017; margin-bottom: 1.4rem;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 4rem); font-weight: 800;
+    line-height: 1.15; color: #D4A017;
+    text-shadow: 0 1px 12px rgba(212,160,23,0.2);
+    letter-spacing: 0.04em; margin-bottom: 1rem;
+    -webkit-text-stroke: 0.5px #D4A017;
+  }
+  .header-stars { color: #D4A017; font-size: 1.3rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; display: block; }
+  .header-divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, transparent, #D4A017, transparent);
+    margin: 0.5rem auto 2rem;
+  }
+  .header-cta-text {
+    font-size: 0.82rem; color: #e8dfc8;
+    margin-bottom: 0.8rem; font-style: normal;
+    letter-spacing: 0.01em; font-weight: 600;
+  }
+  .tg-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.75rem 2rem; background: #D4A017;
+    color: #1a2332; text-decoration: none;
+    border-radius: 8px; font-family: 'Source Serif 4', serif;
+    font-size: 1rem; font-weight: 700;
+    letter-spacing: 0.03em; transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(212,160,23,0.4);
+    position: relative; z-index: 2;
+  }
+  .tg-btn:hover { background: #c49010; transform: translateY(-2px); }
+  .tg-btn svg { flex-shrink: 0; fill: #229ED9; }
+  .progress-wrap {
+    background: #1a2332; padding: 0 2rem 1.2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .segments-bar { flex: 1; display: flex; gap: 2px; }
+  .seg {
+    flex: 1; height: 8px; border-radius: 2px;
+    background: rgba(255,255,255,0.15);
+    transition: background 0.3s ease;
+  }
+  .seg.filled { background: var(--success); }
+  .progress-text {
+    color: #b8a890; font-size: 0.78rem;
+    letter-spacing: 0.1em; white-space: nowrap;
+  }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .section-card {
+    background: white; border: 1px solid var(--border);
+    border-radius: 2px; margin-bottom: 2.5rem;
+    box-shadow: 0 2px 12px var(--shadow); overflow: hidden;
+  }
+  .section-header {
+    background: var(--ink); color: var(--paper);
+    padding: 1rem 1.5rem; display: flex;
+    align-items: center; gap: 1rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 900;
+    color: var(--gold); line-height: 1; min-width: 2rem;
+  }
+  .section-title {
+    font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.18em; font-weight: 600; color: var(--cream);
+  }
+  .section-body { padding: 1.5rem; }
+  .reading-text {
+    background: var(--cream); border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.4rem; margin-bottom: 1.5rem;
+    font-size: 0.92rem; line-height: 1.85;
+    color: #2a1f10; border-radius: 0 2px 2px 0;
+  }
+  .reading-text p { margin-bottom: 0.8rem; }
+  .reading-text p:last-child { margin-bottom: 0; }
+  .instructions {
+    font-size: 0.82rem; color: var(--muted);
+    font-style: italic; margin-bottom: 1.2rem;
+    padding: 0.7rem 1rem; border: 1px dashed var(--border);
+    border-radius: 2px;
+  }
+  .options-label {
+    font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--muted); margin-bottom: 0.6rem;
+  }
+  .options-grid {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+    margin-bottom: 1.4rem; padding: 0.8rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .option-pill {
+    padding: 0.3rem 0.8rem; background: white;
+    border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.82rem; font-family: 'Source Serif 4', serif;
+  }
+  .option-pill strong { color: var(--accent); }
+  .question {
+    margin-bottom: 1.4rem; padding-bottom: 1.4rem;
+    border-bottom: 1px solid #ede5d4;
+  }
+  .question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .q-label {
+    font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--muted); margin-bottom: 0.4rem;
+  }
+  .q-text { font-size: 0.93rem; margin-bottom: 0.8rem; font-weight: 400; }
+  .q-text .blank {
+    display: inline-block; min-width: 120px;
+    border-bottom: 2px solid var(--gold);
+    text-align: center; padding: 0 4px;
+    font-weight: 600; color: var(--accent);
+  }
+  select {
+    appearance: none; -webkit-appearance: none;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a6a55' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1.5px solid var(--border); border-radius: 2px;
+    padding: 0.45rem 2rem 0.45rem 0.7rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    color: var(--ink); cursor: pointer; min-width: 160px;
+    transition: border-color 0.2s;
+  }
+  select:focus { outline: none; border-color: var(--gold); }
+  select.correct { border-color: var(--success); background-color: #f0faf5; }
+  select.wrong { border-color: var(--error); background-color: #fff5f5; }
+  .choices { display: flex; flex-direction: column; gap: 0.5rem; }
+  .choice-label {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.55rem 0.8rem; border: 1.5px solid var(--border);
+    border-radius: 2px; cursor: pointer; font-size: 0.88rem;
+    transition: all 0.15s; background: white;
+  }
+  .choice-label:hover { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label input[type=radio] { display: none; }
+  .choice-key {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    color: var(--muted); min-width: 1.1rem; margin-top: 0.05rem;
+  }
+  .choice-label.selected { border-color: var(--gold); background: #fdf8ef; }
+  .choice-label.correct { border-color: var(--success); background: #f0faf5; }
+  .choice-label.correct .choice-key { color: var(--success); }
+  .choice-label.wrong { border-color: var(--error); background: #fff5f5; }
+  .choice-label.wrong .choice-key { color: var(--error); }
+  .choice-label.show-answer { border-color: var(--success); background: #f0faf5; }
+  .choice-label.show-answer .choice-key { color: var(--success); }
+  .match-row {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 0.8rem; padding: 0.7rem;
+    background: #fdf9f3; border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  .match-num {
+    font-family: 'Playfair Display', serif; font-weight: 700;
+    font-size: 1rem; color: var(--accent);
+    min-width: 1.5rem; padding-top: 0.25rem;
+  }
+  .match-text { flex: 1; font-size: 0.87rem; line-height: 1.5; }
+  .match-select { min-width: 140px; }
+  .submit-wrap {
+    text-align: center; margin-top: 2rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .btn-submit {
+    background: var(--ink); color: var(--paper); border: none;
+    padding: 0.9rem 3rem; font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 0.05em;
+    cursor: pointer; border-radius: 2px; transition: all 0.2s;
+    box-shadow: 0 4px 16px var(--shadow);
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-reset {
+    background: transparent; color: var(--muted);
+    border: 1.5px solid var(--border); padding: 0.9rem 2rem;
+    font-family: 'Source Serif 4', serif; font-size: 0.88rem;
+    cursor: pointer; border-radius: 2px; margin-left: 0.8rem;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--muted); color: var(--ink); }
+  #results {
+    display: none; background: var(--ink); color: var(--paper);
+    border-radius: 2px; padding: 2rem; margin-bottom: 2.5rem;
+    text-align: center; box-shadow: 0 4px 24px var(--shadow);
+    animation: fadeUp 0.5s ease;
+  }
+  #results h2 {
+    font-family: 'Playfair Display', serif; font-size: 2.5rem;
+    font-weight: 900; color: var(--gold);
+  }
+  #results .score-label {
+    font-size: 0.8rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #b8a890; margin-bottom: 0.3rem;
+  }
+  #results .score-detail {
+    font-size: 0.9rem; color: #b8a890;
+    margin-top: 0.5rem; font-style: italic;
+  }
+  #results .feedback {
+    margin-top: 1rem; font-size: 1rem; color: var(--cream);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .q-feedback {
+    display: none; font-size: 0.78rem; margin-top: 0.4rem;
+    padding: 0.3rem 0.6rem; border-radius: 2px; font-style: italic;
+  }
+  .q-feedback.correct { display: block; color: var(--success); background: #f0faf5; }
+  .q-feedback.wrong { display: block; color: var(--error); background: #fff5f5; }
+  @media (max-width: 600px) {
+    .match-row { flex-direction: column; }
+    .match-select, select { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.history.back()">← Geri</button>
+  <div class="header-badge">✦ Okuma Testi 5 ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <span class="header-stars">★★★★★</span>
+  <div class="header-divider"></div>
+  <div class="header-cta-text">Daha fazla içeriğe ücretsiz ulaşmak için Telegram kanalımıza katılın!</div>
+  <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.28 13.6l-2.965-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.959z"/></svg>
+    Kanala Katıl
+  </a>
+</header>
+
+<div class="progress-wrap">
+  <div class="segments-bar" id="segmentsBar"></div>
+  <div class="progress-text" id="progressText">0 / 35</div>
+</div>
+
+<main>
+
+<div id="results">
+  <div class="score-label">Doğru Cevap Sayısı</div>
+  <h2 id="scoreDisplay">–</h2>
+  <div class="score-detail" id="scoreDetail"></div>
+  <div class="feedback" id="feedbackMsg"></div>
+</div>
+
+<!-- BÖLÜM 1: BOŞLUK DOLDURMA -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Okuma Metni — Boşluk Doldurma</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Enerji Tasarrufu ve Verimlilik · Sorular 1–6</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>Enerji verimliliği, aynı konfor koşullarında daha az enerji kullanarak <strong>(1) ______</strong> sağlamayı hedefleyen bir yaklaşımdır. Bu yaklaşım, hem bireysel hem de ulusal düzeyde büyük önem taşımaktadır. Konutlarda yapılacak basit <strong>(2) ______</strong> ile enerji tüketiminde yüzde 30'a varan tasarruf elde etmek mümkündür. LED aydınlatma kullanımı, A sınıfı beyaz eşya tercihi ve yalıtım uygulamaları, bu <strong>(3) ______</strong> başında gelmektedir.</p>
+      <p>Sanayi sektöründe enerji verimliliği, üretim maliyetlerini düşürmenin yanı sıra rekabet gücünü artıran kritik bir <strong>(4) ______</strong> olarak görülmektedir. Enerji yoğun sektörlerde yapılacak verimlilik yatırımları, kısa sürede kendini amorti edebilmektedir. Ayrıca yenilenebilir enerji kaynaklarının <strong>(5) ______</strong> da bu sürecin önemli bir parçasını oluşturmaktadır. Uzmanlar, enerji verimliliğinin aynı zamanda iklim değişikliğiyle mücadelede en etkili <strong>(6) ______</strong> olduğunu vurgulamaktadır.</p>
+    </div>
+    <div class="instructions">Her sözcük yalnızca bir defa kullanılabilir. Seçmemeniz gereken <strong>iki</strong> seçenek bulunmaktadır.</div>
+    <div class="options-label">Kelime Listesi</div>
+    <div class="options-grid">
+      <div class="option-pill"><strong>A)</strong> yöntemler</div>
+      <div class="option-pill"><strong>B)</strong> entegrasyonu</div>
+      <div class="option-pill"><strong>C)</strong> faktör</div>
+      <div class="option-pill"><strong>D)</strong> iyileştirmeler</div>
+      <div class="option-pill"><strong>E)</strong> tasarruf</div>
+      <div class="option-pill"><strong>F)</strong> araçlardan</div>
+      <div class="option-pill"><strong>G)</strong> hedef</div>
+      <div class="option-pill"><strong>H)</strong> kaynak</div>
+    </div>
+    <!-- Q1-6 -->
+    <div class="question" id="qw1"><div class="q-label">Soru 1</div><div class="q-text">Enerji verimliliği, aynı konfor koşullarında daha az enerji kullanarak <span class="blank">______</span> sağlamayı hedefleyen bir yaklaşımdır.</div><select id="q1" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) yöntemler</option><option value="B">B) entegrasyonu</option><option value="C">C) faktör</option><option value="D">D) iyileştirmeler</option><option value="E">E) tasarruf</option><option value="F">F) araçlardan</option><option value="G">G) hedef</option><option value="H">H) kaynak</option></select><div class="q-feedback" id="fb1"></div></div>
+    <div class="question" id="qw2"><div class="q-label">Soru 2</div><div class="q-text">Konutlarda yapılacak basit <span class="blank">______</span> ile enerji tüketiminde yüzde 30'a varan tasarruf elde etmek mümkündür.</div><select id="q2" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) yöntemler</option><option value="B">B) entegrasyonu</option><option value="C">C) faktör</option><option value="D">D) iyileştirmeler</option><option value="E">E) tasarruf</option><option value="F">F) araçlardan</option><option value="G">G) hedef</option><option value="H">H) kaynak</option></select><div class="q-feedback" id="fb2"></div></div>
+    <div class="question" id="qw3"><div class="q-label">Soru 3</div><div class="q-text">LED aydınlatma kullanımı, A sınıfı beyaz eşya tercihi ve yalıtım uygulamaları, bu <span class="blank">______</span> başında gelmektedir.</div><select id="q3" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) yöntemler</option><option value="B">B) entegrasyonu</option><option value="C">C) faktör</option><option value="D">D) iyileştirmeler</option><option value="E">E) tasarruf</option><option value="F">F) araçlardan</option><option value="G">G) hedef</option><option value="H">H) kaynak</option></select><div class="q-feedback" id="fb3"></div></div>
+    <div class="question" id="qw4"><div class="q-label">Soru 4</div><div class="q-text">Sanayi sektöründe enerji verimliliği, üretim maliyetlerini düşürmenin yanı sıra rekabet gücünü artıran kritik bir <span class="blank">______</span> olarak görülmektedir.</div><select id="q4" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) yöntemler</option><option value="B">B) entegrasyonu</option><option value="C">C) faktör</option><option value="D">D) iyileştirmeler</option><option value="E">E) tasarruf</option><option value="F">F) araçlardan</option><option value="G">G) hedef</option><option value="H">H) kaynak</option></select><div class="q-feedback" id="fb4"></div></div>
+    <div class="question" id="qw5"><div class="q-label">Soru 5</div><div class="q-text">Ayrıca yenilenebilir enerji kaynaklarının <span class="blank">______</span> da bu sürecin önemli bir parçasını oluşturmaktadır.</div><select id="q5" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) yöntemler</option><option value="B">B) entegrasyonu</option><option value="C">C) faktör</option><option value="D">D) iyileştirmeler</option><option value="E">E) tasarruf</option><option value="F">F) araçlardan</option><option value="G">G) hedef</option><option value="H">H) kaynak</option></select><div class="q-feedback" id="fb5"></div></div>
+    <div class="question" id="qw6"><div class="q-label">Soru 6</div><div class="q-text">Uzmanlar, enerji verimliliğinin aynı zamanda iklim değişikliğiyle mücadelede en etkili <span class="blank">______</span> olduğunu vurgulamaktadır.</div><select id="q6" onchange="updateProgress()"><option value="">— Seçiniz —</option><option value="A">A) yöntemler</option><option value="B">B) entegrasyonu</option><option value="C">C) faktör</option><option value="D">D) iyileştirmeler</option><option value="E">E) tasarruf</option><option value="F">F) araçlardan</option><option value="G">G) hedef</option><option value="H">H) kaynak</option></select><div class="q-feedback" id="fb6"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 2: İLAN-DURUM EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Okuma Metni — İlan-Durum Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Spor ve Sağlıklı Yaşam · Sorular 7–14</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Aşağıdaki durumları (A-J) ve ilanları (7-14) eşleştiriniz. Her ilan yalnız bir durumla eşleşecektir. <strong>İki</strong> durum seçilmeyecektir.</div>
+    <div class="options-label">Durumlar (A–J)</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Hamilelik sürecinde forma kalmak ve doğuma hazırlanmak için özel egzersiz programı arıyorsunuz.</div>
+      <div class="option-pill"><strong>B)</strong> Çocuğunuzun disiplinli bir spor dalıyla ilgilenmesini ve özgüven kazanmasını istiyorsunuz.</div>
+      <div class="option-pill"><strong>C)</strong> Denizde dalış yaparak su altı yaşamını keşfetmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>D)</strong> İş yoğunluğu nedeniyle spor salonuna gidemeyen, evde kısa süreli egzersizlerle formda kalmak isteyen bir çalışansınız.</div>
+      <div class="option-pill"><strong>E)</strong> Doğa yürüyüşleri yaparak hem spor yapmak hem de stres atmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>F)</strong> Çocuğunuzun yaz tatilini değerlendireceği, birden fazla spor branşını deneyimleyebileceği bir program arıyorsunuz.</div>
+      <div class="option-pill"><strong>G)</strong> Uzun yıllardır masa başında çalıştığınız için oluşan duruş bozukluğunuzu düzeltmek istiyorsunuz.</div>
+      <div class="option-pill"><strong>H)</strong> Yüzme bilmeyen çocuğunuza temel yüzme eğitimi aldırmak istiyorsunuz.</div>
+      <div class="option-pill"><strong>I)</strong> İleri düzeyde yoga bilginizi geliştirmek ve eğitmenlik sertifikası almak istiyorsunuz.</div>
+      <div class="option-pill"><strong>J)</strong> Takım sporlarına ilgi duyan çocuğunuzu profesyonel bir altyapıya yönlendirmek istiyorsunuz.</div>
+    </div>
+    <div id="matchingQuestions">
+      <div class="match-row" id="qw7"><div class="match-num">7</div><div class="match-text"><strong>Gebelik Egzersiz ve Doğum Hazırlık:</strong> Hamilelik sürecinde anne adaylarına özel pilates, yoga ve nefes egzersizleri programı. Uzman eğitmenler eşliğinde hem formda kalın hem de doğuma hazırlanın.</div><select id="q7" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb7"></div></div>
+      <div class="match-row" id="qw8"><div class="match-num">8</div><div class="match-text"><strong>Yaz Spor Kampları:</strong> 7-15 yaş arası çocuklar için futbol, basketbol, yüzme, tenis ve okçuluk gibi farklı branşlarda yaz kampı programları. Profesyonel antrenörler eşliğinde güvenli ortamda spor eğitimi.</div><select id="q8" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb8"></div></div>
+      <div class="match-row" id="qw9"><div class="match-num">9</div><div class="match-text"><strong>Online Evde Spor Platformu:</strong> Canlı dersler ve kayıtlı videolarla evinizde pilates, yoga, cardio ve esneme hareketleri. Günde 20 dakika ile formda kalın. Her seviyeye uygun programlar mevcuttur.</div><select id="q9" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb9"></div></div>
+      <div class="match-row" id="qw10"><div class="match-num">10</div><div class="match-text"><strong>Doğa Sporları ve Trekking:</strong> Hafta sonları düzenlenen rehberli doğa yürüyüşleri, kamp turları ve dağcılık etkinlikleri. Farklı zorluk seviyelerinde parkurlarla her yaştan katılımcıya uygun rotalar.</div><select id="q10" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb10"></div></div>
+      <div class="match-row" id="qw11"><div class="match-num">11</div><div class="match-text"><strong>Postür ve Duruş Bozukluğu Düzeltme:</strong> Masa başı çalışanlar için özel olarak hazırlanmış klinik pilates ve egzersiz programları. Uzman fizyoterapistler eşliğinde duruş bozukluğu analizi ve kişiye özel tedavi planı.</div><select id="q11" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb11"></div></div>
+      <div class="match-row" id="qw12"><div class="match-num">12</div><div class="match-text"><strong>Yüzme Okulu:</strong> 4 yaş ve üzeri çocuklar ve yetişkinler için kapalı yüzme havuzunda, uzman antrenörler eşliğinde yüzme eğitimi. Bebek yüzme programı, çocuk ve yetişkin grupları için ayrı ders saatleri.</div><select id="q12" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb12"></div></div>
+      <div class="match-row" id="qw13"><div class="match-num">13</div><div class="match-text"><strong>Su Altı Sporları Merkezi:</strong> Dalış eğitmenleri eşliğinde tüplü dalış, serbest dalış ve su altı fotoğrafçılığı eğitimleri. Dünyaca geçerli sertifika programları ve organize dalış turları.</div><select id="q13" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb13"></div></div>
+      <div class="match-row" id="qw14"><div class="match-num">14</div><div class="match-text"><strong>Yoga ve Meditasyon Stüdyosu:</strong> Hatha, Vinyasa, Yin Yoga ve meditasyon dersleri. Başlangıç ve ileri seviye gruplar için hafta içi akşam ve hafta sonu ders programları. Sağlıklı yaşam koçluğu desteği.</div><select id="q14" class="match-select" onchange="updateProgress()"><option value="">— Durum —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select><div class="q-feedback" id="fb14"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BÖLÜM 3: PARAGRAF-BAŞLIK EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Okuma Metni — Paragraf-Başlık Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Eğitim Teknolojileri · Sorular 15–20</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="instructions">Her paragraf için uygun başlığı seçiniz (A–H). Her başlık yalnız bir defa kullanılabilir.</div>
+    <div class="options-label">Başlıklar</div>
+    <div class="options-grid" style="flex-direction:column;gap:0.3rem;">
+      <div class="option-pill"><strong>A)</strong> Eğitimde Yapay Zekâ Uygulamaları</div>
+      <div class="option-pill"><strong>B)</strong> Dijital Okuryazarlık ve Eleştirel Düşünme</div>
+      <div class="option-pill"><strong>C)</strong> Uzaktan Eğitimin Avantajları ve Sınırlılıkları</div>
+      <div class="option-pill"><strong>D)</strong> Sanal ve Artırılmış Gerçeklik Uygulamaları</div>
+      <div class="option-pill"><strong>E)</strong> Öğretmenlerin Dijital Dönüşümdeki Rolü</div>
+      <div class="option-pill"><strong>F)</strong> Eğitimde Oyunlaştırma Teknikleri</div>
+      <div class="option-pill"><strong>G)</strong> Kişiselleştirilmiş Öğrenme Deneyimleri</div>
+      <div class="option-pill"><strong>H)</strong> Eğitimde Veri Güvenliği ve Etik Sorunlar</div>
+    </div>
+    <div class="match-row" id="qw15"><div class="match-num">I</div><div class="match-text">Uzaktan eğitim, pandemi döneminde zorunlu bir tercih olarak hayatımıza girmiş olsa da günümüzde birçok kurum tarafından kalıcı bir model olarak benimsenmiştir. Coğrafi engelleri ortadan kaldırması, farklı zaman dilimlerinden katılıma imkân vermesi ve maliyet avantajları, uzaktan eğitimin en güçlü yönleri arasında yer almaktadır. Ancak sosyal etkileşim eksikliği, teknik altyapı sorunları ve öğrenci motivasyonunun sürdürülmesindeki zorluklar, bu modelin sınırlılıkları olarak öne çıkmaktadır.</div><select id="q15" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb15"></div></div>
+    <div class="match-row" id="qw16"><div class="match-num">II</div><div class="match-text">Eğitimde oyunlaştırma, öğrenme süreçlerine oyun elementlerinin entegre edilmesiyle öğrencilerin motivasyonunu ve katılımını artırmayı hedeflemektedir. Puanlama sistemleri, rozetler, seviye atlama mekanizmaları ve hikâyeleştirilmiş içerikler, öğrencilerin derslere olan ilgisini canlı tutmada etkili olmaktadır. Özellikle temel becerilerin kazandırılmasında ve tekrar gerektiren konularda oyunlaştırma teknikleri, geleneksel yöntemlere göre daha yüksek başarı oranları göstermektedir.</div><select id="q16" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb16"></div></div>
+    <div class="match-row" id="qw17"><div class="match-num">III</div><div class="match-text">Dijital dönüşüm, öğretmenlerin rolünde de köklü değişikliklere yol açmıştır. Günümüz öğretmenleri, yalnızca bilgi aktaran kişiler olmaktan çıkarak öğrencilerin dijital ortamlarda rehberi, içeriklerin doğruluğunu sorgulayan bir eleştirmen ve teknolojik araçları pedagojik hedefler doğrultusunda kullanan bir tasarımcı konumuna gelmiştir. Bu dönüşüm, öğretmenlerin dijital pedagoji becerileriyle donatılmasını zorunlu kılmaktadır.</div><select id="q17" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb17"></div></div>
+    <div class="match-row" id="qw18"><div class="match-num">IV</div><div class="match-text">Yapay zekâ destekli eğitim sistemleri, öğrencilerin öğrenme hızlarına, ilgi alanlarına ve eksiklerine göre kişiye özel içerikler sunabilmektedir. Bu sistemler, öğrencinin hangi konularda zorlandığını analiz ederek ona özel çalışma planları oluşturmakta, öğretmenlere de öğrenciler hakkında detaylı raporlar sunmaktadır. Böylece sınıf içindeki bireysel farklılıklar daha kolay yönetilebilmekte ve her öğrencinin potansiyeline ulaşması hedeflenmektedir.</div><select id="q18" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb18"></div></div>
+    <div class="match-row" id="qw19"><div class="match-num">V</div><div class="match-text">Sanal gerçeklik gözlükleri ve artırılmış gerçeklik uygulamaları, öğrencilere daha önce mümkün olmayan deneyimler sunmaktadır. Tarih dersinde antik kentlerde sanal turlar, biyoloji dersinde insan vücudunun üç boyutlu incelenmesi, fizik dersinde uzay boşluğunda deneyler yapılması, bu teknolojiler sayesinde sınıf ortamına taşınabilmektedir. Bu uygulamalar, soyut kavramların somutlaştırılmasında ve öğrencilerin derse aktif katılımında büyük avantaj sağlamaktadır.</div><select id="q19" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb19"></div></div>
+    <div class="match-row" id="qw20"><div class="match-num">VI</div><div class="match-text">Eğitimde dijitalleşmeyle birlikte öğrencilere ait kişisel verilerin toplanması, saklanması ve kullanımı önemli etik sorunları beraberinde getirmektedir. Öğrencilerin akademik performansları, davranış kalıpları ve hatta biyometrik verileri, eğitim platformları tarafından kaydedilmekte ve analiz edilmektedir. Bu verilerin hangi amaçlarla kullanıldığı, üçüncü taraflarla paylaşılıp paylaşılmadığı ve gizlilik politikalarının nasıl uygulandığı, eğitim kurumları ve aileler açısından hassasiyetle takip edilen konular arasında yer almaktadır.</div><select id="q20" class="match-select" onchange="updateProgress()"><option value="">— Başlık —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select><div class="q-feedback" id="fb20"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 4: ÇOKTAN SEÇMELİ + D/Y/V -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli & Doğru/Yanlış/Verilmemiş</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Sağlıklı Beslenme ve Gıda Güvenliği · Sorular 21–29</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p>Sağlıklı beslenme, bireylerin fiziksel ve zihinsel gelişimini destekleyen, kronik hastalıklardan korunmada temel rol oynayan bir yaşam biçimidir. Dünya Sağlık Örgütü'nün verilerine göre, dengesiz beslenme kalp-damar hastalıkları, diyabet, obezite ve bazı kanser türlerinin oluşumunda en önemli risk faktörlerinden biri olarak kabul edilmektedir. Uzmanlar, sağlıklı beslenmenin temel ilkelerini; yeterli ve dengeli beslenme, mevsimsel ve yerel gıdaların tercih edilmesi, işlenmiş gıdalardan uzak durulması ve yeterli su tüketimi olarak sıralamaktadır.</p>
+      <p>Gıda güvenliği, sağlıklı beslenme kadar önemli bir konudur. Gıdaların üretiminden tüketimine kadar geçen tüm aşamalarda fiziksel, kimyasal ve biyolojik tehlikelerden arındırılmış olması gerekmektedir. Tarım ilaçları kalıntıları, ağır metaller, hormon kalıntıları ve mikrobiyal kontaminasyon, gıda güvenliğini tehdit eden başlıca unsurlardır. Son yıllarda organik tarım ürünlerine olan talebin artması, tüketicilerin gıda güvenliği konusundaki bilinç düzeyinin yükseldiğini göstermektedir.</p>
+      <p>Türkiye'de gıda güvenliği alanında Tarım ve Orman Bakanlığı tarafından yürütülen denetimler, üretimden satışa kadar tüm zinciri kapsamaktadır. "Güvenilir Gıda" uygulamasıyla tüketiciler, satın aldıkları ürünlerin izlenebilirliğini sağlayarak üretim bilgilerine erişebilmektedir. Ayrıca son yıllarda gıda israfının önlenmesi konusunda da önemli farkındalık çalışmaları yapılmaktadır. Birleşmiş Milletler Gıda ve Tarım Örgütü'nün verilerine göre, dünyada üretilen gıdaların yaklaşık üçte biri israf edilmekte, bu durum hem ekonomik kayıplara hem de çevresel sorunlara yol açmaktadır.</p>
+      <p>Sağlıklı beslenme alışkanlıklarının kazandırılmasında ailelerin rolü büyüktür. Çocukluk döneminde edinilen beslenme alışkanlıkları, yetişkinlikte de devam etmektedir. Bu nedenle ailelerin, çocuklarına düzenli öğün alışkanlığı kazandırması, sebze ve meyve tüketimini teşvik etmesi, şekerli ve işlenmiş gıdaları sınırlandırması büyük önem taşımaktadır. Okullarda uygulanan beslenme eğitimleri ve sağlıklı kantin uygulamaları da bu alışkanlıkların kazandırılmasında destekleyici rol oynamaktadır.</p>
+      <p>Günümüzde hızlı yaşam koşulları, hazır gıdalara erişim kolaylığı ve dijital platformlarda yaygınlaşan sağlıksız beslenme trendleri, özellikle genç nesillerde obezite oranlarının artmasına neden olmaktadır. Uzmanlar, sağlıklı beslenme bilincinin toplumun tüm kesimlerine yaygınlaştırılması için medya okuryazarlığı eğitimlerinin önemine dikkat çekmektedir. Ayrıca gıda etiketlerinin doğru okunması, besin değerlerinin anlaşılması ve pazarlama stratejilerinin fark edilmesi, bilinçli tüketici olmanın temel unsurları arasında gösterilmektedir.</p>
+    </div>
+    <!-- Q21-24 Multiple Choice -->
+    <div class="question" id="qw21"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 21 — Metnin bütününe göre aşağıdaki yargılardan hangisine varılamaz?</div><div class="choices" id="choices21"><label class="choice-label" onclick="selectChoice(this,'q21','A')"><input type="radio" name="q21" value="A"><span class="choice-key">A</span><span>Dengesiz beslenme, kronik hastalıkların oluşumunda önemli bir risk faktörüdür.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','B')"><input type="radio" name="q21" value="B"><span class="choice-key">B</span><span>Organik tarım ürünlerine olan talep, tüketicilerin gıda güvenliği konusundaki bilincinin arttığını göstermektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','C')"><input type="radio" name="q21" value="C"><span class="choice-key">C</span><span>Türkiye'de gıda güvenliği denetimleri yalnızca ithal ürünler üzerinde yapılmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q21','D')"><input type="radio" name="q21" value="D"><span class="choice-key">D</span><span>Çocukluk döneminde edinilen beslenme alışkanlıkları yetişkinlikte de devam etmektedir.</span></label></div><div class="q-feedback" id="fb21"></div></div>
+    <div class="question" id="qw22"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 22 — Metinde geçen "Güvenilir Gıda uygulaması" ile ne anlatılmaktadır?</div><div class="choices" id="choices22"><label class="choice-label" onclick="selectChoice(this,'q22','A')"><input type="radio" name="q22" value="A"><span class="choice-key">A</span><span>Gıdaların organik sertifikalı olması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','B')"><input type="radio" name="q22" value="B"><span class="choice-key">B</span><span>Tüketicilerin satın aldıkları ürünlerin üretim bilgilerine erişebilmesini sağlayan izlenebilirlik sistemi</span></label><label class="choice-label" onclick="selectChoice(this,'q22','C')"><input type="radio" name="q22" value="C"><span class="choice-key">C</span><span>Gıda ürünlerinin devlet tarafından fiyatlandırılması</span></label><label class="choice-label" onclick="selectChoice(this,'q22','D')"><input type="radio" name="q22" value="D"><span class="choice-key">D</span><span>Gıda ürünlerinin yalnızca yerel üreticilerden satın alınması</span></label></div><div class="q-feedback" id="fb22"></div></div>
+    <div class="question" id="qw23"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 23 — Aşağıdakilerden hangisinde sağlıklı beslenmeye dair verilen bilgiler birbiriyle uyumsuzdur?</div><div class="choices" id="choices23"><label class="choice-label" onclick="selectChoice(this,'q23','A')"><input type="radio" name="q23" value="A"><span class="choice-key">A</span><span>Sağlıklı beslenme, yeterli ve dengeli beslenmeyi gerektirmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','B')"><input type="radio" name="q23" value="B"><span class="choice-key">B</span><span>Dünyada üretilen gıdaların yaklaşık üçte biri israf edilmektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','C')"><input type="radio" name="q23" value="C"><span class="choice-key">C</span><span>Okullarda uygulanan sağlıklı kantin uygulamaları, sağlıklı beslenme alışkanlıklarının kazandırılmasında etkisiz kalmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q23','D')"><input type="radio" name="q23" value="D"><span class="choice-key">D</span><span>Medya okuryazarlığı eğitimleri, sağlıklı beslenme bilincinin yaygınlaştırılmasında önemlidir.</span></label></div><div class="q-feedback" id="fb23"></div></div>
+    <div class="question" id="qw24"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 24 — Metne göre, aşağıdaki bilgilerden hangisi doğrudur?</div><div class="choices" id="choices24"><label class="choice-label" onclick="selectChoice(this,'q24','A')"><input type="radio" name="q24" value="A"><span class="choice-key">A</span><span>Gıda güvenliği, yalnızca üretim aşamasında önem taşımaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','B')"><input type="radio" name="q24" value="B"><span class="choice-key">B</span><span>Dijital platformlarda yaygınlaşan beslenme trendleri, genç nesillerde obezite oranlarının azalmasına katkı sağlamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','C')"><input type="radio" name="q24" value="C"><span class="choice-key">C</span><span>Gıda etiketlerinin doğru okunması, bilinçli tüketici olmanın temel unsurlarından biridir.</span></label><label class="choice-label" onclick="selectChoice(this,'q24','D')"><input type="radio" name="q24" value="D"><span class="choice-key">D</span><span>Ailelerin çocuklarına sebze ve meyve tüketimini teşvik etmesi önerilmemektedir.</span></label></div><div class="q-feedback" id="fb24"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümleler metne göre <strong>DOĞRU (A)</strong>, <strong>YANLIŞ (B)</strong> ya da <strong>VERİLMEMİŞ (C)</strong> olabilir.</div>
+    <!-- Q25-29 True/False/Not Given -->
+    <div class="question" id="qw25"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 25</div><div class="q-text" style="font-weight:700;color:var(--ink);">Dengesiz beslenme, kalp-damar hastalıkları, diyabet ve bazı kanser türlerinin oluşumunda etkili bir faktördür.</div><div class="choices" id="choices25"><label class="choice-label" onclick="selectChoice(this,'q25','A')"><input type="radio" name="q25" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q25','B')"><input type="radio" name="q25" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q25','C')"><input type="radio" name="q25" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb25"></div></div>
+    <div class="question" id="qw26"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 26</div><div class="q-text" style="font-weight:700;color:var(--ink);">Tarım ve Orman Bakanlığı'nın yürüttüğü denetimler, gıda üretiminden satışa kadar tüm aşamaları kapsamaktadır.</div><div class="choices" id="choices26"><label class="choice-label" onclick="selectChoice(this,'q26','A')"><input type="radio" name="q26" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q26','B')"><input type="radio" name="q26" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q26','C')"><input type="radio" name="q26" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb26"></div></div>
+    <div class="question" id="qw27"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 27</div><div class="q-text" style="font-weight:700;color:var(--ink);">Türkiye'de gıda israfını önlemek amacıyla yasal düzenlemeler yapılmış, israf edenlere cezai yaptırımlar uygulanmaktadır.</div><div class="choices" id="choices27"><label class="choice-label" onclick="selectChoice(this,'q27','A')"><input type="radio" name="q27" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q27','B')"><input type="radio" name="q27" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q27','C')"><input type="radio" name="q27" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb27"></div></div>
+    <div class="question" id="qw28"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 28</div><div class="q-text" style="font-weight:700;color:var(--ink);">Okullarda uygulanan beslenme eğitimleri, sağlıklı beslenme alışkanlıklarının kazandırılmasında destekleyici rol oynamaktadır.</div><div class="choices" id="choices28"><label class="choice-label" onclick="selectChoice(this,'q28','A')"><input type="radio" name="q28" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q28','B')"><input type="radio" name="q28" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q28','C')"><input type="radio" name="q28" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb28"></div></div>
+    <div class="question" id="qw29"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 29</div><div class="q-text" style="font-weight:700;color:var(--ink);">Gıda güvenliğini tehdit eden unsurlar arasında yalnızca mikrobiyal kontaminasyon yer almaktadır.</div><div class="choices" id="choices29"><label class="choice-label" onclick="selectChoice(this,'q29','A')"><input type="radio" name="q29" value="A"><span class="choice-key">A</span><span>Doğru</span></label><label class="choice-label" onclick="selectChoice(this,'q29','B')"><input type="radio" name="q29" value="B"><span class="choice-key">B</span><span>Yanlış</span></label><label class="choice-label" onclick="selectChoice(this,'q29','C')"><input type="radio" name="q29" value="C"><span class="choice-key">C</span><span>Verilmemiş</span></label></div><div class="q-feedback" id="fb29"></div></div>
+  </div>
+</div>
+
+<!-- BÖLÜM 5: ÇOKTAN SEÇMELİ + PARAGRAF EŞLEŞTİRME -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div>
+      <div class="section-title">Okuma Metni — Çoktan Seçmeli & Paragraf Eşleştirme</div>
+      <div style="color:#b8a890;font-size:0.78rem;margin-top:2px;">Finansal Okuryazarlık · Sorular 30–35</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="reading-text">
+      <p><strong>A)</strong> Finansal okuryazarlık, bireylerin bütçe yapma, tasarruf etme, yatırım yapma, borç yönetimi ve finansal riskleri değerlendirme gibi konularda bilgi ve beceri sahibi olmasıdır. Günümüzde finansal ürünlerin çeşitlenmesi, dijital bankacılık uygulamalarının yaygınlaşması ve tüketici kredilerine erişimin kolaylaşması, bireylerin finansal okuryazarlık düzeylerinin önemini artırmaktadır. Yapılan araştırmalar, finansal okuryazarlık düzeyi düşük olan bireylerin aşırı borçlanma, dolandırıcılık mağduriyeti ve yetersiz emeklilik birikimi gibi sorunlarla daha sık karşılaştığını göstermektedir.</p>
+      <p><strong>B)</strong> Türkiye'de finansal okuryazarlık düzeyi, gelişmiş ülkelerle karşılaştırıldığında henüz istenen seviyede değildir. Sermaye Piyasası Kurulu ve Bankacılık Düzenleme ve Denetleme Kurumu tarafından yapılan araştırmalara göre, yetişkin nüfusun yalnızca üçte biri temel finansal kavramları doğru şekilde tanımlayabilmektedir. Bu durum, özellikle genç nüfusun yoğun olduğu Türkiye'de finansal eğitime duyulan ihtiyacı açıkça ortaya koymaktadır. Son yıllarda üniversitelerin ilgili bölümlerinde finansal okuryazarlık derslerinin açılması, bu alandaki farkındalığı artıran gelişmeler arasında yer almaktadır.</p>
+      <p><strong>C)</strong> Finansal okuryazarlık eğitiminin erken yaşta başlaması, bireylerin ileriki yaşamlarında daha bilinçli finansal kararlar almasını sağlamaktadır. Çocuklara harçlık yönetimi, tasarruf alışkanlığı ve ihtiyaç-istek ayrımı gibi temel kavramların öğretilmesi, finansal okuryazarlığın temellerini oluşturmaktadır. Finlandiya, Hollanda ve Kanada gibi ülkelerde ilköğretim müfredatına entegre edilen finansal okuryazarlık dersleri, öğrencilerin bu becerileri erken yaşta kazanmasını sağlamaktadır. Uzmanlar, Türkiye'de de benzer bir modelin hayata geçirilmesi gerektiğini vurgulamaktadır.</p>
+      <p><strong>D)</strong> Dijitalleşmeyle birlikte finansal işlemlerin büyük bir kısmı mobil uygulamalar ve internet bankacılığı üzerinden yapılır hale gelmiştir. Bu durum, finansal okuryazarlık kavramına dijital güvenlik boyutunu da eklemiştir. Güçlü şifre oluşturma, iki aşamalı doğrulama kullanma, phishing saldırılarını tanıma ve güvenli internet alışverişi yapma gibi beceriler, dijital finansal okuryazarlığın ayrılmaz parçaları haline gelmiştir. Özellikle yaşlı nüfus ve dijital okuryazarlık düzeyi düşük kesimler, bu konuda daha fazla desteğe ihtiyaç duymaktadır.</p>
+      <p><strong>E)</strong> Finansal okuryazarlığın artırılmasında sivil toplum kuruluşlarının üstlendiği rol giderek büyümektedir. Dernekler ve vakıflar, özellikle kadınlar, gençler ve düşük gelirli gruplara yönelik finansal eğitim programları düzenlemekte, bütçe yönetimi ve borç yapılandırma konularında danışmanlık hizmeti sunmaktadır. Ayrıca bazı finansal kuruluşlar, sosyal sorumluluk projeleri kapsamında ücretsiz finansal okuryazarlık seminerleri düzenleyerek bu alandaki farkındalığa katkı sağlamaktadır. Bu tür girişimler, bireylerin finansal kararlarını daha bilinçli almasına yardımcı olmaktadır.</p>
+    </div>
+    <!-- Q30-32 Multiple Choice -->
+    <div class="question" id="qw30"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 30 — Aşağıdaki cümlelerden hangisi metinden çıkarılamaz?</div><div class="choices" id="choices30"><label class="choice-label" onclick="selectChoice(this,'q30','A')"><input type="radio" name="q30" value="A"><span class="choice-key">A</span><span>Finansal okuryazarlık düzeyi düşük olan bireyler, aşırı borçlanma ve dolandırıcılık gibi sorunlarla daha sık karşılaşmaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','B')"><input type="radio" name="q30" value="B"><span class="choice-key">B</span><span>Türkiye'de finansal okuryazarlık düzeyi, gelişmiş ülkelerle karşılaştırıldığında yeterli seviyededir.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','C')"><input type="radio" name="q30" value="C"><span class="choice-key">C</span><span>Finlandiya, Hollanda ve Kanada gibi ülkelerde ilköğretim müfredatında finansal okuryazarlık dersleri yer almaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q30','D')"><input type="radio" name="q30" value="D"><span class="choice-key">D</span><span>Dijitalleşmeyle birlikte finansal okuryazarlık kavramına dijital güvenlik boyutu da eklenmiştir.</span></label></div><div class="q-feedback" id="fb30"></div></div>
+    <div class="question" id="qw31"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 31 — Metinde aşağıdaki cümlelerden hangisine değinilmemiştir?</div><div class="choices" id="choices31"><label class="choice-label" onclick="selectChoice(this,'q31','A')"><input type="radio" name="q31" value="A"><span class="choice-key">A</span><span>Finansal kuruluşlar, sosyal sorumluluk projeleri kapsamında ücretsiz seminerler düzenlemektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','B')"><input type="radio" name="q31" value="B"><span class="choice-key">B</span><span>Finansal okuryazarlık eğitimi yalnızca yetişkinler için gereklidir.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','C')"><input type="radio" name="q31" value="C"><span class="choice-key">C</span><span>Türkiye'de üniversitelerin bazı bölümlerinde finansal okuryazarlık dersleri açılmıştır.</span></label><label class="choice-label" onclick="selectChoice(this,'q31','D')"><input type="radio" name="q31" value="D"><span class="choice-key">D</span><span>Dijital finansal okuryazarlık becerileri arasında güçlü şifre oluşturma ve phishing saldırılarını tanıma yer almaktadır.</span></label></div><div class="q-feedback" id="fb31"></div></div>
+    <div class="question" id="qw32"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 32 — Metinden aşağıdaki yargılardan hangisine ulaşılamaz?</div><div class="choices" id="choices32"><label class="choice-label" onclick="selectChoice(this,'q32','A')"><input type="radio" name="q32" value="A"><span class="choice-key">A</span><span>Finansal okuryazarlık, bütçe yapma, tasarruf etme ve yatırım yapma gibi becerileri kapsamaktadır.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','B')"><input type="radio" name="q32" value="B"><span class="choice-key">B</span><span>Sivil toplum kuruluşları, özellikle kadınlar ve gençlere yönelik finansal eğitim programları düzenlemektedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','C')"><input type="radio" name="q32" value="C"><span class="choice-key">C</span><span>Türkiye'de finansal okuryazarlık düzeyi, yapılan araştırmalara göre nüfusun tamamında yüzde 90 seviyesindedir.</span></label><label class="choice-label" onclick="selectChoice(this,'q32','D')"><input type="radio" name="q32" value="D"><span class="choice-key">D</span><span>Çocuklara harçlık yönetimi ve tasarruf alışkanlığı kazandırılması, finansal okuryazarlığın temellerini oluşturmaktadır.</span></label></div><div class="q-feedback" id="fb32"></div></div>
+    <hr style="border:none;border-top:1px dashed var(--border);margin:1.2rem 0;">
+    <div class="instructions" style="margin-bottom:1rem;">Aşağıdaki cümlelerin hangi paragraflara (A-E) ait olduğunu bulunuz. Seçilmemesi gereken <strong>İKİ</strong> paragraf bulunmaktadır.</div>
+    <!-- Q33-35 Paragraph Matching -->
+    <div class="question" id="qw33"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 33</div><div class="q-text" style="font-weight:700;color:var(--ink);">Finansal okuryazarlık eğitimine erken yaşta başlanmasının önemi, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices33"><label class="choice-label" onclick="selectChoice(this,'q33','A')"><input type="radio" name="q33" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q33','B')"><input type="radio" name="q33" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q33','C')"><input type="radio" name="q33" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q33','D')"><input type="radio" name="q33" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q33','E')"><input type="radio" name="q33" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb33"></div></div>
+    <div class="question" id="qw34"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 34</div><div class="q-text" style="font-weight:700;color:var(--ink);">Dijitalleşmeyle birlikte finansal işlemlerde karşılaşılan güvenlik boyutu, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices34"><label class="choice-label" onclick="selectChoice(this,'q34','A')"><input type="radio" name="q34" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q34','B')"><input type="radio" name="q34" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q34','C')"><input type="radio" name="q34" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q34','D')"><input type="radio" name="q34" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q34','E')"><input type="radio" name="q34" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb34"></div></div>
+    <div class="question" id="qw35"><div class="q-label" style="color:var(--ink);font-size:0.85rem;font-weight:700;">Soru 35</div><div class="q-text" style="font-weight:700;color:var(--ink);">Türkiye'de finansal okuryazarlık düzeyinin mevcut durumu ve bu alandaki gelişmeler, hangi paragrafta yer almaktadır?</div><div class="choices" id="choices35"><label class="choice-label" onclick="selectChoice(this,'q35','A')"><input type="radio" name="q35" value="A"><span class="choice-key">A</span><span>Paragraf A</span></label><label class="choice-label" onclick="selectChoice(this,'q35','B')"><input type="radio" name="q35" value="B"><span class="choice-key">B</span><span>Paragraf B</span></label><label class="choice-label" onclick="selectChoice(this,'q35','C')"><input type="radio" name="q35" value="C"><span class="choice-key">C</span><span>Paragraf C</span></label><label class="choice-label" onclick="selectChoice(this,'q35','D')"><input type="radio" name="q35" value="D"><span class="choice-key">D</span><span>Paragraf D</span></label><label class="choice-label" onclick="selectChoice(this,'q35','E')"><input type="radio" name="q35" value="E"><span class="choice-key">E</span><span>Paragraf E</span></label></div><div class="q-feedback" id="fb35"></div></div>
+  </div>
+</div>
+
+<div class="submit-wrap">
+  <button class="btn-submit" id="btnFinish" onclick="submitTest()">Testi Bitir</button>
+  <button class="btn-reset" onclick="resetTest()">Sıfırla</button>
+</div>
+
+</main>
+
+<script>
+const answers = {
+  // Bölüm 1: Boşluk Doldurma
+  q1:'E', q2:'D', q3:'A', q4:'C', q5:'B', q6:'F',
+  // Bölüm 2: İlan-Durum Eşleştirme
+  q7:'A', q8:'F', q9:'D', q10:'E', q11:'G', q12:'H', q13:'C', q14:'I',
+  // Bölüm 3: Paragraf-Başlık Eşleştirme
+  q15:'C', q16:'F', q17:'E', q18:'A', q19:'D', q20:'H',
+  // Bölüm 4: Çoktan Seçmeli + D/Y/V
+  q21:'C', q22:'B', q23:'C', q24:'C',
+  q25:'A', q26:'A', q27:'C', q28:'A', q29:'B',
+  // Bölüm 5: Çoktan Seçmeli + Paragraf Eşleştirme
+  q30:'B', q31:'B', q32:'C',
+  q33:'C', q34:'D', q35:'B'
+};
+
+const totalQ = 35;
+const userAnswers = {};
+
+function selectChoice(label, name, val) {
+  const group = label.closest('.choices');
+  group.querySelectorAll('.choice-label').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+  userAnswers[name] = val;
+  updateProgress();
+}
+
+function buildSegments() {
+  const bar = document.getElementById('segmentsBar');
+  bar.innerHTML = '';
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+    seg.id = 'seg' + i;
+    bar.appendChild(seg);
+  }
+}
+
+function updateProgress() {
+  let filled = 0;
+  Object.keys(answers).forEach(k => {
+    const el = document.getElementById(k);
+    if (el) {
+      if (el.tagName === 'SELECT' && el.value !== '') filled++;
+    } else if (userAnswers[k]) {
+      filled++;
+    }
+  });
+  document.getElementById('progressText').textContent = filled + ' / ' + totalQ;
+}
+
+function fillSegments(correctCount) {
+  for (let i = 0; i < totalQ; i++) {
+    const seg = document.getElementById('seg' + i);
+    if (seg) seg.classList.toggle('filled', i < correctCount);
+  }
+  document.getElementById('progressText').textContent = correctCount + ' / ' + totalQ + ' doğru';
+}
+
+function submitTest() {
+  let correct = 0;
+  Object.keys(answers).forEach(k => {
+    const correct_ans = answers[k];
+    let user_ans = '';
+    const el = document.getElementById(k);
+    if (el && el.tagName === 'SELECT') {
+      user_ans = el.value;
+    } else {
+      user_ans = userAnswers[k] || '';
+    }
+    const fb = document.getElementById('fb' + k.replace('q',''));
+    const isCorrect = user_ans === correct_ans;
+    if (isCorrect) {
+      correct++;
+      if (fb) { fb.className='q-feedback correct'; fb.textContent='✓ Doğru'; }
+    } else {
+      if (fb) {
+        fb.className='q-feedback wrong';
+        fb.textContent = user_ans ? `✗ Yanlış — Doğru cevap: ${correct_ans}` : `✗ Boş bırakıldı — Doğru cevap: ${correct_ans}`;
+      }
+    }
+    if (el && el.tagName === 'SELECT') {
+      el.className = 'match-select ' + (isCorrect ? 'correct' : 'wrong');
+    }
+    const choicesDiv = document.getElementById('choices' + k.replace('q',''));
+    if (choicesDiv) {
+      choicesDiv.querySelectorAll('.choice-label').forEach(lbl => {
+        const v = lbl.querySelector('input').value;
+        lbl.classList.remove('selected','correct','wrong','show-answer');
+        if (v === user_ans && !isCorrect) lbl.classList.add('wrong');
+        if (v === correct_ans) lbl.classList.add(isCorrect ? 'correct' : 'show-answer');
+      });
+    }
+  });
+  document.getElementById('scoreDisplay').textContent = correct + ' / ' + totalQ;
+  document.getElementById('scoreDetail').textContent = '35 sorudan ' + correct + ' doğru cevap';
+  let msg = '';
+  if (correct >= 30) msg = '🏆 Mükemmel! Çok iyi bir sonuç elde ettiniz.';
+  else if (correct >= 24) msg = '👍 İyi iş çıkardınız! Biraz daha çalışmayla mükemmel olacaksınız.';
+  else if (correct >= 18) msg = '📚 Orta seviye. Hatalı soruları gözden geçirmenizi öneririz.';
+  else msg = '💪 Daha fazla pratik yapmanız gerekiyor. Pes etmeyin!';
+  document.getElementById('feedbackMsg').textContent = msg;
+  fillSegments(correct);
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetTest() { location.reload(); }
+buildSegments();
+</script>
+
+</body>
+</html>

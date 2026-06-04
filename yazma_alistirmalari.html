@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yazma Alıştırmaları - Hamza Hoca ile Türkçe Öğreniyorum</title>
+<style>
+/* ═══════════════════════════════════════
+   RESET & BASE (index.html ile aynı stil)
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+
+.home-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  color: #F5C842;
+  text-decoration: none;
+}
+
+.home-btn svg { flex-shrink: 0; }
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 2rem 1rem 1.2rem;
+}
+
+.header-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 0.9rem;
+}
+
+header h1 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 auto 10px;
+}
+
+.stars {
+  font-size: 1rem;
+  color: #F5C842;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .7;
+}
+
+.subtitle {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ÖDEV KONTROL BÖLÜMÜ (İKİ SÜTUN) */
+.odev-kontrol-section {
+  max-width: 1000px;
+  margin: 30px auto 20px auto;
+  padding: 0 16px;
+}
+.odev-kontrol-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: rgba(10, 20, 30, 0.65);
+  backdrop-filter: blur(4px);
+  border-radius: 36px;
+  padding: 20px 24px;
+  border: 1px solid rgba(245, 200, 66, 0.3);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+}
+.odev-card {
+  border-radius: 28px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background: #0f1a24;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+.odev-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+}
+.odev-header {
+  padding: 18px 20px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  border-bottom: 2px solid;
+}
+.odev-header.free {
+  background: linear-gradient(135deg, #1f5438, #0e3a24);
+  color: #c7f9cc;
+  border-bottom-color: #6fcf97;
+}
+.odev-header.locked {
+  background: linear-gradient(135deg, #4a2c2c, #2e1a1a);
+  color: #ffb4a2;
+  border-bottom-color: #e07c4c;
+}
+.odev-body {
+  padding: 18px 20px 24px;
+}
+.odev-body p {
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+}
+.odev-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 60px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.odev-btn.free-btn {
+  background: #F5C842;
+  color: #0D1B2A;
+  box-shadow: 0 4px 12px rgba(245,200,66,0.3);
+}
+.odev-btn.free-btn:hover {
+  background: #ffda6e;
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(245,200,66,0.5);
+}
+.odev-btn.locked-btn {
+  background: #3a2c2a;
+  color: #ffbf9f;
+  border: 1px solid #e07c4c;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+.odev-btn.locked-btn:hover {
+  background: #543e3a;
+  color: #ffe0c4;
+  border-color: #f5a56e;
+  transform: scale(1.02);
+}
+@media (max-width: 700px) {
+  .odev-kontrol-grid { grid-template-columns: 1fr; gap: 20px; }
+  .odev-kontrol-section { margin-top: 15px; }
+}
+
+/* Telegram Bölümü - yeni konumu için */
+.telegram-section {
+  text-align: center;
+  padding: 0.5rem 1rem 1.5rem;
+  margin-top: 10px;
+}
+
+.tg-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(26,35,50,0.85);
+  border: 1.5px solid rgba(34,158,217,0.3);
+  border-radius: 60px;
+  padding: .75rem 1.5rem .75rem 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tg-logo-wrap { width: 44px; height: 44px; flex-shrink: 0; }
+
+.tg-btn {
+  display: inline-flex;
+  align-items: center; gap: .45rem;
+  background: linear-gradient(135deg, #229ED9, #1A7FB0);
+  color: #fff; text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 800; font-size: .92rem;
+  padding: .65rem 1.5rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(34,158,217,.4);
+  transition: all .22s; white-space: nowrap;
+}
+
+.tg-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,158,217,.55);
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+}
+footer span { color: #F5C842; }
+
+/* LOGIN MODAL (Giriş formu ile - index.html ile aynı) */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  width: min(440px, 94vw);
+  position: relative;
+  animation: popIn 0.3s ease;
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #aaa;
+  cursor: pointer;
+}
+.modal h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.modal .sub {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block;
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 7px;
+  font-weight: 600;
+}
+.form-group input {
+  width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 12px 14px;
+  outline: none;
+}
+.form-group input:focus { border-color: #F5C842; }
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+.error-msg {
+  background: #fff0f0;
+  border: 1px solid #f8c8c8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #d63031;
+  font-size: 0.85rem;
+  margin-top: 14px;
+  display: none;
+  text-align: center;
+}
+.error-msg.show { display: block; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(.93) translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="home-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<header>
+  <div class="header-badge">✦ Yazma Alıştırmaları ✦</div>
+  <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+  <div class="header-line"></div>
+  <div class="stars">★ ★ ★ ★ ★</div>
+  <p class="subtitle">Konuyu seç-Metnini yaz-Düzeltilmiş Olarak Gör</p>
+</header>
+
+<!-- TELEGRAM BUTONU - Yıldızlar ve "Kompozisyon Alıştırmaları" altına taşındı -->
+<div class="telegram-section">
+  <div class="tg-box">
+    <div class="tg-logo-wrap">
+      <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="44" height="44">
+        <circle cx="24" cy="24" r="24" fill="#229ED9"/>
+        <path d="M9.5 23.2l28.6-11c1.3-.5 2.5.3 2 2.2l-4.9 23c-.4 1.6-1.4 2-2.8 1.2l-7.7-5.7-3.7 3.6c-.4.4-0.8.6-1.6.6l.6-8 15-13.5c.6-.6-.1-.9-.9-.3L13.5 27.5 6 25.2c-1.5-.5-1.6-1.5.5-2z" fill="white"/>
+      </svg>
+    </div>
+    <a href="https://t.me/TurkcheOzbekche" target="_blank" class="tg-btn">
+      Kanala Katıl
+    </a>
+  </div>
+</div>
+
+<!-- ÖDEV KONTROL BÖLÜMÜ (İKİ BUTON: ÜCRETSİZ / GİRİŞ GEREKLİ) -->
+<div class="odev-kontrol-section">
+  <div class="odev-kontrol-grid">
+    <!-- Sol: Ücretsiz -->
+    <div class="odev-card">
+      <div class="odev-header free">
+        📄 ÜCRETSİZ
+      </div>
+      <div class="odev-body">
+        <p></p>
+        <button class="odev-btn free-btn" onclick="freeHomeworkRedirect()">
+          YAZ
+        </button>
+      </div>
+    </div>
+
+    <!-- Sağ: Giriş Gerekli (Premium/Ücretli) -->
+    <div class="odev-card">
+      <div class="odev-header locked">
+        🔐 GİRİŞ GEREKLİ
+      </div>
+      <div class="odev-body">
+        <p></p>
+        <button class="odev-btn locked-btn" onclick="handleLockedContent()">
+          YAZ
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SAYFA ALTI SADECE FOOTER -->
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+<!-- LOGIN MODAL (Google Sheets doğrulamalı - index.html ile aynı) -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h2>🔐 Giriş Yap</h2>
+    <p class="sub">Bu içeriğe erişmek için giriş yapmalısınız.</p>
+    <div class="form-group">
+      <label>Kullanıcı Adı</label>
+      <input type="text" id="inputUser" placeholder="kullanici_adi">
+    </div>
+    <div class="form-group">
+      <label>Şifre</label>
+      <input type="password" id="inputPass" placeholder="••••••••">
+    </div>
+    <button class="btn-login" id="btnLogin" onclick="doLogin()">GİRİŞ YAP</button>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// GOOGLE SHEETS KULLANICI DOĞRULAMA (index.html ile aynı)
+// ═══════════════════════════════════════
+const SHEET_ID  = '1CZAbgcO8mBnEJ_Ay9baiHESirK3C8A1i3C-rDRzLEJE';
+const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet2`;
+
+// Kilitli içerik için yönlendirilecek sayfa
+let targetLockedPage = '';
+
+function handleLockedContent() {
+  // Eğer kullanıcı zaten giriş yapmışsa direkt premium sayfaya yönlendir
+  if (sessionStorage.getItem('hamzaUser')) {
+    window.location.href = 'https://hamzahocayazmakontrolu2.lovable.app';
+  } else {
+    targetLockedPage = 'https://hamzahocayazmakontrolu2.lovable.app';
+    showLoginModal();
+  }
+}
+
+function showLoginModal() {
+  const modal = document.getElementById('modalOverlay');
+  if (modal) modal.classList.add('show');
+}
+
+function closeModal() {
+  const modal = document.getElementById('modalOverlay');
+  if (modal) modal.classList.remove('show');
+  document.getElementById('errorMsg').classList.remove('show');
+  document.getElementById('inputUser').value = '';
+  document.getElementById('inputPass').value = '';
+}
+
+function closeModalOutside(event) {
+  if (event.target === document.getElementById('modalOverlay')) {
+    closeModal();
+  }
+}
+
+function parseCSV(text) {
+  return text.split('\n').filter(l => l.trim()).map(line => {
+    const cols = [];
+    let cur = '';
+    let inQ = false;
+    for (const c of line) {
+      if (c === '"') inQ = !inQ;
+      else if (c === ',' && !inQ) {
+        cols.push(cur);
+        cur = '';
+      } else cur += c;
+    }
+    cols.push(cur);
+    return cols.map(c => c.replace(/^"|"$/g, '').trim());
+  });
+}
+
+async function doLogin() {
+  const username = document.getElementById('inputUser').value.trim();
+  const password = document.getElementById('inputPass').value.trim();
+  const errorMsg = document.getElementById('errorMsg');
+  
+  if (!username || !password) {
+    errorMsg.textContent = 'Kullanıcı adı ve şifre giriniz.';
+    errorMsg.classList.add('show');
+    return;
+  }
+  
+  const btn = document.getElementById('btnLogin');
+  btn.disabled = true;
+  btn.textContent = 'Kontrol ediliyor...';
+  errorMsg.classList.remove('show');
+  
+  try {
+    const response = await fetch(SHEET_URL);
+    const csvText = await response.text();
+    const rows = parseCSV(csvText);
+    
+    let found = false;
+    for (let i = 1; i < rows.length; i++) {
+      const sheetUser = (rows[i][0] || '').trim();
+      const sheetPass = (rows[i][1] || '').trim();
+      
+      if (sheetUser.toLowerCase() === username.toLowerCase() && sheetPass === password) {
+        found = true;
+        break;
+      }
+    }
+    
+    if (found) {
+      sessionStorage.setItem('hamzaUser', username);
+      closeModal();
+      if (targetLockedPage) {
+        window.location.href = targetLockedPage;
+      }
+    } else {
+      errorMsg.textContent = 'Hatalı kullanıcı adı veya şifre!';
+      errorMsg.classList.add('show');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    errorMsg.textContent = 'Bağlantı hatası. Lütfen daha sonra tekrar deneyin.';
+    errorMsg.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'GİRİŞ YAP';
+  }
+}
+
+// Ücretsiz buton işlevi - istenen adrese yönlendir
+function freeHomeworkRedirect() {
+  window.location.href = 'https://hamzahocayazmakontrolu.lovable.app';
+}
+
+// Sayfa yüklendiğinde modal'ın kapalı olduğundan emin ol
+window.addEventListener('pageshow', function() {
+  closeModal();
+});
+</script>
+</body>
+</html>
