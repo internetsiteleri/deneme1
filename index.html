@@ -362,8 +362,7 @@ footer span { color: #F5C842; }
     <button class="cat-btn" onclick="toggle('oyunlar', this)"><span class="emoji">🎯</span><span class="label">OYUNLAR</span></button>
     <button class="cat-btn" onclick="window.location.href='video_sorucozmeteknikleri_1.html'"><span class="emoji">🎬</span><span class="label">VİDEOLAR</span></button>
     <button class="cat-btn" onclick="toggle('ogretmenler-icin', this)"><span class="emoji">👩‍🏫</span><span class="label">ÖĞRETMENLER İÇİN</span></button>
-    <button class="cat-btn" id="odevGonderBtn"><span class="emoji">📤</span><span class="label">YAZMA ÖDEVİ GÖNDER</span></button>
-    <button class="cat-btn" id="konusmaOdevGonderBtn"><span class="emoji">🎙️</span><span class="label">KONUŞMA KAYDI GÖNDER</span></button>
+    <button class="cat-btn" onclick="toggleMain('odev-gonder-panel')"><span class="emoji">📤</span><span class="label">ÖDEV GÖNDER</span></button>
 </div>
 
 <!-- SINAVLAR PANELİ -->
@@ -375,6 +374,17 @@ footer span { color: #F5C842; }
             <div><div class="sub-panel-header"><h3>🎧 DİNLEME SINAVLARI</h3></div><div class="sub-panel-body"><div class="items-grid" id="dinlemeSınavlarıGrid"></div></div></div>
         </div>
         <div class="tg-widget"><div class="tg-icon"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div><div class="tg-body"><span class="tg-bubble">Merhaba hocam. Ben bu testleri satın almak istiyorum.</span><a class="tg-send-btn" href="https://t.me/HamzaOzaydin?text=Merhaba%20hocam.%20Ben%20bu%20testleri%20sat%C4%B1n%20almak%20istiyorum." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>Gönder</a></div></div>
+    </div>
+</div>
+
+<!-- ÖDEV GÖNDER PANELİ -->
+<div class="content-panel" id="odev-gonder-panel">
+    <div class="panel-header"><h2>📤 ÖDEV GÖNDER</h2></div>
+    <div class="panel-body">
+        <div class="sub-buttons-row">
+            <button class="sub-action-btn" id="odevGonderBtn"><span class="emoji">📝</span> YAZMA ÖDEVİ GÖNDER</button>
+            <button class="sub-action-btn" id="konusmaOdevGonderBtn"><span class="emoji">🎙️</span> KONUŞMA KAYDI GÖNDER</button>
+        </div>
     </div>
 </div>
 
@@ -486,7 +496,8 @@ function toggleMain(panelId) {
   document.querySelectorAll('.content-panel').forEach(p => { p.classList.remove('open'); p.style.maxHeight = '0'; });
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   if (!isOpen) { panel.classList.add('open'); panel.style.maxHeight = 'none';
-    const btn = Array.from(document.querySelectorAll('.cat-btn')).find(b => b.innerText.includes(panelId === 'sinavlar' ? 'SINAVLAR' : 'ALIŞTIRMALAR')); if(btn) btn.classList.add('active');
+    const labelMap = { sinavlar: 'SINAVLAR', alistirmalar: 'ALIŞTIRMALAR', 'odev-gonder-panel': 'ÖDEV GÖNDER' };
+    const btn = Array.from(document.querySelectorAll('.cat-btn')).find(b => b.innerText.includes(labelMap[panelId] || '')); if(btn) btn.classList.add('active');
     setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50); }
 }
 function switchWordLevel(level) {
