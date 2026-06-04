@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RGXEF62STR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RGXEF62STR');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>E-Kitaplar / Sesli Kitaplar - PDF Kitaplık</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+        min-height: 100vh;
+        color: white;
+        padding-bottom: 20px;
+    }
+
+    .back-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 100;
+        background: rgba(26, 35, 50, 0.9);
+        backdrop-filter: blur(5px);
+        border: 2px solid #F5C842;
+        border-radius: 30px;
+        padding: 8px 16px;
+        color: #F5C842;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .back-btn.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .page-wrapper {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 80px 20px 40px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 44px;
+    }
+    header h1 {
+        font-size: clamp(1.6rem, 6vw, 2.5rem);
+        font-weight: 800;
+        color: #F5C842;
+        line-height: 1.3;
+        margin-bottom: 16px;
+    }
+    .header-line {
+        width: 80px; height: 2px;
+        background: linear-gradient(90deg, transparent, #F5C842, transparent);
+        margin: 0 auto 14px;
+    }
+    .stars { font-size: 1.2rem; color: #F5C842; letter-spacing: .4em; margin-bottom: 8px; }
+    .subtitle { font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+
+    .two-col {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    @media (min-width: 700px) {
+        .two-col { grid-template-columns: 1fr 1fr; }
+    }
+
+    .section-title {
+        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+        font-weight: 800;
+        color: #F5C842;
+        border-bottom: 2px solid #F5C842;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .subsection-title {
+        font-size: clamp(0.95rem, 2vw, 1.1rem);
+        font-weight: 700;
+        color: #F5C842;
+        border-bottom: 1px solid rgba(245, 200, 66, 0.4);
+        padding-bottom: 8px;
+        margin-top: 28px;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .level-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .level-item {
+        background: #1a2332;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .level-btn {
+        width: 100%;
+        background: #1a2332;
+        border: 2px solid #F5C842;
+        border-radius: 14px;
+        padding: 18px 14px;
+        cursor: pointer;
+        text-align: center;
+        transition: all .2s ease;
+    }
+    .level-btn:hover { background: #2a3a4a; transform: translateY(-3px); }
+    .level-btn.active { 
+        background: #2a3a4a; 
+        border-radius: 14px 14px 0 0;
+        border-bottom: none;
+    }
+    .level-btn .lbl-level { font-size: 1.5rem; font-weight: 900; color: #F5C842; }
+    .level-btn .lbl-count { font-size: 0.75rem; color: rgba(255,255,255,0.55); }
+
+    .book-panel {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.45s cubic-bezier(.4,0,.2,1), opacity 0.35s ease;
+        background: #111d2b;
+        border-left: 2px solid #F5C842;
+        border-right: 2px solid #F5C842;
+        border-bottom: 2px solid #F5C842;
+        border-radius: 0 0 14px 14px;
+    }
+    .book-panel.open { 
+        max-height: 600px; 
+        opacity: 1; 
+    }
+    .book-panel-inner {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .book-card {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        padding: 12px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        text-decoration: none;
+        color: #333;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all .2s ease;
+    }
+    .book-card:hover { background: #e9ecef; transform: translateX(5px); }
+    .book-card .book-name { flex: 1; }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        white-space: nowrap;
+        color: white;
+        background: #2a9d8f;
+    }
+    .badge-pdf { background: #e76f51; }
+    .badge-yt  { background: #c0392b; }
+
+    .sesli-list { display: flex; flex-direction: column; gap: 10px; }
+
+    /* Roman kartı — çok bölümlü için accordion */
+    .roman-item {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .roman-btn {
+        width: 100%;
+        background: #f8f9fa;
+        border: none;
+        padding: 12px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: #333;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-align: left;
+        transition: background .2s;
+    }
+    .roman-btn:hover { background: #e9ecef; }
+    .roman-btn .arrow {
+        font-size: 0.7rem;
+        color: #888;
+        transition: transform .25s;
+        flex-shrink: 0;
+    }
+    .roman-btn.open .arrow { transform: rotate(180deg); }
+
+    .roman-sub {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height .35s ease, opacity .25s ease;
+        background: #eef0f2;
+        border-top: 1px solid #dee2e6;
+    }
+    .roman-sub.open { max-height: 200px; opacity: 1; }
+    .roman-sub-inner {
+        padding: 8px 18px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .roman-sub-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #c0392b;
+        font-size: 0.82rem;
+        font-weight: 500;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: white;
+        border: 1px solid #ddd;
+        transition: background .2s;
+    }
+    .roman-sub-link:hover { background: #fdecea; }
+
+    footer { text-align: center; margin-top: 60px; font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+    footer span { color: #F5C842; }
+</style>
+</head>
+<body>
+
+<a class="back-btn" id="backBtn" onclick="history.back(); return false;" href="#">← Geri</a>
+
+<div class="page-wrapper">
+    <header>
+        <h1>HAMZA HOCA İLE<br>TÜRKÇE ÖĞRENİYORUM</h1>
+        <div class="header-line"></div>
+        <div class="stars">★ ★ ★ ★ ★</div>
+        <p class="subtitle">Türkçe Öğrenme Platformu</p>
+    </header>
+
+    <div class="two-col">
+       <!-- SOL: E-KİTAPLAR -->
+<div>
+    <div class="section-title">📖 E-Kitaplar</div>
+    <div class="level-grid" id="ekitap-grid">
+        
+        <!-- A1 Seviyesi -->
+        <div class="level-item">
+            <button class="level-btn" onclick="toggleLevel('ekitap-a1', this)">
+                <span class="lbl-level">A1</span>
+                <span class="lbl-count">2 kitap</span>
+            </button>
+            <div class="book-panel" id="ekitap-a1">
+                <div class="book-panel-inner">
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/A1.1/mobile/index.html" target="_blank">
+                        <span class="book-name">Saklambaç</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/A1.2/mobile/index.html" target="_blank">
+                        <span class="book-name">Kayıp Bavul</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- A2 Seviyesi -->
+        <div class="level-item">
+            <button class="level-btn" onclick="toggleLevel('ekitap-a2', this)">
+                <span class="lbl-level">A2</span>
+                <span class="lbl-count">2 kitap</span>
+            </button>
+            <div class="book-panel" id="ekitap-a2">
+                <div class="book-panel-inner">
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/A2.1/mobile/index.html" target="_blank">
+                        <span class="book-name">Gizemli Harita</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/A2.2/mobile/index.html" target="_blank">
+                        <span class="book-name">Peri Bacaları</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- B1 Seviyesi -->
+        <div class="level-item">
+            <button class="level-btn" onclick="toggleLevel('ekitap-b1', this)">
+                <span class="lbl-level">B1</span>
+                <span class="lbl-count">2 kitap</span>
+            </button>
+            <div class="book-panel" id="ekitap-b1">
+                <div class="book-panel-inner">
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/B1.1/mobile/index.html" target="_blank">
+                        <span class="book-name">Altın Bilezik</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/B1.2/mobile/index.html" target="_blank">
+                        <span class="book-name">Cevapsız Arama</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+       <!-- B2 Seviyesi -->
+        <div class="level-item">
+            <button class="level-btn" onclick="toggleLevel('ekitap-b2', this)">
+                <span class="lbl-level">B2</span>
+                <span class="lbl-count">4 kitap</span>
+            </button>
+            <div class="book-panel" id="ekitap-b2">
+                <div class="book-panel-inner">
+                    <div class="book-card" onclick="window.open('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/sessizligin_yankisi.pdf', '_blank')">
+                        <span class="book-name">Sessizliğin Yankısı</span>
+                        <span class="badge badge-pdf">📄 PDF</span>
+                    </div>
+                    <div class="book-card" onclick="window.open('https://raw.githubusercontent.com/hamzaozaydin/testmerkezi/main/zamanin_kalbi.pdf', '_blank')">
+                        <span class="book-name">Zamanın Kalbi</span>
+                        <span class="badge badge-pdf">📄 PDF</span>
+                    </div>
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/B2.1/mobile/index.html" target="_blank">
+                        <span class="book-name">Kumların Altındaki Sır</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+                    <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/piktesfb/B2.2/mobile/index.html" target="_blank">
+                        <span class="book-name">Yıl Sonu Pikniği</span><span class="badge">✅ Ücretsiz</span>
+                    </a>
+               </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- YENİ BÖLÜM: Yunus Emre Enstitüsü - Masallar -->
+    <div class="section-title" style="margin-top: 24px;">🎙️ Yunus Emre Enstitüsü — Masallar</div>
+    <div class="level-grid">
+        <div class="level-item">
+            <a class="book-card" href="https://www.youtube.com/watch?v=b2Ql5PGJjPs&list=PLJnZq9X10tdaff9I0dFOOCkpCsmBsro8c" target="_blank">
+                <span class="book-name">YouTube Oynatma Listesi</span>
+                <span class="badge badge-yt">▶ YouTube</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+        <!-- SAĞ: SESLİ KİTAPLAR + ROMANLAR/HİKAYELER -->
+        <div>
+            <div class="section-title">📚 Sesli Kitaplar</div>
+            <div class="sesli-list">
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/1.1/mobile/index.html" target="_blank"><span class="book-name">Kırmızı Uçurtma</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/5/mobile/index.html" target="_blank"><span class="book-name">İlk Kar Tanesi</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/10/mobile/index.html" target="_blank"><span class="book-name">Ege'nin Maceraları</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/11/mobile/index.html" target="_blank"><span class="book-name">Uzun Yol Misafirleri</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/12/mobile/index.html" target="_blank"><span class="book-name">Güneşi Yakala</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/13/mobile/index.html" target="_blank"><span class="book-name">Zamanda Yolculuk</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/14/mobile/index.html" target="_blank"><span class="book-name">Tokyo'dan İstanbul'a</span><span class="badge">✅ Ücretsiz</span></a>
+                <a class="book-card" href="https://cdn.eba.gov.tr/dil-ogrenimi/tr-hikaye-kitaplari/15/mobile/index.html" target="_blank"><span class="book-name">Günlükten İzler</span><span class="badge">✅ Ücretsiz</span></a>
+            </div>
+
+            <!-- ROMANLAR / HİKAYELER -->
+            <div class="subsection-title">📖 Romanlar / Hikayeler</div>
+            <div class="sesli-list">
+
+                <!-- Tek bölümlü kitaplar -->
+                <a class="book-card" href="https://www.youtube.com/watch?v=Oc8lfoY-kg4" target="_blank">
+                    <span class="book-name">Reşat Nuri Güntekin — Çalıkuşu</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=-FxOl83KTFk&list=PLpsYAPK3ObRtmhXENTiYqI4dk3LBikxYy&index=31" target="_blank">
+                    <span class="book-name">Ömer Seyfettin — Kızıl Elma</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=_UhuUb3dNj8&list=PLpsYAPK3ObRtmhXENTiYqI4dk3LBikxYy&index=27" target="_blank">
+                    <span class="book-name">Ömer Seyfettin — Baharın Tesiri</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=M8R3BHQxiSw&list=PLj3p_ziC5813xzb9QqE3gy427TUeuyw__" target="_blank">
+                    <span class="book-name">Ömer Seyfettin — Üç Nasihat</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=7sk9xbHvcE8&list=PLj3p_ziC5813UoQaux6G9Dj33bsZbQMbj&index=5" target="_blank">
+                    <span class="book-name">Uğur Demircan — Örtü</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=Yseyn_PvXWg&list=PLY0XVdswpFo2y-MIbl09lkAbKSTPOGKJD&index=2" target="_blank">
+                    <span class="book-name">Ahmet Ümit — Yırtıcı Kuşlar Zamanı</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=HaYbKHdsk4k&list=PLpsYAPK3ObRtmhXENTiYqI4dk3LBikxYy&index=14" target="_blank">
+                    <span class="book-name">Sabahattin Ali — Bir Firar</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=juEVOwCHuqo&list=PLY0XVdswpFo2y-MIbl09lkAbKSTPOGKJD&index=3" target="_blank">
+                    <span class="book-name">Lev Tolstoy — Anna Karenina</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+                <a class="book-card" href="https://www.youtube.com/watch?v=gXa5hpYQe1c&list=PLj3p_ziC5813OhoiZTGtkF66rXNCr0ArK" target="_blank">
+                    <span class="book-name">Anton Çehov — Korkunç Bir Gece</span>
+                    <span class="badge badge-yt">▶ YouTube</span>
+                </a>
+
+                <!-- Küçük Prens — çok bölümlü -->
+                <div class="roman-item">
+                    <button class="roman-btn" onclick="toggleRoman('kucuk-prens', this)">
+                        <span class="book-name">Antoine de Saint-Exupéry — Küçük Prens</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="roman-sub" id="kucuk-prens">
+                        <div class="roman-sub-inner">
+                            <a class="roman-sub-link" href="https://www.youtube.com/watch?v=spjGbUvkcvc&list=PLpsYAPK3ObRvyRUooVu09oRYnSwCeM4nJ" target="_blank">
+                                ▶ 1. Bölüm
+                            </a>
+                            <a class="roman-sub-link" href="https://www.youtube.com/watch?v=OtiB_uj-pBA&list=PLpsYAPK3ObRvyRUooVu09oRYnSwCeM4nJ&index=2" target="_blank">
+                                ▶ 2. Bölüm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer><p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p></footer>
+</div>
+
+<script>
+    function toggleLevel(panelId, btnElement) {
+        const panel = document.getElementById(panelId);
+        const isOpen = panel.classList.contains('open');
+        document.querySelectorAll('.book-panel').forEach(p => p.classList.remove('open'));
+        document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+        if (!isOpen) {
+            panel.classList.add('open');
+            btnElement.classList.add('active');
+            setTimeout(() => { window.scrollTo(0, window.scrollY); }, 10);
+        }
+    }
+
+    function toggleRoman(id, btn) {
+        const sub = document.getElementById(id);
+        const isOpen = sub.classList.contains('open');
+        document.querySelectorAll('.roman-sub').forEach(s => s.classList.remove('open'));
+        document.querySelectorAll('.roman-btn').forEach(b => b.classList.remove('open'));
+        if (!isOpen) {
+            sub.classList.add('open');
+            btn.classList.add('open');
+        }
+    }
+
+    window.addEventListener('scroll', function() {
+        const backBtn = document.getElementById('backBtn');
+        if (window.scrollY > 100) {
+            backBtn.classList.add('hidden');
+        } else {
+            backBtn.classList.remove('hidden');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.book-panel').forEach(p => p.classList.remove('open'));
+        document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+    });
+</script>
+</body>
+</html>

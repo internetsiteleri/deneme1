@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elektrikli Araçlar – Hamza Hoca</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1a2a3a 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.home-btn-wrap {
+  padding: 18px 20px 0;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a2332;
+  border: 2px solid #F5C842;
+  border-radius: 40px;
+  padding: 9px 20px;
+  color: #F5C842;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .22s, transform .18s, box-shadow .22s;
+}
+.back-btn:hover {
+  background: #2a3a4a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+}
+
+.page-wrapper {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+
+.article-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #F5C842, #C9960A);
+  color: #0D1B2A;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 0.3rem 1.2rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.article-title {
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: #F5C842;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.article-meta {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.header-line {
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F5C842, transparent);
+  margin: 0 0 28px;
+}
+
+.article-body {
+  background: #1a2332;
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 20px;
+  padding: 32px 36px;
+  line-height: 1.9;
+  font-size: 1.02rem;
+  color: rgba(255,255,255,0.88);
+}
+
+.article-body p {
+  margin-bottom: 20px;
+}
+.article-body p:last-child {
+  margin-bottom: 0;
+}
+
+.article-body .highlight {
+  color: #F5C842;
+  font-weight: 700;
+}
+
+.word-count {
+  text-align: right;
+  margin-top: 20px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: .05em;
+}
+
+.level-badge {
+  display: inline-block;
+  background: rgba(245,200,66,0.12);
+  border: 1px solid rgba(245,200,66,0.3);
+  color: #F5C842;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+footer {
+  text-align: center;
+  padding: 0 1rem 2.5rem;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+}
+footer span { color: #F5C842; }
+</style>
+</head>
+<body>
+
+<div class="home-btn-wrap">
+  <button class="back-btn" onclick="history.back()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </svg>
+    Geri
+  </button>
+</div>
+
+<div class="page-wrapper">
+  <div class="article-badge">✦ Okuma Metni ✦</div>
+  <h1 class="article-title">Elektrikli Araçlar</h1>
+  <div class="article-meta">B2 / C1 Seviyesi &nbsp;·&nbsp; Okuma Metni</div>
+  <div class="header-line"></div>
+  <div class="level-badge">B2 / C1</div>
+
+  <div class="article-body">
+    <p>
+      Elektrikli araçlar, içten yanmalı motorun yerini <span class="highlight">elektrik motoruna</span> bıraktığı ve enerji kaynağı olarak şarj edilebilir pillerin kullanıldığı taşıtlardır. Fosil yakıt tüketimine bağlı çevre kirliliğinin artmasıyla birlikte bu araçlara olan ilgi son yıllarda belirgin biçimde yükselmiştir. Başta Avrupa ve Çin olmak üzere pek çok ülke, elektrikli araç satışlarını teşvik eden politikalar hayata geçirmektedir.
+    </p>
+    <p>
+      Elektrikli araçların en önemli avantajı, kullanım sırasında egzoz gazı <span class="highlight">salınımı yapmamasıdır</span>. Bu özellik, özellikle hava kirliliğinin yoğun olduğu şehirlerde ciddi bir fark yaratmaktadır. Bunun yanı sıra elektrik motorları, içten yanmalı motorlara kıyasla daha az hareketli parçaya sahip olduğundan bakım maliyetleri görece düşüktür. Akaryakıt fiyatlarındaki dalgalanmalardan bağımsız, daha öngörülü bir yakıt gideri de kullanıcılar için cazip bir etkendir.
+    </p>
+    <p>
+      Ne var ki elektrikli araçların önünde hâlâ aşılması gereken <span class="highlight">yapısal engeller</span> bulunmaktadır. Şarj istasyonu altyapısının yetersizliği, uzun mesafe yolculuklarda pratik sorunlara yol açmaktadır. Pil kapasitesinin kısıtlı olması ve tam şarj süresinin benzinli araçlara kıyasla çok daha uzun olması, tüketici tercihlerini etkileyen başlıca faktörler arasındadır. Ayrıca araç satın alma maliyeti, benzer segmentteki benzinli araçlara göre hâlâ yüksek seyretmektedir.
+    </p>
+    <p>
+      Pil teknolojisindeki gelişmeler ve üretim maliyetlerinin düşmesi, bu engellerin önümüzdeki yıllarda büyük ölçüde ortadan kalkacağına işaret etmektedir. Uluslararası Enerji Ajansı verilerine göre 2030 yılı itibarıyla dünya genelinde yüz milyonun üzerinde elektrikli aracın trafikte olması beklenmektedir. Ulaşımın <span class="highlight">karbon ayak izini</span> azaltmak için elektrikli araçlara geçiş, iklim hedefleri açısından kritik bir adım olarak değerlendirilmektedir.
+    </p>
+    <div class="word-count">≈ 325 kelime</div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 <span>Hamza Hoca</span> — Türkçe Öğrenme Platformu</p>
+</footer>
+
+</body>
+</html>
