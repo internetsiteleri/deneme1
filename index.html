@@ -339,6 +339,23 @@ footer span { color: #F5C842; }
   display: block;
 }
 
+/* Video başlık alt stil */
+.video-subheader {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #1a2332;
+  border-left: 4px solid #F5C842;
+  padding-left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.video-subheader .emoji {
+  font-size: 1.2rem;
+}
+
 @keyframes popIn { from { opacity: 0; transform: scale(.93) translateY(10px); } to { opacity: 1; transform: none; } }
 </style>
 </head>
@@ -424,7 +441,26 @@ footer span { color: #F5C842; }
             <button class="questions-sub-btn active" onclick="switchQuestionTab('konusma')"><span>💬</span> KONUŞMA SORULARI</button>
             <button class="questions-sub-btn" onclick="switchQuestionTab('yazma')"><span>✍️</span> YAZMA SORULARI</button>
         </div>
-        <div id="konusma-sorulari-content" class="questions-sub-content active"><div class="two-col-grid"><div><div class="col-label col-label-free">✅ Ücretsiz</div><div class="col-items" id="speakingFree"></div></div><div><div class="col-label col-label-locked">🔒 Giriş Gerekli</div><div class="col-items" id="speakingLocked"></div></div></div></div>
+        <div id="konusma-sorulari-content" class="questions-sub-content active">
+            <div class="two-col-grid">
+                <!-- SOL SÜTUN: ÜCRETSİZ -->
+                <div>
+                    <div class="col-label col-label-free">✅ Ücretsiz</div>
+                    <div class="col-items" id="speakingFree"></div>
+                    <!-- 🎬 Video Sorular (Ücretsiz) başlık ve liste -->
+                    <div class="video-subheader"><span class="emoji">🎬</span> Video Sorular</div>
+                    <div class="col-items" id="videoFreeList"></div>
+                </div>
+                <!-- SAĞ SÜTUN: GİRİŞ GEREKLİ -->
+                <div>
+                    <div class="col-label col-label-locked">🔒 Giriş Gerekli</div>
+                    <div class="col-items" id="speakingLocked"></div>
+                    <!-- 🎬 Video Sorular (Ücretli/Giriş Gerekli) başlık ve liste -->
+                    <div class="video-subheader"><span class="emoji">🎬</span> Video Sorular</div>
+                    <div class="col-items" id="videoLockedList"></div>
+                </div>
+            </div>
+        </div>
         <div id="yazma-sorulari-content" class="questions-sub-content"></div>
     </div>
 </div>
@@ -519,7 +555,6 @@ function switchQuestionTab(tab) {
         document.getElementById('konusma-sorulari-content').classList.add('active');
         document.querySelector('.questions-sub-btn:first-child').classList.add('active');
     } else {
-        // Yazma Soruları butonuna tıklandığında direkt yazma_sorulari.html sayfasına yönlendir
         window.location.href = 'yazma_sorulari.html';
     }
 }
@@ -540,6 +575,13 @@ function switchReadingTab(tab) {
 function openVideo(src) { const player = document.getElementById('videoPlayer'); player.src = src; player.load(); document.getElementById('videoOverlay').classList.add('show'); }
 function closeVideo() { const player = document.getElementById('videoPlayer'); player.pause(); player.src = ''; document.getElementById('videoOverlay').classList.remove('show'); }
 function closeVideoOutside(e) { if (e.target === document.getElementById('videoOverlay')) closeVideo(); }
+function openFreeVideo(src) { openVideo(src); }
+function openLockedVideo(src) { 
+    if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => openVideo(src))) return;
+    targetVideoSrc = src;
+    document.getElementById('modalSubTitle').innerHTML='Bu video içeriğine erişmek için <strong>Sınav</strong> hesabıyla giriş yapmalısınız.';
+    document.getElementById('modalOverlay').classList.add('show');
+}
 function checkAccessAndOpen(requiredAccessType, successCallback) { const storedType = sessionStorage.getItem('hamzaAccessType'); const storedUser = sessionStorage.getItem('hamzaUser'); if (storedUser && storedType === requiredAccessType) { if (successCallback) successCallback(); return true; } if (storedUser && storedType !== requiredAccessType) alert(`Bu içerik için farklı hesap gerekli.`); return false; }
 function openExamLogin(page) { if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => window.location.href=page)) return; targetPage=page; targetUrl=''; targetVideoSrc=null; document.getElementById('modalSubTitle').innerHTML='Bu içeriğe erişmek için <strong>Sınav</strong> hesabıyla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
 function openExamLoginVideo(src) { if (checkAccessAndOpen(ACCESS_TYPE.EXAM, () => openVideo(src))) return; targetVideoSrc=src; targetPage=''; targetUrl=''; document.getElementById('modalSubTitle').innerHTML='Bu video içeriğine erişmek için <strong>Sınav</strong> hesabıyla giriş yapmalısınız.'; document.getElementById('modalOverlay').classList.add('show'); }
@@ -601,12 +643,50 @@ document.addEventListener('DOMContentLoaded', function() {
   const freeDivB2=document.getElementById('b2c1FreeInner'); if(freeDivB2) b2free.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; freeDivB2.appendChild(a); });
   const lockedDivB2=document.getElementById('b2c1LockedInner'); if(lockedDivB2) b2locked.forEach(([h,t])=>{ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('${h}')`); div.innerHTML=`<span>${t}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; lockedDivB2.appendChild(div); });
   
-  // Konuşma Soruları
+  // Konuşma Soruları (metin sorular)
   const speakFree=[["2026_ocak_nisan_cikmis_sorular.html","2026 Ocak-Nisan Çıkmış Sorular"],["konuşma_soruları_1.html","Konuşma Soruları 1"],["konuşma_soruları_2.html","Konuşma Soruları 2"],["konusma_soruları_ucretsiz_3.html","Konuşma Soruları 3"],["konusma_soruları_ucretsiz_4.html","Konuşma Soruları 4"],["konusma_soruları_ucretsiz_5.html","Konuşma Soruları 5"],["konusma_soruları_ucretsiz_6.html","Konuşma Soruları 6"],["konusma_soruları_ucretsiz_7.html","Konuşma Soruları 7"],["konusma_soruları_ucretsiz_8.html","Konuşma Soruları 8"]];
   const speakFreeDiv=document.getElementById('speakingFree'); if(speakFreeDiv) speakFree.forEach(([h,t])=>{ let a=document.createElement('a'); a.className='item-card'; a.href=h; a.innerHTML=`<span>${t}</span><span class="badge badge-free">✅ Ücretsiz</span>`; speakFreeDiv.appendChild(a); });
   const speakLockedDiv=document.getElementById('speakingLocked'); if(speakLockedDiv) for(let i=1;i<=14;i++){ let div=document.createElement('div'); div.className='item-card'; div.setAttribute('onclick',`openExamLogin('konusma_sorulari_${i}.html')`); div.innerHTML=`<span>Konuşma Soruları ${i}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`; speakLockedDiv.appendChild(div); }
-  
-  // Yazma Soruları içeriği tamamen kaldırıldı - artık butona tıklayınca yazma_sorulari.html'a yönlendiriyor
+
+  // 🎬 Video Sorular (Ücretsiz)
+  const freeVideos = [
+    ["konusma_sorulari_video_1.mp4", "Video Sorular 1"],
+    ["konusma_sorulari_video_ucretsiz_2.mp4", "Video Sorular 2"],
+    ["konusma_sorulari_video_ucretsiz_3.mp4", "Video Sorular 3"],
+    ["konusma_sorulari_video_ucretsiz_4.mp4", "Video Sorular 4"]
+  ];
+  const videoFreeContainer = document.getElementById('videoFreeList');
+  if(videoFreeContainer) {
+    freeVideos.forEach(([src, label]) => {
+      let div = document.createElement('div');
+      div.className = 'item-card';
+      div.setAttribute('onclick', `openFreeVideo('${src}')`);
+      div.innerHTML = `<span>${label}</span><span class="badge badge-free">🎬 Ücretsiz</span>`;
+      videoFreeContainer.appendChild(div);
+    });
+  }
+
+  // 🎬 Video Sorular (Giriş Gerekli / Ücretli)
+  const lockedVideos = [
+    ["konusma_sorulari_video_ucretli_1.mp4", "Video Sorular 1"],
+    ["konusma_sorulari_video_ucretli_2.mp4", "Video Sorular 2"],
+    ["konusma_sorulari_video_ucretli_3.mp4", "Video Sorular 3"],
+    ["konusma_sorulari_video_ucretli_4.mp4", "Video Sorular 4"],
+    ["konusma_sorulari_video_ucretli_5.mp4", "Video Sorular 5"],
+    ["konusma_sorulari_video_ucretli_6.mp4", "Video Sorular 6"],
+    ["konusma_sorulari_video_ucretli_7.mp4", "Video Sorular 7"],
+    ["konusma_sorulari_video_ucretli_8.mp4", "Video Sorular 8"]
+  ];
+  const videoLockedContainer = document.getElementById('videoLockedList');
+  if(videoLockedContainer) {
+    lockedVideos.forEach(([src, label]) => {
+      let div = document.createElement('div');
+      div.className = 'item-card';
+      div.setAttribute('onclick', `openLockedVideo('${src}')`);
+      div.innerHTML = `<span>${label}</span><span class="badge badge-locked">🔒 Giriş Gerekli</span>`;
+      videoLockedContainer.appendChild(div);
+    });
+  }
   
   // Oyunlar
   const gamesFree=[["deyimler_carki.html","Deyim Çarkı 1"],["fiiller_carki_b1_1.unite.html","B1-Fiiller Çarkı 1"]];
