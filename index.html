@@ -621,9 +621,9 @@ document.addEventListener('DOMContentLoaded', function() {
   const dinlemeGridSub = document.getElementById('dinlemeAlistirmaGrid');
   if(dinlemeGridSub) dinlemeNames.forEach((name,idx)=>{ let a=document.createElement('a'); a.className='item-card'; a.href=dinlemeAlis[idx]; a.innerHTML=`<span class="item-name">${name}</span><span class="badge badge-free">✅ Ücretsiz</span>`; dinlemeGridSub.appendChild(a); });
   
-  // A1/A2
-  const a1Items = ["a1_turk_alfabesi.html","a1_unlu_harfler.html","a1_hal_ekleri_ozbekce.html","a1_a2_unsuz_benzesmesi.html","kartlar.html","gunler.html","a1_es_anlamli_kelimeler.html","a1_zit_anlamlilar.html","akrabalik_adlari.html","benzer_sozler_1.html","benzer_sozler_2.html","A1_es_anlamli_kelime_oyunu_1.html","a1_kelime_bulmaca_1.html","a1_kelime_bulmaca_2.html","a1_hal_ekleri.html","a1_isim_tamlamalari.html","a1_karisik_kelimeler_1.html"];
-  const a1Labels = ["Alfabe Kartları","Ünlü Harfler","Hal Ekleri","Ünsüz Benzeşmesi","Selamlaşma Kartları","Günler","Eş Anlamlı Kelimeler 1","Zıt Anlamlı Kelimeler 1","Akrabalık Adları","Benzer Sözler 1","Benzer Sözler 2","Eş Anlamlı Kelime Alıştırması 1","Kelime Bulmaca 1","Kelime Bulmaca 2","Hal Ekleri","İsim Tamlamaları","Karışık Kelimeler 1"];
+// A1/A2
+  const a1Items = ["a1_turk_alfabesi.html","a1_unlu_harfler.html","a1_cogul_eki.html","a1_hal_ekleri_ozbekce.html","a1_a2_unsuz_benzesmesi.html","kartlar.html","gunler.html","a1_es_anlamli_kelimeler.html","a1_zit_anlamlilar.html","akrabalik_adlari.html","benzer_sozler_1.html","benzer_sozler_2.html","A1_es_anlamli_kelime_oyunu_1.html","a1_kelime_bulmaca_1.html","a1_kelime_bulmaca_2.html","a1_hal_ekleri.html","a1_isim_tamlamalari.html","a1_karisik_kelimeler_1.html"];
+  const a1Labels = ["Alfabe Kartları","Ünlü Harfler","Çoğul Eki","Hal Ekleri","Ünsüz Benzeşmesi","Selamlaşma Kartları","Günler","Eş Anlamlı Kelimeler 1","Zıt Anlamlı Kelimeler 1","Akrabalık Adları","Benzer Sözler 1","Benzer Sözler 2","Eş Anlamlı Kelime Alıştırması 1","Kelime Bulmaca 1","Kelime Bulmaca 2","Hal Ekleri","İsim Tamlamaları","Karışık Kelimeler 1"];
   const a1Container = document.getElementById('a1ThreeColGrid');
   if(a1Container) {
       const chunkSize = Math.ceil(a1Items.length / 3);
@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let div = document.createElement('div');
       div.className = 'item-card';
       div.setAttribute('onclick', `openFreeVideo('${src}')`);
-      div.innerHTML = `<span>${label}</span><span class="badge badge-free">✅ Ücretsiz</span>`;
+      div.innerHTML = `<span>${label}</span><span class="badge badge-free">🎬 Ücretsiz</span>`;
       videoFreeContainer.appendChild(div);
     });
   }
